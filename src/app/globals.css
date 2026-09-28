@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
 :root {
+  /*
+   * One design pixel. The Figma artboard is 1440px wide; below that width
+   * every "u" shrinks proportionally so the art-directed collage keeps its
+   * composition. Above 1440px it stays at 1px and the page is centred.
+   * Measured against the nearest inline-size container (the page <main>),
+   * so the scrollbar is excluded; outside a container cqw falls back to svw.
+   */
+  --u: min(1px, calc(100cqw / 1440));
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-ink: #1a1a1a;
+  --color-muted: #737373;
+  --color-subtle: #808080;
+  --color-body: #666666;
+  --font-sans:
+    "Neue Haas Grotesk Display Pro", "Neue Haas Grotesk Display",
+    var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* Horizontal page gutter: 72 design px, never less than 16px on phones. */
+.gutter {
+  padding-inline: max(16px, calc(72 * var(--u)));
+}
+
+/*
+ * Collage "stage". On small screens children flow as a normal stack; from
+ * the lg breakpoint each `.place` child is absolutely positioned using the
+ * design coordinates passed in as --x / --y / --w (in design px), and the
+ * stage takes its design height --h. Kept outside @layer so it wins over
+ * the mobile utility classes at lg.
+ */
+.stage {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .stage {
+    height: calc(var(--h) * var(--u));
+  }
+
+  .place {
+    position: absolute;
+    left: calc(var(--x) * var(--u));
+    top: calc(var(--y) * var(--u));
+    width: calc(var(--w) * var(--u));
+    margin: 0;
+  }
 }

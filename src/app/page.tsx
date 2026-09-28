@@ -1,12 +1,31 @@
+import { Collection } from "@/components/sections/Collection";
+import { Departures } from "@/components/sections/Departures";
+import { ForOwners } from "@/components/sections/ForOwners";
+import { Hero } from "@/components/sections/Hero";
+import { Manifesto } from "@/components/sections/Manifesto";
+import { SiteFooter } from "@/components/sections/SiteFooter";
+import { SiteHeader } from "@/components/sections/SiteHeader";
+import { StayConnected } from "@/components/sections/StayConnected";
+
 export default function Home() {
   return (
-    <main className="flex flex-1 flex-col items-center justify-center gap-4 px-6 py-24 text-center">
-      <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
-        Andy Lenart
-      </h1>
-      <p className="max-w-md text-lg text-zinc-600 dark:text-zinc-400">
-        New website coming soon.
-      </p>
-    </main>
+    <>
+      {/* The inline-size container is what the design unit (--u) measures. */}
+      <div
+        id="top"
+        className="mx-auto w-full max-w-[1440px] overflow-x-clip [container-type:inline-size]"
+      >
+        <SiteHeader />
+        <main>
+          <Hero />
+          <Departures />
+          <Manifesto />
+          <Collection />
+          <ForOwners />
+          <StayConnected />
+        </main>
+      </div>
+      <SiteFooter />
+    </>
   );
 }
