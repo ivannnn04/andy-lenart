@@ -58,14 +58,14 @@ export function Hero() {
       </p>
 
       <div
-        className="place hidden rotate-[-90.22deg] lg:block"
+        className="place hidden lg:block"
         style={p(1085, 1021, 241)}
       >
         <Photo
           src="/images/shape-4.png"
           alt="Handwritten scrawl of words"
-          width={240}
-          height={240}
+          width={241}
+          height={241}
           sizes="17vw"
         />
       </div>
