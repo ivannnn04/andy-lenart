@@ -42,12 +42,11 @@ export function Manifesto() {
         style={p(310, 3318, 790)}
       />
       <Photo
-        src="/images/signature.png"
+        src="/images/signature-limbo.png"
         alt="Handwritten: Limbo, past, time, death, birth"
         width={391}
         height={32}
-        sizes="(min-width: 1024px) 52vw, 180vw"
-        crop={{ width: "189.77%", height: "2318.75%", left: "-29.41%", top: "-1459.38%" }}
+        sizes="(min-width: 1024px) 27vw, 80vw"
         className="place w-4/5 max-lg:order-last"
         style={p(746, 3915, 391)}
       />
