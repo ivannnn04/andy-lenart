@@ -20,10 +20,11 @@ export function SiteHeader() {
         src="/images/radio-wave.png"
         alt="Hand-drawn sound wave"
         width={308}
-        height={212}
+        height={194}
         sizes="(min-width: 1024px) 22vw, 112px"
         className="place w-28"
-        style={p(14, -18, 308)}
+        // The Figma layer starts 18px above the artboard; this is its visible part.
+        style={p(14, 0, 308)}
       />
       <a
         href="#top"
