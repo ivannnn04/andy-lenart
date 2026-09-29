@@ -30,9 +30,17 @@ export function Hero() {
 
       <div
         className="place w-full font-normal uppercase leading-[1.5] max-md:order-5"
-        style={p(156, 1438, 600, { fontSize: fs(32, 16) })}
+        // Phones shrink below 16px (down to 4vw) so each line still fits on one row.
+        style={p(156, 1438, 600, {
+          fontSize: "clamp(min(16px, 4vw), calc(32 * var(--u)), 32px)",
+        })}
       >
-        <p>I grew up in a post-communist block with a mother who was a waitress.</p>
+        {/* Two lines as in the design; each line is kept whole. */}
+        <p className="whitespace-nowrap">
+          I grew up in a post-communist block
+          <br />
+          with a mother who was a waitress.
+        </p>
         <p className="mt-[1.5em] font-bold">This is how it continues...</p>
       </div>
 
