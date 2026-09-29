@@ -17,7 +17,8 @@ export function Departures() {
         width={666}
         height={965}
         sizes="(min-width: 768px) 47vw, 100vw"
-        className="place w-full max-md:order-3"
+        // Phones: pulled up so the signature's lower part lies over it.
+        className="place w-full max-md:order-3 max-md:-mt-[calc(19%+1.5rem)]"
         style={p(82, 2053, 666)}
       />
       <Photo
@@ -36,14 +37,16 @@ export function Departures() {
         height={514}
         sizes="(min-width: 768px) 76vw, 100vw"
         objectPosition="bottom"
-        className="place w-full max-md:order-1"
+        // Phones: starts around the middle of the heading and runs down over
+        // the top of the photo (heading ≈ 31.5vw tall at 13vw × 2 lines).
+        className="place w-full max-md:z-10 max-md:order-2 max-md:-mt-[calc(17vw+1.5rem)]"
         style={p(253, 1741, 1082)}
       />
       <h2
         id="departures-title"
-        // Phones: as large as fits on one line (13vw, max 96px) and pulled up
-        // so the signature runs behind the middle of it, as in the desktop collage.
-        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-10 max-md:order-2 max-md:-mt-[calc(42%+1.5rem)] md:text-[clamp(48px,calc(96*var(--u)),96px)]"
+        // Phones: as large as fits on one line (13vw, max 96px), above the
+        // signature that overlaps it.
+        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-20 max-md:order-1 md:text-[clamp(48px,calc(96*var(--u)),96px)]"
         style={p(361, 1896, 1130)}
       >
         Departures
