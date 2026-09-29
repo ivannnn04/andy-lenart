@@ -35,7 +35,7 @@ export function StayConnected() {
         style={p(895, 7382, 434)}
       >
         <Photo
-          src="/images/newsletter-photo.png"
+          src="/images/newsletter-photo.webp"
           alt="Black-and-white photo of the model in the white coat with a string bag, standing on concrete steps below brutalist towers"
           width={434}
           height={642}
