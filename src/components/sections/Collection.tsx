@@ -25,7 +25,7 @@ const GARMENTS: Garment[] = [
     price: "£ 1,500",
     preview: "0:30",
     image: {
-      src: "/images/garment-01.png",
+      src: "/images/garment-01.webp",
       alt: "Garment 01: white coat with hand-drawn black lettering, worn on concrete steps beneath tower blocks",
     },
   },
