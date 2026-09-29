@@ -60,7 +60,7 @@ export function StayConnectedForm() {
         className={`${fieldText} bg-black px-16 text-white shadow-[inset_0_0_0_2px_#000] transition-colors duration-300 hover:bg-white hover:text-black motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black`}
         style={{ paddingBlock: sp(32, 20) }}
       >
-        Stay connected
+        <span className="link-draw">Stay connected</span>
       </button>
     </form>
   );
