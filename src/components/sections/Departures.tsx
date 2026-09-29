@@ -29,7 +29,7 @@ export function Departures() {
         style={p(839, 2315, 411)}
       />
       <Photo
-        src="/images/departures-banner.png"
+        src="/images/departures-banner.webp"
         alt="Brush-stroke signature"
         width={1082}
         height={514}

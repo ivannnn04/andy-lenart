@@ -44,7 +44,7 @@ Export these Figma layers as PNG into `public/images/`:
 | `hero-coat.webp` | R1-17 1 (added) |
 | `fragments.png` | fragments 1 (added) |
 | `shape-4.png` | Shape 4 1 (added; exported upright) |
-| `departures-banner.png` | 4 49 |
+| `departures-banner.webp` | 4 49 (added) |
 | `img-1924.png` | IMG_1924 1 |
 | `photo-block-standing.png` | R1-01944-0035 1 |
 | `photo-block-wide.png` | R1-01944-0019 1 |
