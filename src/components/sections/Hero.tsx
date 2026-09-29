@@ -30,9 +30,10 @@ export function Hero() {
 
       <div
         className="place w-full font-normal uppercase leading-[1.5] max-md:order-5"
-        // Phones shrink below 16px (down to 4vw) so each line still fits on one row.
+        // Slightly larger than the design's 32px. Phones shrink with the width
+        // (4.3vw) so each line still fits on one row.
         style={p(156, 1438, 600, {
-          fontSize: "clamp(min(16px, 4vw), calc(32 * var(--u)), 32px)",
+          fontSize: "clamp(min(18px, 4.3vw), calc(36 * var(--u)), 36px)",
         })}
       >
         {/* Two lines as in the design; each line is kept whole. */}
