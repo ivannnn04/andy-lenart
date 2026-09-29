@@ -15,8 +15,6 @@ type PhotoProps = {
   crop?: Crop;
   objectPosition?: string;
   preload?: boolean;
-  /** Serve the source file as-is (no resizing or re-compression). */
-  unoptimized?: boolean;
   className?: string;
   style?: CSSProperties;
 };
@@ -30,7 +28,6 @@ export function Photo({
   crop,
   objectPosition,
   preload,
-  unoptimized,
   className = "",
   style,
 }: PhotoProps) {
@@ -45,7 +42,6 @@ export function Photo({
         fill
         sizes={sizes}
         preload={preload}
-        unoptimized={unoptimized}
         className={crop ? "max-w-none" : "object-cover"}
         style={
           crop
