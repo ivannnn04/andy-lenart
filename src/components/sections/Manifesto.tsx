@@ -33,7 +33,7 @@ export function Manifesto() {
         COLLECTION 01
       </p>
       <Photo
-        src="/images/photo-block-wide.png"
+        src="/images/photo-block-wide.webp"
         alt="Black-and-white photo of a concrete apartment block with enclosed balconies and a bare tree"
         width={790}
         height={538}
