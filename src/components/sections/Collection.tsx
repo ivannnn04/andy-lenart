@@ -173,13 +173,13 @@ function GarmentCard({
           {statusHref ? (
             <a
               href={statusHref}
-              className="text-[11px] whitespace-nowrap uppercase tracking-[0.08em] text-subtle link-draw"
+              className="text-[11px] whitespace-nowrap uppercase tracking-[0.08em] text-subtle link-draw max-[400px]:whitespace-normal"
             >
               {status}
             </a>
           ) : (
             <span
-              className={`text-[11px] whitespace-nowrap uppercase tracking-[0.08em] ${price ? "text-ink" : "text-subtle"}`}
+              className={`text-[11px] whitespace-nowrap uppercase tracking-[0.08em] max-[400px]:whitespace-normal ${price ? "text-ink" : "text-subtle"}`}
             >
               {status}
             </span>

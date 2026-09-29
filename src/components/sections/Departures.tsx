@@ -8,7 +8,7 @@ export function Departures() {
     <section
       data-reveal-children
       aria-labelledby="departures-title"
-      className="stage mt-16 flex flex-col gap-6 px-4 md:m-0 md:p-0"
+      className="stage gutter mt-16 flex flex-col gap-6 md:m-0"
       style={stage(1360)}
     >
       <Photo

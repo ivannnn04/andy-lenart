@@ -133,9 +133,19 @@ button:focus-visible .link-draw {
   }
 }
 
-/* Horizontal page gutter: 72 design px, never less than 16px on phones. */
+/*
+ * Horizontal page gutter — the single source of side padding for every
+ * section and the footer: 16px on phones, 72 design px (scaled) from md.
+ * Absolutely positioned collage pieces are unaffected by it.
+ */
 .gutter {
-  padding-inline: max(16px, calc(72 * var(--u)));
+  padding-inline: 16px;
+}
+
+@media (min-width: 768px) {
+  .gutter {
+    padding-inline: max(16px, calc(72 * var(--u)));
+  }
 }
 
 /*

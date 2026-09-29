@@ -14,7 +14,7 @@ export function Hero() {
     <section
       data-reveal-children
       aria-label="Departures 1322"
-      className="stage flex flex-wrap items-end gap-x-6 gap-y-8 px-4 pt-10 md:p-0"
+      className="stage gutter flex flex-wrap items-end gap-x-6 gap-y-8 pt-10 md:pt-0"
       style={stage(1500)}
     >
       <Photo

@@ -14,7 +14,7 @@ export function SiteHeader() {
   return (
     <header
       data-reveal-children
-      className="stage flex flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 pt-4 md:p-0"
+      className="stage flex flex-wrap items-center justify-between gap-x-4 gap-y-2 gutter pt-4 md:pt-0"
       style={stage(200)}
     >
       <Photo
