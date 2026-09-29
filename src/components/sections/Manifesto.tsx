@@ -34,7 +34,7 @@ export function Manifesto() {
       </p>
       <Photo
         src="/images/photo-block-wide.png"
-        alt="Model in the painted coat beside a row of concrete apartment blocks"
+        alt="Black-and-white photo of a concrete apartment block with enclosed balconies and a bare tree"
         width={790}
         height={538}
         sizes="(min-width: 1024px) 55vw, 100vw"

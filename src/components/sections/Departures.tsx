@@ -12,7 +12,7 @@ export function Departures() {
     >
       <Photo
         src="/images/img-1924.png"
-        alt="Model in the white painted coat on a housing-estate walkway"
+        alt="Black-and-white photo of the model in the white coat covered in hand-drawn lettering, standing in front of brutalist tower blocks"
         width={666}
         height={965}
         sizes="(min-width: 1024px) 47vw, 100vw"
@@ -21,7 +21,7 @@ export function Departures() {
       />
       <Photo
         src="/images/photo-block-standing.png"
-        alt="Model standing in front of a tower block"
+        alt="Model in the white coat holding a string bag of oranges, standing on a pavement in front of a concrete housing block"
         width={411}
         height={608}
         sizes="(min-width: 1024px) 29vw, 70vw"

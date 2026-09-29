@@ -42,7 +42,7 @@ export function Hero() {
 
       <Photo
         src="/images/fragments.png"
-        alt=""
+        alt="Fragments of Roots — hand-lettered title"
         width={630}
         height={394}
         sizes="(min-width: 1024px) 44vw, 80vw"

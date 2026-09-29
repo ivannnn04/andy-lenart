@@ -26,7 +26,7 @@ const GARMENTS: Garment[] = [
     preview: "0:30",
     image: {
       src: "/images/garment-01.png",
-      alt: "Garment 01: white coat covered in hand-drawn black lettering, worn outdoors",
+      alt: "Garment 01: white coat with hand-drawn black lettering, worn on concrete steps beneath tower blocks",
     },
   },
   {
@@ -106,7 +106,7 @@ export function Collection() {
 
       <Photo
         src="/images/film-strip.png"
-        alt=""
+        alt="Panoramic strip of prefab housing blocks and a road sign under a grey sky"
         width={981}
         height={136}
         sizes="(min-width: 1024px) 68vw, 100vw"

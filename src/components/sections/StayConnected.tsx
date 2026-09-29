@@ -36,7 +36,7 @@ export function StayConnected() {
       >
         <Photo
           src="/images/newsletter-photo.png"
-          alt="Model in the painted coat photographed in front of a tower block"
+          alt="Black-and-white photo of the model in the white coat with a string bag, standing on concrete steps below brutalist towers"
           width={434}
           height={642}
           sizes="(min-width: 1024px) 30vw, 75vw"
