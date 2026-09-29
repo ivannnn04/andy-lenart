@@ -13,8 +13,8 @@ export function Hero() {
       style={stage(1500)}
     >
       <Photo
-        src="/images/hero-coat.png"
-        alt="Model in a long white hand-painted coat standing in front of a concrete housing block"
+        src="/images/hero-coat.webp"
+        alt="Model in a long white coat with graffiti lettering, holding a checked bag, in front of a concrete housing block"
         width={726}
         height={1075}
         sizes="(min-width: 1024px) 51vw, 100vw"

@@ -41,7 +41,7 @@ Export these Figma layers as PNG into `public/images/`:
 | --- | --- |
 | `radio-wave.png` | radio-wave-icon-monochrome-… 1 |
 | `logo-mark.png` | Illustration_sans_titre 2 copy 1 |
-| `hero-coat.png` | R1-17 1 |
+| `hero-coat.webp` | R1-17 1 (added) |
 | `fragments.png` | fragments 1 |
 | `shape-4.png` | Shape 4 1 |
 | `departures-banner.png` | 4 49 |
