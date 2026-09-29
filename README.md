@@ -52,7 +52,7 @@ Export these Figma layers as PNG into `public/images/`:
 | `signature-connectivity.png` | Shape 2 1 (added, pre-cropped) |
 | `garment-01.webp` | IMG_2246 1 (added) |
 | `film-strip.webp` | R1-04911-0000 1 (added, pre-cropped) |
-| `line-thick.png` | line thick 1 (source image, uncropped) |
+| `line-thick.png` | line thick 1 (added, pre-cropped) |
 | `newsletter-photo.webp` | R1-31 1 (added, 1x — a 2x export would be sharper) |
 | `newsletter-mark.png` | Illustration_sans_titre 3 1 (added) |
 

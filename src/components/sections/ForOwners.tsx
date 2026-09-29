@@ -66,8 +66,7 @@ export function ForOwners() {
           alt="Hand-drawn underline"
           width={583}
           height={156}
-          sizes="115vw"
-          crop={{ width: "282.75%", height: "660.2%", left: "-102.18%", top: "-203.2%" }}
+          sizes="41vw"
           className="pointer-events-none absolute! hidden lg:block"
           style={{ left: u(5), top: u(16), width: u(583) }}
         />
