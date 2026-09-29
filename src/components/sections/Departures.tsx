@@ -42,8 +42,8 @@ export function Departures() {
       <h2
         id="departures-title"
         // Phones: as large as fits on one line (13vw, max 96px) and pulled up
-        // over the lower part of the signature, as in the desktop collage.
-        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-10 max-md:order-2 max-md:-mt-[calc(30%+1.5rem)] md:text-[clamp(48px,calc(96*var(--u)),96px)]"
+        // so the signature runs behind the middle of it, as in the desktop collage.
+        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-10 max-md:order-2 max-md:-mt-[calc(42%+1.5rem)] md:text-[clamp(48px,calc(96*var(--u)),96px)]"
         style={p(361, 1896, 1130)}
       >
         Departures
