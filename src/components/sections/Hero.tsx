@@ -52,25 +52,33 @@ export function Hero() {
         style={p(-36, 491, 630)}
       />
 
-      <p
-        aria-hidden
-        className={bigNumber}
-        style={p(1083, 1000, 243, { fontSize: fs(206, 96) })}
-      >
-        22
-      </p>
+      {/*
+        Phones: "22" and the scrawl share a box so the scrawl can lie over the
+        number as in the design. From md up the wrapper is display: contents,
+        so both keep their own collage positions.
+      */}
+      <div className="relative max-md:order-3 md:static md:contents">
+        <p
+          aria-hidden
+          className={bigNumber}
+          style={p(1083, 1000, 243, { fontSize: fs(206, 96) })}
+        >
+          22
+        </p>
 
-      <div
-        className="place hidden md:block"
-        style={p(1085, 1021, 241)}
-      >
-        <Photo
-          src="/images/shape-4.png"
-          alt="Handwritten scrawl of words"
-          width={241}
-          height={241}
-          sizes="17vw"
-        />
+        <div
+          // Same offset as in the design: 2px right, 21px down on a 243×234 "22".
+          className="place max-md:absolute max-md:left-[1%] max-md:top-[9%] max-md:w-full"
+          style={p(1085, 1021, 241)}
+        >
+          <Photo
+            src="/images/shape-4.png"
+            alt="Handwritten scrawl of words"
+            width={241}
+            height={241}
+            sizes="(min-width: 768px) 17vw, 45vw"
+          />
+        </div>
       </div>
     </section>
   );
