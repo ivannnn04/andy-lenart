@@ -43,7 +43,7 @@ export function StayConnected() {
         />
         <Photo
           src="/images/newsletter-mark.png"
-          alt="Hand-drawn white mark over the photo"
+          alt="White Andy Lenárt monogram and hand-lettered name over the photo"
           width={164}
           height={116}
           sizes="(min-width: 1024px) 12vw, 28vw"
