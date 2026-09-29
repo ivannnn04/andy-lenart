@@ -13,13 +13,15 @@ export function Manifesto() {
       style={stage(900)}
     >
       <p
-        // 22px on phones; from md, scaled with the layout as before.
-        className="place text-center text-[22px] font-bold uppercase leading-[1.25] md:text-[clamp(16px,calc(32*var(--u)),32px)]"
+        // 20px on phones (no forced line break); from md, scaled with the layout.
+        className="place text-center text-[20px] font-bold uppercase leading-[1.25] md:text-[clamp(16px,calc(32*var(--u)),32px)]"
         style={p(132, 3096, 1175)}
       >
         One night I dreamed I broke into the flat I grew up in and found
         strangers asleep in every room. I wasn’t there to take anything.
-        <br />I just sat on the floor in grief. That’s where this collection
+        {" "}
+        <br className="max-md:hidden" />
+        I just sat on the floor in grief. That’s where this collection
         began.
       </p>
       <p
