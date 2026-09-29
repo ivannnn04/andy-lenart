@@ -171,7 +171,7 @@ function GarmentCard({
           {statusHref ? (
             <a
               href={statusHref}
-              className="text-[11px] uppercase tracking-[0.08em] text-subtle underline-offset-2 hover:underline"
+              className="text-[11px] uppercase tracking-[0.08em] text-subtle link-draw"
             >
               {status}
             </a>

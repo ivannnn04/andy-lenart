@@ -29,7 +29,7 @@ export function SiteHeader() {
       <a
         href="#top"
         title="Back to top"
-        className="place w-16"
+        className="place w-16 transition-transform duration-300 ease-out hover:-rotate-3 hover:scale-105 focus-visible:scale-105 motion-reduce:transition-none"
         style={p(588, 34, 166)}
       >
         <Photo
@@ -50,7 +50,7 @@ export function SiteHeader() {
             <li key={item.href}>
               <a
                 href={item.href}
-                className="underline-offset-4 hover:underline focus-visible:underline"
+                className="link-draw"
               >
                 {item.label}
               </a>

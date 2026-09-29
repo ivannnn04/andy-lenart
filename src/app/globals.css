@@ -31,6 +31,84 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Tailwind's preflight gives buttons the default arrow; everything clickable gets a hand. */
+a[href],
+button:not(:disabled),
+[role="button"],
+summary {
+  cursor: pointer;
+}
+
+/*
+ * Link hover animations. The underline is a background gradient so it can
+ * be animated (text-decoration can't grow from one side).
+ *  .link-draw  — no underline at rest; draws in from the left on hover.
+ *  .link-sweep — underlined at rest; on hover it exits right and redraws
+ *                from the left (for the big email link).
+ */
+.link-draw,
+.link-sweep {
+  --line: max(1px, 0.07em);
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  padding-bottom: 0.08em;
+  text-decoration: none;
+  /* Underline each line separately when the link wraps. */
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.link-draw {
+  background-position: 0 100%;
+  background-size: 0% var(--line);
+  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-draw:hover,
+.link-draw:focus-visible {
+  background-size: 100% var(--line);
+}
+
+.link-sweep {
+  background-position: 0 100%;
+  background-size: 100% var(--line);
+}
+
+.link-sweep:hover,
+.link-sweep:focus-visible {
+  animation: link-sweep 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@keyframes link-sweep {
+  0% {
+    background-position: 100% 100%;
+    background-size: 100% var(--line);
+  }
+  50% {
+    background-position: 100% 100%;
+    background-size: 0% var(--line);
+  }
+  50.01% {
+    background-position: 0 100%;
+    background-size: 0% var(--line);
+  }
+  100% {
+    background-position: 0 100%;
+    background-size: 100% var(--line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-draw {
+    transition: none;
+  }
+
+  .link-sweep:hover,
+  .link-sweep:focus-visible {
+    animation: none;
+  }
+}
+
 /* Horizontal page gutter: 72 design px, never less than 16px on phones. */
 .gutter {
   padding-inline: max(16px, calc(72 * var(--u)));
