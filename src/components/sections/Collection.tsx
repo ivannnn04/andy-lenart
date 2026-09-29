@@ -101,7 +101,7 @@ export function Collection() {
         the caption image is empty, so the lettering floats just above the strip.
         Design: strip 981 wide at x=72, caption 400 wide at x=728 (66.9%).
       */}
-      <div className="relative mt-32 md:mt-[calc(146*var(--u))] md:w-[calc(981*var(--u))]">
+      <div className="relative mt-44 md:mt-[calc(146*var(--u))] md:w-[calc(981*var(--u))]">
         <Photo
           src="/images/signature-connectivity.png"
           alt="Handwritten: Connectivity"
