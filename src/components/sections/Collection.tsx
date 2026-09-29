@@ -93,31 +93,31 @@ export function Collection() {
         {GARMENTS.map((garment) => (
           <GarmentCard key={garment.no} {...garment} />
         ))}
-        {/*
-          Phones: its own full-width row under cards 09–10, aligned right as in
-          the design; pulled up because the top ~70% of the image is empty.
-          From md: next to cards 09–10 at the design position.
-        */}
-        <li className="pointer-events-none col-span-2 -mt-16 md:mt-[calc(421*var(--u))]">
-          <Photo
-            src="/images/signature-connectivity.png"
-            alt="Handwritten: Connectivity"
-            width={400}
-            height={229}
-            sizes="(min-width: 768px) 28vw, 280px"
-            className="ml-auto w-[min(100%,280px)] md:ml-0 md:w-[calc(400*var(--u))]"
-          />
-        </li>
       </ul>
 
-      <Photo
-        src="/images/film-strip.webp"
-        alt="Panoramic strip of prefab housing blocks and a road sign under a grey sky"
-        width={981}
-        height={136}
-        sizes="(min-width: 768px) 68vw, 100vw"
-        className="mt-12 md:mt-[calc(5*var(--u))] md:w-[calc(981*var(--u))]"
-      />
+      {/*
+        The panoramic strip with its handwritten caption sitting on top of it.
+        The caption's bottom edge meets the strip's top edge; the lower part of
+        the caption image is empty, so the lettering floats just above the strip.
+        Design: strip 981 wide at x=72, caption 400 wide at x=728 (66.9%).
+      */}
+      <div className="relative mt-32 md:mt-[calc(146*var(--u))] md:w-[calc(981*var(--u))]">
+        <Photo
+          src="/images/signature-connectivity.png"
+          alt="Handwritten: Connectivity"
+          width={400}
+          height={229}
+          sizes="(min-width: 768px) 28vw, 60vw"
+          className="pointer-events-none absolute! right-0 bottom-full w-[60%] md:right-auto md:left-[66.87%] md:w-[40.77%]"
+        />
+        <Photo
+          src="/images/film-strip.webp"
+          alt="Panoramic strip of prefab housing blocks and a road sign under a grey sky"
+          width={981}
+          height={136}
+          sizes="(min-width: 768px) 68vw, 100vw"
+        />
+      </div>
     </section>
   );
 }
