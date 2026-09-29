@@ -19,6 +19,7 @@ export function Hero() {
         height={1075}
         sizes="(min-width: 1024px) 51vw, 100vw"
         preload
+        unoptimized
         className="place w-full max-lg:order-2"
         style={p(308, 273, 726)}
       />
