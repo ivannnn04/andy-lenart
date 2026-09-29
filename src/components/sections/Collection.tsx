@@ -70,8 +70,8 @@ export function Collection() {
       data-reveal-children
       id="collection"
       aria-labelledby="collection-title"
-      className="gutter"
-      style={{ paddingTop: sp(45, 32) }}
+      // Phones: the same 64px gap as between the other sections.
+      className="gutter pt-16 md:pt-[max(32px,calc(45*var(--u)))]"
     >
       <p className={label}>THE COLLECTION</p>
       <h2
