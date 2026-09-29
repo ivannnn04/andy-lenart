@@ -11,7 +11,7 @@ export function Departures() {
       style={stage(1360)}
     >
       <Photo
-        src="/images/img-1924.png"
+        src="/images/img-1924.webp"
         alt="Black-and-white photo of the model in the white coat covered in hand-drawn lettering, standing in front of brutalist tower blocks"
         width={666}
         height={965}

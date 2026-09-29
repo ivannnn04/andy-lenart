@@ -45,7 +45,7 @@ Export these Figma layers as PNG into `public/images/`:
 | `fragments.png` | fragments 1 (added) |
 | `shape-4.png` | Shape 4 1 (added; exported upright) |
 | `departures-banner.webp` | 4 49 (added) |
-| `img-1924.png` | IMG_1924 1 |
+| `img-1924.webp` | IMG_1924 1 (added) |
 | `photo-block-standing.png` | R1-01944-0035 1 |
 | `photo-block-wide.png` | R1-01944-0019 1 |
 | `signature.png` | Shape 2 1 / Shape 2 2 (source image, uncropped) |
