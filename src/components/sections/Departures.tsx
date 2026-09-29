@@ -1,5 +1,5 @@
 import { Photo } from "@/components/Photo";
-import { fs, placer, stage } from "@/lib/design";
+import { placer, stage } from "@/lib/design";
 
 const p = placer(1700);
 
@@ -36,13 +36,15 @@ export function Departures() {
         height={514}
         sizes="(min-width: 768px) 76vw, 100vw"
         objectPosition="bottom"
-        className="place w-full max-md:order-2"
+        className="place w-full max-md:order-1"
         style={p(253, 1741, 1082)}
       />
       <h2
         id="departures-title"
-        className="place text-center font-bold uppercase leading-[normal] max-md:order-1"
-        style={p(361, 1896, 1130, { fontSize: fs(96, 48) })}
+        // Phones: as large as fits on one line (13vw, max 96px) and pulled up
+        // over the lower part of the signature, as in the desktop collage.
+        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-10 max-md:order-2 max-md:-mt-[calc(30%+1.5rem)] md:text-[clamp(48px,calc(96*var(--u)),96px)]"
+        style={p(361, 1896, 1130)}
       >
         Departures
         <br />
