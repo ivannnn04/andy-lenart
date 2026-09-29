@@ -167,7 +167,7 @@ function GarmentCard({
           {title}
         </h3>
 
-        <p className="text-[14px] font-light leading-[1.4] text-muted">{description}</p>
+        <p className="text-[14px] font-normal leading-[1.4] text-muted">{description}</p>
 
         <div className="flex items-start justify-between font-medium">
           {statusHref ? (

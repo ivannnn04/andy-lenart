@@ -23,7 +23,7 @@ export function StayConnected() {
           Hear when the next piece is out
         </h2>
         <p
-          className="leading-[1.2] lg:max-w-[calc(723*var(--u))]"
+          className="font-medium leading-[1.2] lg:max-w-[calc(723*var(--u))]"
           style={{ marginTop: sp(24, 16), fontSize: fs(24, 18) }}
         >
           Follow the collection. Receive an email when the next garment is ready.

@@ -13,7 +13,7 @@ export function Manifesto() {
       style={stage(900)}
     >
       <p
-        className="place text-center font-medium uppercase leading-[1.25]"
+        className="place text-center font-bold uppercase leading-[1.25]"
         style={p(132, 3096, 1175, { fontSize: fs(32, 20) })}
       >
         One night I dreamed I broke into the flat I grew up in and found

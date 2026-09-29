@@ -25,7 +25,7 @@ export function Hero() {
       />
 
       <div
-        className="place w-full font-light uppercase leading-[1.5] max-lg:order-5"
+        className="place w-full font-normal uppercase leading-[1.5] max-lg:order-5"
         style={p(156, 1438, 600, { fontSize: fs(32, 20) })}
       >
         <p>I grew up in a post-communist block with a mother who was a waitress.</p>
