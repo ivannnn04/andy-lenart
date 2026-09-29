@@ -105,12 +105,11 @@ export function Collection() {
       </ul>
 
       <Photo
-        src="/images/film-strip.png"
+        src="/images/film-strip.webp"
         alt="Panoramic strip of prefab housing blocks and a road sign under a grey sky"
         width={981}
         height={136}
         sizes="(min-width: 1024px) 68vw, 100vw"
-        crop={{ width: "100%", height: "516.67%", left: "0", top: "-103.92%" }}
         className="mt-12 lg:mt-[calc(5*var(--u))] lg:w-[calc(981*var(--u))]"
       />
     </section>

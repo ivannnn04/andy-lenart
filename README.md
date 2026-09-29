@@ -51,7 +51,7 @@ Export these Figma layers as PNG into `public/images/`:
 | `signature-limbo.png` | Shape 2 2 (added, pre-cropped) |
 | `signature.png` | Shape 2 1 (source image, uncropped) |
 | `garment-01.webp` | IMG_2246 1 (added) |
-| `film-strip.png` | R1-04911-0000 1 (source image, uncropped) |
+| `film-strip.webp` | R1-04911-0000 1 (added, pre-cropped) |
 | `line-thick.png` | line thick 1 (source image, uncropped) |
 | `newsletter-photo.png` | R1-31 1 |
 | `newsletter-mark.png` | Illustration_sans_titre 3 1 |
