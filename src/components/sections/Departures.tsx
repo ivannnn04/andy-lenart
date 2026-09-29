@@ -30,7 +30,7 @@ export function Departures() {
       />
       <Photo
         src="/images/departures-banner.png"
-        alt=""
+        alt="Brush-stroke signature"
         width={1082}
         height={514}
         sizes="(min-width: 1024px) 76vw, 100vw"

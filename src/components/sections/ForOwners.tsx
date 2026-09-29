@@ -63,7 +63,7 @@ export function ForOwners() {
       <div className="relative" style={{ marginTop: sp(59, 48) }}>
         <Photo
           src="/images/line-thick.png"
-          alt=""
+          alt="Hand-drawn underline"
           width={583}
           height={156}
           sizes="115vw"

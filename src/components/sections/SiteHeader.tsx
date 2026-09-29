@@ -18,7 +18,7 @@ export function SiteHeader() {
     >
       <Photo
         src="/images/radio-wave.png"
-        alt=""
+        alt="Hand-drawn sound wave"
         width={308}
         height={212}
         sizes="(min-width: 1024px) 22vw, 112px"
@@ -27,13 +27,13 @@ export function SiteHeader() {
       />
       <a
         href="#top"
-        aria-label="Andy Lenárt — back to top"
+        title="Back to top"
         className="place w-16"
         style={p(588, 34, 166)}
       >
         <Photo
           src="/images/logo-mark.png"
-          alt=""
+          alt="Andy Lenárt monogram"
           width={166}
           height={141}
           sizes="(min-width: 1024px) 12vw, 64px"

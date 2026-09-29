@@ -43,7 +43,7 @@ export function Manifesto() {
       />
       <Photo
         src="/images/signature.png"
-        alt=""
+        alt="Handwritten: Limbo, past, time, death, birth"
         width={391}
         height={32}
         sizes="(min-width: 1024px) 52vw, 180vw"

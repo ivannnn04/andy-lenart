@@ -59,13 +59,12 @@ export function Hero() {
       </p>
 
       <div
-        aria-hidden
         className="place hidden rotate-[-90.22deg] lg:block"
         style={p(1085, 1021, 241)}
       >
         <Photo
           src="/images/shape-4.png"
-          alt=""
+          alt="Handwritten scrawl of words"
           width={240}
           height={240}
           sizes="17vw"

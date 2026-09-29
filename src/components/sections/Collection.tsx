@@ -91,10 +91,10 @@ export function Collection() {
         {GARMENTS.map((garment) => (
           <GarmentCard key={garment.no} {...garment} />
         ))}
-        <li aria-hidden className="hidden lg:col-span-2 lg:block" style={{ marginTop: u(421) }}>
+        <li className="hidden lg:col-span-2 lg:block" style={{ marginTop: u(421) }}>
           <Photo
             src="/images/signature.png"
-            alt=""
+            alt="Handwritten: Connectivity"
             width={400}
             height={229}
             sizes="52vw"

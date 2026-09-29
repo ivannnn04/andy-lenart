@@ -43,7 +43,7 @@ export function StayConnected() {
         />
         <Photo
           src="/images/newsletter-mark.png"
-          alt=""
+          alt="Hand-drawn white mark over the photo"
           width={164}
           height={116}
           sizes="(min-width: 1024px) 12vw, 28vw"
