@@ -6,6 +6,7 @@ const p = placer(1700);
 export function Departures() {
   return (
     <section
+      data-reveal-children
       aria-labelledby="departures-title"
       className="stage mt-16 flex flex-col gap-6 px-4 lg:m-0 lg:p-0"
       style={stage(1360)}

@@ -8,6 +8,7 @@ const bigNumber = "place font-bold uppercase leading-[normal] max-lg:order-3";
 export function Hero() {
   return (
     <section
+      data-reveal-children
       aria-label="Departures 1322"
       className="stage flex flex-wrap items-end gap-x-6 gap-y-8 px-4 pt-10 lg:p-0"
       style={stage(1500)}

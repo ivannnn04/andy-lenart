@@ -27,6 +27,7 @@ const STEPS: { title: string; body: ReactNode }[] = [
 export function ForOwners() {
   return (
     <section
+      data-reveal-children
       id="listen"
       aria-labelledby="owners-title"
       className="gutter"
@@ -41,7 +42,7 @@ export function ForOwners() {
         EVERY GARMENT HOLDS A WORLD OF SOUND
       </h2>
 
-      <ol className="flex flex-col" style={{ marginTop: sp(30, 24), gap: sp(40, 32) }}>
+      <ol data-reveal-children className="flex flex-col" style={{ marginTop: sp(30, 24), gap: sp(40, 32) }}>
         {STEPS.map((step, i) => (
           <li key={step.title}>
             <span aria-hidden className="block font-bold leading-[normal]" style={{ fontSize: fs(64, 48) }}>

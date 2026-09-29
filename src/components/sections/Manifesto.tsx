@@ -6,6 +6,7 @@ const p = placer(3060);
 export function Manifesto() {
   return (
     <section
+      data-reveal-children
       id="manifesto"
       aria-label="Manifesto"
       className="stage mt-16 flex flex-col gap-6 px-4 lg:m-0 lg:p-0"

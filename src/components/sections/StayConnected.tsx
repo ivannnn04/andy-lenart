@@ -8,12 +8,13 @@ const p = placer(7185);
 export function StayConnected() {
   return (
     <section
+      data-reveal-children
       id="stay-connected"
       aria-labelledby="stay-connected-title"
       className="gutter relative"
       style={{ paddingTop: sp(238, 96), paddingBottom: sp(193, 80) }}
     >
-      <div className="lg:pl-[calc(26*var(--u))]">
+      <div data-reveal-children className="lg:pl-[calc(26*var(--u))]">
         <h2
           id="stay-connected-title"
           className="font-bold uppercase leading-none lg:max-w-[calc(688*var(--u))]"

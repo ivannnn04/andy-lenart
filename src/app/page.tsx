@@ -1,3 +1,4 @@
+import { ScrollReveal } from "@/components/ScrollReveal";
 import { Collection } from "@/components/sections/Collection";
 import { Departures } from "@/components/sections/Departures";
 import { ForOwners } from "@/components/sections/ForOwners";
@@ -26,6 +27,7 @@ export default function Home() {
         </main>
       </div>
       <SiteFooter />
+      <ScrollReveal />
     </>
   );
 }

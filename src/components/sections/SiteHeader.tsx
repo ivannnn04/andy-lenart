@@ -13,6 +13,7 @@ const NAV = [
 export function SiteHeader() {
   return (
     <header
+      data-reveal-children
       className="stage flex flex-wrap items-center justify-between gap-x-4 gap-y-6 px-4 pt-4 lg:p-0"
       style={stage(200)}
     >

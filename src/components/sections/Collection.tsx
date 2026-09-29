@@ -67,6 +67,7 @@ const label = "text-[12px] leading-[normal] font-medium tracking-[0.14em] text-m
 export function Collection() {
   return (
     <section
+      data-reveal-children
       id="collection"
       aria-labelledby="collection-title"
       className="gutter"
@@ -85,6 +86,7 @@ export function Collection() {
       </p>
 
       <ul
+        data-reveal-children
         className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-8 lg:grid-cols-[repeat(4,calc(296*var(--u)))] lg:gap-x-[calc(32*var(--u))] lg:gap-y-[calc(64*var(--u))]"
         style={{ marginTop: sp(26, 20) }}
       >
