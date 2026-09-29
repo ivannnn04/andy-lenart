@@ -24,7 +24,7 @@ The homepage implements the Figma frame **Desktop - 34** (1440 × 8574).
 Collage sections use the design's own coordinates: `--u` in
 `src/app/globals.css` is one design pixel, scaled down below 1440px wide, and
 `placer()` in `src/lib/design.ts` positions elements from their Figma x/y.
-Below the `lg` breakpoint the same markup falls back to a stacked mobile layout.
+Below the `md` breakpoint (768px) the same markup falls back to a stacked mobile layout.
 
 ### Typeface
 

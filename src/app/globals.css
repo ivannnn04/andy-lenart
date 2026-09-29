@@ -140,7 +140,7 @@ button:focus-visible .link-draw {
 
 /*
  * Collage "stage". On small screens children flow as a normal stack; from
- * the lg breakpoint each `.place` child is absolutely positioned using the
+ * the md breakpoint (768px) each `.place` child is absolutely positioned using the
  * design coordinates passed in as --x / --y / --w (in design px), and the
  * stage takes its design height --h. Kept outside @layer so it wins over
  * the mobile utility classes at lg.
@@ -149,7 +149,7 @@ button:focus-visible .link-draw {
   position: relative;
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 768px) {
   .stage {
     height: calc(var(--h) * var(--u));
   }

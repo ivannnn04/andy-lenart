@@ -1,5 +1,5 @@
 import { Photo } from "@/components/Photo";
-import { fs, placer, stage } from "@/lib/design";
+import { placer, stage } from "@/lib/design";
 
 const p = placer(0);
 
@@ -14,7 +14,7 @@ export function SiteHeader() {
   return (
     <header
       data-reveal-children
-      className="stage flex flex-wrap items-center justify-between gap-x-4 gap-y-6 px-4 pt-4 lg:p-0"
+      className="stage flex flex-wrap items-center justify-between gap-x-4 gap-y-6 px-4 pt-4 md:p-0"
       style={stage(200)}
     >
       <Photo
@@ -22,7 +22,7 @@ export function SiteHeader() {
         alt="Hand-drawn sound wave"
         width={308}
         height={194}
-        sizes="(min-width: 1024px) 22vw, 112px"
+        sizes="(min-width: 768px) 22vw, 112px"
         className="place w-28"
         // The Figma layer starts 18px above the artboard; this is its visible part.
         style={p(14, 0, 308)}
@@ -38,14 +38,19 @@ export function SiteHeader() {
           alt="Andy Lenárt monogram"
           width={166}
           height={141}
-          sizes="(min-width: 1024px) 12vw, 64px"
+          sizes="(min-width: 768px) 12vw, 64px"
           preload
         />
       </a>
-      <nav aria-label="Primary" className="place w-full" style={p(917, 88, 418)}>
+      <nav
+        aria-label="Primary"
+        // Anchored to its right edge (x=1335 in the design) so it never runs
+        // off-screen or into the logo at narrower widths.
+        className="place w-full md:left-auto! md:right-[calc(105*var(--u))] md:w-auto!"
+        style={p(917, 88, 418)}
+      >
         <ul
-          className="flex justify-between gap-4 font-black uppercase leading-[0.9] whitespace-nowrap"
-          style={{ fontSize: fs(18, 14) }}
+          className="flex justify-between gap-4 text-[14px] font-black uppercase leading-[0.9] whitespace-nowrap md:gap-[max(12px,calc(25*var(--u)))] md:text-[clamp(11px,calc(18*var(--u)),18px)]"
         >
           {NAV.map((item) => (
             <li key={item.href}>

@@ -87,13 +87,13 @@ export function Collection() {
 
       <ul
         data-reveal-children
-        className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-8 lg:grid-cols-[repeat(4,calc(296*var(--u)))] lg:gap-x-[calc(32*var(--u))] lg:gap-y-[calc(64*var(--u))]"
+        className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-8 md:grid-cols-[repeat(4,calc(296*var(--u)))] md:gap-x-[calc(32*var(--u))] md:gap-y-[calc(64*var(--u))]"
         style={{ marginTop: sp(26, 20) }}
       >
         {GARMENTS.map((garment) => (
           <GarmentCard key={garment.no} {...garment} />
         ))}
-        <li className="hidden lg:col-span-2 lg:block" style={{ marginTop: u(421) }}>
+        <li className="hidden md:col-span-2 md:block" style={{ marginTop: u(421) }}>
           <Photo
             src="/images/signature-connectivity.png"
             alt="Handwritten: Connectivity"
@@ -110,8 +110,8 @@ export function Collection() {
         alt="Panoramic strip of prefab housing blocks and a road sign under a grey sky"
         width={981}
         height={136}
-        sizes="(min-width: 1024px) 68vw, 100vw"
-        className="mt-12 lg:mt-[calc(5*var(--u))] lg:w-[calc(981*var(--u))]"
+        sizes="(min-width: 768px) 68vw, 100vw"
+        className="mt-12 md:mt-[calc(5*var(--u))] md:w-[calc(981*var(--u))]"
       />
     </section>
   );
@@ -138,7 +138,7 @@ function GarmentCard({
             alt={image.alt}
             width={296}
             height={380}
-            sizes="(min-width: 1024px) 21vw, 50vw"
+            sizes="(min-width: 768px) 21vw, 50vw"
           />
         ) : (
           <div
@@ -162,7 +162,7 @@ function GarmentCard({
 
         <h3
           className="font-bold uppercase leading-[normal] text-ink"
-          style={{ fontSize: `${titleSize}px` }}
+          style={{ fontSize: fs(titleSize, 16) }}
         >
           {title}
         </h3>
@@ -173,18 +173,18 @@ function GarmentCard({
           {statusHref ? (
             <a
               href={statusHref}
-              className="text-[11px] uppercase tracking-[0.08em] text-subtle link-draw"
+              className="text-[11px] whitespace-nowrap uppercase tracking-[0.08em] text-subtle link-draw"
             >
               {status}
             </a>
           ) : (
             <span
-              className={`text-[11px] uppercase tracking-[0.08em] ${price ? "text-ink" : "text-subtle"}`}
+              className={`text-[11px] whitespace-nowrap uppercase tracking-[0.08em] ${price ? "text-ink" : "text-subtle"}`}
             >
               {status}
             </span>
           )}
-          {price && <span className="text-[13px] text-ink">{price}</span>}
+          {price && <span className="text-[13px] whitespace-nowrap text-ink">{price}</span>}
         </div>
       </article>
     </li>

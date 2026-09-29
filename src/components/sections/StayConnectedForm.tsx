@@ -34,7 +34,7 @@ export function StayConnectedForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex w-full flex-col lg:w-[calc(700*var(--u))]"
+      className="flex w-full flex-col md:w-[calc(700*var(--u))]"
       style={{ marginTop: sp(109, 40), gap: sp(88, 40), fontSize: fs(40, 22) }}
     >
       <div className="flex flex-col" style={{ gap: sp(40, 16) }}>

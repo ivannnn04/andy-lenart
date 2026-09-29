@@ -52,7 +52,7 @@ export function ForOwners() {
               {step.title}
             </h3>
             <p
-              className="mt-1.5 font-medium leading-[1.55] text-body lg:max-w-[calc(1227*var(--u))]"
+              className="mt-1.5 font-medium leading-[1.55] text-body md:max-w-[calc(1227*var(--u))]"
               style={{ fontSize: fs(20, 16) }}
             >
               {step.body}
@@ -68,7 +68,7 @@ export function ForOwners() {
           width={583}
           height={156}
           sizes="41vw"
-          className="pointer-events-none absolute! hidden lg:block"
+          className="pointer-events-none absolute! hidden md:block"
           style={{ left: u(5), top: u(16), width: u(583) }}
         />
         <p className="relative font-medium leading-[1.2]" style={{ fontSize: fs(40, 24) }}>
