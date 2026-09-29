@@ -1,5 +1,5 @@
 import { Photo } from "@/components/Photo";
-import { fs, sp, u } from "@/lib/design";
+import { fs, sp } from "@/lib/design";
 
 type Garment = {
   no: string;
@@ -93,14 +93,19 @@ export function Collection() {
         {GARMENTS.map((garment) => (
           <GarmentCard key={garment.no} {...garment} />
         ))}
-        <li className="hidden md:col-span-2 md:block" style={{ marginTop: u(421) }}>
+        {/*
+          Phones: its own full-width row under cards 09–10, aligned right as in
+          the design; pulled up because the top ~70% of the image is empty.
+          From md: next to cards 09–10 at the design position.
+        */}
+        <li className="pointer-events-none col-span-2 -mt-16 md:mt-[calc(421*var(--u))]">
           <Photo
             src="/images/signature-connectivity.png"
             alt="Handwritten: Connectivity"
             width={400}
             height={229}
-            sizes="28vw"
-            style={{ width: u(400) }}
+            sizes="(min-width: 768px) 28vw, 280px"
+            className="ml-auto w-[min(100%,280px)] md:ml-0 md:w-[calc(400*var(--u))]"
           />
         </li>
       </ul>
