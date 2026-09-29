@@ -70,8 +70,8 @@ export function Collection() {
       data-reveal-children
       id="collection"
       aria-labelledby="collection-title"
-      // Phones: the same 64px gap as between the other sections.
-      className="gutter pt-16 md:pt-[max(32px,calc(45*var(--u)))]"
+      // Phones: a larger 96px gap after the manifesto.
+      className="gutter pt-24 md:pt-[max(32px,calc(45*var(--u)))]"
     >
       <p className={label}>THE COLLECTION</p>
       <h2
