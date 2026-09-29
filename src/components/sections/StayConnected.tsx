@@ -55,7 +55,7 @@ export function StayConnected() {
       <p className="lg:pl-[calc(19*var(--u))]" style={{ marginTop: sp(142, 80) }}>
         <a
           href={`mailto:${CONTACT_EMAIL}`}
-          className="font-medium leading-[1.2] break-all link-sweep"
+          className="font-bold leading-[1.2] break-all link-sweep"
           style={{ fontSize: fs(93, 28) }}
         >
           {CONTACT_EMAIL}

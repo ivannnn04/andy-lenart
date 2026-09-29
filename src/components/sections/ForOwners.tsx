@@ -33,7 +33,7 @@ export function ForOwners() {
       className="gutter"
       style={{ paddingTop: sp(66, 64) }}
     >
-      <p className="text-[12px] leading-[normal] font-medium tracking-[0.14em] text-muted">FOR OWNERS</p>
+      <p className="text-[12px] leading-[normal] font-bold tracking-[0.14em] text-muted">FOR OWNERS</p>
       <h2
         id="owners-title"
         className="mt-3 font-bold leading-[normal]"
