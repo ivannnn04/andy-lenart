@@ -71,7 +71,7 @@ export function ForOwners() {
           className="pointer-events-none absolute! hidden md:block"
           style={{ left: u(5), top: u(16), width: u(583) }}
         />
-        <p className="relative font-medium leading-[1.2]" style={{ fontSize: fs(40, 24) }}>
+        <p className="relative text-[22px] font-medium leading-[1.2] md:text-[clamp(24px,calc(40*var(--u)),40px)]">
           THE ALBUM LIVES INSIDE THE COLLECTION.
           <br />
           <span className="font-bold">WHEN THE LAST PIECE IS SOLD, IT GOES EVERYWHERE.</span>
