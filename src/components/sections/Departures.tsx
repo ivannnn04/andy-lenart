@@ -20,7 +20,7 @@ export function Departures() {
         style={p(82, 2053, 666)}
       />
       <Photo
-        src="/images/photo-block-standing.png"
+        src="/images/photo-block-standing.webp"
         alt="Model in the white coat holding a string bag of oranges, standing on a pavement in front of a concrete housing block"
         width={411}
         height={608}
