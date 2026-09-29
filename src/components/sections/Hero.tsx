@@ -46,10 +46,9 @@ export function Hero() {
         width={630}
         height={394}
         sizes="(min-width: 768px) 44vw, 80vw"
-        // Phones: pull the photo up so it sits under the lower half of the
-        // lettering (ink spans the top ~49% of this frame; its middle is at
-        // ~26%). Overlap = 74% of the frame height (0.5 × width here) + gap.
-        className="place w-4/5 max-md:order-1 max-md:z-10 max-md:mb-[calc(-37.2%-2rem)]"
+        // Phones: pull the photo up under the lower part of the lettering
+        // (ink spans the top ~49% of this frame, whose height is 0.5 × width).
+        className="place w-4/5 max-md:order-1 max-md:z-10 max-md:mb-[calc(-34%-2rem)]"
         style={p(-36, 491, 630)}
       />
 

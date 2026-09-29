@@ -50,7 +50,7 @@ export function SiteHeader() {
         style={p(917, 88, 418)}
       >
         <ul
-          className="flex justify-between gap-4 text-[14px] font-black uppercase leading-[0.9] whitespace-nowrap md:gap-[max(12px,calc(25*var(--u)))] md:text-[clamp(11px,calc(18*var(--u)),18px)]"
+          className="flex justify-center gap-5 text-[14px] md:justify-between font-black uppercase leading-[0.9] whitespace-nowrap md:gap-[max(12px,calc(25*var(--u)))] md:text-[clamp(11px,calc(18*var(--u)),18px)]"
         >
           {NAV.map((item) => (
             <li key={item.href}>
