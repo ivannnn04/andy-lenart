@@ -29,17 +29,15 @@ export function Hero() {
       />
 
       <div
-        className="place w-full font-normal uppercase leading-[1.5] max-md:order-5"
-        // Slightly larger than the design's 32px. Phones shrink with the width
-        // (4.3vw) so each line still fits on one row.
-        style={p(156, 1438, 600, {
-          fontSize: "clamp(min(18px, 4.3vw), calc(36 * var(--u)), 36px)",
-        })}
+        className="place w-full text-[22px] font-normal uppercase leading-[1.5] max-md:order-5 md:text-[clamp(18px,calc(36*var(--u)),36px)]"
+        // 22px on phones (wraps freely); from md, slightly larger than the
+        // design's 32px and scaled with the layout.
+        style={p(156, 1438, 600)}
       >
-        {/* Two lines as in the design; each line is kept whole. */}
-        <p className="whitespace-nowrap">
-          I grew up in a post-communist block
-          <br />
+        {/* From md: two lines as in the design, each kept whole. */}
+        <p className="md:whitespace-nowrap">
+          I grew up in a post-communist block{" "}
+          <br className="max-md:hidden" />
           with a mother who was a waitress.
         </p>
         <p className="mt-[1.5em] font-bold">This is how it continues...</p>
