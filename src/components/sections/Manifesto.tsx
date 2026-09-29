@@ -25,7 +25,8 @@ export function Manifesto() {
         began.
       </p>
       <p
-        className="place font-bold leading-[1.5] whitespace-nowrap md:h-[calc(600*var(--u))] md:rotate-180 md:[writing-mode:vertical-rl]"
+        // Phones: extra space after the quote (24px gap + 24px).
+        className="place font-bold leading-[1.5] whitespace-nowrap max-md:mt-6 md:h-[calc(600*var(--u))] md:rotate-180 md:[writing-mode:vertical-rl]"
         style={p(252, 3256, 49, { fontSize: fs(32, 20) })}
       >
         DEPARTURES 1322
