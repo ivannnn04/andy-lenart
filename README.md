@@ -49,7 +49,7 @@ Export these Figma layers as PNG into `public/images/`:
 | `photo-block-standing.webp` | R1-01944-0035 1 (added) |
 | `photo-block-wide.webp` | R1-01944-0019 1 (added) |
 | `signature-limbo.png` | Shape 2 2 (added, pre-cropped) |
-| `signature.png` | Shape 2 1 (source image, uncropped) |
+| `signature-connectivity.png` | Shape 2 1 (added, pre-cropped) |
 | `garment-01.webp` | IMG_2246 1 (added) |
 | `film-strip.webp` | R1-04911-0000 1 (added, pre-cropped) |
 | `line-thick.png` | line thick 1 (source image, uncropped) |

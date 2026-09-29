@@ -93,12 +93,11 @@ export function Collection() {
         ))}
         <li className="hidden lg:col-span-2 lg:block" style={{ marginTop: u(421) }}>
           <Photo
-            src="/images/signature.png"
+            src="/images/signature-connectivity.png"
             alt="Handwritten: Connectivity"
             width={400}
             height={229}
-            sizes="52vw"
-            crop={{ width: "185.5%", height: "324.02%", left: "0", top: "-4.37%" }}
+            sizes="28vw"
             style={{ width: u(400) }}
           />
         </li>
