@@ -51,7 +51,8 @@ export function Manifesto() {
         width={391}
         height={32}
         sizes="(min-width: 768px) 27vw, 80vw"
-        className="place w-4/5 max-md:order-last"
+        // Phones: tucked up closer under "COLLECTION 01".
+        className="place w-4/5 max-md:order-last max-md:-mt-4"
         style={p(746, 3915, 391)}
       />
     </section>
