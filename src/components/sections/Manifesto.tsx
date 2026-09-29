@@ -13,8 +13,9 @@ export function Manifesto() {
       style={stage(900)}
     >
       <p
-        className="place text-center font-bold uppercase leading-[1.25]"
-        style={p(132, 3096, 1175, { fontSize: fs(32, 16) })}
+        // 22px on phones; from md, scaled with the layout as before.
+        className="place text-center text-[22px] font-bold uppercase leading-[1.25] md:text-[clamp(16px,calc(32*var(--u)),32px)]"
+        style={p(132, 3096, 1175)}
       >
         One night I dreamed I broke into the flat I grew up in and found
         strangers asleep in every room. I wasn’t there to take anything.
