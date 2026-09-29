@@ -5,6 +5,10 @@ const p = placer(200);
 
 const bigNumber = "place font-bold uppercase leading-[normal] max-md:order-3";
 
+// Phones: "13" and "22" share a row; auto side margins centre that row only.
+const centerRowStart = "max-md:ml-auto";
+const centerRowEnd = "max-md:mr-auto";
+
 export function Hero() {
   return (
     <section
@@ -34,7 +38,7 @@ export function Hero() {
 
       <p
         aria-hidden
-        className={bigNumber}
+        className={`${bigNumber} ${centerRowStart}`}
         style={p(1099, 830, 209, { fontSize: fs(206, 96) })}
       >
         13
@@ -57,7 +61,7 @@ export function Hero() {
         number as in the design. From md up the wrapper is display: contents,
         so both keep their own collage positions.
       */}
-      <div className="relative max-md:order-3 md:static md:contents">
+      <div className={`relative max-md:order-3 md:static md:contents ${centerRowEnd}`}>
         <p
           aria-hidden
           className={bigNumber}
