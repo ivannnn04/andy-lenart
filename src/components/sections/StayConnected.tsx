@@ -52,11 +52,19 @@ export function StayConnected() {
         />
       </div>
 
-      <p className="md:pl-[calc(19*var(--u))]" style={{ marginTop: sp(142, 80) }}>
+      {/*
+        One line at every width: the paragraph is a size container and the
+        address is sized from its width (the address is ≈12.7em wide in the
+        wider fallback font; /13.2 leaves a margin), capped at the design's 93px.
+      */}
+      <p
+        className="[container-type:inline-size] md:pl-[calc(19*var(--u))]"
+        style={{ marginTop: sp(142, 80) }}
+      >
         <a
           href={`mailto:${CONTACT_EMAIL}`}
-          className="font-bold leading-[1.2] break-all link-sweep"
-          style={{ fontSize: fs(93, 28) }}
+          className="font-bold leading-[1.2] whitespace-nowrap link-sweep"
+          style={{ fontSize: "min(93px, calc(100cqw / 13.2))" }}
         >
           {CONTACT_EMAIL}
         </a>
