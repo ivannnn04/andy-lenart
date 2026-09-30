@@ -48,7 +48,7 @@ export const GARMENTS: Garment[] = [
     price: "£1,500",
     availability: "Limited edition · 12 remaining",
     size: "One size",
-    preview: { duration: "0:30" },
+    preview: { src: "/audio/garment-01-preview.mp3", duration: "0:30" },
     gallery: [
       {
         src: "/images/garment-01.webp",

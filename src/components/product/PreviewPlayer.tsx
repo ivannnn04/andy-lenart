@@ -13,6 +13,10 @@ const toClock = (seconds: number) => {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 };
 
+// Soft edges so the clipped preview doesn't start or stop with a click.
+const FADE_IN = 0.5;
+const FADE_OUT = 1.5;
+
 /**
  * 30-second track preview: play/pause, a waveform that fills as it plays and
  * the elapsed time. Without an audio file the button is disabled.
@@ -26,18 +30,38 @@ export function PreviewPlayer({ src, duration }: { src?: string; duration: strin
   useEffect(() => {
     const el = audio.current;
     if (!el) return;
-    const onTime = () => setTime(el.currentTime);
     const onMeta = () => setLength(el.duration);
-    const onEnd = () => setPlaying(false);
-    el.addEventListener("timeupdate", onTime);
+    const onEnd = () => {
+      setPlaying(false);
+      el.currentTime = 0;
+      setTime(0);
+    };
+    // Metadata may already be loaded before hydration.
+    if (el.readyState >= 1) onMeta();
     el.addEventListener("loadedmetadata", onMeta);
     el.addEventListener("ended", onEnd);
     return () => {
-      el.removeEventListener("timeupdate", onTime);
       el.removeEventListener("loadedmetadata", onMeta);
       el.removeEventListener("ended", onEnd);
     };
   }, []);
+
+  // While playing: follow the playhead every frame (smooth waveform) and
+  // shape the volume for the fade in/out.
+  useEffect(() => {
+    const el = audio.current;
+    if (!el || !playing) return;
+    let frame = 0;
+    const tick = () => {
+      const t = el.currentTime;
+      const d = el.duration || 0;
+      el.volume = Math.max(0, Math.min(1, t / FADE_IN, d ? (d - t) / FADE_OUT : 1));
+      setTime(t);
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [playing]);
 
   const toggle = () => {
     const el = audio.current;
