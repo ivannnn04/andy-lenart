@@ -205,7 +205,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
               {garment.inside.paragraphs.map((runs, i) => (
                 <p
                   key={i}
-                  className={`font-medium leading-[1.55] ${i ? "mt-[1.55em]" : "mt-5"}`}
+                  className={`max-w-[535px] font-medium leading-[1.55] ${i ? "mt-[1.55em]" : "mt-5"}`}
                   style={{ fontSize: fs(18, 16) }}
                 >
                   {runs.map((run, j) =>
