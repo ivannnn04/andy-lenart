@@ -9,7 +9,7 @@ import { CONTACT_EMAIL } from "@/lib/site";
 
 const buttonClass =
   "flex w-full items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none";
-const fieldLabel = "text-[14px] leading-[normal] font-medium uppercase tracking-[0.1em] text-[#595959]";
+const fieldLabel = "text-[14px] leading-[normal] font-semibold uppercase tracking-[0.1em] text-[#595959]";
 const fieldInput =
   "w-full rounded-none border border-[#4d4d4d] bg-white p-4 text-[15px] leading-[normal] text-ink placeholder:text-[#999] focus:border-ink focus:shadow-[inset_0_0_0_1px_#1a1a1a] focus:outline-none aria-invalid:border-error aria-invalid:focus:shadow-[inset_0_0_0_1px_var(--color-error)]";
 const outlineButtonClass =
@@ -132,7 +132,7 @@ export function RequestDrawer({
 
           <div className="ml-auto flex h-full w-full shrink-0 flex-col gap-6 overflow-y-auto bg-white px-4 py-8 text-ink md:w-[clamp(440px,41.667vw,600px)] md:px-14 md:py-12">
           <div className="flex items-start justify-between">
-            <p className="text-[12px] leading-[normal] font-medium uppercase tracking-[0.12em] text-muted">
+            <p className="text-[12px] leading-[normal] font-semibold uppercase tracking-[0.12em] text-muted">
               {sent ? "Request sent" : "Request"}
             </p>
             <button
@@ -149,7 +149,7 @@ export function RequestDrawer({
 
           {!sent && (
           <div className="flex flex-col gap-1 border-y border-[#d9d9d9] py-4 leading-[normal]">
-            <p className="text-[15px] font-bold">
+            <p className="text-[15px] font-semibold">
               No. {no} — <span className="uppercase">{title}</span>
             </p>
             <p className="text-[13px] text-muted">{summary}</p>
@@ -158,7 +158,7 @@ export function RequestDrawer({
 
           {sent ? (
             <div className="mt-4 flex flex-col gap-6" role="status">
-              <h2 id={`${id}-title`} className="text-[32px] leading-[1.2] font-bold">
+              <h2 id={`${id}-title`} className="text-[32px] leading-[1.2] font-semibold">
                 Your request has been received
               </h2>
               <ol className="flex flex-col gap-6">
@@ -168,7 +168,7 @@ export function RequestDrawer({
                       {i + 1}
                     </span>
                     <div className="flex min-w-0 flex-1 flex-col gap-1">
-                      <p className="text-[17px] leading-[normal] font-medium">{step.title}</p>
+                      <p className="text-[17px] leading-[normal] font-semibold">{step.title}</p>
                       <p className="text-[14px] leading-[1.5] text-muted">
                         {step.lines.map((line, j) => (
                           <span key={j} className="block">
@@ -186,7 +186,7 @@ export function RequestDrawer({
             </div>
           ) : (
             <>
-              <h2 id={`${id}-title`} className="text-[28px] leading-[normal] font-bold">
+              <h2 id={`${id}-title`} className="text-[28px] leading-[normal] font-semibold">
                 Why this garment?
               </h2>
 
