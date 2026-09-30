@@ -72,7 +72,8 @@ export the original fill image rather than the cropped layer.
 its file is added; `preview.src` enables the audio preview.
 "Request this piece" opens the inquiry drawer (Figma "05 — Inquiry
 (drawer)"). With no backend yet, submitting it opens the visitor's email app
-with the request addressed to `CONTACT_EMAIL`; swap `submit` in
+with the request addressed to `CONTACT_EMAIL` and shows the "request
+sent" screen (Figma "06 — Inquiry sent"); swap `submit` in
 `RequestDrawer.tsx` for a form endpoint to receive requests directly. Garment 01 still
 needs these files in `public/images/`:
 

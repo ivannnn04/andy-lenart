@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useId, useRef, useState, type FormEvent } from "react";
 import { Arrow } from "@/components/Arrow";
 import type { GarmentImage } from "@/lib/garments";
@@ -11,6 +12,22 @@ const buttonClass =
 const fieldLabel = "text-[14px] leading-[normal] font-medium uppercase tracking-[0.1em] text-[#595959]";
 const fieldInput =
   "w-full rounded-none border border-[#4d4d4d] bg-white p-4 text-[15px] leading-[normal] text-ink placeholder:text-[#999] focus:border-ink focus:shadow-[inset_0_0_0_1px_#1a1a1a] focus:outline-none aria-invalid:border-error aria-invalid:focus:shadow-[inset_0_0_0_1px_var(--color-error)]";
+const outlineButtonClass =
+  "flex w-full items-center justify-center border border-ink px-7 py-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] whitespace-nowrap text-ink transition-colors duration-300 hover:bg-ink hover:text-white motion-reduce:transition-none";
+
+// What happens after a request is sent (Figma "06 — Inquiry sent").
+const NEXT_STEPS: { title: string; lines: string[] }[] = [
+  { title: "Review", lines: ["If selected, you will receive an email with next steps."] },
+  {
+    title: "Payment & production",
+    lines: ["Completed via private link.", "Each piece is made to order in London. Allow\u00a04–\u20606\u00a0weeks."],
+  },
+  {
+    title: "Arrival",
+    lines: ["Includes your garment and access keyword to enter your private Listening Room."],
+  },
+];
+
 const errorText = "text-[13px] leading-[1.4] text-error";
 
 type Field = "name" | "city" | "email" | "consent";
@@ -116,7 +133,7 @@ export function RequestDrawer({
           <div className="ml-auto flex h-full w-full shrink-0 flex-col gap-6 overflow-y-auto bg-white px-4 py-8 text-ink md:w-[clamp(440px,41.667vw,600px)] md:px-14 md:py-12">
           <div className="flex items-start justify-between">
             <p className="text-[12px] leading-[normal] font-medium uppercase tracking-[0.12em] text-muted">
-              Request
+              {sent ? "Request sent" : "Request"}
             </p>
             <button
               type="button"
@@ -130,29 +147,42 @@ export function RequestDrawer({
             </button>
           </div>
 
+          {!sent && (
           <div className="flex flex-col gap-1 border-y border-[#d9d9d9] py-4 leading-[normal]">
             <p className="text-[15px] font-bold">
               No. {no} — <span className="uppercase">{title}</span>
             </p>
             <p className="text-[13px] text-muted">{summary}</p>
           </div>
+          )}
 
           {sent ? (
-            <div className="flex flex-col gap-4" role="status">
-              <h2 id={`${id}-title`} className="text-[28px] leading-[normal] font-bold">
-                Almost there
+            <div className="mt-4 flex flex-col gap-6" role="status">
+              <h2 id={`${id}-title`} className="text-[32px] leading-[1.2] font-bold">
+                Your request has been received
               </h2>
-              <p className="text-[15px] leading-[1.5] text-[#595959]">
-                Your email app should open with the request ready to send. If it
-                doesn’t, write to{" "}
-                <a href={`mailto:${CONTACT_EMAIL}`} className="link-draw text-ink">
-                  {CONTACT_EMAIL}
-                </a>
-                .
-              </p>
-              <button type="button" onClick={close} className={`${buttonClass} mt-2`}>
-                Close
-              </button>
+              <ol className="flex flex-col gap-6">
+                {NEXT_STEPS.map((step, i) => (
+                  <li key={step.title} className="flex items-start gap-5 border-t border-[#d9d9d9] pt-4">
+                    <span aria-hidden className="w-[1ch] text-[28px] leading-[normal] font-bold text-[#bfbfbf]">
+                      {i + 1}
+                    </span>
+                    <div className="flex min-w-0 flex-1 flex-col gap-1">
+                      <p className="text-[17px] leading-[normal] font-medium">{step.title}</p>
+                      <p className="text-[14px] leading-[1.5] text-muted">
+                        {step.lines.map((line, j) => (
+                          <span key={j} className="block">
+                            {line}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              <Link href="/#collection" onClick={close} className={`${outlineButtonClass} mt-3.5`}>
+                Back to the collection
+              </Link>
             </div>
           ) : (
             <>
