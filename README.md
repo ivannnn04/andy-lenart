@@ -68,6 +68,5 @@ needs these files in `public/images/`:
 
 | Figma layer | Used for |
 | --- | --- |
-| IMG_2316 1, IMG_2180, IMG_2180 (2nd), IMG_2345 1 | the four gallery thumbnails |
 | born by the pelican sculpture 1 | the concept photo |
 | (not in design yet) | the Listening Room image and the 30-second audio preview |
