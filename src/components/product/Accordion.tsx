@@ -50,7 +50,7 @@ export function Accordion({ items }: { items: Item[] }) {
             >
               <div className="overflow-hidden">
                 <p
-                  className={`pt-2 pb-1 text-[14px] leading-[1.5] text-body transition-[opacity,translate] duration-[600ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none ${
+                  className={`pt-2 pb-1 text-[14px] font-medium leading-[1.5] text-body transition-[opacity,translate] duration-[600ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none ${
                     isOpen ? "translate-y-0 opacity-100 delay-150" : "-translate-y-1 opacity-0"
                   }`}
                 >

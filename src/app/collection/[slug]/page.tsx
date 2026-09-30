@@ -81,7 +81,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     </span>
                   ))}
                 </h1>
-                <p className="font-light italic leading-[1.4] text-[#595959]" style={{ fontSize: fs(20, 18) }}>
+                <p className="font-normal italic leading-[1.4] text-[#595959]" style={{ fontSize: fs(20, 18) }}>
                   {garment.tagline}
                 </p>
 
@@ -91,7 +91,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     duration={garment.preview.duration}
                     waveform={garment.preview.waveform}
                   />
-                  <p className="text-[13px] font-light text-muted">
+                  <p className="text-[13px] font-normal text-muted">
                     Preview · 30 seconds. You’ll find the full track in this garment’s Listening Room.
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
               {garment.concept.paragraphs.map((text, i) => (
                 <p
                   key={i}
-                  className={`font-light leading-[1.6] ${i ? "mt-[1.6em]" : ""}`}
+                  className={`font-normal leading-[1.6] ${i ? "mt-[1.6em]" : ""}`}
                   style={{ fontSize: fs(22, 18) }}
                 >
                   {text}
@@ -161,7 +161,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 className="mt-10 w-full md:mt-[calc(40*var(--u))] md:-ml-[calc(9*var(--u))] md:w-[calc(918*var(--u))]"
               />
               <blockquote
-                className="mt-7 text-center font-light italic leading-[1.35] md:mt-[calc(28*var(--u))]"
+                className="mt-7 text-center font-normal italic leading-[1.35] md:mt-[calc(28*var(--u))]"
                 style={{ fontSize: fs(30, 22) }}
               >
                 {garment.concept.quote}
@@ -175,7 +175,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                   <p className="font-medium" style={{ fontSize: fs(20, 18) }}>
                     {credit.name}
                   </p>
-                  <p className="mt-1.5 font-light text-muted" style={{ fontSize: fs(18, 16) }}>
+                  <p className="mt-1.5 font-normal text-muted" style={{ fontSize: fs(18, 16) }}>
                     {credit.role}
                   </p>
                 </li>
@@ -205,12 +205,12 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
               {garment.inside.paragraphs.map((runs, i) => (
                 <p
                   key={i}
-                  className={`leading-[1.55] ${i ? "mt-[1.55em]" : "mt-5"}`}
+                  className={`font-medium leading-[1.55] ${i ? "mt-[1.55em]" : "mt-5"}`}
                   style={{ fontSize: fs(18, 16) }}
                 >
                   {runs.map((run, j) =>
                     run.strong ? (
-                      <strong key={j} className="font-medium">
+                      <strong key={j} className="font-semibold">
                         {run.text}
                       </strong>
                     ) : (
