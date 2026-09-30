@@ -29,6 +29,18 @@
   --font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
+/*
+ * In-page links (the navigation's /#manifesto, /#collection, …) glide to
+ * their section. `data-scroll-behavior="smooth"` on <html> tells Next.js to
+ * switch this off during route changes, so arriving from another page jumps
+ * straight to the section instead of scrolling the whole page.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
