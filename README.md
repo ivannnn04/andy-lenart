@@ -58,3 +58,16 @@ Export these Figma layers as PNG into `public/images/`:
 
 "Source image, uncropped" layers are cropped in code exactly as in Figma, so
 export the original fill image rather than the cropped layer.
+
+## Garment pages
+
+`/collection/[slug]` renders a garment from `src/lib/garments.ts` (Figma frame
+"04 — Garment page"). An image without `src` shows a labelled placeholder until
+its file is added; `preview.src` enables the audio preview. Garment 01 still
+needs these files in `public/images/`:
+
+| Figma layer | Used for |
+| --- | --- |
+| IMG_2316 1, IMG_2180, IMG_2180 (2nd), IMG_2345 1 | the four gallery thumbnails |
+| born by the pelican sculpture 1 | the concept photo |
+| (not in design yet) | the Listening Room image and the 30-second audio preview |

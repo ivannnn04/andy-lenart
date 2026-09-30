@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { Photo } from "@/components/Photo";
 import { fs, sp } from "@/lib/design";
+import { garmentHref } from "@/lib/garments";
 
 type Garment = {
   no: string;
@@ -8,6 +10,8 @@ type Garment = {
   status: string;
   /** Makes the status line a link, e.g. to the newsletter sign-up. */
   statusHref?: string;
+  /** The garment's own page, once it exists. */
+  href?: string;
   price?: string;
   preview?: string;
   image?: { src: string; alt: string };
@@ -22,6 +26,7 @@ const GARMENTS: Garment[] = [
     title: "Born by the Pelican Sculpture",
     description: "One can depart, but the place does not release you.",
     status: "Available · 12 left",
+    href: garmentHref("born-by-the-pelican-sculpture"),
     price: "£ 1,500",
     preview: "0:30",
     image: {
@@ -128,6 +133,7 @@ function GarmentCard({
   description,
   status,
   statusHref,
+  href,
   price,
   preview,
   image,
@@ -137,7 +143,18 @@ function GarmentCard({
   return (
     <li className={dimmed ? "opacity-80" : undefined}>
       <article className="flex flex-col gap-3.5">
-        {image ? (
+        {image && href ? (
+          // The title below is the accessible link; the photo repeats it for pointers.
+          <Link href={href} tabIndex={-1} aria-hidden className="block transition-opacity duration-300 hover:opacity-85">
+            <Photo
+              src={image.src}
+              alt=""
+              width={296}
+              height={380}
+              sizes="(min-width: 768px) 21vw, 50vw"
+            />
+          </Link>
+        ) : image ? (
           <Photo
             src={image.src}
             alt={image.alt}
@@ -169,7 +186,13 @@ function GarmentCard({
           className="font-bold uppercase leading-[normal] text-ink"
           style={{ fontSize: fs(titleSize, 16) }}
         >
-          {title}
+          {href ? (
+            <Link href={href} className="link-draw">
+              {title}
+            </Link>
+          ) : (
+            title
+          )}
         </h3>
 
         <p className="text-[14px] font-normal leading-[1.4] text-muted">{description}</p>
