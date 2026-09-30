@@ -172,7 +172,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
             <ul className="mt-4 flex flex-col gap-6 md:mt-[calc(100*var(--u))] md:flex-row md:gap-[calc(80*var(--u))]">
               {garment.credits.map((credit) => (
                 <li key={credit.name} className="md:w-[calc(410*var(--u))]">
-                  <p className="font-medium" style={{ fontSize: fs(20, 18) }}>
+                  <p className="font-semibold" style={{ fontSize: fs(20, 18) }}>
                     {credit.name}
                   </p>
                   <p className="mt-1.5 font-normal text-muted" style={{ fontSize: fs(18, 16) }}>
