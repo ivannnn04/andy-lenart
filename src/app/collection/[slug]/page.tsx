@@ -74,7 +74,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
             <section data-reveal-children aria-labelledby="garment-title" className="gutter">
               <nav
                 aria-label="Breadcrumb"
-                className="mt-6 text-[13px] tracking-[0.04em] text-muted md:mt-[calc(25*var(--u))]"
+                className="mt-10 text-[13px] tracking-[0.04em] text-muted md:mt-[calc(25*var(--u))]"
               >
                 <Link href="/#collection" className="link-draw">
                   <Arrow left /> Collection
@@ -83,7 +83,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 <span aria-current="page">No. {garment.no}</span>
               </nav>
 
-              <div className="mt-4 grid grid-cols-1 items-start gap-10 md:mt-[calc(24*var(--u))] md:grid-cols-[calc(723*var(--u))_minmax(0,1fr)] md:gap-[calc(77*var(--u))]">
+              <div className="mt-6 grid grid-cols-1 items-start gap-10 md:mt-[calc(24*var(--u))] md:grid-cols-[calc(723*var(--u))_minmax(0,1fr)] md:gap-[calc(77*var(--u))]">
                 <Gallery images={garment.gallery} />
 
                 {/* Stays in view while the gallery scrolls past (desktop). */}
