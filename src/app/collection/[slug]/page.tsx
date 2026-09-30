@@ -14,12 +14,12 @@ import { CONTACT_EMAIL } from "@/lib/site";
 
 // Drawn rather than typed: the web fonts' Latin subsets have no arrow glyphs,
 // so a typed ← / → would fall back to whatever system font has one.
-function Arrow({ left = false }: { left?: boolean }) {
+function Arrow({ left = false, className = "" }: { left?: boolean; className?: string }) {
   return (
     <svg
       aria-hidden
       viewBox="0 0 16 10"
-      className={`inline-block h-[0.62em] w-[1em] align-[0.02em] ${left ? "-scale-x-100" : ""}`}
+      className={`inline-block h-[0.62em] w-[1em] align-[0.02em] ${left ? "-scale-x-100" : ""} ${className}`}
       fill="none"
       stroke="currentColor"
       strokeWidth="1.4"
@@ -77,7 +77,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 className="mt-10 text-[13px] tracking-[0.04em] text-muted md:mt-[calc(25*var(--u))]"
               >
                 <Link href="/#collection" className="link-draw">
-                  <Arrow left /> Collection
+                  <Arrow left className="mr-[0.65em]" />Collection
                 </Link>
                 <span aria-hidden className="whitespace-pre">{"  /  "}</span>
                 <span aria-current="page">No. {garment.no}</span>
@@ -136,7 +136,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     href={requestHref}
                     className="flex items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-medium uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none"
                   >
-                    Request this piece&nbsp;<Arrow />
+                    Request this piece<Arrow className="ml-[0.65em]" />
                   </a>
 
                   <div className={divider} />
