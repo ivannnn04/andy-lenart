@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { Photo } from "@/components/Photo";
+import { PreviewPlayer } from "@/components/product/PreviewPlayer";
 import { fs, sp } from "@/lib/design";
-import { garmentHref } from "@/lib/garments";
+import { garmentHref, getGarment } from "@/lib/garments";
 
 type Garment = {
   no: string;
@@ -13,7 +14,8 @@ type Garment = {
   /** The garment's own page, once it exists. */
   href?: string;
   price?: string;
-  preview?: string;
+  /** Track preview; cards without `src` show the player disabled. */
+  preview?: { src?: string; duration: string; waveform?: number[] };
   image?: { src: string; alt: string };
   /** Chapters further out are shown faded. */
   dimmed?: boolean;
@@ -28,7 +30,7 @@ const GARMENTS: Garment[] = [
     status: "Available · 12 left",
     href: garmentHref("born-by-the-pelican-sculpture"),
     price: "£ 1,500",
-    preview: "0:30",
+    preview: getGarment("born-by-the-pelican-sculpture")?.preview,
     image: {
       src: "/images/garment-01.webp",
       alt: "Garment 01: white coat with hand-drawn black lettering, worn on concrete steps beneath tower blocks",
@@ -171,16 +173,15 @@ function GarmentCard({
           </div>
         )}
 
-        <div className="flex items-start justify-between text-[12px] font-medium">
-          <span className="font-bold tracking-[0.08em] text-muted">No. {no}</span>
-          {preview && (
-            <span className="tracking-[0.06em] text-ink">
-              <span aria-hidden>▶ </span>
-              <span className="sr-only">Track preview, </span>
-              {preview}
-            </span>
-          )}
-        </div>
+        <span className="text-[12px] font-bold tracking-[0.08em] text-muted">No. {no}</span>
+
+        <PreviewPlayer
+          variant="compact"
+          title={title}
+          src={preview?.src}
+          duration={preview?.duration ?? "0:30"}
+          waveform={preview?.waveform}
+        />
 
         <h3
           className="font-bold uppercase leading-[normal] text-ink"
