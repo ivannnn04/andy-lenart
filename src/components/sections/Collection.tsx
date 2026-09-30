@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Photo } from "@/components/Photo";
-import { PreviewPlayer } from "@/components/product/PreviewPlayer";
+import { CardPreview } from "@/components/product/PreviewPlayer";
 import { fs, sp } from "@/lib/design";
 import { garmentHref, getGarment } from "@/lib/garments";
 
@@ -14,8 +14,7 @@ type Garment = {
   /** The garment's own page, once it exists. */
   href?: string;
   price?: string;
-  /** Track preview; cards without `src` show the player disabled. */
-  preview?: { src?: string; duration: string; waveform?: number[] };
+  preview?: { src?: string; duration: string };
   image?: { src: string; alt: string };
   /** Chapters further out are shown faded. */
   dimmed?: boolean;
@@ -173,15 +172,10 @@ function GarmentCard({
           </div>
         )}
 
-        <span className="text-[12px] font-bold tracking-[0.08em] text-muted">No. {no}</span>
-
-        <PreviewPlayer
-          variant="compact"
-          title={title}
-          src={preview?.src}
-          duration={preview?.duration ?? "0:30"}
-          waveform={preview?.waveform}
-        />
+        <div className="flex items-start justify-between text-[12px] font-medium">
+          <span className="font-bold tracking-[0.08em] text-muted">No. {no}</span>
+          {preview && <CardPreview title={title} src={preview.src} duration={preview.duration} />}
+        </div>
 
         <h3
           className="font-bold uppercase leading-[normal] text-ink"
