@@ -192,39 +192,41 @@ summary {
   border: 0;
   background: transparent;
   overflow: hidden;
-  --drawer-in: cubic-bezier(0.32, 0.72, 0, 1);
-  --drawer-out: cubic-bezier(0.7, 0, 0.84, 0);
+  /* Slow start, long glide, soft landing — no jump at either end. */
+  --drawer-ease: cubic-bezier(0.65, 0, 0.35, 1);
   transition:
-    display 0.5s allow-discrete,
-    overlay 0.5s allow-discrete;
+    display 0.7s allow-discrete,
+    overlay 0.7s allow-discrete;
 }
 
 /* Closed state (and the timing used while closing). */
 .drawer::backdrop {
   background: rgb(0 0 0 / 0);
   transition:
-    background-color 0.5s ease,
-    display 0.5s allow-discrete,
-    overlay 0.5s allow-discrete;
+    background-color 0.7s ease,
+    display 0.7s allow-discrete,
+    overlay 0.7s allow-discrete;
 }
 
 .drawer-sheet {
   translate: 0 100%;
-  transition: translate 0.5s var(--drawer-out);
+  /* Its own compositor layer, so the big photo moves without repainting. */
+  will-change: translate;
+  transition: translate 0.7s var(--drawer-ease);
 }
 
 /* Open state (and the timing used while opening). */
 .drawer[open]::backdrop {
   background: rgb(0 0 0 / 0.45);
   transition:
-    background-color 0.6s ease,
-    display 0.5s allow-discrete,
-    overlay 0.5s allow-discrete;
+    background-color 1s ease,
+    display 0.7s allow-discrete,
+    overlay 0.7s allow-discrete;
 }
 
 .drawer[open] .drawer-sheet {
   translate: 0 0;
-  transition: translate 0.9s var(--drawer-in);
+  transition: translate 1s var(--drawer-ease);
 }
 
 @starting-style {
