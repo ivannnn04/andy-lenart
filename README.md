@@ -68,5 +68,4 @@ needs these files in `public/images/`:
 
 | Figma layer | Used for |
 | --- | --- |
-| born by the pelican sculpture 1 | the concept photo |
 | (not in design yet) | the Listening Room image |

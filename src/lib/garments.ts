@@ -104,9 +104,10 @@ export const GARMENTS: Garment[] = [
         "It is haunting how deeply we are carved out by the everyday world around us.",
       ],
       image: {
-        alt: "Black-and-white photo of a hand resting on a concrete wall covered in graffiti, tower blocks behind",
-        width: 918,
-        height: 528,
+        src: "/images/garment-01-concept.webp",
+        alt: "Black-and-white photo of a hand resting on a tiled wall sprayed with graffiti, tower blocks behind",
+        width: 1836,
+        height: 1056,
       },
       quote: "“Lying in squares made out of concrete.”",
     },
