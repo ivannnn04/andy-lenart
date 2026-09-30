@@ -34,8 +34,9 @@ the licensed files and load them with `next/font/local` in
 `src/app/layout.tsx`, exposing the family first in `--font-sans`.
 
 Weights used map to the family's cuts: 300 = 45 Light, 400 = 55 Roman,
-500 = 65 Medium, 700 = 75 Bold, 900 = 95 Black. There is no 600 cut, so avoid
-`font-semibold` (the browser would substitute Bold). Arrows are drawn as SVG
+500 = 65 Medium, 700 = 75 Bold, 900 = 95 Black. Button labels are 600
+(`font-semibold`): real in Inter, while Neue Haas has no 600 cut, so the
+browser shows its Bold there. Arrows are drawn as SVG
 because the fonts' Latin subsets have no arrow glyphs.
 
 ### Image assets

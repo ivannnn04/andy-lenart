@@ -7,7 +7,7 @@ import type { GarmentImage } from "@/lib/garments";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 const buttonClass =
-  "flex w-full items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-medium uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none";
+  "flex w-full items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none";
 const fieldLabel = "text-[14px] leading-[normal] font-medium uppercase tracking-[0.1em] text-[#595959]";
 const fieldInput =
   "w-full rounded-none border border-[#4d4d4d] bg-white p-4 text-[15px] leading-[normal] text-ink placeholder:text-[#999] focus:border-ink focus:shadow-[inset_0_0_0_1px_#1a1a1a] focus:outline-none";
