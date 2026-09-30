@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ImageSlot } from "@/components/ImageSlot";
+import { Accordion } from "@/components/product/Accordion";
 import { Gallery } from "@/components/product/Gallery";
 import { PreviewPlayer } from "@/components/product/PreviewPlayer";
 import { ScrollReveal } from "@/components/ScrollReveal";
@@ -114,24 +115,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
 
                 <div className={divider} />
 
-                <div className="flex flex-col gap-4">
-                  {garment.details.map((item) => (
-                    <details key={item.title} className="group">
-                      <summary className="flex cursor-pointer list-none items-center justify-between py-1 text-[15px] text-ink [&::-webkit-details-marker]:hidden">
-                        <span className="link-draw">{item.title}</span>
-                        <span
-                          aria-hidden
-                          className="text-[18px] font-light transition-transform duration-300 group-open:rotate-45 motion-reduce:transition-none"
-                        >
-                          +
-                        </span>
-                      </summary>
-                      <p className="pt-2 pb-1 text-[14px] leading-[1.5] text-body">
-                        {item.body ?? "Details coming soon."}
-                      </p>
-                    </details>
-                  ))}
-                </div>
+                <Accordion items={garment.details} />
               </div>
             </div>
           </section>
