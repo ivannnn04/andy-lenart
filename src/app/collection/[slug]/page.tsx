@@ -110,7 +110,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                   href={requestHref}
                   className="flex items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-medium uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none"
                 >
-                  <span className="link-draw">Request this piece →</span>
+                  Request this piece →
                 </a>
 
                 <div className={divider} />

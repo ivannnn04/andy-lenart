@@ -65,10 +65,7 @@ summary {
 }
 
 .link-draw:hover,
-.link-draw:focus-visible,
-/* A .link-draw label inside a button animates when the whole button is hovered. */
-button:hover .link-draw,
-button:focus-visible .link-draw {
+.link-draw:focus-visible {
   background-size: 100% var(--line);
 }
 

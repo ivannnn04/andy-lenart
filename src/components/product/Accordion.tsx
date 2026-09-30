@@ -28,7 +28,7 @@ export function Accordion({ items }: { items: Item[] }) {
                 onClick={() => setOpen(isOpen ? null : i)}
                 className="group flex w-full items-center justify-between py-1 text-left text-[15px] text-ink"
               >
-                <span className="link-draw">{item.title}</span>
+                <span>{item.title}</span>
                 <span
                   aria-hidden
                   className={`text-[18px] font-light transition-transform duration-[600ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none ${
