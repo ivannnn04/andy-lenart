@@ -68,7 +68,11 @@ export the original fill image rather than the cropped layer.
 
 `/collection/[slug]` renders a garment from `src/lib/garments.ts` (Figma frame
 "04 — Garment page"). An image without `src` shows a labelled placeholder until
-its file is added; `preview.src` enables the audio preview. Garment 01 still
+its file is added; `preview.src` enables the audio preview.
+"Request this piece" opens the inquiry drawer (Figma "05 — Inquiry
+(drawer)"). With no backend yet, submitting it opens the visitor's email app
+with the request addressed to `CONTACT_EMAIL`; swap `submit` in
+`RequestDrawer.tsx` for a form endpoint to receive requests directly. Garment 01 still
 needs these files in `public/images/`:
 
 | Figma layer | Used for |

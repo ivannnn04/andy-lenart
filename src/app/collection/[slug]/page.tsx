@@ -1,33 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Arrow } from "@/components/Arrow";
 import { ImageSlot } from "@/components/ImageSlot";
 import { Accordion } from "@/components/product/Accordion";
 import { Gallery } from "@/components/product/Gallery";
 import { PreviewPlayer } from "@/components/product/PreviewPlayer";
+import { RequestDrawer } from "@/components/product/RequestDrawer";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { fs } from "@/lib/design";
 import { GARMENTS, getGarment } from "@/lib/garments";
-import { CONTACT_EMAIL } from "@/lib/site";
-
-// Drawn rather than typed: the web fonts' Latin subsets have no arrow glyphs,
-// so a typed ← / → would fall back to whatever system font has one.
-function Arrow({ left = false, className = "" }: { left?: boolean; className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 16 10"
-      className={`inline-block h-[0.62em] w-[1em] align-[0.02em] ${left ? "-scale-x-100" : ""} ${className}`}
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.4"
-    >
-      <path d="M0 5h15M10.5 0.75 15 5l-4.5 4.25" />
-    </svg>
-  );
-}
 
 export function generateStaticParams() {
   return GARMENTS.map((g) => ({ slug: g.slug }));
@@ -52,11 +36,6 @@ const sectionRule =
 export default async function GarmentPage({ params }: PageProps<"/collection/[slug]">) {
   const garment = getGarment((await params).slug);
   if (!garment) notFound();
-
-  const title = garment.titleLines.join(" ");
-  const requestHref = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-    `Request: No. ${garment.no} ${title}`,
-  )}`;
 
   return (
     <>
@@ -132,12 +111,12 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     {garment.size}
                   </p>
 
-                  <a
-                    href={requestHref}
-                    className="flex items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-medium uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none"
-                  >
-                    Request this piece<Arrow className="ml-[0.65em]" />
-                  </a>
+                  <RequestDrawer
+                    no={garment.no}
+                    title={garment.titleLines.join(" ")}
+                    summary={[garment.size.toUpperCase(), garment.price, garment.remaining].join(" · ")}
+                    photo={garment.gallery[garment.requestPhoto]}
+                  />
 
                   <div className={divider} />
 

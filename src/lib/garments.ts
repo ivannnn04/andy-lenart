@@ -22,6 +22,8 @@ export type Garment = {
   tagline: string;
   price: string;
   availability: string;
+  /** Stock line in the request drawer, e.g. "12 remaining". */
+  remaining: string;
   size: string;
   /**
    * `waveform`: bar heights (px, 4–33) measured from the clip itself — RMS
@@ -29,6 +31,8 @@ export type Garment = {
    */
   preview: { src?: string; duration: string; waveform?: number[] };
   gallery: GarmentImage[];
+  /** Gallery index of the photo shown beside the request drawer. */
+  requestPhoto: number;
   details: { title: string; body?: string }[];
   concept: {
     paragraphs: string[];
@@ -51,6 +55,7 @@ export const GARMENTS: Garment[] = [
     tagline: "One can depart, but the place does not release you.",
     price: "£1,500",
     availability: "Limited edition · 12 remaining",
+    remaining: "12 remaining",
     size: "One size",
     preview: {
       src: "/audio/garment-01-preview.mp3",
@@ -92,6 +97,7 @@ export const GARMENTS: Garment[] = [
         height: 1875,
       },
     ],
+    requestPhoto: 3,
     details: [
       { title: "Fabric & Making" },
       { title: "Sizing" },

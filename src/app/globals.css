@@ -171,3 +171,85 @@ summary {
     margin: 0;
   }
 }
+
+/*
+ * Request drawer (components/product/RequestDrawer.tsx): a full-screen modal
+ * <dialog> whose panel slides in from the right while the garment photo fades
+ * in beside it. @starting-style gives the entry animation; allow-discrete
+ * keeps the dialog in the top layer until the exit animation has finished.
+ */
+.drawer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  --drawer-ease: cubic-bezier(0.65, 0, 0.35, 1);
+  transition:
+    display 0.5s allow-discrete,
+    overlay 0.5s allow-discrete;
+}
+
+.drawer::backdrop {
+  background: rgb(0 0 0 / 0);
+  transition:
+    background-color 0.5s var(--drawer-ease),
+    display 0.5s allow-discrete,
+    overlay 0.5s allow-discrete;
+}
+
+.drawer[open]::backdrop {
+  background: rgb(0 0 0 / 0.45);
+}
+
+.drawer-panel {
+  translate: 100% 0;
+  transition: translate 0.5s var(--drawer-ease);
+}
+
+.drawer-photo {
+  right: clamp(440px, 41.667vw, 600px);
+  opacity: 0;
+  transition: opacity 0.5s var(--drawer-ease);
+}
+
+.drawer[open] .drawer-panel {
+  translate: 0 0;
+}
+
+.drawer[open] .drawer-photo {
+  opacity: 1;
+}
+
+@starting-style {
+  .drawer[open]::backdrop {
+    background: rgb(0 0 0 / 0);
+  }
+
+  .drawer[open] .drawer-panel {
+    translate: 100% 0;
+  }
+
+  .drawer[open] .drawer-photo {
+    opacity: 0;
+  }
+}
+
+/* The page behind stays put while the drawer is open. */
+html:has(.drawer[open]) {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer::backdrop,
+  .drawer-panel,
+  .drawer-photo {
+    transition: none;
+  }
+}
