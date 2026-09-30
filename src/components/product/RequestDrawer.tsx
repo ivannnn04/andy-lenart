@@ -65,22 +65,18 @@ export function RequestDrawer({
         <Arrow className="ml-[0.65em]" />
       </button>
 
-      <dialog
-        ref={dialog}
-        aria-labelledby={`${id}-title`}
-        className="drawer"
-        // A click on the dialog itself (outside the panel) closes it.
-        onClick={(e) => e.target === e.currentTarget && close()}
-      >
-        {photo?.src && (
-          // The garment beside the drawer; clicking it closes the drawer too.
-          <div aria-hidden className="drawer-photo absolute inset-y-0 left-0 max-md:hidden" onClick={close}>
-            {/* Eager, so the photo is ready by the time the drawer opens. */}
-            <Image src={photo.src} alt="" fill sizes="60vw" loading="eager" className="object-cover object-[50%_30%]" />
-          </div>
-        )}
+      <dialog ref={dialog} aria-labelledby={`${id}-title`} className="drawer">
+        {/* Photo and form move as one sheet, rising from the bottom. */}
+        <div className="drawer-sheet absolute inset-0 flex">
+          {photo?.src && (
+            // The garment beside the form; clicking it closes the drawer.
+            <div aria-hidden className="relative min-w-0 flex-1 max-md:hidden" onClick={close}>
+              {/* Eager, so the photo is ready by the time the drawer opens. */}
+              <Image src={photo.src} alt="" fill sizes="60vw" loading="eager" className="object-cover object-[50%_30%]" />
+            </div>
+          )}
 
-        <div className="drawer-panel absolute inset-y-0 right-0 flex w-full flex-col gap-6 overflow-y-auto bg-white px-4 py-8 text-ink md:w-[clamp(440px,41.667vw,600px)] md:px-14 md:py-12">
+          <div className="ml-auto flex h-full w-full shrink-0 flex-col gap-6 overflow-y-auto bg-white px-4 py-8 text-ink md:w-[clamp(440px,41.667vw,600px)] md:px-14 md:py-12">
           <div className="flex items-start justify-between">
             <p className="text-[12px] leading-[normal] font-medium uppercase tracking-[0.12em] text-muted">
               Request
@@ -193,6 +189,7 @@ export function RequestDrawer({
               </p>
             </>
           )}
+          </div>
         </div>
       </dialog>
     </>

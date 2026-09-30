@@ -174,12 +174,11 @@ summary {
 
 /*
  * Request drawer (components/product/RequestDrawer.tsx): a full-screen modal
- * <dialog>. Opening: the page dims, the panel glides in from the right on a
- * long ease-out, its content settles in just after, and the garment photo
- * fades up beside it. Closing is quicker and eases in. @starting-style gives
- * the entry state; allow-discrete keeps the dialog in the top layer until
- * the exit has finished. Each transition's timing comes from the state it
- * moves *to*, hence separate open / closed timings.
+ * <dialog>. The photo and the form are one sheet that rises from the bottom
+ * while the page behind dims; closing sends it back down. @starting-style
+ * gives the entry state; allow-discrete keeps the dialog in the top layer
+ * until the exit has finished. Each transition's timing comes from the state
+ * it moves *to*, hence separate open / closed timings.
  */
 .drawer {
   position: fixed;
@@ -192,42 +191,26 @@ summary {
   padding: 0;
   border: 0;
   background: transparent;
+  overflow: hidden;
   --drawer-in: cubic-bezier(0.32, 0.72, 0, 1);
   --drawer-out: cubic-bezier(0.7, 0, 0.84, 0);
   transition:
-    display 0.45s allow-discrete,
-    overlay 0.45s allow-discrete;
+    display 0.5s allow-discrete,
+    overlay 0.5s allow-discrete;
 }
 
 /* Closed state (and the timing used while closing). */
 .drawer::backdrop {
   background: rgb(0 0 0 / 0);
   transition:
-    background-color 0.45s ease,
-    display 0.45s allow-discrete,
-    overlay 0.45s allow-discrete;
+    background-color 0.5s ease,
+    display 0.5s allow-discrete,
+    overlay 0.5s allow-discrete;
 }
 
-.drawer-panel {
-  translate: 100% 0;
-  transition: translate 0.45s var(--drawer-out);
-}
-
-.drawer-panel > * {
-  opacity: 0;
-  translate: 24px 0;
-  transition:
-    opacity 0.2s ease,
-    translate 0.2s ease;
-}
-
-.drawer-photo {
-  right: clamp(440px, 41.667vw, 600px);
-  opacity: 0;
-  scale: 1.04;
-  transition:
-    opacity 0.35s ease,
-    scale 0.45s ease;
+.drawer-sheet {
+  translate: 0 100%;
+  transition: translate 0.5s var(--drawer-out);
 }
 
 /* Open state (and the timing used while opening). */
@@ -235,29 +218,13 @@ summary {
   background: rgb(0 0 0 / 0.45);
   transition:
     background-color 0.6s ease,
-    display 0.45s allow-discrete,
-    overlay 0.45s allow-discrete;
+    display 0.5s allow-discrete,
+    overlay 0.5s allow-discrete;
 }
 
-.drawer[open] .drawer-panel {
+.drawer[open] .drawer-sheet {
   translate: 0 0;
-  transition: translate 0.85s var(--drawer-in);
-}
-
-.drawer[open] .drawer-panel > * {
-  opacity: 1;
-  translate: 0 0;
-  transition:
-    opacity 0.6s ease 0.25s,
-    translate 0.8s var(--drawer-in) 0.25s;
-}
-
-.drawer[open] .drawer-photo {
-  opacity: 1;
-  scale: 1;
-  transition:
-    opacity 0.9s ease 0.15s,
-    scale 1.4s var(--drawer-in) 0.15s;
+  transition: translate 0.9s var(--drawer-in);
 }
 
 @starting-style {
@@ -265,18 +232,8 @@ summary {
     background: rgb(0 0 0 / 0);
   }
 
-  .drawer[open] .drawer-panel {
-    translate: 100% 0;
-  }
-
-  .drawer[open] .drawer-panel > * {
-    opacity: 0;
-    translate: 24px 0;
-  }
-
-  .drawer[open] .drawer-photo {
-    opacity: 0;
-    scale: 1.04;
+  .drawer[open] .drawer-sheet {
+    translate: 0 100%;
   }
 }
 
@@ -289,12 +246,8 @@ html:has(.drawer[open]) {
   .drawer,
   .drawer::backdrop,
   .drawer[open]::backdrop,
-  .drawer-panel,
-  .drawer[open] .drawer-panel,
-  .drawer-panel > *,
-  .drawer[open] .drawer-panel > *,
-  .drawer-photo,
-  .drawer[open] .drawer-photo {
+  .drawer-sheet,
+  .drawer[open] .drawer-sheet {
     transition: none;
   }
 }
