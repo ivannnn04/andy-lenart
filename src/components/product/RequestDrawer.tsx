@@ -191,7 +191,7 @@ export function RequestDrawer({
               </h2>
 
               <form noValidate onSubmit={submit} onChange={recheck} className="flex flex-col gap-6">
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 gap-4 max-[480px]:grid-cols-1 max-[480px]:gap-6">
                   <label className="flex min-w-0 flex-col gap-2">
                     <span className={fieldLabel}>Name</span>
                     <input
