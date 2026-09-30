@@ -6,6 +6,7 @@ import { useId, useRef, useState, type FormEvent } from "react";
 import { Arrow } from "@/components/Arrow";
 import type { GarmentImage } from "@/lib/garments";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { emailError } from "@/lib/validate";
 
 const buttonClass =
   "flex w-full items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none";
@@ -33,17 +34,12 @@ const errorText = "text-[13px] leading-[1.4] text-error";
 type Field = "name" | "city" | "email" | "consent";
 type Errors = Partial<Record<Field, string>>;
 
-// Deliberately loose: something@something.something, no spaces.
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
 function validate(data: FormData): Errors {
   const value = (name: string) => String(data.get(name) ?? "").trim();
   const errors: Errors = {};
   if (!value("name")) errors.name = "Please enter your name.";
   if (!value("city")) errors.city = "Please enter your city.";
-  const email = value("email");
-  if (!email) errors.email = "Please enter your email.";
-  else if (!EMAIL.test(email)) errors.email = "That email doesn’t look right — e.g. you@email.com.";
+  errors.email = emailError(value("email"));
   if (!data.get("consent")) errors.consent = "Please confirm this to send your request.";
   return errors;
 }
