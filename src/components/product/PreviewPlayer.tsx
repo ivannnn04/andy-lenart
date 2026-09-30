@@ -140,7 +140,7 @@ export function PreviewPlayer({
           />
         ))}
       </div>
-      <p className="shrink-0 text-[12px] font-medium whitespace-nowrap text-body" aria-live="off">
+      <p className="shrink-0 font-ui text-[12px] font-medium whitespace-nowrap text-body" aria-live="off">
         {toClock(time)} / {duration}
       </p>
     </div>

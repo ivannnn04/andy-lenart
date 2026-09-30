@@ -59,7 +59,7 @@ export function ImageSlot({
       )}
       <span
         aria-hidden
-        className={`relative px-2.5 py-1.5 text-center text-[11px] font-medium uppercase tracking-[0.08em] ${dark ? "bg-[#4d4d4d]" : ""}`}
+        className={`relative px-2.5 py-1.5 text-center font-ui text-[11px] font-medium uppercase tracking-[0.08em] ${dark ? "bg-[#4d4d4d]" : ""}`}
       >
         {label}
       </span>

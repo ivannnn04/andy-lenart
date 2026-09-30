@@ -121,7 +121,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                   <div className={divider} />
 
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
-                    <p className="font-bold leading-[normal] text-ink" style={{ fontSize: fs(32, 26) }}>
+                    <p className="font-ui font-bold leading-[normal] text-ink" style={{ fontSize: fs(32, 26) }}>
                       {garment.price}
                     </p>
                     <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#595959]">

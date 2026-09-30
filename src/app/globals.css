@@ -23,6 +23,8 @@
   --font-sans:
     "Neue Haas Grotesk Display Pro", "Neue Haas Grotesk Display",
     var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* The few details the design sets in Inter (price, player clock, labels). */
+  --font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
