@@ -13,7 +13,7 @@ const fieldInput =
   "w-full rounded-none border border-[#4d4d4d] bg-white p-4 text-[15px] leading-[normal] text-ink placeholder:text-[#999] focus:border-ink focus:shadow-[inset_0_0_0_1px_#1a1a1a] focus:outline-none aria-invalid:border-error aria-invalid:focus:shadow-[inset_0_0_0_1px_var(--color-error)]";
 const errorText = "text-[13px] leading-[1.4] text-error";
 
-type Field = "name" | "email" | "consent";
+type Field = "name" | "city" | "email" | "consent";
 type Errors = Partial<Record<Field, string>>;
 
 // Deliberately loose: something@something.something, no spaces.
@@ -23,6 +23,7 @@ function validate(data: FormData): Errors {
   const value = (name: string) => String(data.get(name) ?? "").trim();
   const errors: Errors = {};
   if (!value("name")) errors.name = "Please enter your name.";
+  if (!value("city")) errors.city = "Please enter your city.";
   const email = value("email");
   if (!email) errors.email = "Please enter your email.";
   else if (!EMAIL.test(email)) errors.email = "That email doesn’t look right — e.g. you@email.com.";
@@ -74,7 +75,7 @@ export function RequestDrawer({
     const found = validate(data);
     setAttempted(true);
     setErrors(found);
-    const first = (["name", "email", "consent"] as const).find((f) => found[f]);
+    const first = (["name", "city", "email", "consent"] as const).find((f) => found[f]);
     if (first) {
       form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
@@ -180,7 +181,20 @@ export function RequestDrawer({
                   </label>
                   <label className="flex min-w-0 flex-col gap-2">
                     <span className={fieldLabel}>City</span>
-                    <input name="city" autoComplete="address-level2" placeholder="London" className={fieldInput} />
+                    <input
+                      name="city"
+                      required
+                      autoComplete="address-level2"
+                      placeholder="London"
+                      aria-invalid={!!errors.city || undefined}
+                      aria-describedby={errors.city ? `${id}-city-error` : undefined}
+                      className={fieldInput}
+                    />
+                    {errors.city && (
+                      <span id={`${id}-city-error`} className={errorText}>
+                        {errors.city}
+                      </span>
+                    )}
                   </label>
                 </div>
                 <label className="flex flex-col gap-2">
