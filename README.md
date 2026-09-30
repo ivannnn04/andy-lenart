@@ -33,6 +33,11 @@ up automatically when available; otherwise Inter is used. To self-host it, add
 the licensed files and load them with `next/font/local` in
 `src/app/layout.tsx`, exposing the family first in `--font-sans`.
 
+Weights used map to the family's cuts: 300 = 45 Light, 400 = 55 Roman,
+500 = 65 Medium, 700 = 75 Bold, 900 = 95 Black. There is no 600 cut, so avoid
+`font-semibold` (the browser would substitute Bold). Arrows are drawn as SVG
+because the fonts' Latin subsets have no arrow glyphs.
+
 ### Image assets
 
 Export these Figma layers as PNG into `public/images/`:

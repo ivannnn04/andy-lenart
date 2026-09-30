@@ -12,6 +12,23 @@ import { fs } from "@/lib/design";
 import { GARMENTS, getGarment } from "@/lib/garments";
 import { CONTACT_EMAIL } from "@/lib/site";
 
+// Drawn rather than typed: the web fonts' Latin subsets have no arrow glyphs,
+// so a typed ← / → would fall back to whatever system font has one.
+function Arrow({ left = false }: { left?: boolean }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 16 10"
+      className={`inline-block h-[0.62em] w-[1em] align-[0.02em] ${left ? "-scale-x-100" : ""}`}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.4"
+    >
+      <path d="M0 5h15M10.5 0.75 15 5l-4.5 4.25" />
+    </svg>
+  );
+}
+
 export function generateStaticParams() {
   return GARMENTS.map((g) => ({ slug: g.slug }));
 }
@@ -60,7 +77,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 className="mt-6 text-[13px] tracking-[0.04em] text-muted md:mt-[calc(25*var(--u))]"
               >
                 <Link href="/#collection" className="link-draw">
-                  ← Collection
+                  <Arrow left /> Collection
                 </Link>
                 <span aria-hidden className="whitespace-pre">{"  /  "}</span>
                 <span aria-current="page">No. {garment.no}</span>
@@ -119,7 +136,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     href={requestHref}
                     className="flex items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-medium uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none"
                   >
-                    Request this piece →
+                    Request this piece&nbsp;<Arrow />
                   </a>
 
                   <div className={divider} />
@@ -177,7 +194,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
               <ul className="mt-4 flex flex-col gap-6 md:mt-[calc(100*var(--u))] md:flex-row md:gap-[calc(80*var(--u))]">
                 {garment.credits.map((credit) => (
                   <li key={credit.name} className="md:w-[calc(410*var(--u))]">
-                    <p className="font-semibold" style={{ fontSize: fs(20, 18) }}>
+                    <p className="font-bold" style={{ fontSize: fs(20, 18) }}>
                       {credit.name}
                     </p>
                     <p className="mt-1.5 font-normal text-muted" style={{ fontSize: fs(18, 16) }}>
@@ -215,7 +232,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                   >
                     {runs.map((run, j) =>
                       run.strong ? (
-                        <strong key={j} className="font-semibold">
+                        <strong key={j} className="font-bold">
                           {run.text}
                         </strong>
                       ) : (

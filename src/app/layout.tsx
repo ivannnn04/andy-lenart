@@ -7,6 +7,9 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "latin-ext"],
+  // The design sets the tagline and quote in italic; without the italic
+  // files the browser would slant the upright letters instead.
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
