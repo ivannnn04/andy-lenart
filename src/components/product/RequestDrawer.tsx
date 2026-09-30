@@ -256,8 +256,8 @@ export function RequestDrawer({
                 </label>
 
                 <div className="flex flex-col gap-2">
-                  <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-[1.4] text-[#595959]">
-                    <span className="relative mt-px flex size-[18px] shrink-0">
+                  <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-[18px] text-[#595959]">
+                    <span className="relative flex size-[18px] shrink-0">
                       <input
                         type="checkbox"
                         name="consent"
