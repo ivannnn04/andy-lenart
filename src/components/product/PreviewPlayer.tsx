@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// Bar heights (px) of the waveform in the design.
-const BARS = [
+// Placeholder bar heights (px) from the design, used when no waveform is given.
+const DESIGN_BARS = [
   6, 27, 33, 28, 14, 22, 31, 32, 22, 6, 27, 33, 28, 14, 22, 31, 32, 22, 7, 28, 33, 28, 14, 22,
   32, 31, 21, 7, 28, 33, 27, 13, 23, 32, 31, 21, 7, 28, 33, 27, 13, 23, 32, 31, 21, 8, 29, 33,
 ];
@@ -13,6 +13,8 @@ const toClock = (seconds: number) => {
   return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
 };
 
+// Playback level (0–1): the preview plays quieter than full volume.
+const MAX_VOLUME = 0.45;
 // Soft edges so the clipped preview doesn't start or stop with a click.
 const FADE_IN = 0.5;
 const FADE_OUT = 1.5;
@@ -21,7 +23,16 @@ const FADE_OUT = 1.5;
  * 30-second track preview: play/pause, a waveform that fills as it plays and
  * the elapsed time. Without an audio file the button is disabled.
  */
-export function PreviewPlayer({ src, duration }: { src?: string; duration: string }) {
+export function PreviewPlayer({
+  src,
+  duration,
+  waveform = DESIGN_BARS,
+}: {
+  src?: string;
+  duration: string;
+  /** Bar heights in px, e.g. measured from the audio itself. */
+  waveform?: number[];
+}) {
   const audio = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);
@@ -55,7 +66,7 @@ export function PreviewPlayer({ src, duration }: { src?: string; duration: strin
     const tick = () => {
       const t = el.currentTime;
       const d = el.duration || 0;
-      el.volume = Math.max(0, Math.min(1, t / FADE_IN, d ? (d - t) / FADE_OUT : 1));
+      el.volume = MAX_VOLUME * Math.max(0, Math.min(1, t / FADE_IN, d ? (d - t) / FADE_OUT : 1));
       setTime(t);
       frame = requestAnimationFrame(tick);
     };
@@ -76,7 +87,7 @@ export function PreviewPlayer({ src, duration }: { src?: string; duration: strin
   };
 
   const progress = length ? time / length : 0;
-  const played = Math.round(progress * BARS.length);
+  const played = Math.round(progress * waveform.length);
 
   return (
     <div className="flex items-center gap-4 border border-ink py-3.5 pr-5 pl-4">
@@ -101,7 +112,7 @@ export function PreviewPlayer({ src, duration }: { src?: string; duration: strin
         )}
       </button>
       <div aria-hidden className="flex min-w-0 flex-1 items-center gap-[3px] overflow-hidden">
-        {BARS.map((h, i) => (
+        {waveform.map((h, i) => (
           <span
             key={i}
             className={`w-[3px] shrink-0 ${i < played ? "bg-ink" : "bg-[#bfbfbf]"}`}

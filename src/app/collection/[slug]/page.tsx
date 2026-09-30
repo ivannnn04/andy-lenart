@@ -86,7 +86,11 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 </p>
 
                 <div className="flex flex-col gap-3">
-                  <PreviewPlayer src={garment.preview.src} duration={garment.preview.duration} />
+                  <PreviewPlayer
+                    src={garment.preview.src}
+                    duration={garment.preview.duration}
+                    waveform={garment.preview.waveform}
+                  />
                   <p className="text-[13px] font-light text-muted">
                     Preview · 30 seconds. You’ll find the full track in this garment’s Listening Room.
                   </p>

@@ -23,7 +23,11 @@ export type Garment = {
   price: string;
   availability: string;
   size: string;
-  preview: { src?: string; duration: string };
+  /**
+   * `waveform`: bar heights (px, 4–33) measured from the clip itself — RMS
+   * loudness of 48 equal slices, perceptually scaled.
+   */
+  preview: { src?: string; duration: string; waveform?: number[] };
   gallery: GarmentImage[];
   details: { title: string; body?: string }[];
   concept: {
@@ -48,7 +52,14 @@ export const GARMENTS: Garment[] = [
     price: "£1,500",
     availability: "Limited edition · 12 remaining",
     size: "One size",
-    preview: { src: "/audio/garment-01-preview.mp3", duration: "0:30" },
+    preview: {
+      src: "/audio/garment-01-preview.mp3",
+      duration: "0:30",
+      waveform: [
+        4, 12, 14, 13, 10, 14, 20, 25, 27, 29, 33, 30, 28, 25, 26, 28, 31, 31, 26, 23, 21, 23, 25, 28,
+        24, 21, 21, 19, 21, 25, 21, 22, 26, 28, 27, 28, 28, 26, 23, 26, 22, 27, 29, 25, 25, 27, 26, 26,
+      ],
+    },
     gallery: [
       {
         src: "/images/garment-01.webp",
