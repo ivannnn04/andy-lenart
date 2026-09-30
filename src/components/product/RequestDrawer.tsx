@@ -75,7 +75,8 @@ export function RequestDrawer({
         {photo?.src && (
           // The garment beside the drawer; clicking it closes the drawer too.
           <div aria-hidden className="drawer-photo absolute inset-y-0 left-0 max-md:hidden" onClick={close}>
-            <Image src={photo.src} alt="" fill sizes="60vw" className="object-cover object-[50%_30%]" />
+            {/* Eager, so the photo is ready by the time the drawer opens. */}
+            <Image src={photo.src} alt="" fill sizes="60vw" loading="eager" className="object-cover object-[50%_30%]" />
           </div>
         )}
 
