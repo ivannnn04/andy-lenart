@@ -20,6 +20,8 @@
   --color-muted: #737373;
   --color-subtle: #808080;
   --color-body: #666666;
+  /* Form errors: a deep red that still reads as part of the monochrome palette. */
+  --color-error: #b3261e;
   --font-sans:
     "Neue Haas Grotesk Display Pro", "Neue Haas Grotesk Display",
     var(--font-inter), ui-sans-serif, system-ui, sans-serif;

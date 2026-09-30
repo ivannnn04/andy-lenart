@@ -10,7 +10,25 @@ const buttonClass =
   "flex w-full items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-semibold uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none";
 const fieldLabel = "text-[14px] leading-[normal] font-medium uppercase tracking-[0.1em] text-[#595959]";
 const fieldInput =
-  "w-full rounded-none border border-[#4d4d4d] bg-white p-4 text-[15px] leading-[normal] text-ink placeholder:text-[#999] focus:border-ink focus:shadow-[inset_0_0_0_1px_#1a1a1a] focus:outline-none";
+  "w-full rounded-none border border-[#4d4d4d] bg-white p-4 text-[15px] leading-[normal] text-ink placeholder:text-[#999] focus:border-ink focus:shadow-[inset_0_0_0_1px_#1a1a1a] focus:outline-none aria-invalid:border-error aria-invalid:focus:shadow-[inset_0_0_0_1px_var(--color-error)]";
+const errorText = "text-[13px] leading-[1.4] text-error";
+
+type Field = "name" | "email" | "consent";
+type Errors = Partial<Record<Field, string>>;
+
+// Deliberately loose: something@something.something, no spaces.
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function validate(data: FormData): Errors {
+  const value = (name: string) => String(data.get(name) ?? "").trim();
+  const errors: Errors = {};
+  if (!value("name")) errors.name = "Please enter your name.";
+  const email = value("email");
+  if (!email) errors.email = "Please enter your email.";
+  else if (!EMAIL.test(email)) errors.email = "That email doesn’t look right — e.g. you@email.com.";
+  if (!data.get("consent")) errors.consent = "Please confirm this to send your request.";
+  return errors;
+}
 
 /**
  * "Request this piece" button and the inquiry drawer it opens (Figma
@@ -32,17 +50,35 @@ export function RequestDrawer({
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [sent, setSent] = useState(false);
+  // Errors show after the first submit attempt, then update as the visitor types.
+  const [errors, setErrors] = useState<Errors>({});
+  const [attempted, setAttempted] = useState(false);
   const id = useId();
 
   const open = () => {
     setSent(false);
+    setErrors({});
+    setAttempted(false);
     dialog.current?.showModal();
   };
   const close = () => dialog.current?.close();
 
+  const recheck = (e: FormEvent<HTMLFormElement>) => {
+    if (attempted) setErrors(validate(new FormData(e.currentTarget)));
+  };
+
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const found = validate(data);
+    setAttempted(true);
+    setErrors(found);
+    const first = (["name", "email", "consent"] as const).find((f) => found[f]);
+    if (first) {
+      form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
+      return;
+    }
     const field = (name: string) => String(data.get(name) ?? "").trim();
     const body = [
       `Piece: No. ${no} — ${title}`,
@@ -123,11 +159,24 @@ export function RequestDrawer({
                 Why this garment?
               </h2>
 
-              <form onSubmit={submit} className="flex flex-col gap-6">
+              <form noValidate onSubmit={submit} onChange={recheck} className="flex flex-col gap-6">
                 <div className="grid grid-cols-2 gap-4">
                   <label className="flex min-w-0 flex-col gap-2">
                     <span className={fieldLabel}>Name</span>
-                    <input name="name" required autoComplete="name" placeholder="Your name" className={fieldInput} />
+                    <input
+                      name="name"
+                      required
+                      autoComplete="name"
+                      placeholder="Your name"
+                      aria-invalid={!!errors.name || undefined}
+                      aria-describedby={errors.name ? `${id}-name-error` : undefined}
+                      className={fieldInput}
+                    />
+                    {errors.name && (
+                      <span id={`${id}-name-error`} className={errorText}>
+                        {errors.name}
+                      </span>
+                    )}
                   </label>
                   <label className="flex min-w-0 flex-col gap-2">
                     <span className={fieldLabel}>City</span>
@@ -142,8 +191,15 @@ export function RequestDrawer({
                     required
                     autoComplete="email"
                     placeholder="you@email.com"
+                    aria-invalid={!!errors.email || undefined}
+                    aria-describedby={errors.email ? `${id}-email-error` : undefined}
                     className={fieldInput}
                   />
+                  {errors.email && (
+                    <span id={`${id}-email-error`} className={errorText}>
+                      {errors.email}
+                    </span>
+                  )}
                 </label>
                 <label className="flex flex-col gap-2">
                   <span className={fieldLabel}>Message</span>
@@ -155,27 +211,36 @@ export function RequestDrawer({
                   />
                 </label>
 
-                <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-[1.4] text-[#595959]">
-                  <span className="relative mt-px flex size-[18px] shrink-0">
-                    <input
-                      type="checkbox"
-                      name="consent"
-                      required
-                      className="peer size-full cursor-pointer appearance-none rounded-none border border-ink bg-white checked:bg-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                    />
-                    <svg
-                      aria-hidden
-                      viewBox="0 0 18 18"
-                      className="pointer-events-none absolute inset-0 hidden text-white peer-checked:block"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.6"
-                    >
-                      <path d="M4.5 9.5l3 3 6-7" />
-                    </svg>
-                  </span>
-                  I understand order approval and payment details are handled via email.
-                </label>
+                <div className="flex flex-col gap-2">
+                  <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-[1.4] text-[#595959]">
+                    <span className="relative mt-px flex size-[18px] shrink-0">
+                      <input
+                        type="checkbox"
+                        name="consent"
+                        required
+                        aria-invalid={!!errors.consent || undefined}
+                        aria-describedby={errors.consent ? `${id}-consent-error` : undefined}
+                        className="peer size-full cursor-pointer appearance-none rounded-none border border-ink bg-white checked:bg-ink aria-invalid:border-error focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                      />
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 18 18"
+                        className="pointer-events-none absolute inset-0 hidden text-white peer-checked:block"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.6"
+                      >
+                        <path d="M4.5 9.5l3 3 6-7" />
+                      </svg>
+                    </span>
+                    I understand order approval and payment details are handled via email.
+                  </label>
+                  {errors.consent && (
+                    <span id={`${id}-consent-error`} className={`${errorText} pl-[30px]`}>
+                      {errors.consent}
+                    </span>
+                  )}
+                </div>
 
                 <button type="submit" className={buttonClass}>
                   Submit request
