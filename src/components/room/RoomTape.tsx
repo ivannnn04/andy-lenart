@@ -20,7 +20,7 @@ export function RoomTape({ src, title, children }: { src?: string; title: string
         aria-pressed={playing}
         aria-label={`${playing ? "Pause" : "Play"} ${title}`}
         data-playing={playing || undefined}
-        className="room-tape block size-full cursor-pointer transition-transform duration-300 hover:scale-[1.03] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-default motion-reduce:transition-none"
+        className="room-tape block size-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-default"
       >
         {children}
       </button>
