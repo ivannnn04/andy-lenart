@@ -99,9 +99,10 @@ other pages. Point each garment's tag at
 - The page is `noindex`. Once the gate is open the same URL shows the
   Listening Room (Figma "09" mobile, "14" desktop): a black collage around a
   cassette that plays the garment's track. The tape plays the full track
-  (`room.track` in `src/lib/garments.ts`) and the lyrics light up line by line
-  with it, Spotify-style. Each line's start time (seconds) is set in
-  `room.lyrics`; No. 01's timings are placeholders until the real ones arrive. For review the No. 01 keyword is
+  (`room.track` in `src/lib/garments.ts`) and the big heading shows the lyrics
+  in real time, one line at a time, Spotify-style. Each line's start time
+  (seconds) is set in `room.lyrics`; No. 01's lyrics and timings are
+  placeholders until the real ones arrive. For review the No. 01 keyword is
   temporarily "andy" (`KEYWORD_OVERRIDE` in `src/lib/rooms.ts`).
 - The Staircase (`/room/<slug>/staircase`) is a placeholder for now.
 

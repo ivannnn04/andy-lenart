@@ -4,7 +4,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
-import { RoomAudioProvider, RoomLyrics } from "@/components/room/RoomAudio";
+import { RoomAudioProvider, RoomCurrentLine } from "@/components/room/RoomAudio";
 import { RoomTape } from "@/components/room/RoomTape";
 import { fs } from "@/lib/design";
 import type { Garment } from "@/lib/garments";
@@ -266,12 +266,13 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
             <p className="font-normal leading-[normal] text-[#efefef] text-[13px] md:text-[clamp(14px,calc(24*var(--u)),24px)]">
               No. {garment.no} / DEPARTURES 1322
             </p>
-            <h1
-              id="room-title"
-              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[24px] leading-[0.85] font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[clamp(24px,calc(40*var(--u)),40px)]"
-            >
-              Lyrics by one sentence each time
+            <h1 id="room-title" className="sr-only">
+              Listening Room — No. {garment.no} {garment.titleLines.join(" ")}
             </h1>
+            <RoomCurrentLine
+              lines={garment.room.lyrics}
+              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[24px] leading-[0.85] font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[clamp(24px,calc(40*var(--u)),40px)]"
+            />
           </Placed>
 
           {PICTURES.map((picture) => (
@@ -281,10 +282,13 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           ))}
 
           <Placed place={{ m: [20, 666, 350], d: [175, 744, 481] }} className="text-center">
-            <RoomLyrics
-              lines={garment.room.lyrics}
-              className="font-normal leading-[normal] text-[12px] md:text-[clamp(12px,calc(16*var(--u)),16px)]"
-            />
+            <p className="font-normal leading-[normal] text-[12px] md:text-[clamp(12px,calc(16*var(--u)),16px)]">
+              {garment.room.verse.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
+            </p>
           </Placed>
 
           <Placed place={{ d: [916, 793, 482] }}>

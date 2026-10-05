@@ -27,32 +27,26 @@ export function useRoomAudio() {
   return value;
 }
 
-/**
- * Lyrics that light up line by line with the track, Spotify-style: the
- * current line is bright, the rest fade back. Before the first play every
- * line reads normally.
- */
-export function RoomLyrics({ lines, className = "" }: { lines: { time: number; text: string }[]; className?: string }) {
-  const { playing, time } = useRoomAudio();
-  const started = playing || time > 0;
-  let current = -1;
-  lines.forEach((line, i) => {
-    if (time >= line.time) current = i;
-  });
+type Line = { time: number; text: string };
 
+/** Index of the line being sung at `time` (-1 before the first one). */
+const lineAt = (lines: Line[], time: number) => lines.findLastIndex((line) => time >= line.time);
+
+/**
+ * The lyric of the moment, one sentence at a time (Spotify-style): it
+ * follows the track and each new line fades in. Before the music starts it
+ * shows the first line.
+ */
+export function RoomCurrentLine({ lines, className = "" }: { lines: Line[]; className?: string }) {
+  const { time } = useRoomAudio();
+  const line = lines[Math.max(0, lineAt(lines, time))];
+  if (!line) return null;
   return (
-    <p className={className}>
-      {lines.map((line, i) => (
-        <span
-          key={line.text}
-          aria-current={started && i === current ? "true" : undefined}
-          className={`block transition-opacity duration-500 motion-reduce:transition-none ${
-            !started || i === current ? "opacity-100" : "opacity-35"
-          }`}
-        >
-          {line.text}
-        </span>
-      ))}
+    // Not announced line by line: that would talk over the music.
+    <p aria-live="off" className={className}>
+      <span key={line.text} className="room-line block">
+        {line.text}
+      </span>
     </p>
   );
 }

@@ -33,9 +33,10 @@ export type Garment = {
   /**
    * The Listening Room: the full track the tape plays, and its lyrics with
    * the time (seconds into the track) each line starts, for the
-   * Spotify-style highlight.
+   * Spotify-style display (one line at a time); `verse` is the fixed text
+   * printed in the collage.
    */
-  room: { track?: string; lyrics: { time: number; text: string }[] };
+  room: { track?: string; lyrics: { time: number; text: string }[]; verse: string[] };
   gallery: GarmentImage[];
   /** Gallery index of the photo shown beside the request drawer. */
   requestPhoto: number;
@@ -79,6 +80,12 @@ export const GARMENTS: Garment[] = [
         { time: 12, text: "I look for reimagined fragments of me," },
         { time: 20, text: "and the rest of you, in the simplicity of early technology." },
         { time: 30, text: "I pull the white noise closer to me, hoping it will take me along." },
+      ],
+      verse: [
+        "I look for truth in the early 2000s.",
+        "I look for reimagined fragments of me,",
+        "and the rest of you, in the simplicity of early technology.",
+        "I pull the white noise closer to me, hoping it will take me along.",
       ],
     },
     gallery: [

@@ -412,3 +412,21 @@ html:has(.site-menu[open]) {
     animation: none;
   }
 }
+
+/* Each new lyric line in the Listening Room fades up into place. */
+.room-line {
+  animation: room-line 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes room-line {
+  from {
+    opacity: 0;
+    translate: 0 0.3em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-line {
+    animation: none;
+  }
+}
