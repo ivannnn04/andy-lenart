@@ -12,7 +12,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { Garment } from "@/lib/garments";
 
-export const MAX_ATTEMPTS = 5;
+export const MAX_ATTEMPTS = 3;
 export const LOCK_MINUTES = 10;
 
 // Set ROOM_SECRET in the deployment's environment; the fallback only keeps

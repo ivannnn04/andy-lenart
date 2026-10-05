@@ -93,7 +93,7 @@ other pages. Point each garment's tag at
   `src/lib/garments.ts` (for No. 01: "is"). It is checked on the server
   (`src/lib/rooms.ts`) and never sent to the browser.
 - A correct word sets a signed, httpOnly cookie that keeps the room open on
-  that device. Five wrong words lock the gate for ten minutes.
+  that device. Three wrong words lock the gate for ten minutes.
 - Set `ROOM_SECRET` (any long random string) in the deployment environment;
   it signs those cookies.
 - The page is `noindex`. The Listening Room itself (Figma "09" onwards) is
