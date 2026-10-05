@@ -46,7 +46,7 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
     <div className={`${courier.variable} overflow-x-clip`}>
       {/* Same header as the other pages; the inline-size container is what the design unit (--u) measures. */}
       <div className="mx-auto w-full max-w-[1440px] [container-type:inline-size]">
-        <SiteHeader variant="compact" title="Listening Room" inset="px-7" />
+        <SiteHeader variant="compact" inset="px-7" />
 
         <div className="px-7 pt-10 pb-16 md:grid md:grid-cols-2 md:items-center md:gap-[calc(96*var(--u))] md:px-[max(16px,calc(72*var(--u)))] md:pt-[calc(24*var(--u))] md:pb-[calc(120*var(--u))]">
           {photo?.src && (

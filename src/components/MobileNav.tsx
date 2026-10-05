@@ -10,7 +10,8 @@ const barText = "text-[16px] leading-[normal] font-semibold uppercase";
 /**
  * The phone header used on every page: the page's name on the left, the
  * monogram in the middle and "Public" on the right, which opens the
- * full-screen menu. The menu is a modal <dialog> (focus stays inside, Esc
+ * full-screen menu. Without a title, "Public" moves to the left (the
+ * Listening Room). The menu is a modal <dialog> (focus stays inside, Esc
  * closes it).
  */
 export function MobileNav({
@@ -18,7 +19,7 @@ export function MobileNav({
   className = "",
   inset = "gutter",
 }: {
-  title: string;
+  title?: string;
   className?: string;
   /** Side padding of the bar, to line up with the page's own content. */
   inset?: string;
@@ -30,7 +31,11 @@ export function MobileNav({
     // Three columns: the side ones share what the monogram leaves, so a long
     // page name wraps instead of running under it.
     <div className={`grid h-[101px] grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] items-center gap-3 ${inset}`}>
-      <span className={`${barText} leading-[1.1] pb-[0.08em]`}>{title}</span>
+      {title ? (
+        <span className={`${barText} leading-[1.1] pb-[0.08em]`}>{title}</span>
+      ) : (
+        <div className="flex">{button}</div>
+      )}
       <Link
         href="/"
         aria-label="Andy Lenárt — home"
@@ -39,7 +44,7 @@ export function MobileNav({
       >
         <Image src="/images/logo-mark.png" alt="" width={332} height={282} sizes="72px" preload />
       </Link>
-      <div className="flex justify-end">{button}</div>
+      {title && <div className="flex justify-end">{button}</div>}
     </div>
   );
 
@@ -69,7 +74,7 @@ export function MobileNav({
                 <a
                   href={item.href}
                   onClick={close}
-                  className="link-draw text-[44px] leading-[1.05] font-black uppercase"
+                  className="link-draw text-[36px] leading-[1.05] font-black uppercase"
                 >
                   {item.label}
                 </a>

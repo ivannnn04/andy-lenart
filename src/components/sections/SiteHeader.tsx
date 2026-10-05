@@ -43,8 +43,8 @@ export function SiteHeader({
   inset,
 }: {
   variant?: keyof typeof VARIANTS;
-  /** Page name shown on the left of the phone header. */
-  title: string;
+  /** Page name shown on the left of the phone header (none puts "Public" there). */
+  title?: string;
   /** Side padding of the phone header, when the page uses its own. */
   inset?: string;
 }) {
