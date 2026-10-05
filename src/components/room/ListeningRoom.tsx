@@ -4,6 +4,7 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
+import { RoomAudioProvider, RoomLyrics } from "@/components/room/RoomAudio";
 import { RoomTape } from "@/components/room/RoomTape";
 import { fs } from "@/lib/design";
 import type { Garment } from "@/lib/garments";
@@ -141,12 +142,6 @@ function Reel({ cx }: { cx: number }) {
   );
 }
 
-const LYRICS = [
-  "I look for truth in the early 2000s.",
-  "I look for reimagined fragments of me,",
-  "and the rest of you, in the simplicity of early technology.",
-  "I pull the white noise closer to me, hoping it will take me along.",
-];
 
 const imageExists = (file: string) => existsSync(path.join(process.cwd(), "public/images", file));
 
@@ -247,6 +242,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           </nav>
         </header>
 
+        <RoomAudioProvider src={garment.room.track}>
         <main className="room-stage" aria-labelledby="room-title">
           <Placed place={{ m: [95, 38, 200], d: [556, 65, 324] }} className="text-center">
             <p className="font-light leading-[normal] text-[#efefef]" style={{ fontSize: `clamp(12px, calc(24 * var(--u)), 24px)` }}>
@@ -255,7 +251,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           </Placed>
 
           <Placed place={TAPE.place}>
-            <RoomTape src={garment.preview.src} title={`the track for No. ${garment.no}`}>
+            <RoomTape title={`the track for No. ${garment.no}`}>
               <span className="relative block size-full">
                 <Art picture={TAPE} sizes="(min-width: 768px) 23vw, 50vw" />
                 {imageExists(TAPE.file) && REELS.map((cx) => <Reel key={cx} cx={cx} />)}
@@ -285,13 +281,10 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           ))}
 
           <Placed place={{ m: [20, 666, 350], d: [175, 744, 481] }} className="text-center">
-            <p className="font-thin leading-[normal] text-[12px] md:text-[clamp(12px,calc(16*var(--u)),16px)]">
-              {LYRICS.map((line) => (
-                <span key={line} className="block">
-                  {line}
-                </span>
-              ))}
-            </p>
+            <RoomLyrics
+              lines={garment.room.lyrics}
+              className="font-thin leading-[normal] text-[12px] md:text-[clamp(12px,calc(16*var(--u)),16px)]"
+            />
           </Placed>
 
           <Placed place={{ d: [916, 793, 482] }}>
@@ -313,6 +306,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
             </Link>
           </Placed>
         </main>
+        </RoomAudioProvider>
       </div>
     </div>
   );

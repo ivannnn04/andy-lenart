@@ -1,29 +1,27 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { usePreviewAudio } from "@/components/product/PreviewPlayer";
+import { useRoomAudio } from "@/components/room/RoomAudio";
 
 /**
  * "Touch the tape": the cassette is the play / pause button for the
- * garment's track. It rocks gently while the track plays.
+ * garment's track. It stays still until the music starts, then its reels
+ * turn and it rocks gently.
  */
-export function RoomTape({ src, title, children }: { src?: string; title: string; children: ReactNode }) {
-  const { audio, playing, toggle } = usePreviewAudio();
+export function RoomTape({ title, children }: { title: string; children: ReactNode }) {
+  const { src, playing, toggle } = useRoomAudio();
 
   return (
-    <>
-      {src && <audio ref={audio} src={src} preload="metadata" />}
-      <button
-        type="button"
-        onClick={toggle}
-        disabled={!src}
-        aria-pressed={playing}
-        aria-label={`${playing ? "Pause" : "Play"} ${title}`}
-        data-playing={playing || undefined}
-        className="room-tape block size-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-default"
-      >
-        {children}
-      </button>
-    </>
+    <button
+      type="button"
+      onClick={toggle}
+      disabled={!src}
+      aria-pressed={playing}
+      aria-label={`${playing ? "Pause" : "Play"} ${title}`}
+      data-playing={playing || undefined}
+      className="room-tape block size-full cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-default"
+    >
+      {children}
+    </button>
   );
 }

@@ -30,6 +30,12 @@ export type Garment = {
    * loudness of 48 equal slices, perceptually scaled.
    */
   preview: { src?: string; duration: string; waveform?: number[] };
+  /**
+   * The Listening Room: the full track the tape plays, and its lyrics with
+   * the time (seconds into the track) each line starts, for the
+   * Spotify-style highlight.
+   */
+  room: { track?: string; lyrics: { time: number; text: string }[] };
   gallery: GarmentImage[];
   /** Gallery index of the photo shown beside the request drawer. */
   requestPhoto: number;
@@ -63,6 +69,16 @@ export const GARMENTS: Garment[] = [
       waveform: [
         4, 12, 14, 13, 10, 14, 20, 25, 27, 29, 33, 30, 28, 25, 26, 28, 31, 31, 26, 23, 21, 23, 25, 28,
         24, 21, 21, 19, 21, 25, 21, 22, 26, 28, 27, 28, 28, 26, 23, 26, 22, 27, 29, 25, 25, 27, 26, 26,
+      ],
+    },
+    room: {
+      track: "/audio/garment-01-track.mp3",
+      // Placeholder timings until the real ones are known.
+      lyrics: [
+        { time: 4, text: "I look for truth in the early 2000s." },
+        { time: 12, text: "I look for reimagined fragments of me," },
+        { time: 20, text: "and the rest of you, in the simplicity of early technology." },
+        { time: 30, text: "I pull the white noise closer to me, hoping it will take me along." },
       ],
     },
     gallery: [
