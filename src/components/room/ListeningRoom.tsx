@@ -46,7 +46,7 @@ type Picture = {
 // Order is stacking order: the lettering comes after the photo it overlaps.
 const PICTURES: Picture[] = [
   {
-    file: "room-photo-road.webp",
+    file: "room-photo-road.png",
     alt: "Faded colour photo of a road past prefab tower blocks, a car driving by",
     layer: "R1-01944-0028 2",
     place: { m: [69, 437, 250, 179], d: [242, 435, 348, 250] },
@@ -59,14 +59,14 @@ const PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-photo-sledges.webp",
+    file: "room-photo-sledges.png",
     alt: "Black-and-white photo of children pulling sledges through the snow",
     layer: "R1-01944-0028 1",
     place: { m: [28, 784, 160, 113], d: [154, 872, 238, 167] },
     objectPosition: "bottom",
   },
   {
-    file: "room-photo-tortoise.webp",
+    file: "room-photo-tortoise.png",
     alt: "Black-and-white photo of hands holding a small tortoise",
     layer: "R1-01944-0028 3",
     place: { m: [199, 784, 160, 113], d: [408, 872, 237, 167] },
@@ -79,7 +79,7 @@ const PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-photo-pelican.webp",
+    file: "room-photo-pelican.png",
     alt: "Black-and-white photo of the pelican sculpture on its plinth in a reedy pond",
     layer: "R1-01944-0030 1",
     place: { m: [85, 975, 160, 220], d: [723, 557, 273, 375] },
