@@ -16,7 +16,7 @@ export default function Home() {
         id="top"
         className="mx-auto w-full max-w-[1440px] overflow-x-clip [container-type:inline-size]"
       >
-        <SiteHeader />
+        <SiteHeader title="Home" />
         <main>
           <Hero />
           <Departures />

@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { MobileNav } from "@/components/MobileNav";
 import { RoomGate } from "@/components/room/RoomGate";
 import { getGarment } from "@/lib/garments";
 import { accessCookie, gateCookie, readGate, unsign } from "@/lib/rooms";
@@ -51,21 +52,10 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
         </div>
       )}
 
-      <div className="mx-auto flex w-full max-w-[536px] flex-col px-7 pb-16">
-        <header className="relative flex h-[101px] items-center">
-          <Link href="/" className="link-draw text-[16px] leading-[normal] font-medium" title="Andy Lenárt — public site">
-            PUBLIC
-          </Link>
-          <Link
-            href="/"
-            aria-label="Andy Lenárt — home"
-            className="absolute top-5 left-1/2 w-[72px] -translate-x-1/2 transition-transform duration-300 hover:-rotate-3 hover:scale-105 motion-reduce:transition-none"
-          >
-            <Image src="/images/logo-mark.png" alt="" width={332} height={282} sizes="72px" preload />
-          </Link>
-        </header>
+      <div className="mx-auto flex w-full max-w-[536px] flex-col pb-16">
+        <MobileNav title="Listening Room" inset="px-7" />
 
-        <main className="mt-10 flex w-full flex-col md:my-auto md:pb-[101px]">
+        <main className="mt-10 flex w-full flex-col px-7 md:my-auto md:pb-[101px]">
           <p className={label}>Listening Room · No. {garment.no}</p>
           <h1 className="mt-6 text-[40px] leading-[0.95] font-bold uppercase md:text-[56px]">
             {garment.titleLines.join(" ")}

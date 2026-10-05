@@ -46,7 +46,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
           id="top"
           className="mx-auto w-full max-w-[1440px] [container-type:inline-size]"
         >
-          <SiteHeader variant="compact" />
+          <SiteHeader variant="compact" title="Collection" />
 
           <main>
             {/* Gallery + purchase info */}

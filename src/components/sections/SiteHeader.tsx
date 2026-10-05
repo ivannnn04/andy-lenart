@@ -1,16 +1,9 @@
+import { MobileNav } from "@/components/MobileNav";
 import { Photo } from "@/components/Photo";
 import { placer, stage } from "@/lib/design";
+import { NAV } from "@/lib/nav";
 
 const p = placer(0);
-
-// Absolute paths so the links also work from inner pages (on the homepage the
-// browser just scrolls to the section).
-const NAV = [
-  { label: "Manifesto", href: "/#manifesto" },
-  { label: "Collections", href: "/#collection" },
-  { label: "Listen", href: "/#listen" },
-  { label: "Own", href: "/#stay-connected" },
-];
 
 /**
  * Design coordinates per header variant: the homepage header, and the smaller
@@ -40,12 +33,25 @@ const VARIANTS = {
   },
 } as const;
 
-export function SiteHeader({ variant = "home" }: { variant?: keyof typeof VARIANTS }) {
+/**
+ * Phones get the compact bar (page name · monogram · "Public" menu) on every
+ * page; from md the art-directed header below takes over.
+ */
+export function SiteHeader({
+  variant = "home",
+  title,
+}: {
+  variant?: keyof typeof VARIANTS;
+  /** Page name shown on the left of the phone header. */
+  title: string;
+}) {
   const v = VARIANTS[variant];
   return (
+    <>
+    <MobileNav title={title} className="md:hidden" />
     <header
       data-reveal-children
-      className="stage flex flex-wrap items-center justify-between gap-x-4 gap-y-2 gutter pt-4 md:pt-0"
+      className="stage gutter max-md:hidden"
       style={stage(v.height)}
     >
       <Photo
@@ -92,5 +98,6 @@ export function SiteHeader({ variant = "home" }: { variant?: keyof typeof VARIAN
         </ul>
       </nav>
     </header>
+    </>
   );
 }
