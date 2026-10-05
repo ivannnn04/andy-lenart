@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Courier_Prime } from "next/font/google";
-import Link from "next/link";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Photo } from "@/components/Photo";
+import { ListeningRoom } from "@/components/room/ListeningRoom";
 import { RoomGate } from "@/components/room/RoomGate";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { getGarment } from "@/lib/garments";
@@ -39,6 +39,8 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
 
   const jar = await cookies();
   const granted = unsign(jar.get(accessCookie(slug))?.value) === "granted";
+  if (granted) return <ListeningRoom garment={garment} slug={slug} />;
+
   const initial = gateState(jar.get(gateCookie(slug))?.value);
   const photo = garment.gallery[garment.requestPhoto];
 
@@ -68,29 +70,16 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
               {garment.titleLines.join(" ")}
             </h1>
 
-            {granted ? (
-              <div className="mt-6 flex flex-col gap-6" role="status">
-                <p className="text-[20px] leading-[1.5] text-ink">
-                  The room is open. Your track and the Staircase will appear here.
-                </p>
-                <Link href={`/collection/${slug}`} className="link-draw self-start text-[13px] uppercase tracking-[0.1em] text-muted">
-                  About this garment
-                </Link>
-              </div>
-            ) : (
-              <>
-                <p className="mt-6 text-[20px] leading-[1.5] text-ink">
-                  Enter the <strong className="font-semibold">third word</strong> of the concept text,
-                  found inside your garment.
-                </p>
-                <p className="mt-0.5 text-[12px] leading-[normal] uppercase tracking-[0.1em] text-muted">
-                  (Excludes title &amp; collection name)
-                </p>
-                <div className="mt-2.5">
-                  <RoomGate slug={slug} initial={initial} />
-                </div>
-              </>
-            )}
+            <p className="mt-6 text-[20px] leading-[1.5] text-ink">
+              Enter the <strong className="font-semibold">third word</strong> of the concept text,
+              found inside your garment.
+            </p>
+            <p className="mt-0.5 text-[12px] leading-[normal] uppercase tracking-[0.1em] text-muted">
+              (Excludes title &amp; collection name)
+            </p>
+            <div className="mt-2.5">
+              <RoomGate slug={slug} initial={initial} />
+            </div>
           </main>
         </div>
       </div>

@@ -26,7 +26,7 @@ const PLAY_EVENT = "preview:play";
  * Playback state for a preview <audio>: play/pause, the playhead (followed
  * every frame while playing) and the fade-shaped, quieter volume.
  */
-function usePreviewAudio() {
+export function usePreviewAudio() {
   const audio = useRef<HTMLAudioElement>(null);
   const [playing, setPlaying] = useState(false);
   const [time, setTime] = useState(0);

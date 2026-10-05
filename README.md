@@ -96,6 +96,27 @@ other pages. Point each garment's tag at
   that device. Three wrong words lock the gate for ten minutes.
 - Set `ROOM_SECRET` (any long random string) in the deployment environment;
   it signs those cookies.
-- The page is `noindex`. The Listening Room itself (Figma "09" onwards) is
-  not built yet; an opened gate shows a short placeholder.
+- The page is `noindex`. Once the gate is open the same URL shows the
+  Listening Room (Figma "09" mobile, "14" desktop): a black collage around a
+  cassette that plays the garment's track. For review the No. 01 keyword is
+  temporarily "andy" (`KEYWORD_OVERRIDE` in `src/lib/rooms.ts`).
+- The Staircase (`/room/<slug>/staircase`) is a placeholder for now.
+
+### Listening Room images
+
+Export these Figma layers (the layer as cropped in the frame, PNG at 2x) into
+`public/images/`. Until a file is there, an outlined placeholder with the
+layer name holds its place.
+
+| File | Figma layer |
+| --- | --- |
+| `room-cassette.webp` | spinning_cassette_realistic 1 |
+| `room-listen.png` | Unnamed 1 (the "LISTEN" lettering) |
+| `room-photo-road.webp` | R1-01944-0028 2 |
+| `room-hold-on.png` | so endlessly 2 3 ("hold on —") |
+| `room-photo-sledges.webp` | R1-01944-0028 1 |
+| `room-photo-tortoise.webp` | R1-01944-0028 3 |
+| `room-so-endlessly.png` | so endlessly 2 1 |
+| `room-photo-pelican.webp` | R1-01944-0030 1 |
+| `room-was-that.png` | was that.... 1 |
 

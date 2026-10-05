@@ -18,12 +18,17 @@ export function MobileNav({
   title,
   className = "",
   inset = "gutter",
+  tone = "light",
 }: {
-  title?: string;
+  /** Page name (or a link) on the left; without it "Public" goes there. */
+  title?: ReactNode;
   className?: string;
   /** Side padding of the bar, to line up with the page's own content. */
   inset?: string;
+  /** "dark": white text and monogram on black (the Listening Room). */
+  tone?: "light" | "dark";
 }) {
+  const dark = tone === "dark";
   const menu = useRef<HTMLDialogElement>(null);
   const close = () => menu.current?.close();
 
@@ -42,7 +47,15 @@ export function MobileNav({
         onClick={close}
         className="w-[72px] self-start pt-5 transition-transform duration-300 hover:-rotate-3 hover:scale-105 motion-reduce:transition-none"
       >
-        <Image src="/images/logo-mark.png" alt="" width={332} height={282} sizes="72px" preload />
+        <Image
+          src="/images/logo-mark.png"
+          alt=""
+          width={332}
+          height={282}
+          sizes="72px"
+          preload
+          className={dark ? "invert" : undefined}
+        />
       </Link>
       {title && <div className="flex justify-end">{button}</div>}
     </div>
@@ -61,7 +74,11 @@ export function MobileNav({
         </button>,
       )}
 
-      <dialog ref={menu} aria-label="Menu" className="site-menu bg-white text-black">
+      <dialog
+        ref={menu}
+        aria-label="Menu"
+        className={`site-menu ${dark ? "bg-black text-white" : "bg-white text-black"}`}
+      >
         {bar(
           <button type="button" onClick={close} className={`${barText} link-draw shrink-0`}>
             Close

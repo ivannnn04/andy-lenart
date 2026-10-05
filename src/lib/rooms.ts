@@ -22,7 +22,15 @@ const SECRET = process.env.ROOM_SECRET ?? "andy-lenart-dev-room-secret";
 /** Lower-case letters and digits only, so "Is," / " is " / "IS" all match. */
 const normalise = (word: string) => word.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 
+// Temporary keywords while the rooms are being reviewed; remove an entry to
+// go back to the third word of the concept text.
+const KEYWORD_OVERRIDE: Record<string, string> = {
+  "born-by-the-pelican-sculpture": "andy",
+};
+
 export function roomKeyword(garment: Garment) {
+  const override = KEYWORD_OVERRIDE[garment.slug];
+  if (override) return normalise(override);
   const words = garment.concept.paragraphs.join(" ").split(/\s+/).map(normalise).filter(Boolean);
   return words[2] ?? "";
 }

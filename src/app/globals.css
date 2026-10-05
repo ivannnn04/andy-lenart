@@ -337,3 +337,57 @@ html:has(.site-menu[open]) {
     transition: none;
   }
 }
+
+/*
+ * Listening Room collage (components/room/ListeningRoom.tsx). Below md the
+ * pieces are placed on the 390px phone artboard (--m = one phone design px,
+ * capped so a wide phone doesn't blow it up); from md on the 1440px
+ * artboard (--u). Each piece gets --mx/--my/--mw and --dx/--dy/--dw, plus
+ * an aspect ratio (--mr / --dr) when it is an image.
+ */
+.room-stage {
+  --m: min(calc(100cqw / 390), 1.6px);
+  position: relative;
+  width: calc(390 * var(--m));
+  height: calc(1380 * var(--m));
+  margin-inline: auto;
+}
+
+.room-item {
+  position: absolute;
+  left: calc(var(--mx) * var(--m));
+  top: calc(var(--my) * var(--m));
+  width: calc(var(--mw) * var(--m));
+  aspect-ratio: var(--mr, auto);
+}
+
+@media (min-width: 768px) {
+  .room-stage {
+    width: 100%;
+    height: calc(1258 * var(--u));
+  }
+
+  .room-item {
+    left: calc(var(--dx) * var(--u));
+    top: calc(var(--dy) * var(--u));
+    width: calc(var(--dw) * var(--u));
+    aspect-ratio: var(--dr, auto);
+  }
+}
+
+/* The tape rocks while the track plays. */
+.room-tape[data-playing] {
+  animation: room-tape 2.4s ease-in-out infinite;
+}
+
+@keyframes room-tape {
+  50% {
+    rotate: -1.5deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-tape[data-playing] {
+    animation: none;
+  }
+}
