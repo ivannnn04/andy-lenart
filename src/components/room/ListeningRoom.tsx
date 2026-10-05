@@ -288,7 +288,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           </Placed>
 
           <Placed place={{ d: [916, 793, 482] }}>
-            <p className="font-medium leading-[normal] uppercase text-[#efefef]" style={{ fontSize: fs(40, 24) }}>
+            <p className="font-bold leading-[normal] uppercase text-[#efefef]" style={{ fontSize: fs(40, 24) }}>
               {garment.titleLines.map((line) => (
                 <span key={line} className="block">
                   {line}
