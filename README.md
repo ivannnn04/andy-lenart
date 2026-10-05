@@ -110,7 +110,7 @@ layer name holds its place.
 
 | File | Figma layer |
 | --- | --- |
-| `room-cassette.webp` | spinning_cassette_realistic 1 |
+| `room-cassette.webp` | spinning_cassette_realistic 1 (static; the reel hubs are turned in CSS while the track plays) |
 | `room-listen.png` | Unnamed 1 (the "LISTEN" lettering) |
 | `room-photo-road.png` | R1-01944-0028 2 |
 | `room-hold-on.png` | so endlessly 2 3 ("hold on —") |

@@ -109,6 +109,38 @@ const LISTEN: Picture = {
   lettering: true,
 };
 
+// The cassette photo is 1177×748; its reel hubs sit at x 342 / 837, y 322.
+const CASSETTE = { w: 1177, h: 748, cy: 322, r: 95 };
+const REELS = [342, 837];
+
+/**
+ * A reel hub cut out of the photo as a circle; it turns while the track
+ * plays (see .room-reel in globals.css).
+ */
+function Reel({ cx }: { cx: number }) {
+  const { w, h, cy, r } = CASSETTE;
+  const d = 2 * r;
+  return (
+    <span
+      aria-hidden
+      className="room-reel absolute aspect-square overflow-hidden rounded-full"
+      style={{ left: `${((cx - r) / w) * 100}%`, top: `${((cy - r) / h) * 100}%`, width: `${(d / w) * 100}%` }}
+    >
+      <span
+        className="absolute block"
+        style={{
+          left: `${(-(cx - r) / d) * 100}%`,
+          top: `${(-(cy - r) / d) * 100}%`,
+          width: `${(w / d) * 100}%`,
+          height: `${(h / d) * 100}%`,
+          backgroundImage: `url(/images/${TAPE.file})`,
+          backgroundSize: "100% 100%",
+        }}
+      />
+    </span>
+  );
+}
+
 const LYRICS = [
   "I look for truth in the early 2000s.",
   "I look for reimagined fragments of me,",
@@ -226,6 +258,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
             <RoomTape src={garment.preview.src} title={`the track for No. ${garment.no}`}>
               <span className="relative block size-full">
                 <Art picture={TAPE} sizes="(min-width: 768px) 23vw, 50vw" />
+                {imageExists(TAPE.file) && REELS.map((cx) => <Reel key={cx} cx={cx} />)}
               </span>
             </RoomTape>
           </Placed>

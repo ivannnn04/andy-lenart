@@ -391,3 +391,24 @@ html:has(.site-menu[open]) {
     animation: none;
   }
 }
+
+/* The cassette's reel hubs turn while the track plays. */
+.room-reel {
+  animation: room-reel 2.2s linear infinite paused;
+}
+
+.room-tape[data-playing] .room-reel {
+  animation-play-state: running;
+}
+
+@keyframes room-reel {
+  to {
+    rotate: -360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .room-reel {
+    animation: none;
+  }
+}
