@@ -245,7 +245,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
         <RoomAudioProvider src={garment.room.track}>
         <main className="room-stage" aria-labelledby="room-title">
           <Placed place={{ m: [95, 38, 200], d: [556, 65, 324] }} className="text-center">
-            <p className="font-light leading-[normal] text-[#efefef]" style={{ fontSize: `clamp(12px, calc(24 * var(--u)), 24px)` }}>
+            <p className="font-normal leading-[normal] text-[#efefef]" style={{ fontSize: `clamp(12px, calc(24 * var(--u)), 24px)` }}>
               TOUCH THE TAPE
             </p>
           </Placed>
@@ -263,7 +263,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           </Placed>
 
           <Placed place={{ m: [48, 265, 300], d: [98, 138, 420] }}>
-            <p className="font-light leading-[normal] text-[#efefef] text-[13px] md:text-[clamp(14px,calc(24*var(--u)),24px)]">
+            <p className="font-normal leading-[normal] text-[#efefef] text-[13px] md:text-[clamp(14px,calc(24*var(--u)),24px)]">
               No. {garment.no} / DEPARTURES 1322
             </p>
             <h1
@@ -283,7 +283,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           <Placed place={{ m: [20, 666, 350], d: [175, 744, 481] }} className="text-center">
             <RoomLyrics
               lines={garment.room.lyrics}
-              className="font-thin leading-[normal] text-[12px] md:text-[clamp(12px,calc(16*var(--u)),16px)]"
+              className="font-normal leading-[normal] text-[12px] md:text-[clamp(12px,calc(16*var(--u)),16px)]"
             />
           </Placed>
 
@@ -300,7 +300,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
           <Placed place={{ m: [0, 1298, 390], d: [420, 1140, 600] }} className="text-center">
             <Link
               href={staircase}
-              className="text-[15px] uppercase text-[#efefef] underline underline-offset-4 transition-opacity hover:opacity-70 md:text-[clamp(15px,calc(20*var(--u)),20px)]"
+              className="text-[15px] font-medium uppercase text-[#efefef] underline underline-offset-4 transition-opacity hover:opacity-70 md:text-[clamp(15px,calc(20*var(--u)),20px)]"
             >
               Exit to the Staircase
             </Link>

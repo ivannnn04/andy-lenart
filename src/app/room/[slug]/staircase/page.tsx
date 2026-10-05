@@ -26,7 +26,7 @@ export default async function StaircasePage({ params }: PageProps<"/room/[slug]/
       <MobileNav tone="dark" title="The Staircase" />
       <main className="gutter flex flex-col items-start gap-6 pt-16">
         <h1 className="text-[40px] leading-[0.95] font-bold uppercase">The Staircase</h1>
-        <p className="text-[18px] leading-[1.5] text-[#efefef]">Opening soon.</p>
+        <p className="text-[18px] leading-[1.5] font-medium text-[#efefef]">Opening soon.</p>
         <Link href={`/room/${slug}`} className="link-draw text-[15px] uppercase text-[#efefef]">
           Back to the Listening Room
         </Link>
