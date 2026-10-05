@@ -13,7 +13,8 @@ const ERROR_BLUE = "text-[#2137e1]";
 export function RoomGate({ slug, initial }: { slug: string; initial: GateState }) {
   const [state, formAction, pending] = useActionState(enterRoom.bind(null, slug), initial);
   const locked = useLockCountdown(state);
-  const wrong = state.status === "wrong";
+  // A wrong word, or the lock that the last wrong word triggered.
+  const failed = state.status !== "idle";
 
   return (
     <form action={formAction} className="flex flex-col">
@@ -30,31 +31,45 @@ export function RoomGate({ slug, initial }: { slug: string; initial: GateState }
         spellCheck={false}
         placeholder="_"
         disabled={locked !== null}
-        aria-invalid={wrong || undefined}
-        aria-describedby={wrong ? "room-word-error" : locked !== null ? "room-locked" : undefined}
+        aria-invalid={failed || undefined}
+        aria-describedby={
+          [failed && "room-word-error", locked !== null && "room-locked"].filter(Boolean).join(" ") || undefined
+        }
         // A fresh, empty field after each wrong word.
-        key={wrong ? `wrong-${state.attemptsLeft}` : "word"}
-        className="h-[54px] w-full rounded-none border-b border-[#333] bg-transparent pt-3.5 pb-2.5 font-(family-name:--font-courier) text-[26px] leading-[normal] text-ink outline-none placeholder:text-[#808080] focus:border-ink disabled:opacity-40"
+        key={
+          state.status === "wrong"
+            ? `wrong-${state.attemptsLeft}`
+            : state.status === "locked"
+              ? `locked-${state.lockedUntil}`
+              : "word"
+        }
+        className="h-[54px] w-full rounded-none border-b border-[#333] bg-transparent pt-3.5 pb-2.5 font-(family-name:--font-courier) text-[26px] leading-[normal] text-ink outline-none placeholder:text-[#808080] focus:border-ink disabled:cursor-not-allowed"
       />
 
-      {wrong && (
-        <p id="room-word-error" role="alert" className={`mt-3.5 flex gap-2 text-[13px] leading-[1.45] ${ERROR_BLUE}`}>
-          <svg aria-hidden viewBox="0 0 12 12" className="mt-[0.3em] size-3 shrink-0" stroke="currentColor" strokeWidth="1.3">
+      {failed && (
+        // The cross sits in the line, so the message wraps back to the left
+        // edge rather than hanging beside it.
+        <p id="room-word-error" role="alert" className={`mt-3.5 text-[13px] leading-[1.45] ${ERROR_BLUE}`}>
+          <svg
+            aria-hidden
+            viewBox="0 0 12 12"
+            className="mr-2 inline-block size-3 align-[-0.1em]"
+            stroke="currentColor"
+            strokeWidth="1.2"
+          >
             <path d="M1 1l10 10M11 1 1 11" />
           </svg>
-          <span>
-            Incorrect word. Check the <strong className="font-semibold">concept text</strong> printed
-            inside the garment and try again, following the guide above.
-          </span>
+          Incorrect word. Check the <strong className="font-semibold">concept text</strong> printed
+          inside the garment and try again, following the guide above.
         </p>
       )}
 
       <button
         type="submit"
         disabled={pending || locked !== null}
-        className={`${wrong ? "mt-[30px]" : "mt-6"} flex h-[50px] items-center justify-center bg-ink text-[15px] font-semibold uppercase tracking-[0.1em] text-[#f2f2f2] shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-ink disabled:hover:text-[#f2f2f2] motion-reduce:transition-none`}
+        className={`mt-6 flex h-[50px] items-center justify-center bg-ink text-[15px] font-semibold uppercase tracking-[0.1em] text-[#f2f2f2] shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-[#f2f2f2] motion-reduce:transition-none`}
       >
-        {pending ? "Checking…" : wrong ? "Try again" : "Enter the room"}
+        {pending ? "Checking…" : failed ? "Try again" : "Enter the room"}
       </button>
 
       {locked !== null && (
