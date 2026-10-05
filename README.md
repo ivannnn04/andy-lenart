@@ -80,3 +80,21 @@ needs these files in `public/images/`:
 | Figma layer | Used for |
 | --- | --- |
 | (not in design yet) | the Listening Room image |
+
+## Listening Room gate
+
+`/room/[slug]` is where an owner lands after tapping the NFC tag in their
+garment (Figma "07 — Room gate", "08 — wrong word"; mobile first, with the
+garment photo beside the form on desktop). Point each garment's tag at
+`https://<domain>/room/<slug>`, e.g. `/room/born-by-the-pelican-sculpture`.
+
+- The keyword is the third word of the garment's concept text in
+  `src/lib/garments.ts` (for No. 01: "is"). It is checked on the server
+  (`src/lib/rooms.ts`) and never sent to the browser.
+- A correct word sets a signed, httpOnly cookie that keeps the room open on
+  that device. Five wrong words lock the gate for ten minutes.
+- Set `ROOM_SECRET` (any long random string) in the deployment environment;
+  it signs those cookies.
+- The page is `noindex`. The Listening Room itself (Figma "09" onwards) is
+  not built yet; an opened gate shows a short placeholder.
+
