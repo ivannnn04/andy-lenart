@@ -85,7 +85,8 @@ needs these files in `public/images/`:
 
 `/room/[slug]` is where an owner lands after tapping the NFC tag in their
 garment (Figma "07 — Room gate", "08 — wrong word"; mobile first, with the
-garment photo beside the form on desktop). Point each garment's tag at
+garment photo beside the form on desktop). It uses the same header as the
+other pages. Point each garment's tag at
 `https://<domain>/room/<slug>`, e.g. `/room/born-by-the-pelican-sculpture`.
 
 - The keyword is the third word of the garment's concept text in

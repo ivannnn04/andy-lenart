@@ -40,15 +40,18 @@ const VARIANTS = {
 export function SiteHeader({
   variant = "home",
   title,
+  inset,
 }: {
   variant?: keyof typeof VARIANTS;
   /** Page name shown on the left of the phone header. */
   title: string;
+  /** Side padding of the phone header, when the page uses its own. */
+  inset?: string;
 }) {
   const v = VARIANTS[variant];
   return (
     <>
-    <MobileNav title={title} className="md:hidden" />
+    <MobileNav title={title} inset={inset} className="md:hidden" />
     <header
       data-reveal-children
       className="stage gutter max-md:hidden"
