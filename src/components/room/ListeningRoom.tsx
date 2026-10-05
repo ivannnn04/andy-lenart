@@ -73,7 +73,7 @@ const PICTURES: Picture[] = [
   },
   {
     file: "room-so-endlessly.png",
-    alt: "Handwritten: So endlessly…",
+    alt: "Handwritten: So endlessly fragmented",
     layer: "so endlessly 2 1",
     place: { m: [109, 837, 272, 170], d: [274, 950, 404, 252] },
     lettering: true,
@@ -104,9 +104,9 @@ const LISTEN: Picture = {
   file: "room-listen.png",
   alt: "Handwritten: Listen",
   layer: "Unnamed 1",
-  place: { m: [174.5, 136.8, 195.5, 122.2], d: [675.2, 226.5, 335.3, 209.6] },
+  // The export already carries the layer's slight tilt.
+  place: { m: [171, 131, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
   lettering: true,
-  rotate: -3.47,
 };
 
 const LYRICS = [

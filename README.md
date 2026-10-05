@@ -116,7 +116,7 @@ layer name holds its place.
 | `room-hold-on.png` | so endlessly 2 3 ("hold on —") |
 | `room-photo-sledges.png` | R1-01944-0028 1 |
 | `room-photo-tortoise.png` | R1-01944-0028 3 |
-| `room-so-endlessly.png` | so endlessly 2 1 |
+| `room-so-endlessly.png` | so endlessly 2 1 ("so endlessly fragmented") |
 | `room-photo-pelican.png` | R1-01944-0030 1 |
 | `room-was-that.png` | was that.... 1 |
 
