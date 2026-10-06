@@ -19,6 +19,7 @@ export function MobileNav({
   className = "",
   inset = "gutter",
   tone = "light",
+  buttonExtra,
 }: {
   /** Page name (or a link) on the left; without it "Public" goes there. */
   title?: ReactNode;
@@ -27,6 +28,8 @@ export function MobileNav({
   inset?: string;
   /** "dark": white text and monogram on black (the Listening Room). */
   tone?: "light" | "dark";
+  /** Drawn beside "Public" (hand-lettering), not part of the button. */
+  buttonExtra?: ReactNode;
 }) {
   const dark = tone === "dark";
   const menu = useRef<HTMLDialogElement>(null);
@@ -57,21 +60,24 @@ export function MobileNav({
           className={dark ? "invert" : undefined}
         />
       </Link>
-      {title && <div className="flex justify-end">{button}</div>}
+      {title && <div className="relative flex justify-end">{button}</div>}
     </div>
   );
 
   return (
     <header className={className}>
       {bar(
-        <button
-          type="button"
-          onClick={() => menu.current?.showModal()}
-          aria-haspopup="dialog"
-          className={`${barText} link-draw shrink-0`}
-        >
-          Public
-        </button>,
+        <span className="relative">
+          <button
+            type="button"
+            onClick={() => menu.current?.showModal()}
+            aria-haspopup="dialog"
+            className={`${barText} link-draw relative z-10 shrink-0`}
+          >
+            Public
+          </button>
+          {buttonExtra}
+        </span>,
       )}
 
       <dialog

@@ -17,12 +17,15 @@ export function RoomHeader({
   label,
   href,
   extra,
+  phoneExtra,
 }: {
   tone: "light" | "dark";
   label: string;
   href: string;
   /** Something drawn beside the label on desktop (hand-lettering). */
   extra?: ReactNode;
+  /** The same on the phone bar, beside "Public". */
+  phoneExtra?: ReactNode;
 }) {
   const dark = tone === "dark";
   return (
@@ -30,6 +33,7 @@ export function RoomHeader({
       <MobileNav
         tone={tone}
         className="md:hidden"
+        buttonExtra={phoneExtra}
         title={
           <Link href={href} className="link-draw">
             {label}

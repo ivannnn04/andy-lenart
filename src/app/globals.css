@@ -433,8 +433,8 @@ html:has(.site-menu[open]) {
 
 /*
  * The Staircase (components/room/StaircaseWall.tsx): the "share your
- * thoughts" sheet opens centred over a dimmed page, fading up into place; a
- * mark just added fades in.
+ * thoughts" sheet opens centred over a dimmed page, fading up into place (on
+ * phones it is a bottom sheet that slides up); a mark just added fades in.
  */
 .staircase-sheet {
   position: fixed;
@@ -491,6 +491,33 @@ html:has(.site-menu[open]) {
   .staircase-sheet[open] .staircase-sheet-panel {
     opacity: 0;
     translate: 0 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .staircase-sheet {
+    inset: auto 0 0;
+    width: 100%;
+    max-height: 100dvh;
+    margin: 0;
+  }
+
+  .staircase-sheet-panel {
+    max-height: 100dvh;
+    opacity: 1;
+    translate: 0 100%;
+    transition: translate 0.35s ease-in;
+  }
+
+  .staircase-sheet[open] .staircase-sheet-panel {
+    transition: translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @starting-style {
+    .staircase-sheet[open] .staircase-sheet-panel {
+      opacity: 1;
+      translate: 0 100%;
+    }
   }
 }
 

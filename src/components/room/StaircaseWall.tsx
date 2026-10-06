@@ -31,6 +31,10 @@ const NUDGES = [
   [-8, 48],
 ];
 
+// On phones the wall is a single column; each mark is indented by its own
+// amount (phone design px, scaled down on narrower screens).
+const PHONE_INDENTS = [0, 111, 9, 57, 9, 39, 143, 0, 46, 0];
+
 /**
  * "+ leave your mark" button, the bottom sheet it opens (Figma "Bottom
  * sheet") and the wall of marks below.
@@ -106,7 +110,8 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
     );
   const input =
     "w-full rounded-none border-b border-white bg-transparent py-2.5 text-[17px] leading-[normal] font-normal normal-case tracking-normal text-white [--autofill-text:#fff] outline-none placeholder:text-[#737373] focus:border-b-2 aria-invalid:border-[#ff8a7a]";
-  const label = "flex flex-col gap-1.5 text-[16px] leading-[normal] font-medium uppercase tracking-[0.1em]";
+  const label =
+    "flex flex-col gap-1.5 text-[12px] leading-[normal] font-normal uppercase tracking-[0.1em] md:text-[16px] md:font-medium";
 
   return (
     <>
@@ -114,33 +119,43 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
         type="button"
         onClick={open}
         aria-haspopup="dialog"
-        className="mt-[max(20px,calc(29*var(--u)))] bg-black px-6 py-4 text-[clamp(18px,calc(24*var(--u)),24px)] leading-[normal] font-bold text-white shadow-[inset_0_0_0_2px_#000] transition-colors duration-300 hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black motion-reduce:transition-none"
+        className="mt-[13px] bg-black px-6 py-4 text-[15px] leading-[normal] md:mt-[max(20px,calc(29*var(--u)))] md:text-[clamp(18px,calc(24*var(--u)),24px)] font-bold text-white shadow-[inset_0_0_0_2px_#000] transition-colors duration-300 hover:bg-white hover:text-black focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black motion-reduce:transition-none"
       >
         + leave your mark
       </button>
 
       <ul
         aria-label="Marks left on the Staircase"
-        className="mt-16 grid w-full max-w-[1200px] grid-cols-1 gap-x-[calc(48*var(--u))] gap-y-10 sm:grid-cols-2 md:mt-[calc(110*var(--u))] md:grid-cols-3 md:gap-y-[calc(64*var(--u))]"
+        className="mt-[61px] grid w-full max-w-[1200px] grid-cols-1 gap-x-[calc(48*var(--u))] gap-y-10 sm:grid-cols-2 md:mt-[calc(110*var(--u))] md:grid-cols-3 md:gap-y-[calc(64*var(--u))]"
       >
         {marks.map((mark, i) => {
           const [dy, dx] = NUDGES[i % NUDGES.length];
+          const mx = PHONE_INDENTS[i % PHONE_INDENTS.length];
           const short = mark.text.length <= 8;
+          const long = mark.text.length > 60;
           return (
             <li
               key={mark.id}
-              className={`staircase-mark md:translate-x-[var(--dx)] md:translate-y-[var(--dy)] ${mark.id === fresh ? "is-fresh" : ""}`}
-              style={{ "--dx": `calc(${dx} * var(--u))`, "--dy": `calc(${dy} * var(--u))` } as CSSProperties}
+              className={`staircase-mark max-sm:pl-[var(--mx)] md:translate-x-[var(--dx)] md:translate-y-[var(--dy)] ${mark.id === fresh ? "is-fresh" : ""}`}
+              style={
+                {
+                  "--mx": `min(${mx}px, ${((mx / 390) * 100).toFixed(2)}vw)`,
+                  "--dx": `calc(${dx} * var(--u))`,
+                  "--dy": `calc(${dy} * var(--u))`,
+                } as CSSProperties
+              }
             >
               <blockquote>
                 <p
                   className={`max-w-[300px] leading-none text-black ${
-                    short ? "text-[clamp(26px,calc(34*var(--u)),34px)]" : "text-[clamp(20px,calc(24*var(--u)),24px)] leading-[1.15]"
+                    short
+                      ? "text-[34px] md:text-[clamp(26px,calc(34*var(--u)),34px)]"
+                      : `${long ? "text-[14px] leading-[1.45]" : "text-[20px] leading-[1.15]"} md:text-[clamp(20px,calc(24*var(--u)),24px)] md:leading-[1.15]`
                   }`}
                 >
                   {mark.text}
                 </p>
-                <footer className="mt-2 text-[clamp(13px,calc(16*var(--u)),16px)] tracking-[0.04em] text-[#333]">
+                <footer className="mt-1.5 text-[13px] tracking-[0.04em] text-[#333] md:mt-2 md:text-[clamp(13px,calc(16*var(--u)),16px)]">
                   {mark.name} · {mark.city} · {mark.no}
                 </footer>
               </blockquote>
@@ -156,7 +171,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
         // A click on the dimmed page around the sheet closes it.
         onClick={(e) => e.target === e.currentTarget && close()}
       >
-        <div className="staircase-sheet-panel mx-auto w-full max-w-[849px] bg-black px-6 pt-7 pb-8 text-white">
+        <div className="staircase-sheet-panel mx-auto w-full max-w-[849px] bg-black px-6 pt-7 pb-9 text-white md:pb-8">
           <div className="flex items-start justify-between">
             <span aria-hidden className="block h-1 w-10 bg-[#d9d9d9]" />
             <button type="button" onClick={close} aria-label="Close" className="-m-2 p-2 transition-opacity hover:opacity-60">
@@ -165,7 +180,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
               </svg>
             </button>
           </div>
-          <h2 id={`${id}-title`} className="mt-9 text-[clamp(28px,4vw,36px)] leading-[normal] font-bold uppercase">
+          <h2 id={`${id}-title`} className="mt-12 text-[24px] leading-[normal] font-bold uppercase md:mt-9 md:text-[36px]">
             Share your thoughts
           </h2>
 
@@ -173,9 +188,9 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
             noValidate
             onSubmit={submit}
             onChange={(e) => attempted && setErrors(validate(new FormData(e.currentTarget)))}
-            className="mt-6 flex flex-col gap-5"
+            className="mt-[38px] flex flex-col gap-5 md:mt-6"
           >
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-[290px_minmax(0,1fr)] sm:gap-4">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-[290px_minmax(0,1fr)]">
               <label className={label}>
                 Nickname
                 <input name="name" autoComplete="nickname" placeholder="Mira" maxLength={40} className={input} {...field("name")} />
@@ -195,17 +210,17 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
                 maxLength={MAX_MARK_LENGTH}
                 placeholder="Impression, feeling, memory..."
                 onInput={(e) => setCount(e.currentTarget.value.length)}
-                className={`${input} min-h-[99px] resize-none text-[16px]`}
+                className={`${input} min-h-[99px] resize-none text-[15px] md:text-[16px]`}
                 {...field("text")}
               />
               {error("text")}
             </label>
-            <p className="-mt-3 text-[16px] text-[#d9d9d9]" aria-live="polite">
+            <p className="-mt-3 text-[12px] text-[#d9d9d9] md:text-[16px]" aria-live="polite">
               {count} / {MAX_MARK_LENGTH}
             </p>
             <button
               type="submit"
-              className="mx-auto mt-1 h-[50px] w-full max-w-[256px] bg-white text-[20px] font-bold uppercase tracking-[0.06em] text-black shadow-[inset_0_0_0_2px_#fff] transition-colors duration-300 hover:bg-black hover:text-white motion-reduce:transition-none"
+              className="mx-auto mt-6 h-[50px] w-full bg-white text-[15px] font-bold uppercase tracking-[0.06em] md:mt-1 md:max-w-[256px] md:text-[20px] text-black shadow-[inset_0_0_0_2px_#fff] transition-colors duration-300 hover:bg-black hover:text-white motion-reduce:transition-none"
             >
               Add to the wall
             </button>
