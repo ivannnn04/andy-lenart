@@ -104,7 +104,12 @@ other pages. Point each garment's tag at
   (seconds) is set in `room.lyrics`; No. 01's lyrics and timings are
   placeholders until the real ones arrive. For review the No. 01 keyword is
   temporarily "andy" (`KEYWORD_OVERRIDE` in `src/lib/rooms.ts`).
-- The Staircase (`/room/<slug>/staircase`) is a placeholder for now.
+- The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
+  needs the room's access cookie. Its wall shows the design's marks
+  (`src/lib/staircase.ts`) plus the ones left on this device: there is no
+  shared database yet, so a new mark is only stored in that browser
+  (localStorage). Connecting a database (e.g. Vercel Postgres / Upstash) is
+  what makes the wall shared.
 
 ### Listening Room images
 
@@ -123,4 +128,6 @@ layer name holds its place.
 | `room-so-endlessly.png` | so endlessly 2 1 ("so endlessly fragmented") |
 | `room-photo-pelican.png` | R1-01944-0030 1 |
 | `room-was-that.png` | was that.... 1 |
+| `room-staircase-graffiti.webp` | the two "R1-01944-0028 4" crops behind THE STAIRCASE, exported together (299×284) |
+| `room-staircase-scrawl.png` | text 4 (the scrawl beside "LISTENING ROOM") |
 

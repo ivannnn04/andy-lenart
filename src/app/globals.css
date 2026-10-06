@@ -430,3 +430,78 @@ html:has(.site-menu[open]) {
     animation: none;
   }
 }
+
+/*
+ * The Staircase (components/room/StaircaseWall.tsx): the bottom sheet rises
+ * from the bottom edge over a dimmed page; a mark just added fades in.
+ */
+.staircase-sheet {
+  position: fixed;
+  inset: auto 0 0;
+  width: 100%;
+  max-width: none;
+  max-height: 100dvh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+  transition:
+    display 0.4s allow-discrete,
+    overlay 0.4s allow-discrete;
+}
+
+.staircase-sheet::backdrop {
+  background: rgb(0 0 0 / 0);
+  transition:
+    background-color 0.4s ease,
+    display 0.4s allow-discrete,
+    overlay 0.4s allow-discrete;
+}
+
+.staircase-sheet[open]::backdrop {
+  background: rgb(255 255 255 / 0.6);
+}
+
+.staircase-sheet-panel {
+  max-height: 100dvh;
+  overflow-y: auto;
+  translate: 0 100%;
+  transition: translate 0.4s ease-in;
+}
+
+.staircase-sheet[open] .staircase-sheet-panel {
+  translate: 0 0;
+  transition: translate 0.6s ease-out;
+}
+
+@starting-style {
+  .staircase-sheet[open]::backdrop {
+    background: rgb(0 0 0 / 0);
+  }
+
+  .staircase-sheet[open] .staircase-sheet-panel {
+    translate: 0 100%;
+  }
+}
+
+html:has(.staircase-sheet[open]) {
+  overflow: hidden;
+}
+
+.staircase-mark.is-fresh {
+  animation: reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .staircase-sheet,
+  .staircase-sheet::backdrop,
+  .staircase-sheet-panel,
+  .staircase-sheet[open] .staircase-sheet-panel {
+    transition: none;
+  }
+
+  .staircase-mark.is-fresh {
+    animation: none;
+  }
+}

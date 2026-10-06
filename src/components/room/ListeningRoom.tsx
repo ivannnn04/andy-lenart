@@ -3,12 +3,11 @@ import path from "node:path";
 import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MobileNav } from "@/components/MobileNav";
 import { RoomAudioProvider, RoomCurrentLine } from "@/components/room/RoomAudio";
+import { RoomHeader } from "@/components/room/RoomHeader";
 import { RoomTape } from "@/components/room/RoomTape";
 import { fs } from "@/lib/design";
 import type { Garment } from "@/lib/garments";
-import { NAV } from "@/lib/nav";
 
 /**
  * Placement on the two artboards: [x, y, width, height?] in design px.
@@ -190,8 +189,6 @@ function Placed({
   );
 }
 
-const linkText = "link-draw font-black uppercase";
-
 /**
  * The Listening Room (Figma "09 — Listening Room (mobile)" and "14 —
  * Listening Room (desktop)"): a black collage around the tape that plays
@@ -204,43 +201,7 @@ export function ListeningRoom({ garment, slug }: { garment: Garment; slug: strin
   return (
     <div className="min-h-dvh overflow-x-clip bg-black text-white">
       <div className="mx-auto w-full max-w-[1440px] [container-type:inline-size]">
-        <MobileNav
-          tone="dark"
-          className="md:hidden"
-          title={
-            <Link href={staircase} className="link-draw">
-              The Staircase
-            </Link>
-          }
-        />
-
-        {/* Desktop header: the room's own name in place of the sound wave. */}
-        <header className="relative h-[calc(200*var(--u))] px-[calc(98*var(--u))] max-md:hidden">
-          <Link
-            href={staircase}
-            className={`${linkText} absolute top-[calc(112*var(--u))] left-[calc(98*var(--u))] text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]`}
-          >
-            The Staircase
-          </Link>
-          <Link
-            href="/"
-            aria-label="Andy Lenárt — home"
-            className="absolute top-[calc(40*var(--u))] left-1/2 w-[calc(121*var(--u))] -translate-x-1/2 transition-transform duration-300 hover:-rotate-3 hover:scale-105 motion-reduce:transition-none"
-          >
-            <Image src="/images/logo-mark.png" alt="" width={332} height={282} sizes="10vw" className="invert" preload />
-          </Link>
-          <nav aria-label="Primary" className="absolute top-[calc(112*var(--u))] right-[calc(72*var(--u))]">
-            <ul className="flex gap-[max(12px,calc(25*var(--u)))] text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]">
-              {NAV.map((item) => (
-                <li key={item.href}>
-                  <a href={item.href} className={linkText}>
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </header>
+        <RoomHeader tone="dark" label="The Staircase" href={staircase} />
 
         <RoomAudioProvider src={garment.room.track}>
         <main className="room-stage" aria-labelledby="room-title">
