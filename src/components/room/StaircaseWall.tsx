@@ -111,7 +111,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
   const input =
     "w-full rounded-none border-b border-white bg-transparent py-2.5 text-[17px] leading-[normal] font-normal normal-case tracking-normal text-white [--autofill-text:#fff] outline-none placeholder:text-[#737373] focus:border-b-2 aria-invalid:border-[#ff8a7a]";
   const label =
-    "flex flex-col gap-1.5 text-[12px] leading-[normal] font-normal uppercase tracking-[0.1em] md:text-[16px] md:font-medium";
+    "flex flex-col gap-1 text-[12px] leading-[normal] font-normal uppercase tracking-[0.1em] md:gap-1.5 md:text-[16px] md:font-medium";
 
   return (
     <>
@@ -174,13 +174,14 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
         <div className="staircase-sheet-panel mx-auto w-full max-w-[849px] bg-black px-6 pt-7 pb-9 text-white md:pb-8">
           <div className="flex items-start justify-between">
             <span aria-hidden className="block h-1 w-10 bg-[#d9d9d9]" />
-            <button type="button" onClick={close} aria-label="Close" className="-m-2 p-2 transition-opacity hover:opacity-60">
+            {/* Phones close it by tapping above the sheet, as in the design; desktop gets a cross. */}
+            <button type="button" onClick={close} aria-label="Close" className="-m-2 p-2 transition-opacity hover:opacity-60 max-md:hidden">
               <svg aria-hidden viewBox="0 0 14 14" className="size-3.5" stroke="currentColor" strokeWidth="1.4">
                 <path d="M1 1l12 12M13 1 1 13" />
               </svg>
             </button>
           </div>
-          <h2 id={`${id}-title`} className="mt-12 text-[24px] leading-[normal] font-bold uppercase md:mt-9 md:text-[36px]">
+          <h2 id={`${id}-title`} className="mt-[50px] text-[24px] leading-[normal] font-bold uppercase md:mt-9 md:text-[36px]">
             Share your thoughts
           </h2>
 
@@ -188,7 +189,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
             noValidate
             onSubmit={submit}
             onChange={(e) => attempted && setErrors(validate(new FormData(e.currentTarget)))}
-            className="mt-[38px] flex flex-col gap-5 md:mt-6"
+            className="mt-[50px] flex flex-col gap-5 md:mt-6"
           >
             <div className="grid grid-cols-2 gap-4 md:grid-cols-[290px_minmax(0,1fr)]">
               <label className={label}>
@@ -210,7 +211,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
                 maxLength={MAX_MARK_LENGTH}
                 placeholder="Impression, feeling, memory..."
                 onInput={(e) => setCount(e.currentTarget.value.length)}
-                className={`${input} min-h-[99px] resize-none text-[15px] md:text-[16px]`}
+                className={`${input} min-h-[86px] resize-none text-[15px] md:min-h-[99px] md:text-[16px]`}
                 {...field("text")}
               />
               {error("text")}
@@ -220,7 +221,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
             </p>
             <button
               type="submit"
-              className="mx-auto mt-6 h-[50px] w-full bg-white text-[15px] font-bold uppercase tracking-[0.06em] md:mt-1 md:max-w-[256px] md:text-[20px] text-black shadow-[inset_0_0_0_2px_#fff] transition-colors duration-300 hover:bg-black hover:text-white motion-reduce:transition-none"
+              className="mx-auto mt-[15px] h-[50px] w-full bg-white text-[15px] font-bold uppercase tracking-[0.06em] md:mt-1 md:max-w-[256px] md:text-[20px] text-black shadow-[inset_0_0_0_2px_#fff] transition-colors duration-300 hover:bg-black hover:text-white motion-reduce:transition-none"
             >
               Add to the wall
             </button>
