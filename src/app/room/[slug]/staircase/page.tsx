@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 const hasImage = (file: string) => existsSync(path.join(process.cwd(), "public/images", file));
 
-const GRAFFITI = "room-staircase-graffiti.webp";
+const GRAFFITI = "room-staircase-graffiti.png";
 const SCRAWL = "room-staircase-scrawl.png";
 
 /**
@@ -46,7 +46,7 @@ export default async function StaircasePage({ params }: PageProps<"/room/[slug]/
                 width={155}
                 height={110}
                 sizes="11vw"
-                className="pointer-events-none absolute top-[calc(-6*var(--u))] left-[calc(34*var(--u))] w-[calc(155*var(--u))] max-w-none"
+                className="pointer-events-none absolute top-[calc(-6*var(--u))] left-[calc(53*var(--u))] w-[calc(155*var(--u))] max-w-none"
               />
             )
           }

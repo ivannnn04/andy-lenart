@@ -128,6 +128,6 @@ layer name holds its place.
 | `room-so-endlessly.png` | so endlessly 2 1 ("so endlessly fragmented") |
 | `room-photo-pelican.png` | R1-01944-0030 1 |
 | `room-was-that.png` | was that.... 1 |
-| `room-staircase-graffiti.webp` | the two "R1-01944-0028 4" crops behind THE STAIRCASE, exported together (299×284) |
+| `room-staircase-graffiti.png` | the two "R1-01944-0028 4" crops behind THE STAIRCASE, exported together (299×284) |
 | `room-staircase-scrawl.png` | text 4 (the scrawl beside "LISTENING ROOM") |
 
