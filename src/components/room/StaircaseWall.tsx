@@ -105,7 +105,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
       </span>
     );
   const input =
-    "w-full rounded-none border-b border-white bg-transparent py-2.5 text-[17px] leading-[normal] font-normal normal-case tracking-normal text-white outline-none placeholder:text-[#737373] focus:border-b-2 aria-invalid:border-[#ff8a7a]";
+    "w-full rounded-none border-b border-white bg-transparent py-2.5 text-[17px] leading-[normal] font-normal normal-case tracking-normal text-white [--autofill-text:#fff] outline-none placeholder:text-[#737373] focus:border-b-2 aria-invalid:border-[#ff8a7a]";
   const label = "flex flex-col gap-1.5 text-[16px] leading-[normal] font-medium uppercase tracking-[0.1em]";
 
   return (

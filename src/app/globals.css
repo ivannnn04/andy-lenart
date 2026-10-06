@@ -514,3 +514,25 @@ html:has(.staircase-sheet[open]) {
     animation: none;
   }
 }
+
+/*
+ * Browser autofill: keep our fields as they are instead of the browser's
+ * pale blue / yellow box. The background is held on its first frame by an
+ * endless transition (the only override Chrome allows), and the text keeps
+ * the field's colour; fields on dark backgrounds set --autofill-text.
+ */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--autofill-text, currentColor);
+  caret-color: var(--autofill-text, currentColor);
+  transition: background-color 100000s 0s, color 100000s 0s;
+}
+
+input:autofill,
+textarea:autofill,
+select:autofill {
+  filter: none;
+}
