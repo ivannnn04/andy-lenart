@@ -136,10 +136,13 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
           return (
             <li
               key={mark.id}
-              className={`staircase-mark max-sm:pl-[var(--mx)] md:translate-x-[var(--dx)] md:translate-y-[var(--dy)] ${mark.id === fresh ? "is-fresh" : ""}`}
+              className={`staircase-mark max-sm:pl-[var(--mx)] sm:max-md:translate-x-[var(--tx)] sm:max-md:mt-[var(--ty)] md:translate-x-[var(--dx)] md:translate-y-[var(--dy)] ${mark.id === fresh ? "is-fresh" : ""}`}
               style={
                 {
                   "--mx": `min(${mx}px, ${((mx / 390) * 100).toFixed(2)}vw)`,
+                  // Tablets (two columns): the phone indents, halved, plus the desktop drops.
+                  "--tx": `${Math.round(mx * 0.5)}px`,
+                  "--ty": `${dy}px`,
                   "--dx": `calc(${dx} * var(--u))`,
                   "--dy": `calc(${dy} * var(--u))`,
                 } as CSSProperties
