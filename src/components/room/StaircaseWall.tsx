@@ -20,7 +20,8 @@ function validate(data: FormData): Errors {
 }
 
 // Loosely scattered columns, as on the design's wall: each mark is nudged
-// down and sideways by a repeating pattern.
+// down and sideways by a repeating pattern (as margin / padding, so it takes
+// up room and a mark never runs into its neighbours).
 const NUDGES = [
   [0, 0],
   [40, 24],
@@ -126,7 +127,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
 
       <ul
         aria-label="Marks left on the Staircase"
-        className="mt-[61px] grid w-full max-w-[1200px] grid-cols-1 gap-x-[calc(48*var(--u))] gap-y-10 sm:grid-cols-2 md:mt-[calc(110*var(--u))] md:grid-cols-3 md:gap-y-[calc(64*var(--u))]"
+        className="mt-[61px] grid w-full max-w-[1200px] grid-cols-1 gap-y-14 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-16 md:mt-[calc(110*var(--u))] md:grid-cols-3 md:gap-x-[max(40px,calc(96*var(--u)))] md:gap-y-[max(56px,calc(96*var(--u)))]"
       >
         {marks.map((mark, i) => {
           const [dy, dx] = NUDGES[i % NUDGES.length];
@@ -136,7 +137,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
           return (
             <li
               key={mark.id}
-              className={`staircase-mark max-sm:pl-[var(--mx)] sm:max-md:translate-x-[var(--tx)] sm:max-md:mt-[var(--ty)] md:translate-x-[var(--dx)] md:translate-y-[var(--dy)] ${mark.id === fresh ? "is-fresh" : ""}`}
+              className={`staircase-mark min-w-0 max-sm:pl-[var(--mx)] sm:max-md:mt-[var(--ty)] sm:max-md:pl-[var(--tx)] md:mt-[var(--dy)] md:pl-[var(--dx)] ${mark.id === fresh ? "is-fresh" : ""}`}
               style={
                 {
                   "--mx": `min(${mx}px, ${((mx / 390) * 100).toFixed(2)}vw)`,
@@ -150,7 +151,7 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
             >
               <blockquote>
                 <p
-                  className={`max-w-[300px] leading-none text-black ${
+                  className={`max-w-[min(300px,100%)] leading-none [overflow-wrap:anywhere] text-black ${
                     short
                       ? "text-[34px] md:text-[clamp(26px,calc(34*var(--u)),34px)]"
                       : `${long ? "text-[14px] leading-[1.45]" : "text-[20px] leading-[1.15]"} md:text-[clamp(20px,calc(24*var(--u)),24px)] md:leading-[1.15]`
