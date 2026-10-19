@@ -188,6 +188,13 @@ export const ROOMS: ListeningRoomInfo[] = [
     slug: "funkce",
     garmentNo: "10",
     titleLines: ["Funkce"],
+    // No photo of its own yet: the vase-painted tower block from "Philosophy of Form".
+    photo: {
+      src: "/images/room-08-photo-vase.png",
+      alt: "Photos of a lamp-lit interior and a tower block with a blue vase painted on its side",
+      width: 311,
+      height: 372,
+    },
     concept: pelican?.concept ?? [],
     track: pelican?.track,
     lyrics: pelican?.lyrics ?? [],
