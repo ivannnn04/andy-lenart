@@ -115,6 +115,9 @@ other pages. Point each garment's tag at
 - The fourth room, "Soviet Sunset" (Figma "04 — SOVIET SUNSET"), is at
   `/room/soviet-sunset`, keyword "andy04" (`room-04-*.png`). Only its phone
   collage is designed; desktop lays out the same pieces in two columns.
+- The fifth room, "Stations of Comfort" (Figma "05 — STATIONS OF COMFORT"),
+  is at `/room/stations-of-comfort`, keyword "andy05" (`room-05-*.png`);
+  desktop is laid out the same way as Soviet Sunset's.
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
   needs the room's access cookie. Its wall shows the design's marks
   (`src/lib/staircase.ts`) plus the ones left on this device: there is no

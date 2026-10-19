@@ -43,7 +43,7 @@ type Picture = {
   objectPosition?: string;
   rotate?: number;
   /** Blend mode the design gives the layer. */
-  blend?: "plus-lighter" | "difference" | "luminosity";
+  blend?: "plus-lighter" | "difference" | "luminosity" | "lighten";
 };
 
 // Order is stacking order: the lettering comes after the photo it overlaps.
@@ -207,6 +207,51 @@ const SUNSET_PICTURES: Picture[] = [
   },
 ];
 
+// "Stations of Comfort" (Figma "05 — STATIONS OF COMFORT"). Only the phone
+// collage is designed; desktop sets it in two columns, 1.5× the phone size.
+const COMFORT_PICTURES: Picture[] = [
+  {
+    file: "room-05-abstract.png",
+    alt: "",
+    layer: "ABSTRACT 1",
+    place: { m: [0, 819, 390, 381], d: [720, 579.5, 585, 571.5] },
+    lettering: true,
+  },
+  {
+    file: "room-05-photo-tower.png",
+    alt: "Dim photo of a tower block against the sky",
+    layer: "2026-10-05 14-50 page 5 15",
+    place: { m: [75, 960, 229, 158], d: [832.5, 791, 343.5, 237] },
+    // The layer is at 20% opacity, so the brush stroke shows through it.
+    blend: "lighten",
+  },
+  {
+    file: "room-05-photo-bench.png",
+    alt: "Black-and-white photo of an empty park bench",
+    layer: "2026-10-05 14-50 page 5 14",
+    place: { m: [229, 986, 121, 95], d: [1063.5, 830, 181.5, 142.5] },
+  },
+  {
+    file: "room-05-photo-sculpture.png",
+    alt: "Black-and-white photo of a concrete sculpture between bushes in front of a housing block",
+    layer: "2026-10-05 14-50 page 5 11",
+    place: { m: [48, 464, 122, 165], d: [170, 552.8, 183, 247.5] },
+  },
+  {
+    file: "room-05-photo-doorway.png",
+    alt: "Black-and-white photo of a graffitied doorway with a bicycle in front",
+    layer: "2026-10-05 14-50 page 5 13",
+    place: { m: [190, 464, 110, 165], d: [383, 552.8, 165, 247.5] },
+  },
+];
+
+const COMFORT_FRUIT: Picture = {
+  file: "room-05-photo-fruit.png",
+  alt: "Black-and-white photo of a table heaped with fruit",
+  layer: "2026-10-05 14-50 page 5 10",
+  place: { m: [82, 766, 173, 125], d: [843, 500, 259.5, 187.5] },
+};
+
 const TAPE_FILE = "room-cassette.webp";
 
 /** What every room shares; only where it sits differs. */
@@ -247,6 +292,14 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1164, 600] },
   },
   "soviet-sunset": {
+    height: [1466, 1330],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1236, 600] },
+  },
+  "stations-of-comfort": {
     height: [1466, 1330],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -408,6 +461,7 @@ const BLEND = {
   "plus-lighter": "mix-blend-plus-lighter",
   difference: "mix-blend-difference",
   luminosity: "mix-blend-luminosity",
+  lighten: "mix-blend-lighten",
 };
 
 // The big SUN / SET letters break inside their narrow boxes, as in the design.
@@ -490,6 +544,50 @@ function BlueprintCollage() {
   );
 }
 
+function StationsOfComfortCollage() {
+  return (
+    <>
+      {COMFORT_PICTURES.map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      <Placed place={{ m: [96, 428.8, 200], d: [242, 500, 300] }} className="pointer-events-none mix-blend-difference">
+        <p aria-hidden className="font-bold leading-[1.1] text-white text-[calc(64*var(--m))] md:text-[calc(96*var(--u))]">
+          1322
+        </p>
+      </Placed>
+
+      <Pictured picture={COMFORT_FRUIT} />
+
+      <Placed place={{ m: [66, 665, 300], d: [197, 854.3, 460] }}>
+        <p className="font-medium leading-[normal] text-[#efefef] text-[14px] md:text-[clamp(16px,calc(21*var(--u)),21px)]">
+          <span className="block">Ritualistic simplicity.</span>
+          <span className="block">Testing life early.</span>
+          <span className="block font-bold">Places designed to design us in return.</span>
+        </p>
+      </Placed>
+
+      <Placed place={{ m: [179, 1135, 200], d: [988.5, 1053.5, 300] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-[#efefef] text-[12px] md:text-[clamp(13px,calc(18*var(--u)),18px)]">
+          …with smoke and a few bottles.
+        </p>
+      </Placed>
+      <Placed place={{ m: [266, 1154.3, 81, 41], d: [1119, 1082.4, 121.5, 61.5] }} className="pointer-events-none">
+        <Art picture={{ file: "room-05-and-more.png", alt: "Handwritten: and more", layer: "Group 2085663286", place: {}, lettering: true }} sizes="120px" />
+      </Placed>
+
+      <Placed place={{ d: [170, 990, 500] }}>
+        <p className="font-bold leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(36, 20) }}>
+          STATIONS OF COMFORT
+        </p>
+      </Placed>
+      <Placed place={{ m: [0, 1418, 390] }} className="text-center">
+        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">05 / STATIONS OF COMFORT</p>
+      </Placed>
+    </>
+  );
+}
+
 function Pictured({ picture }: { picture: Picture }) {
   return (
     <Placed
@@ -503,7 +601,8 @@ function Pictured({ picture }: { picture: Picture }) {
 
 /**
  * A Listening Room (Figma "09 — Listening Room (mobile)", "14 — Listening
- * Room (desktop)", "02 — PAPER WALLS", "03 — THE BLUEPRINT" and "04 — SOVIET SUNSET"): a black collage around the tape
+ * Room (desktop)", "02 — PAPER WALLS", "03 — THE BLUEPRINT", "04 — SOVIET SUNSET" and "05 —
+ * STATIONS OF COMFORT"): a black collage around the tape
  * that plays the room's track. Both layouts are absolute collages measured
  * in their own artboard's units (see .room-stage in globals.css).
  */
@@ -570,6 +669,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           {room.collage === "paper-walls" && <PaperWallsCollage />}
           {room.collage === "blueprint" && <BlueprintCollage />}
           {room.collage === "soviet-sunset" && <SovietSunsetCollage />}
+          {room.collage === "stations-of-comfort" && <StationsOfComfortCollage />}
 
           <Placed place={layout.exit} className="text-center">
             <Link
