@@ -364,6 +364,64 @@ const SIGNATURES_PICTURES: Picture[] = [
   },
 ];
 
+// "Funkce" (Figma "10 — FUNKCE"). Only desktop is designed; the phone
+// layout stacks the same pieces in one column.
+const FUNKCE_PICTURES: Picture[] = [
+  {
+    file: "room-10-photo-building.png",
+    alt: "Black-and-white photo of a concrete building raised on pillars",
+    layer: "R1-04911-0000 2",
+    place: { m: [46, 450, 180, 191], d: [248, 405, 262, 278] },
+  },
+  {
+    file: "room-10-photo-flats.png",
+    alt: "Black-and-white photo of a block of flats behind trees",
+    layer: "R1-04911-0000 3",
+    place: { m: [46, 655, 180, 78.8], d: [248, 712, 265, 116] },
+  },
+  {
+    file: "room-10-photo-bird.png",
+    alt: "Grainy photo of a dark bird's wing against a window",
+    layer: "R1-04911-0001 2",
+    place: { m: [240, 515, 104, 200], d: [564, 515, 127, 244] },
+    blend: "luminosity",
+  },
+  {
+    file: "room-10-loop.png",
+    alt: "",
+    layer: "Vector 47",
+    place: { m: [190, 440, 162.5, 129.1], d: [479, 400, 258, 205] },
+    lettering: true,
+  },
+  {
+    file: "room-10-funkce.png",
+    alt: "Handwritten: Funkce",
+    layer: "fuknce 1–2",
+    place: { m: [80, 700, 250, 119.6], d: [380.4, 781.2, 324, 155] },
+    lettering: true,
+  },
+  {
+    file: "room-10-dostay.png",
+    alt: "Handwritten: do stay",
+    layer: "Group 2085663318",
+    place: { m: [215, 812, 72, 41.3], d: [585.8, 927.2, 96, 55] },
+    lettering: true,
+  },
+  {
+    file: "room-10-photo-family.png",
+    alt: "Faded colour photo of a family around a coffee table with bottles and fruit",
+    layer: "2026-10-09 14-28 page 18 1",
+    place: { m: [30, 975, 330, 226.1], d: [787, 628, 394, 270] },
+  },
+  {
+    file: "room-10-star.png",
+    alt: "",
+    layer: "Star 1",
+    place: { m: [100, 1210, 34, 32.5], d: [959.2, 982, 45, 43] },
+    lettering: true,
+  },
+];
+
 const TAPE_FILE = "room-cassette.webp";
 
 /** What every room shares; only where it sits differs. */
@@ -987,9 +1045,30 @@ function TheSignaturesCollage() {
   );
 }
 
-/** "Funkce": only the desktop frame exists so far, with no collage yet. */
 function FunkceCollage() {
-  return <Footer>10 / FUNKCE</Footer>;
+  return (
+    <>
+      {FUNKCE_PICTURES.map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      <Placed place={{ m: [30, 870, 340], d: [785, 493, 460] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
+          <span className="block">So you found what was there:</span>
+          <span className="block">life as an ordinary, everyday function…</span>
+          <span className="mt-[1.2em] block font-bold">With just a couple million layers in between.</span>
+        </p>
+      </Placed>
+
+      <Placed place={{ m: [160, 1210, 220], d: [1070, 933, 280] }}>
+        <p className="font-medium whitespace-nowrap text-white text-[18px] leading-[22px] md:text-[clamp(18px,calc(24*var(--u)),24px)] md:leading-[calc(30*var(--u))]">
+          <span className="block">UNTIL YOUR NEXT</span>
+          <span className="block">UTOPIAN DREAM</span>
+        </p>
+      </Placed>
+      <Footer>10 / FUNKCE</Footer>
+    </>
+  );
 }
 
 function Pictured({ picture }: { picture: Picture }) {

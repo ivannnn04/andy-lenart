@@ -184,16 +184,15 @@ export const ROOMS: ListeningRoomInfo[] = [
     collage: "the-signatures",
   },
   {
-    // Figma "10 — FUNKCE". It plays the first track until its own is added.
+    // Figma "10 — FUNKCE" (desktop only; the phone layout follows the other rooms). It plays the first track until its own is added.
     slug: "funkce",
     garmentNo: "10",
     titleLines: ["Funkce"],
-    // No photo of its own yet: the vase-painted tower block from "Philosophy of Form".
     photo: {
-      src: "/images/room-08-photo-vase.png",
-      alt: "Photos of a lamp-lit interior and a tower block with a blue vase painted on its side",
-      width: 311,
-      height: 372,
+      src: "/images/room-10-photo-family.png",
+      alt: "Faded colour photo of a family around a coffee table with bottles and fruit",
+      width: 394,
+      height: 270,
     },
     concept: pelican?.concept ?? [],
     track: pelican?.track,

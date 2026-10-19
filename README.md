@@ -124,7 +124,8 @@ other pages. Point each garment's tag at
 - Rooms 7–10: "Aliens and Herons" (`/room/aliens-and-herons`, "andy07"),
   "Philosophy of Form" (`/room/philosophy-of-form`, "andy08"), "The
   Signatures" (`/room/the-signatures`, "andy09") and "Funkce"
-  (`/room/funkce`, "andy10"; its Figma frame has no collage yet).
+  (`/room/funkce`, "andy10"; only its desktop is designed, the phone layout
+  stacks the same pieces).
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
   needs the room's access cookie. Its wall shows the design's marks
   (`src/lib/staircase.ts`) plus the ones left on this device: there is no
