@@ -27,6 +27,7 @@ const normalise = (word: string) => word.toLowerCase().replace(/[^\p{L}\p{N}]/gu
 const KEYWORD_OVERRIDE: Record<string, string> = {
   "born-by-the-pelican-sculpture": "andy",
   "paper-walls": "andy02",
+  "the-blueprint": "andy03",
 };
 
 type Keyed = Pick<ListeningRoomInfo, "slug" | "concept">;

@@ -42,6 +42,8 @@ type Picture = {
   lettering?: boolean;
   objectPosition?: string;
   rotate?: number;
+  /** Blend mode the design gives the layer. */
+  blend?: "plus-lighter" | "difference";
 };
 
 // Order is stacking order: the lettering comes after the photo it overlaps.
@@ -130,6 +132,48 @@ const PAPER_WALLS_PICTURES: Picture[] = [
   },
 ];
 
+// "The Blueprint" (Figma "03 — THE BLUEPRINT"). The family photo appears
+// three times, smaller each time.
+const FAMILY = {
+  file: "room-03-photo-family.png",
+  alt: "Black-and-white photo of a mother with two small children on her lap",
+  layer: "2026-10-05 14-50 page 5 6",
+};
+
+const BLUEPRINT_PICTURES: Picture[] = [
+  {
+    file: "room-03-photo-tv.png",
+    alt: "Faded colour photo of an old television on a small table between patterned curtains",
+    layer: "2026-10-05 14-50 page 5 6",
+    place: { m: [70, 450, 257, 169.8], d: [233, 433, 390.5, 258] },
+  },
+  {
+    file: "room-03-staying.png",
+    alt: "Handwritten: Staying",
+    layer: "cas 2",
+    place: { m: [88.3, 474.1, 252.7, 121.7], d: [260.8, 469.6, 384, 185] },
+    lettering: true,
+    blend: "plus-lighter",
+  },
+  {
+    file: "room-03-photo-kitchen.png",
+    alt: "Black-and-white photo of a woman sitting at a glass table in a living room",
+    layer: "2026-10-05 14-50 page 5 5",
+    place: { m: [110, 699, 236, 164], d: [327, 774, 335, 233] },
+  },
+  { ...FAMILY, place: { m: [46, 939, 114.3, 151], d: [729, 634, 200, 264.3] } },
+  { ...FAMILY, alt: "", place: { m: [185, 964, 81, 107], d: [966.1, 691.2, 141.8, 187.3] } },
+  { ...FAMILY, alt: "", place: { m: [291, 981, 54, 71.3], d: [1148.5, 720.9, 94.5, 124.8] } },
+  {
+    file: "room-03-asking.png",
+    alt: "Handwritten: I am asking, while I know I can't",
+    layer: "cas 2 + cas 3",
+    place: { m: [212, 1084, 189.5, 77.1], d: [1007.3, 906.2, 331.7, 134.9] },
+    lettering: true,
+    blend: "difference",
+  },
+];
+
 const TAPE_FILE = "room-cassette.webp";
 
 /** What every room shares; only where it sits differs. */
@@ -154,6 +198,14 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1140, 600] },
   },
   "paper-walls": {
+    height: [1466, 1258],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1164, 600] },
+  },
+  blueprint: {
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -311,9 +363,49 @@ function PaperWallsCollage() {
   );
 }
 
+const BLEND = { "plus-lighter": "mix-blend-plus-lighter", difference: "mix-blend-difference" };
+
+function BlueprintCollage() {
+  return (
+    <>
+      {BLUEPRINT_PICTURES.slice(0, 3).map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      {/* Set slightly out of focus, as in the design. */}
+      <Placed place={{ m: [53, 674, 160], d: [233, 735, 361] }} className="pointer-events-none">
+        <p className="font-medium leading-[normal] whitespace-pre text-[#efefef] blur-[1px]">
+          <span className="block text-[16px] md:text-[clamp(16px,calc(30*var(--u)),30px)]">absence met</span>
+          <span className="block text-[20px] md:text-[clamp(20px,calc(32*var(--u)),32px)]">
+            {"with      "}
+            <span className="font-bold line-through">isolation</span>
+          </span>
+        </p>
+      </Placed>
+
+      <Placed place={{ d: [729, 580, 162] }} className="text-center">
+        <p className="font-medium leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(20, 14) }}>
+          THE BLUEPRINT
+        </p>
+      </Placed>
+
+      {BLUEPRINT_PICTURES.slice(3).map((picture, i) => (
+        <Pictured key={`${picture.file}-${i}`} picture={picture} />
+      ))}
+
+      <Placed place={{ m: [0, 1419, 390] }} className="text-center">
+        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">03 / THE BLUEPRINT</p>
+      </Placed>
+    </>
+  );
+}
+
 function Pictured({ picture }: { picture: Picture }) {
   return (
-    <Placed place={picture.place} className={picture.lettering ? "pointer-events-none" : ""}>
+    <Placed
+      place={picture.place}
+      className={`${picture.lettering ? "pointer-events-none" : ""} ${picture.blend ? BLEND[picture.blend] : ""}`}
+    >
       <Art picture={picture} sizes="(min-width: 768px) 30vw, 70vw" />
     </Placed>
   );
@@ -321,7 +413,7 @@ function Pictured({ picture }: { picture: Picture }) {
 
 /**
  * A Listening Room (Figma "09 — Listening Room (mobile)", "14 — Listening
- * Room (desktop)" and "02 — PAPER WALLS"): a black collage around the tape
+ * Room (desktop)", "02 — PAPER WALLS" and "03 — THE BLUEPRINT"): a black collage around the tape
  * that plays the room's track. Both layouts are absolute collages measured
  * in their own artboard's units (see .room-stage in globals.css).
  */
@@ -384,7 +476,9 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
             />
           </Placed>
 
-          {room.collage === "pelican" ? <PelicanCollage room={room} /> : <PaperWallsCollage />}
+          {room.collage === "pelican" && <PelicanCollage room={room} />}
+          {room.collage === "paper-walls" && <PaperWallsCollage />}
+          {room.collage === "blueprint" && <BlueprintCollage />}
 
           <Placed place={layout.exit} className="text-center">
             <Link

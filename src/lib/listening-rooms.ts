@@ -20,7 +20,7 @@ export type ListeningRoomInfo = {
   track?: string;
   lyrics: Garment["room"]["lyrics"];
   verse: string[];
-  collage: "pelican" | "paper-walls";
+  collage: "pelican" | "paper-walls" | "blueprint";
 };
 
 function fromGarment(slug: string, collage: ListeningRoomInfo["collage"]): ListeningRoomInfo | undefined {
@@ -57,6 +57,23 @@ export const ROOMS: ListeningRoomInfo[] = [
     lyrics: pelican?.lyrics ?? [],
     verse: [],
     collage: "paper-walls",
+  },
+  {
+    // Figma "03 — THE BLUEPRINT". It plays the first track until its own is added.
+    slug: "the-blueprint",
+    garmentNo: "03",
+    titleLines: ["The Blueprint"],
+    photo: {
+      src: "/images/room-03-photo-family.png",
+      alt: "Black-and-white photo of a mother with two small children on her lap",
+      width: 201,
+      height: 265,
+    },
+    concept: pelican?.concept ?? [],
+    track: pelican?.track,
+    lyrics: pelican?.lyrics ?? [],
+    verse: [],
+    collage: "blueprint",
   },
 ];
 

@@ -109,6 +109,9 @@ other pages. Point each garment's tag at
   "andy02" for review. Until its own track arrives it plays No. 01's. Its
   images (`room-02-*.png`) are 1× renders of the Figma layers; replace them
   with 2× exports of the same layers for sharper photos.
+- The third room, "The Blueprint" (Figma "03 — THE BLUEPRINT"), is at
+  `/room/the-blueprint`, keyword "andy03"; same notes as Paper Walls
+  (`room-03-*.png`).
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
   needs the room's access cookie. Its wall shows the design's marks
   (`src/lib/staircase.ts`) plus the ones left on this device: there is no
