@@ -184,7 +184,7 @@ export const ROOMS: ListeningRoomInfo[] = [
     collage: "the-signatures",
   },
   {
-    // Figma "10 — FUNKCE" (desktop only; the phone layout follows the other rooms). It plays the first track until its own is added.
+    // Figma "10 — FUNKCE". It plays the first track until its own is added.
     slug: "funkce",
     garmentNo: "10",
     titleLines: ["Funkce"],

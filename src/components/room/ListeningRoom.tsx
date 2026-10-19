@@ -364,60 +364,62 @@ const SIGNATURES_PICTURES: Picture[] = [
   },
 ];
 
-// "Funkce" (Figma "10 — FUNKCE"). Only desktop is designed; the phone
-// layout stacks the same pieces in one column.
+// "Funkce" (Figma "10 — FUNKCE" desktop and mobile).
 const FUNKCE_PICTURES: Picture[] = [
   {
     file: "room-10-photo-building.png",
     alt: "Black-and-white photo of a concrete building raised on pillars",
     layer: "R1-04911-0000 2",
-    place: { m: [46, 450, 180, 191], d: [248, 405, 262, 278] },
+    place: { m: [56, 451, 155, 164], d: [248, 405, 262, 278] },
   },
   {
     file: "room-10-photo-flats.png",
     alt: "Black-and-white photo of a block of flats behind trees",
     layer: "R1-04911-0000 3",
-    place: { m: [46, 655, 180, 78.8], d: [248, 712, 265, 116] },
+    place: { m: [56, 632, 156, 68], d: [248, 712, 265, 116] },
   },
   {
     file: "room-10-photo-bird.png",
     alt: "Grainy photo of a dark bird's wing against a window",
     layer: "R1-04911-0001 2",
-    place: { m: [240, 515, 104, 200], d: [564, 515, 127, 244] },
+    place: { m: [242, 516, 75, 144], d: [564, 515, 127, 244] },
     blend: "luminosity",
   },
   {
     file: "room-10-loop.png",
     alt: "",
     layer: "Vector 47",
-    place: { m: [190, 440, 162.5, 129.1], d: [479, 400, 258, 205] },
+    place: { m: [192.4, 448.2, 151.7, 120.5], d: [479, 400, 258, 205] },
     lettering: true,
   },
+  // Two more strokes of the loop, drawn on the phone layout only.
+  { file: "room-10-line-1.png", alt: "", layer: "Vector 49", place: { m: [255.4, 563.3, 27, 86] }, lettering: true },
+  { file: "room-10-line-2.png", alt: "", layer: "Vector 50", place: { m: [277.3, 524.3, 37.5, 52] }, lettering: true },
   {
     file: "room-10-funkce.png",
     alt: "Handwritten: Funkce",
     layer: "fuknce 1–2",
-    place: { m: [80, 700, 250, 119.6], d: [380.4, 781.2, 324, 155] },
+    place: { m: [134, 673, 190.3, 91], d: [380.4, 781.2, 324, 155] },
     lettering: true,
   },
   {
     file: "room-10-dostay.png",
     alt: "Handwritten: do stay",
     layer: "Group 2085663318",
-    place: { m: [215, 812, 72, 41.3], d: [585.8, 927.2, 96, 55] },
+    place: { m: [255, 759, 56, 32], d: [585.8, 927.2, 96, 55] },
     lettering: true,
   },
   {
     file: "room-10-photo-family.png",
     alt: "Faded colour photo of a family around a coffee table with bottles and fruit",
     layer: "2026-10-09 14-28 page 18 1",
-    place: { m: [30, 975, 330, 226.1], d: [787, 628, 394, 270] },
+    place: { m: [66, 919, 236, 162], d: [787, 628, 394, 270] },
   },
   {
     file: "room-10-star.png",
     alt: "",
     layer: "Star 1",
-    place: { m: [100, 1210, 34, 32.5], d: [959.2, 982, 45, 43] },
+    place: { m: [173.2, 1169, 45, 43], d: [959.2, 982, 45, 43] },
     lettering: true,
   },
 ];
@@ -1052,7 +1054,7 @@ function FunkceCollage() {
         <Pictured key={picture.file} picture={picture} />
       ))}
 
-      <Placed place={{ m: [30, 870, 340], d: [785, 493, 460] }}>
+      <Placed place={{ m: [47, 801, 330], d: [785, 493, 460] }}>
         <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
           <span className="block">So you found what was there:</span>
           <span className="block">life as an ordinary, everyday function…</span>
@@ -1060,13 +1062,15 @@ function FunkceCollage() {
         </p>
       </Placed>
 
-      <Placed place={{ m: [160, 1210, 220], d: [1070, 933, 280] }}>
-        <p className="font-medium whitespace-nowrap text-white text-[18px] leading-[22px] md:text-[clamp(18px,calc(24*var(--u)),24px)] md:leading-[calc(30*var(--u))]">
+      <Placed place={{ m: [194, 1097, 180], d: [1070, 933, 280] }}>
+        <p className="font-medium whitespace-nowrap text-white text-[16px] leading-[20px] md:text-[clamp(16px,calc(24*var(--u)),24px)] md:leading-[calc(30*var(--u))]">
           <span className="block">UNTIL YOUR NEXT</span>
           <span className="block">UTOPIAN DREAM</span>
         </p>
       </Placed>
-      <Footer>10 / FUNKCE</Footer>
+      <Placed place={{ m: [0, 1406, 390] }} className="text-center">
+        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">10 / FUNKCE</p>
+      </Placed>
     </>
   );
 }
