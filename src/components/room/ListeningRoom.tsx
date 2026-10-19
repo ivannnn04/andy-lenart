@@ -43,7 +43,7 @@ type Picture = {
   objectPosition?: string;
   rotate?: number;
   /** Blend mode the design gives the layer. */
-  blend?: "plus-lighter" | "difference" | "luminosity" | "lighten";
+  blend?: "plus-lighter" | "difference" | "luminosity" | "lighten" | "hard-light" | "exclusion";
 };
 
 // Order is stacking order: the lettering comes after the photo it overlaps.
@@ -252,6 +252,38 @@ const COMFORT_FRUIT: Picture = {
   place: { m: [82, 766, 173, 125], d: [843, 500, 259.5, 187.5] },
 };
 
+// "Symmetrica" (Figma "06 — SYMMETRICA" mobile, "07 — SYMMETRICA" desktop).
+const STRIP = {
+  alt: "",
+  layer: "2026-10-05 14-50 page 5 19–21",
+};
+
+const SYMMETRICA_PICTURES: Picture[] = [
+  { ...STRIP, file: "room-06-strip-1.png", place: { m: [46, 496, 408, 28], d: [84, 472, 585, 40] } },
+  { ...STRIP, file: "room-06-strip-2.png", place: { m: [46, 535, 408, 28], d: [84, 537.5, 585, 40] } },
+  { ...STRIP, file: "room-06-strip-3.png", place: { m: [46, 574, 408, 28], d: [84, 603.9, 585, 40] } },
+  {
+    file: "room-06-photo-blocks.png",
+    alt: "Black-and-white photo of prefab housing blocks behind dark trees",
+    layer: "2026-10-05 14-50 page 5 22",
+    place: { m: [144, 751, 182, 122], d: [319, 825.8, 302.3, 202.2] },
+  },
+  {
+    file: "room-06-photo-tower.png",
+    alt: "Black-and-white photo of a long housing block above trees",
+    layer: "R1-04911-0012 3",
+    place: { m: [176, 693, 166, 151], d: [394, 748, 275.4, 250.5] },
+    blend: "exclusion",
+  },
+];
+
+const SYMMETRICA_TERRACES: Picture = {
+  file: "room-06-photo-terraces.png",
+  alt: "Black-and-white photo of a terraced housing block between trees",
+  layer: "R1-04911-0012 2",
+  place: { m: [-64, 950, 415, 130], d: [782, 705, 546, 171] },
+};
+
 const TAPE_FILE = "room-cassette.webp";
 
 /** What every room shares; only where it sits differs. */
@@ -298,6 +330,14 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
     exit: { m: [0, 1298, 390], d: [420, 1236, 600] },
+  },
+  symmetrica: {
+    height: [1466, 1258],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
   },
   "stations-of-comfort": {
     height: [1466, 1330],
@@ -462,6 +502,8 @@ const BLEND = {
   difference: "mix-blend-difference",
   luminosity: "mix-blend-luminosity",
   lighten: "mix-blend-lighten",
+  "hard-light": "mix-blend-hard-light",
+  exclusion: "mix-blend-exclusion",
 };
 
 // The big SUN / SET letters break inside their narrow boxes, as in the design.
@@ -588,6 +630,68 @@ function StationsOfComfortCollage() {
   );
 }
 
+const SQUARES: Place[] = [
+  { m: [78, 898, 19, 19], d: [782, 611, 46, 39] },
+  { m: [118, 898, 19, 19], d: [877, 611, 46, 39] },
+  { m: [158, 898, 19, 19], d: [974, 611, 44, 39] },
+];
+
+function SymmetricaCollage() {
+  return (
+    <>
+      {/* The white offset shadow sits under the photo, which is blended (hard light) with the black. */}
+      <Placed place={SYMMETRICA_TERRACES.place} className="shadow-[calc(4*var(--m))_calc(15*var(--m))_0_0_#fff] md:shadow-[calc(4*var(--u))_calc(15*var(--u))_0_0_#fff]">
+        <div className="relative size-full mix-blend-hard-light">
+          <Art picture={SYMMETRICA_TERRACES} sizes="(min-width: 768px) 38vw, 100vw" />
+        </div>
+      </Placed>
+
+      {SYMMETRICA_PICTURES.map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      <Placed place={{ m: [29, 693, 160], d: [178, 739, 240] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[17px] md:text-[clamp(17px,calc(24*var(--u)),24px)]">
+          <span className="block">I TURN LEFT</span>
+          <span className="block">AND HERE I AM</span>
+          <span className="block underline underline-offset-[0.12em]">AGAIN</span>
+        </p>
+      </Placed>
+
+      {/* A left-pointing arrow. */}
+      <Placed place={{ m: [158, 642.6, 103, 14.7], d: [460, 688.3, 144, 29.5] }} className="pointer-events-none">
+        <svg aria-hidden viewBox="0 0 144 30" preserveAspectRatio="none" className="size-full" fill="none" stroke="#fff" strokeWidth="2">
+          <path d="M144 15H2M16 1 2 15l14 14" vectorEffect="non-scaling-stroke" />
+        </svg>
+      </Placed>
+
+      {SQUARES.map((place, i) => (
+        <Placed key={i} place={place} className="bg-[#d9d9d9]">
+          <span />
+        </Placed>
+      ))}
+      <Placed place={{ d: [1096.5, 616, 200] }} className="text-center">
+        <p className="font-bold leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(24, 16) }}>
+          SYMMETRICA
+        </p>
+      </Placed>
+
+      <Placed place={{ m: [225, 1127, 126, 10], d: [1152, 924, 176, 10] }} className="bg-white">
+        <span />
+      </Placed>
+      <Placed place={{ m: [219, 1144, 150], d: [1147, 943, 208] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[16px] md:text-[clamp(16px,calc(24*var(--u)),24px)]">
+          line of reason
+        </p>
+      </Placed>
+
+      <Placed place={{ m: [0, 1416, 390] }} className="text-center">
+        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">06 / SYMMETRICA</p>
+      </Placed>
+    </>
+  );
+}
+
 function Pictured({ picture }: { picture: Picture }) {
   return (
     <Placed
@@ -601,8 +705,8 @@ function Pictured({ picture }: { picture: Picture }) {
 
 /**
  * A Listening Room (Figma "09 — Listening Room (mobile)", "14 — Listening
- * Room (desktop)", "02 — PAPER WALLS", "03 — THE BLUEPRINT", "04 — SOVIET SUNSET" and "05 —
- * STATIONS OF COMFORT"): a black collage around the tape
+ * Room (desktop)", "02 — PAPER WALLS", "03 — THE BLUEPRINT", "04 — SOVIET SUNSET", "05 —
+ * STATIONS OF COMFORT" and "06 / 07 — SYMMETRICA"): a black collage around the tape
  * that plays the room's track. Both layouts are absolute collages measured
  * in their own artboard's units (see .room-stage in globals.css).
  */
@@ -670,6 +774,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           {room.collage === "blueprint" && <BlueprintCollage />}
           {room.collage === "soviet-sunset" && <SovietSunsetCollage />}
           {room.collage === "stations-of-comfort" && <StationsOfComfortCollage />}
+          {room.collage === "symmetrica" && <SymmetricaCollage />}
 
           <Placed place={layout.exit} className="text-center">
             <Link

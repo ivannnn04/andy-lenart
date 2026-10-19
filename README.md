@@ -118,6 +118,9 @@ other pages. Point each garment's tag at
 - The fifth room, "Stations of Comfort" (Figma "05 — STATIONS OF COMFORT"),
   is at `/room/stations-of-comfort`, keyword "andy05" (`room-05-*.png`);
   desktop is laid out the same way as Soviet Sunset's.
+- The sixth room, "Symmetrica" (Figma "06 — SYMMETRICA" mobile, "07 —
+  SYMMETRICA" desktop), is at `/room/symmetrica`, keyword "andy06"
+  (`room-06-*.png`).
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
   needs the room's access cookie. Its wall shows the design's marks
   (`src/lib/staircase.ts`) plus the ones left on this device: there is no

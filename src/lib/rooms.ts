@@ -30,6 +30,7 @@ const KEYWORD_OVERRIDE: Record<string, string> = {
   "the-blueprint": "andy03",
   "soviet-sunset": "andy04",
   "stations-of-comfort": "andy05",
+  "symmetrica": "andy06",
 };
 
 type Keyed = Pick<ListeningRoomInfo, "slug" | "concept">;

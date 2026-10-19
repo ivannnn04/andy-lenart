@@ -20,7 +20,7 @@ export type ListeningRoomInfo = {
   track?: string;
   lyrics: Garment["room"]["lyrics"];
   verse: string[];
-  collage: "pelican" | "paper-walls" | "blueprint" | "soviet-sunset" | "stations-of-comfort";
+  collage: "pelican" | "paper-walls" | "blueprint" | "soviet-sunset" | "stations-of-comfort" | "symmetrica";
 };
 
 function fromGarment(slug: string, collage: ListeningRoomInfo["collage"]): ListeningRoomInfo | undefined {
@@ -108,6 +108,23 @@ export const ROOMS: ListeningRoomInfo[] = [
     lyrics: pelican?.lyrics ?? [],
     verse: [],
     collage: "stations-of-comfort",
+  },
+  {
+    // Figma "06 — SYMMETRICA". It plays the first track until its own is added.
+    slug: "symmetrica",
+    garmentNo: "06",
+    titleLines: ["Symmetrica"],
+    photo: {
+      src: "/images/room-06-photo-tower.png",
+      alt: "Black-and-white photo of a long housing block above trees",
+      width: 275,
+      height: 250,
+    },
+    concept: pelican?.concept ?? [],
+    track: pelican?.track,
+    lyrics: pelican?.lyrics ?? [],
+    verse: [],
+    collage: "symmetrica",
   },
 ];
 
