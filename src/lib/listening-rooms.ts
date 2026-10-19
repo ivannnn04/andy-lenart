@@ -44,7 +44,7 @@ export const ROOMS: ListeningRoomInfo[] = [
   {
     // Figma "02 — PAPER WALLS". It plays the first track until its own is added.
     slug: "paper-walls",
-    garmentNo: "01",
+    garmentNo: "02",
     titleLines: ["Paper Walls"],
     photo: {
       src: "/images/room-02-photo-paper-walls.png",
