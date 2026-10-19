@@ -25,7 +25,7 @@ function gateState(cookie: string | undefined): GateState {
   return lockedUntil > Date.now() ? { status: "locked", lockedUntil } : { status: "idle" };
 }
 
-const label = "text-[13px] leading-[normal] uppercase tracking-[0.1em] text-muted";
+const label = "text-[13px] leading-[normal] font-medium uppercase tracking-[0.1em] text-muted";
 
 /**
  * Listening Room entrance — the page an owner lands on after tapping the
@@ -70,11 +70,11 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
               {room.titleLines.join(" ")}
             </h1>
 
-            <p className="mt-6 text-[20px] leading-[1.5] text-ink">
-              Enter the <strong className="font-semibold">third word</strong> of the concept text,
+            <p className="mt-6 text-[20px] leading-[1.5] font-medium text-ink">
+              Enter the <strong className="font-bold">third word</strong> of the concept text,
               found inside your garment.
             </p>
-            <p className="mt-0.5 text-[12px] leading-[normal] uppercase tracking-[0.1em] text-muted">
+            <p className="mt-0.5 text-[12px] leading-[normal] font-medium uppercase tracking-[0.1em] text-muted">
               (Excludes title &amp; collection name)
             </p>
             <div className="mt-2.5">

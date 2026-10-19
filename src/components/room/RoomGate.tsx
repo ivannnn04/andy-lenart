@@ -49,7 +49,7 @@ export function RoomGate({ slug, initial }: { slug: string; initial: GateState }
       {failed && (
         // The cross sits in the line, so the message wraps back to the left
         // edge rather than hanging beside it.
-        <p id="room-word-error" role="alert" className={`mt-3.5 text-[13px] leading-[1.45] ${ERROR_BLUE}`}>
+        <p id="room-word-error" role="alert" className={`mt-3.5 text-[13px] leading-[1.45] font-medium ${ERROR_BLUE}`}>
           <svg
             aria-hidden
             viewBox="0 0 12 12"
@@ -59,7 +59,7 @@ export function RoomGate({ slug, initial }: { slug: string; initial: GateState }
           >
             <path d="M1 1l10 10M11 1 1 11" />
           </svg>
-          Incorrect word. Check the <strong className="font-semibold">concept text</strong> printed
+          Incorrect word. Check the <strong className="font-bold">concept text</strong> printed
           inside the garment and try again, following the guide above.
         </p>
       )}
@@ -73,11 +73,11 @@ export function RoomGate({ slug, initial }: { slug: string; initial: GateState }
       </button>
 
       {locked !== null && (
-        <p id="room-locked" role="status" className="mt-[30px] text-center text-[12px] leading-[1.5] text-black">
+        <p id="room-locked" role="status" className="mt-[30px] text-center text-[12px] leading-[1.5] font-medium text-black">
           Maximum attempts reached.
           <br />
           The room is locked;{" "}
-          <strong className="font-semibold">
+          <strong className="font-bold">
             try again in {locked} {locked === 1 ? "minute" : "minutes"}.
           </strong>
         </p>
