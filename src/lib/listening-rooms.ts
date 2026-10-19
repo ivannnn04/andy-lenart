@@ -20,7 +20,13 @@ export type ListeningRoomInfo = {
   track?: string;
   lyrics: Garment["room"]["lyrics"];
   verse: string[];
-  collage: "pelican" | "paper-walls" | "blueprint" | "soviet-sunset" | "stations-of-comfort" | "symmetrica";
+  collage:
+    | "pelican"
+    | "paper-walls" | "blueprint" | "soviet-sunset" | "stations-of-comfort" | "symmetrica"
+    | "aliens-and-herons"
+    | "philosophy-of-form"
+    | "the-signatures"
+    | "funkce";
 };
 
 function fromGarment(slug: string, collage: ListeningRoomInfo["collage"]): ListeningRoomInfo | undefined {
@@ -125,6 +131,68 @@ export const ROOMS: ListeningRoomInfo[] = [
     lyrics: pelican?.lyrics ?? [],
     verse: [],
     collage: "symmetrica",
+  },
+  {
+    // Figma "07 — ALIENS AND HERONS". It plays the first track until its own is added.
+    slug: "aliens-and-herons",
+    garmentNo: "07",
+    titleLines: ["Aliens and Herons"],
+    photo: {
+      src: "/images/room-07-photo-hand.png",
+      alt: "Black-and-white photo of a hand resting on a weathered stone sculpture",
+      width: 306,
+      height: 451,
+    },
+    concept: pelican?.concept ?? [],
+    track: pelican?.track,
+    lyrics: pelican?.lyrics ?? [],
+    verse: [],
+    collage: "aliens-and-herons",
+  },
+  {
+    // Figma "08 — PHILOSOPHY OF FORM". It plays the first track until its own is added.
+    slug: "philosophy-of-form",
+    garmentNo: "08",
+    titleLines: ["Philosophy of Form"],
+    photo: {
+      src: "/images/room-08-photo-shadows.png",
+      alt: "Black-and-white photo of a tower block with leaf shadows across it",
+      width: 350,
+      height: 446,
+    },
+    concept: pelican?.concept ?? [],
+    track: pelican?.track,
+    lyrics: pelican?.lyrics ?? [],
+    verse: [],
+    collage: "philosophy-of-form",
+  },
+  {
+    // Figma "09 — THE SIGNATURES". It plays the first track until its own is added.
+    slug: "the-signatures",
+    garmentNo: "09",
+    titleLines: ["The Signatures"],
+    photo: {
+      src: "/images/room-09-graffiti.png",
+      alt: "Black-and-white photos of graffiti tags layered over each other",
+      width: 421,
+      height: 553,
+    },
+    concept: pelican?.concept ?? [],
+    track: pelican?.track,
+    lyrics: pelican?.lyrics ?? [],
+    verse: [],
+    collage: "the-signatures",
+  },
+  {
+    // Figma "10 — FUNKCE". It plays the first track until its own is added.
+    slug: "funkce",
+    garmentNo: "10",
+    titleLines: ["Funkce"],
+    concept: pelican?.concept ?? [],
+    track: pelican?.track,
+    lyrics: pelican?.lyrics ?? [],
+    verse: [],
+    collage: "funkce",
   },
 ];
 

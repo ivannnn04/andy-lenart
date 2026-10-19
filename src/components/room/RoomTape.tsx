@@ -6,7 +6,7 @@ import { useRoomAudio } from "@/components/room/RoomAudio";
 /**
  * "Touch the tape": the cassette is the play / pause button for the
  * garment's track. It stays still until the music starts, then its reels
- * turn and it rocks gently.
+ * turn.
  */
 export function RoomTape({ title, children }: { title: string; children: ReactNode }) {
   const { src, playing, toggle } = useRoomAudio();

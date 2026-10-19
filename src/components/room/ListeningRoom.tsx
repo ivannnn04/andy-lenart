@@ -31,6 +31,15 @@ const placeStyle = ({ m, d }: Place, rotate?: number) =>
     ...(rotate ? { rotate: `${rotate}deg` } : {}),
   }) as CSSProperties;
 
+const BLEND = {
+  "plus-lighter": "mix-blend-plus-lighter",
+  difference: "mix-blend-difference",
+  luminosity: "mix-blend-luminosity",
+  lighten: "mix-blend-lighten",
+  "hard-light": "mix-blend-hard-light",
+  exclusion: "mix-blend-exclusion",
+};
+
 type Picture = {
   /** File in public/images; until it exists a placeholder holds its place. */
   file: string;
@@ -43,7 +52,7 @@ type Picture = {
   objectPosition?: string;
   rotate?: number;
   /** Blend mode the design gives the layer. */
-  blend?: "plus-lighter" | "difference" | "luminosity" | "lighten" | "hard-light" | "exclusion";
+  blend?: keyof typeof BLEND;
 };
 
 // Order is stacking order: the lettering comes after the photo it overlaps.
@@ -284,6 +293,77 @@ const SYMMETRICA_TERRACES: Picture = {
   place: { m: [-64, 950, 415, 130], d: [782, 705, 546, 171] },
 };
 
+// "Aliens and Herons" (Figma "07 — ALIENS AND HERONS").
+const ALIENS_PICTURES: Picture[] = [
+  {
+    file: "room-07-photo-hand.png",
+    alt: "Black-and-white photo of a hand resting on a weathered stone sculpture",
+    layer: "2026-10-05 14-50 page 5 12",
+    place: { m: [74, 431, 221, 326], d: [777, 491, 305.7, 450.6] },
+  },
+  {
+    file: "room-07-schoulena.png",
+    alt: "Handwritten: Schoulená 1977",
+    layer: "schoulena 1",
+    place: { m: [185, 722, 133, 94], d: [924.9, 902.1, 184.1, 129.9] },
+    lettering: true,
+  },
+  {
+    file: "room-07-photo-sculpture.png",
+    alt: "Black-and-white photo of an abstract stone sculpture on a lawn",
+    layer: "2026-10-05 14-50 page 5 11",
+    place: { m: [91, 939, 246, 155], d: [283.4, 648, 359.1, 226.2] },
+  },
+];
+
+const ALIENS_POWER: Picture = {
+  file: "room-07-power.png",
+  alt: "Handwritten: to not threaten power",
+  layer: "power 1",
+  place: { m: [29, 1081, 228, 167], d: [168.9, 831, 333, 244] },
+  lettering: true,
+};
+
+// "Philosophy of Form" (Figma "08 — PHILOSOPHY OF FORM"). Each photo pair
+// is exported with its blend already applied.
+const FORM_PICTURES: Picture[] = [
+  {
+    file: "room-08-photo-shadows.png",
+    alt: "Black-and-white photos of a tower block with leaf shadows across it",
+    layer: "Group 1503:170",
+    place: { m: [81, 449, 229, 291.9], d: [298, 431, 349.1, 445] },
+  },
+  {
+    file: "room-08-photo-vase.png",
+    alt: "Photos of a lamp-lit interior and a tower block with a blue vase painted on its side",
+    layer: "Group 1503:173",
+    place: { m: [33, 839, 213, 250], d: [692.6, 594.3, 310.7, 371.3] },
+  },
+];
+
+// "The Signatures" (Figma "09 — THE SIGNATURES").
+const SIGNATURES_PICTURES: Picture[] = [
+  {
+    file: "room-09-graffiti.png",
+    alt: "Black-and-white photos of graffiti tags layered over each other",
+    layer: "Group 1503:229",
+    place: { m: [40, 463, 246, 323], d: [297.5, 375.7, 420.6, 552.3] },
+  },
+  {
+    file: "room-09-1322.png",
+    alt: "Handwritten: 1322",
+    layer: "communal shame 7",
+    place: { m: [38.6, 424, 134.9, 100], d: [295, 309, 230.8, 170.9] },
+    lettering: true,
+  },
+  {
+    file: "room-09-photo-flats.png",
+    alt: "Faded photo of a long block of flats",
+    layer: "Group 1503:235",
+    place: { m: [177, 749, 166, 87], d: [857.1, 509.3, 240.4, 126] },
+  },
+];
+
 const TAPE_FILE = "room-cassette.webp";
 
 /** What every room shares; only where it sits differs. */
@@ -332,6 +412,38 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1236, 600] },
   },
   symmetrica: {
+    height: [1466, 1258],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+  },
+  "aliens-and-herons": {
+    height: [1466, 1258],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+  },
+  "philosophy-of-form": {
+    height: [1466, 1258],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+  },
+  "the-signatures": {
+    height: [1466, 1258],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+  },
+  funkce: {
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -496,15 +608,6 @@ function PaperWallsCollage() {
     </>
   );
 }
-
-const BLEND = {
-  "plus-lighter": "mix-blend-plus-lighter",
-  difference: "mix-blend-difference",
-  luminosity: "mix-blend-luminosity",
-  lighten: "mix-blend-lighten",
-  "hard-light": "mix-blend-hard-light",
-  exclusion: "mix-blend-exclusion",
-};
 
 // The big SUN / SET letters break inside their narrow boxes, as in the design.
 const bigLetters =
@@ -692,6 +795,203 @@ function SymmetricaCollage() {
   );
 }
 
+/** A white rule (the design's thick lines). */
+function Rule({ place }: { place: Place }) {
+  return (
+    <Placed place={place} className="bg-white">
+      <span />
+    </Placed>
+  );
+}
+
+/** The room's name set sideways along the right edge (desktop only). */
+function SideTitle({ place, children, size }: { place: Place; children: ReactNode; size: number }) {
+  return (
+    <Placed place={place} className="flex justify-center">
+      <p
+        className="font-normal leading-[normal] whitespace-nowrap text-[#efefef] [writing-mode:vertical-rl]"
+        style={{ fontSize: fs(size, 14) }}
+      >
+        {children}
+      </p>
+    </Placed>
+  );
+}
+
+function Footer({ children }: { children: ReactNode }) {
+  return (
+    <Placed place={{ m: [0, 1419, 390] }} className="text-center">
+      <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">{children}</p>
+    </Placed>
+  );
+}
+
+function AliensAndHeronsCollage() {
+  return (
+    <>
+      {ALIENS_PICTURES.map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      <Placed place={{ m: [38, 846, 330], d: [335, 545, 420] }}>
+        <p className="font-medium leading-[normal] text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
+          <span className="block">Environmental mood-setting objects</span>
+          <span className="block">for a collective life that no longer exists.</span>
+        </p>
+      </Placed>
+
+      <Placed place={{ m: [29, 1085, 340], d: [192.9, 861.1, 540] }}>
+        <p className="font-bold whitespace-nowrap text-white leading-[calc(30*var(--m))] md:leading-[calc(30*var(--u))]">
+          <span className="block">
+            <span className="text-[calc(36*var(--m))] md:text-[calc(48*var(--u))]">ABSTRACT</span>{" "}
+            <span className="text-[calc(18*var(--m))] md:text-[calc(24*var(--u))]">ENOUGH</span>
+          </span>
+          <span className="block text-[calc(18*var(--m))] md:text-[calc(24*var(--u))]">TO FEEL MODERN</span>
+        </p>
+      </Placed>
+      {/* The hand-drawn underline under MODERN. */}
+      <Rule place={{ m: [106.9, 1148.6, 88.1, 1.5], d: [297.9, 932.4, 128.6, 2] }} />
+      <Pictured picture={ALIENS_POWER} />
+
+      <SideTitle place={{ d: [1365, 610, 29, 257] }} size={24}>
+        ALIENS AND HERONS
+      </SideTitle>
+      <Footer>07 / ALIENS AND HERONS</Footer>
+    </>
+  );
+}
+
+function PhilosophyOfFormCollage() {
+  const scribble = (file: string, place: Place) => (
+    <Placed place={place} className="pointer-events-none">
+      <Art picture={{ file, alt: "", layer: "scribble", place, lettering: true }} sizes="110px" />
+    </Placed>
+  );
+  return (
+    <>
+      {FORM_PICTURES.map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      <Rule place={{ m: [131, 770, 195, 10], d: [717, 484, 411, 15] }} />
+      <Placed place={{ m: [216, 801, 150], d: [952, 529, 251] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[17px] md:text-[clamp(17px,calc(24*var(--u)),24px)]">
+          <span className="block">FUNCTION</span>
+          <span className="block">PROJECTED</span>
+          <span className="block">ONTO LIVES</span>
+        </p>
+      </Placed>
+      {scribble("room-08-scribble-1.png", { m: [212.7, 860, 59.2, 11.2], d: [957, 624.8, 109.6, 20.7] })}
+
+      <Placed place={{ m: [264, 993, 120], d: [1062, 824, 132] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(16*var(--u)),16px)]">
+          <span className="block">Emotional life</span>
+          <span className="block">as an overlay.</span>
+        </p>
+      </Placed>
+      {scribble("room-08-scribble-2.png", { m: [306.4, 1020.5, 69.8, 21.6], d: [1097.5, 860.5, 87, 26.9] })}
+
+      <Placed place={{ m: [51, 1128, 160], d: [647, 929, 165] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-white underline underline-offset-[0.12em] text-[17px] md:text-[clamp(17px,calc(20*var(--u)),20px)]">
+          <span className="block">Concrete</span>
+          <span className="block">planted</span>
+          <span className="block">in the ground.</span>
+        </p>
+      </Placed>
+
+      <Placed place={{ d: [802.2, 593.3, 401, 446.7] }} className="pointer-events-none mix-blend-exclusion">
+        <Art
+          picture={{ file: "room-08-thick-lines.png", alt: "", layer: "thick lines 1", place: {}, lettering: true }}
+          sizes="28vw"
+        />
+      </Placed>
+
+      <SideTitle place={{ d: [1362, 592, 24, 232] }} size={20}>
+        PHILOSOPHY OF FORM
+      </SideTitle>
+      <Footer>08 / PHILOSOPHY OF FORM</Footer>
+    </>
+  );
+}
+
+function TheSignaturesCollage() {
+  return (
+    <>
+      {SIGNATURES_PICTURES.map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      <Placed place={{ m: [177, 735, 150], d: [857, 493, 160] }}>
+        <p className="font-medium leading-[22px] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
+          Hear me out…
+        </p>
+      </Placed>
+
+      <Placed place={{ m: [126, 929, 200], d: [783.3, 770, 300] }}>
+        <p className="font-medium whitespace-nowrap text-white leading-[18px]">
+          <span className="block text-[20px] md:text-[clamp(20px,calc(25*var(--u)),25px)]">MARK-MAKING</span>
+          <span className="block text-[13px] md:text-[clamp(13px,calc(18*var(--u)),18px)]">RAW HAND AS THE MAIN TOOL</span>
+        </p>
+      </Placed>
+      <Pictured
+        picture={{
+          file: "room-09-block.png",
+          alt: "Handwritten: Block",
+          layer: "block 1",
+          place: { m: [83, 786, 225, 149], d: [721, 563, 326, 189] },
+          lettering: true,
+        }}
+      />
+      <Rule place={{ m: [126, 976, 184, 5], d: [780, 823, 267, 10] }} />
+
+      <Placed place={{ m: [215, 1105, 150], d: [906, 998, 164] }}>
+        <p className="font-bold whitespace-nowrap text-white">
+          <span className="block text-[14px] leading-[20px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">speaking</span>
+          <span className="block text-[16px] leading-[20px] md:text-[clamp(16px,calc(20*var(--u)),20px)] md:leading-[calc(25*var(--u))]">
+            in dripping ink
+          </span>
+          <span aria-hidden className="block text-[40px] leading-[20px] md:text-[clamp(40px,calc(50*var(--u)),50px)]">
+            . . .
+          </span>
+        </p>
+      </Placed>
+      <Pictured
+        picture={{
+          file: "room-09-drip.png",
+          alt: "",
+          layer: "communal shame 6",
+          place: { d: [825, 728, 283, 307] },
+          lettering: true,
+          blend: "exclusion",
+        }}
+      />
+      <Pictured
+        picture={{
+          file: "room-09-drip-tall.png",
+          alt: "",
+          layer: "communal shame 6",
+          place: { m: [146, 854, 227, 349] },
+          lettering: true,
+          blend: "exclusion",
+        }}
+      />
+
+      <Placed place={{ d: [526, 806, 300] }}>
+        <p className="font-bold leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(32, 20) }}>
+          <span className="block">THE</span>
+          <span className="block">SIGNATURES</span>
+        </p>
+      </Placed>
+      <Footer>09 / THE SIGNATURES</Footer>
+    </>
+  );
+}
+
+/** "Funkce": only the desktop frame exists so far, with no collage yet. */
+function FunkceCollage() {
+  return <Footer>10 / FUNKCE</Footer>;
+}
+
 function Pictured({ picture }: { picture: Picture }) {
   return (
     <Placed
@@ -775,6 +1075,10 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           {room.collage === "soviet-sunset" && <SovietSunsetCollage />}
           {room.collage === "stations-of-comfort" && <StationsOfComfortCollage />}
           {room.collage === "symmetrica" && <SymmetricaCollage />}
+          {room.collage === "aliens-and-herons" && <AliensAndHeronsCollage />}
+          {room.collage === "philosophy-of-form" && <PhilosophyOfFormCollage />}
+          {room.collage === "the-signatures" && <TheSignaturesCollage />}
+          {room.collage === "funkce" && <FunkceCollage />}
 
           <Placed place={layout.exit} className="text-center">
             <Link
