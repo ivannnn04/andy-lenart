@@ -43,7 +43,7 @@ type Picture = {
   objectPosition?: string;
   rotate?: number;
   /** Blend mode the design gives the layer. */
-  blend?: "plus-lighter" | "difference";
+  blend?: "plus-lighter" | "difference" | "luminosity";
 };
 
 // Order is stacking order: the lettering comes after the photo it overlaps.
@@ -174,6 +174,39 @@ const BLUEPRINT_PICTURES: Picture[] = [
   },
 ];
 
+// "Soviet Sunset" (Figma "04 — SOVIET SUNSET"). Only the phone collage is
+// designed; desktop sets the same pieces in two columns, 1.5× the phone size.
+const SUNSET_SQUARE: Picture = {
+  file: "room-04-photo-square.png",
+  alt: "Faded photo of a crowd with flags filling a square in front of a domed museum",
+  layer: "2026-10-05 14-50 page 5 9",
+  place: { m: [100.8, 480.7, 172.6, 133.3], d: [295.7, 571.5, 258.9, 200] },
+  blend: "luminosity",
+};
+
+const SUNSET_PICTURES: Picture[] = [
+  {
+    file: "room-04-walls-and-wires.png",
+    alt: "Two men in a living room; handwritten: walls and wires",
+    layer: "Group 1418:297",
+    place: { m: [41, 756, 247.1, 114.2], d: [839.6, 500, 370.6, 171.3] },
+  },
+  {
+    file: "room-04-photo-protest.png",
+    alt: "Faded photo of a crowd in front of a monument covered in posters and flags",
+    layer: "2026-10-05 14-50 page 5 8",
+    place: { m: [56, 909, 273, 166], d: [862.6, 729.5, 409.5, 249] },
+    blend: "luminosity",
+  },
+  {
+    file: "room-04-stand.png",
+    alt: "Handwritten: Stand",
+    layer: "Group 1347:69",
+    place: { m: [14.3, 1064, 184.6, 100.7], d: [780, 1050, 240, 131] },
+    lettering: true,
+  },
+];
+
 const TAPE_FILE = "room-cassette.webp";
 
 /** What every room shares; only where it sits differs. */
@@ -212,6 +245,14 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
     exit: { m: [0, 1298, 390], d: [420, 1164, 600] },
+  },
+  "soviet-sunset": {
+    height: [1466, 1330],
+    touch: { m: [95, 54, 200], d: [556, 65, 324] },
+    tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
+    listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
+    intro: { m: [46, 281, 300], d: [98, 138, 420] },
+    exit: { m: [0, 1298, 390], d: [420, 1236, 600] },
   },
 };
 
@@ -363,7 +404,56 @@ function PaperWallsCollage() {
   );
 }
 
-const BLEND = { "plus-lighter": "mix-blend-plus-lighter", difference: "mix-blend-difference" };
+const BLEND = {
+  "plus-lighter": "mix-blend-plus-lighter",
+  difference: "mix-blend-difference",
+  luminosity: "mix-blend-luminosity",
+};
+
+// The big SUN / SET letters break inside their narrow boxes, as in the design.
+const bigLetters =
+  "text-center font-medium leading-[1.2] text-[#efefef] text-[calc(90*var(--m))] md:text-[calc(135*var(--u))]";
+
+function SovietSunsetCollage() {
+  return (
+    <>
+      <Placed place={{ m: [17, 433, 172.4], d: [170, 500, 258.6] }} className="pointer-events-none">
+        <p aria-hidden className={bigLetters}>
+          <span className="block">SU</span>
+          <span className="block">N</span>
+        </p>
+      </Placed>
+      <Placed place={{ m: [189.4, 576.8, 161.6], d: [428.6, 715.8, 242.4] }} className="pointer-events-none mix-blend-difference">
+        <p aria-hidden className={bigLetters}>
+          <span className="block">SE</span>
+          <span className="block">T</span>
+        </p>
+      </Placed>
+      <Pictured picture={SUNSET_SQUARE} />
+
+      <Placed place={{ m: [29, 678, 310], d: [188, 867.5, 465] }}>
+        <blockquote className="font-bold leading-[1.1] text-white text-[12px] md:text-[clamp(14px,calc(18*var(--u)),18px)]">
+          <span className="block">‘Let us not falsify words and concepts.</span>
+          <span className="block">What is crooked cannot be straight,</span>
+          <span className="block">even if we say so a hundred times.’</span>
+        </blockquote>
+      </Placed>
+
+      {SUNSET_PICTURES.map((picture) => (
+        <Pictured key={picture.file} picture={picture} />
+      ))}
+
+      <Placed place={{ d: [972, 992, 300] }} className="text-right">
+        <p className="font-bold leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(36, 20) }}>
+          SOVIET SUNSET
+        </p>
+      </Placed>
+      <Placed place={{ m: [0, 1419, 390] }} className="text-center">
+        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">04 / SOVIET SUNSET</p>
+      </Placed>
+    </>
+  );
+}
 
 function BlueprintCollage() {
   return (
@@ -413,7 +503,7 @@ function Pictured({ picture }: { picture: Picture }) {
 
 /**
  * A Listening Room (Figma "09 — Listening Room (mobile)", "14 — Listening
- * Room (desktop)", "02 — PAPER WALLS" and "03 — THE BLUEPRINT"): a black collage around the tape
+ * Room (desktop)", "02 — PAPER WALLS", "03 — THE BLUEPRINT" and "04 — SOVIET SUNSET"): a black collage around the tape
  * that plays the room's track. Both layouts are absolute collages measured
  * in their own artboard's units (see .room-stage in globals.css).
  */
@@ -479,6 +569,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           {room.collage === "pelican" && <PelicanCollage room={room} />}
           {room.collage === "paper-walls" && <PaperWallsCollage />}
           {room.collage === "blueprint" && <BlueprintCollage />}
+          {room.collage === "soviet-sunset" && <SovietSunsetCollage />}
 
           <Placed place={layout.exit} className="text-center">
             <Link

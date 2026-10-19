@@ -112,6 +112,9 @@ other pages. Point each garment's tag at
 - The third room, "The Blueprint" (Figma "03 — THE BLUEPRINT"), is at
   `/room/the-blueprint`, keyword "andy03"; same notes as Paper Walls
   (`room-03-*.png`).
+- The fourth room, "Soviet Sunset" (Figma "04 — SOVIET SUNSET"), is at
+  `/room/soviet-sunset`, keyword "andy04" (`room-04-*.png`). Only its phone
+  collage is designed; desktop lays out the same pieces in two columns.
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
   needs the room's access cookie. Its wall shows the design's marks
   (`src/lib/staircase.ts`) plus the ones left on this device: there is no

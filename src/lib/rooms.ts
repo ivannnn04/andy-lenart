@@ -28,6 +28,7 @@ const KEYWORD_OVERRIDE: Record<string, string> = {
   "born-by-the-pelican-sculpture": "andy",
   "paper-walls": "andy02",
   "the-blueprint": "andy03",
+  "soviet-sunset": "andy04",
 };
 
 type Keyed = Pick<ListeningRoomInfo, "slug" | "concept">;

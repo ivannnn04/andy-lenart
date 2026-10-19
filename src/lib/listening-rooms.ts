@@ -20,7 +20,7 @@ export type ListeningRoomInfo = {
   track?: string;
   lyrics: Garment["room"]["lyrics"];
   verse: string[];
-  collage: "pelican" | "paper-walls" | "blueprint";
+  collage: "pelican" | "paper-walls" | "blueprint" | "soviet-sunset";
 };
 
 function fromGarment(slug: string, collage: ListeningRoomInfo["collage"]): ListeningRoomInfo | undefined {
@@ -74,6 +74,23 @@ export const ROOMS: ListeningRoomInfo[] = [
     lyrics: pelican?.lyrics ?? [],
     verse: [],
     collage: "blueprint",
+  },
+  {
+    // Figma "04 — SOVIET SUNSET". It plays the first track until its own is added.
+    slug: "soviet-sunset",
+    garmentNo: "04",
+    titleLines: ["Soviet Sunset"],
+    photo: {
+      src: "/images/room-04-photo-protest.png",
+      alt: "Faded colour photo of a crowd in front of a monument covered in posters and flags",
+      width: 273,
+      height: 166,
+    },
+    concept: pelican?.concept ?? [],
+    track: pelican?.track,
+    lyrics: pelican?.lyrics ?? [],
+    verse: [],
+    collage: "soviet-sunset",
   },
 ];
 
