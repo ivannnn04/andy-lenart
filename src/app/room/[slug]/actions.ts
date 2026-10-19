@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getGarment } from "@/lib/garments";
+import { getRoom } from "@/lib/listening-rooms";
 import {
   LOCK_MINUTES,
   MAX_ATTEMPTS,
@@ -27,15 +27,15 @@ const cookieOptions = {
 };
 
 export async function enterRoom(slug: string, _prev: GateState, form: FormData): Promise<GateState> {
-  const garment = getGarment(slug);
-  if (!garment) return { status: "idle" };
+  const room = getRoom(slug);
+  if (!room) return { status: "idle" };
 
   const jar = await cookies();
   const gate = readGate(jar.get(gateCookie(slug))?.value);
   const now = Date.now();
   if (gate.lockedUntil > now) return { status: "locked", lockedUntil: gate.lockedUntil };
 
-  if (isKeyword(garment, String(form.get("word") ?? ""))) {
+  if (isKeyword(room, String(form.get("word") ?? ""))) {
     jar.delete({ name: gateCookie(slug), path: "/room" });
     jar.set(accessCookie(slug), sign("granted"), { ...cookieOptions, maxAge: 60 * 60 * 24 * 365 });
     redirect(`/room/${slug}`);

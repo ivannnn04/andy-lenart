@@ -104,6 +104,11 @@ other pages. Point each garment's tag at
   (seconds) is set in `room.lyrics`; No. 01's lyrics and timings are
   placeholders until the real ones arrive. For review the No. 01 keyword is
   temporarily "andy" (`KEYWORD_OVERRIDE` in `src/lib/rooms.ts`).
+- Rooms are listed in `src/lib/listening-rooms.ts`. The second room,
+  "Paper Walls" (Figma "02 — PAPER WALLS"), is at `/room/paper-walls`, keyword
+  "andy02" for review. Until its own track arrives it plays No. 01's. Its
+  images (`room-02-*.png`) are 1× renders of the Figma layers; replace them
+  with 2× exports of the same layers for sharper photos.
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
   needs the room's access cookie. Its wall shows the design's marks
   (`src/lib/staircase.ts`) plus the ones left on this device: there is no

@@ -349,7 +349,7 @@ html:has(.site-menu[open]) {
   --m: min(calc(100cqw / 390), 1.6px);
   position: relative;
   width: calc(390 * var(--m));
-  height: calc(1380 * var(--m));
+  height: calc(var(--mh, 1380) * var(--m));
   margin-inline: auto;
 }
 
@@ -364,7 +364,7 @@ html:has(.site-menu[open]) {
 @media (min-width: 768px) {
   .room-stage {
     width: 100%;
-    height: calc(1258 * var(--u));
+    height: calc(var(--dh, 1258) * var(--u));
   }
 
   .room-item {

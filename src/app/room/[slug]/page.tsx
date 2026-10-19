@@ -6,7 +6,7 @@ import { Photo } from "@/components/Photo";
 import { ListeningRoom } from "@/components/room/ListeningRoom";
 import { RoomGate } from "@/components/room/RoomGate";
 import { SiteHeader } from "@/components/sections/SiteHeader";
-import { getGarment } from "@/lib/garments";
+import { getRoom } from "@/lib/listening-rooms";
 import { accessCookie, gateCookie, readGate, unsign } from "@/lib/rooms";
 import type { GateState } from "./actions";
 
@@ -34,15 +34,15 @@ const label = "text-[13px] leading-[normal] uppercase tracking-[0.1em] text-mute
  */
 export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
   const { slug } = await params;
-  const garment = getGarment(slug);
-  if (!garment) notFound();
+  const room = getRoom(slug);
+  if (!room) notFound();
 
   const jar = await cookies();
   const granted = unsign(jar.get(accessCookie(slug))?.value) === "granted";
-  if (granted) return <ListeningRoom garment={garment} slug={slug} />;
+  if (granted) return <ListeningRoom room={room} />;
 
   const initial = gateState(jar.get(gateCookie(slug))?.value);
-  const photo = garment.gallery[garment.requestPhoto];
+  const { photo } = room;
 
   return (
     <div className={`${courier.variable} overflow-x-clip`}>
@@ -65,9 +65,9 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
           )}
 
           <main className="flex w-full max-w-[480px] flex-col">
-            <p className={label}>Listening Room · No. {garment.no}</p>
+            <p className={label}>Listening Room · No. {room.garmentNo}</p>
             <h1 className="mt-6 text-[40px] leading-[0.95] font-bold uppercase md:text-[56px]">
-              {garment.titleLines.join(" ")}
+              {room.titleLines.join(" ")}
             </h1>
 
             <p className="mt-6 text-[20px] leading-[1.5] text-ink">

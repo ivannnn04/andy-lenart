@@ -10,7 +10,7 @@
  * locks for LOCK_MINUTES.
  */
 import { createHmac, timingSafeEqual } from "node:crypto";
-import type { Garment } from "@/lib/garments";
+import type { ListeningRoomInfo } from "@/lib/listening-rooms";
 
 export const MAX_ATTEMPTS = 3;
 export const LOCK_MINUTES = 10;
@@ -26,17 +26,20 @@ const normalise = (word: string) => word.toLowerCase().replace(/[^\p{L}\p{N}]/gu
 // go back to the third word of the concept text.
 const KEYWORD_OVERRIDE: Record<string, string> = {
   "born-by-the-pelican-sculpture": "andy",
+  "paper-walls": "andy02",
 };
 
-export function roomKeyword(garment: Garment) {
-  const override = KEYWORD_OVERRIDE[garment.slug];
+type Keyed = Pick<ListeningRoomInfo, "slug" | "concept">;
+
+export function roomKeyword(room: Keyed) {
+  const override = KEYWORD_OVERRIDE[room.slug];
   if (override) return normalise(override);
-  const words = garment.concept.paragraphs.join(" ").split(/\s+/).map(normalise).filter(Boolean);
+  const words = room.concept.join(" ").split(/\s+/).map(normalise).filter(Boolean);
   return words[2] ?? "";
 }
 
-export const isKeyword = (garment: Garment, attempt: string) => {
-  const keyword = roomKeyword(garment);
+export const isKeyword = (room: Keyed, attempt: string) => {
+  const keyword = roomKeyword(room);
   return keyword !== "" && normalise(attempt) === keyword;
 };
 
