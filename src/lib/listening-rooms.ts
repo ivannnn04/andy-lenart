@@ -97,7 +97,7 @@ export const ROOMS: ListeningRoomInfo[] = [
     collage: "paper-walls",
   },
   {
-    // Figma "03 — THE BLUEPRINT". It plays the first track until its own is added.
+    // Figma "03 — THE BLUEPRINT".
     slug: "the-blueprint",
     garmentNo: "03",
     titleLines: ["The Blueprint"],
@@ -108,8 +108,9 @@ export const ROOMS: ListeningRoomInfo[] = [
       height: 265,
     },
     concept: pelican?.concept ?? [],
-    track: pelican?.track,
-    lyrics: pelican?.lyrics ?? [],
+    track: "/audio/the-blueprint-track.m4a",
+    // No lyrics file yet: the room's name stands in the line's place.
+    lyrics: [{ time: 0, text: "The Blueprint" }],
     verse: [],
     collage: "blueprint",
   },
