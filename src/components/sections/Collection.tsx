@@ -70,8 +70,7 @@ const GARMENTS: Garment[] = [
     description: "Not yet released",
     status: "Coming soon",
     dimmed: true,
-    // Previews so far for 05 and 06.
-    ...(no === "05" || no === "06" ? { preview: preview(no) } : {}),
+    preview: preview(no),
   })),
 ];
 
