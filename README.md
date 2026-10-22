@@ -106,7 +106,7 @@ other pages. Point each garment's tag at
   temporarily "andy" (`KEYWORD_OVERRIDE` in `src/lib/rooms.ts`).
 - Rooms are listed in `src/lib/listening-rooms.ts`. The second room,
   "Paper Walls" (Figma "02 — PAPER WALLS"), is at `/room/paper-walls`, keyword
-  "andy02" for review. Until its own track arrives it plays No. 01's. Its
+  "andy02" for review. It plays its own track (`public/audio/paper-walls-track.m4a`) and lyrics. Its
   images (`room-02-*.png`) are 1× renders of the Figma layers; replace them
   with 2× exports of the same layers for sharper photos.
 - The third room, "The Blueprint" (Figma "03 — THE BLUEPRINT"), is at
