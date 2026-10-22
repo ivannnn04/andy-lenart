@@ -73,7 +73,7 @@ export const GARMENTS: Garment[] = [
       ],
     },
     room: {
-      track: "/audio/garment-01-track.mp3",
+      track: "/audio/garment-01-track.m4a",
       // Placeholder timings until the real ones are known.
       lyrics: [
         { time: 4, text: "I look for truth in the early 2000s." },
