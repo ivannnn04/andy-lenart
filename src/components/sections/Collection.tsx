@@ -21,6 +21,9 @@ type Garment = {
   titleSize?: number;
 };
 
+/** The 30-second preview of a garment's track, in public/audio. */
+const preview = (no: string) => ({ src: `/audio/garment-${no}-preview.aac`, duration: "0:30" });
+
 const GARMENTS: Garment[] = [
   {
     no: "01",
@@ -41,14 +44,16 @@ const GARMENTS: Garment[] = [
     description: "Not yet released",
     status: "Next release · Notify me",
     statusHref: "#stay-connected",
+    preview: preview("02"),
   },
-  { no: "03", title: "Symmetrica", description: "Not yet released", status: "Coming soon" },
+  { no: "03", title: "Symmetrica", description: "Not yet released", status: "Coming soon", preview: preview("03") },
   {
     no: "04",
     title: "Aliens and Herons (Vetřelci a volavky)",
     description: "Not yet released",
     status: "Coming soon",
     titleSize: 20,
+    preview: preview("04"),
   },
   ...(
     [
@@ -65,6 +70,8 @@ const GARMENTS: Garment[] = [
     description: "Not yet released",
     status: "Coming soon",
     dimmed: true,
+    // Previews so far for 05 and 06.
+    ...(no === "05" || no === "06" ? { preview: preview(no) } : {}),
   })),
 ];
 
