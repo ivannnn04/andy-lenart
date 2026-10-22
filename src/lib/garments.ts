@@ -27,7 +27,7 @@ export type Garment = {
   size: string;
   /**
    * `waveform`: bar heights (px, 4–33) measured from the clip itself — RMS
-   * loudness of 48 equal slices, perceptually scaled.
+   * loudness of 48 equal slices in dB, the top 12 dB spread over the range.
    */
   preview: { src?: string; duration: string; waveform?: number[] };
   /**
@@ -65,11 +65,11 @@ export const GARMENTS: Garment[] = [
     remaining: "12 remaining",
     size: "One size",
     preview: {
-      src: "/audio/garment-01-preview.mp3",
+      src: "/audio/garment-01-preview.aac",
       duration: "0:30",
       waveform: [
-        4, 12, 14, 13, 10, 14, 20, 25, 27, 29, 33, 30, 28, 25, 26, 28, 31, 31, 26, 23, 21, 23, 25, 28,
-        24, 21, 21, 19, 21, 25, 21, 22, 26, 28, 27, 28, 28, 26, 23, 26, 22, 27, 29, 25, 25, 27, 26, 26,
+        18, 20, 23, 24, 23, 24, 26, 26, 27, 29, 28, 27, 29, 32, 29, 32, 28, 31, 28, 26, 24, 33, 30, 28,
+        31, 26, 26, 26, 29, 28, 27, 30, 31, 31, 29, 29, 29, 28, 27, 25, 21, 12, 4, 4, 4, 4, 4, 4,
       ],
     },
     room: {
