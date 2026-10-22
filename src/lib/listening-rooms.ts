@@ -114,7 +114,7 @@ export const ROOMS: ListeningRoomInfo[] = [
     collage: "blueprint",
   },
   {
-    // Figma "04 — SOVIET SUNSET". It plays the first track until its own is added.
+    // Figma "04 — SOVIET SUNSET".
     slug: "soviet-sunset",
     garmentNo: "04",
     titleLines: ["Soviet Sunset"],
@@ -125,8 +125,29 @@ export const ROOMS: ListeningRoomInfo[] = [
       height: 166,
     },
     concept: pelican?.concept ?? [],
-    track: pelican?.track,
-    lyrics: pelican?.lyrics ?? [],
+    track: "/audio/soviet-sunset-track.m4a",
+    // From the track's .srt file: stray "you" lines, *tags* and ♪ marks left
+    // out, long lines split into phrases timed across their cue.
+    lyrics: [
+      { time: 47.54, text: "The archaeological work is never completely free." },
+      { time: 54.42, text: "It is a collective work." },
+      { time: 81.2, text: "standing" },
+      { time: 87.06, text: "The other side." },
+      { time: 91.86, text: "We witness" },
+      { time: 103.35, text: "frozen in moments" },
+      { time: 111.67, text: "Frozen in patterns." },
+      { time: 120.85, text: "De Belis mes polis." },
+      { time: 128.53, text: "Ta-ta." },
+      { time: 134.64, text: "Zippy Unity." },
+      { time: 160.66, text: "After using the houses," },
+      { time: 163.35, text: "he lost his uniform and became more" },
+      { time: 167.45, text: "and more intelligent and open-minded." },
+      { time: 175.19, text: "I'm not." },
+      { time: 183.09, text: "Yes, they were. I'm a genius." },
+      { time: 191.03, text: "Best in the world, I don't know" },
+      { time: 196.66, text: "I'm sure of all you have." },
+      { time: 209.46, text: "I'm sorry." },
+    ],
     verse: [],
     collage: "soviet-sunset",
   },
