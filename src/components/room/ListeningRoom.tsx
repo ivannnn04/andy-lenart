@@ -435,6 +435,8 @@ type Layout = {
   listen: Place;
   intro: Place;
   exit: Place;
+  /** Lines the lyric may take before it is set smaller: [phone, desktop]. */
+  lyricLines?: [number, number];
 };
 
 const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
@@ -502,6 +504,8 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
     exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+    // The "1322" lettering sits close under the line on desktop.
+    lyricLines: [5, 3],
   },
   funkce: {
     height: [1466, 1258],
@@ -1148,7 +1152,9 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
             </h1>
             <RoomCurrentLine
               lines={room.lyrics}
-              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[24px] leading-[0.85] font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[clamp(24px,calc(40*var(--u)),40px)]"
+              maxLines={layout.lyricLines ?? [5, 4]}
+              // Scales with the collage, so a line wraps the same way at every width.
+              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[calc(24*var(--m))] leading-[0.85] font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[calc(40*var(--u))]"
             />
           </Placed>
 
