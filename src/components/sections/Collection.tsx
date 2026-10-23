@@ -2,12 +2,12 @@ import Link from "next/link";
 import { Photo } from "@/components/Photo";
 import { CardPreview } from "@/components/product/PreviewPlayer";
 import { fs, sp } from "@/lib/design";
-import type { CollectionCard } from "@/lib/content/types";
+import type { Garment } from "@/lib/content/types";
 import { garmentHref } from "@/lib/content/store";
 
 const label = "text-[12px] leading-[normal] font-bold tracking-[0.14em] text-muted";
 
-export function Collection({ cards }: { cards: CollectionCard[] }) {
+export function Collection({ garments }: { garments: Garment[] }) {
   return (
     <section
       data-reveal-children
@@ -33,9 +33,24 @@ export function Collection({ cards }: { cards: CollectionCard[] }) {
         className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-8 md:grid-cols-[repeat(4,calc(296*var(--u)))] md:gap-x-[calc(32*var(--u))] md:gap-y-[calc(64*var(--u))]"
         style={{ marginTop: sp(26, 20) }}
       >
-        {cards.filter((card) => !card.hidden).map((card, i) => (
-          <GarmentCard key={`${card.no}-${i}`} {...card} />
-        ))}
+        {garments
+          .filter((g) => !g.hidden)
+          .map((g) => (
+            <GarmentCard
+              key={g.slug}
+              no={g.no}
+              title={g.cardTitle || g.titleLines.join(" ")}
+              description={g.tagline}
+              status={g.status}
+              statusHref={g.statusHref}
+              href={g.page ? garmentHref(g.slug) : undefined}
+              price={g.price || undefined}
+              preview={g.preview.src ? g.preview : undefined}
+              image={g.cardImage}
+              dimmed={g.dimmed}
+              titleSize={g.titleSize}
+            />
+          ))}
       </ul>
 
       {/*
@@ -71,14 +86,25 @@ function GarmentCard({
   description,
   status,
   statusHref,
-  garmentSlug,
+  href,
   price,
   preview,
   image,
   dimmed,
   titleSize = 22,
-}: CollectionCard) {
-  const href = garmentSlug ? garmentHref(garmentSlug) : undefined;
+}: {
+  no: string;
+  title: string;
+  description: string;
+  status: string;
+  statusHref?: string;
+  href?: string;
+  price?: string;
+  preview?: Garment["preview"];
+  image?: Garment["cardImage"];
+  dimmed?: boolean;
+  titleSize?: number;
+}) {
   return (
     <li className={dimmed ? "opacity-80" : undefined}>
       <article className="flex flex-col gap-3.5">

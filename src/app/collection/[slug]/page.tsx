@@ -15,7 +15,7 @@ import { getContent, getGarment } from "@/lib/content/store";
 import { inline } from "@/lib/inline";
 
 export async function generateStaticParams() {
-  return (await getContent()).garments.map((g) => ({ slug: g.slug }));
+  return (await getContent()).garments.filter((g) => g.page).map((g) => ({ slug: g.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/collection/[slug]">): Promise<Metadata> {

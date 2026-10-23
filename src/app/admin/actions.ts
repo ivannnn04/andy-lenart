@@ -8,7 +8,7 @@ import { deleteRequest, deleteSubscriber, setRequestDone, withinLimit } from "@/
 import { deleteMark, updateMark } from "@/lib/content/marks";
 import * as normalize from "@/lib/content/normalize";
 import { saveContent } from "@/lib/content/store";
-import type { Garment, Room, SiteContent } from "@/lib/content/types";
+import type { Garment, SiteContent } from "@/lib/content/types";
 
 export type ActionResult = { ok: true; slug?: string } | { ok: false; error: string };
 
@@ -57,26 +57,17 @@ export async function saveHome(value: unknown) {
   });
 }
 
-export async function saveCollection(value: unknown) {
-  return run(async () => {
-    const list = Array.isArray(value) ? value : (value as { cards?: unknown[] })?.cards;
-    const cards = Array.isArray(list) ? list.map(normalize.card) : [];
-    await saveContent((c) => ({ ...c, collection: cards }));
-  });
-}
-
-/** Saves under `slug` (the URL it had), so renaming the slug moves it. */
-function upsert<T extends { slug: string }>(list: T[], slug: string, item: T, kind: string) {
-  if (item.slug !== slug && list.some((x) => x.slug === item.slug))
-    throw new Error(`Another ${kind} already uses the address “${item.slug}”.`);
-  const at = list.findIndex((x) => x.slug === slug);
-  return at < 0 ? [...list, item] : list.map((x, i) => (i === at ? item : x));
-}
-
+/** Saves under `slug` (the address it had), so renaming the address moves it. */
 export async function saveGarment(slug: string, value: unknown) {
   return run(async () => {
     const garment = normalize.garment(value);
-    await saveContent((c) => ({ ...c, garments: upsert(c.garments, slug, garment, "garment") }));
+    await saveContent((c) => {
+      if (garment.slug !== slug && c.garments.some((g) => g.slug === garment.slug))
+        throw new Error(`Another garment already uses the address “${garment.slug}”.`);
+      const at = c.garments.findIndex((g) => g.slug === slug);
+      const garments = at < 0 ? [...c.garments, garment] : c.garments.map((g, i) => (i === at ? garment : g));
+      return { ...c, garments };
+    });
     return { slug: garment.slug };
   });
 }
@@ -87,69 +78,58 @@ export async function deleteGarment(slug: string) {
   });
 }
 
-function freeSlug(list: { slug: string }[], base: string) {
-  let slug = base;
-  for (let n = 2; list.some((x) => x.slug === slug); n++) slug = `${base}-${n}`;
-  return slug;
+/** Shows or hides the garment's card on the home page. */
+export async function setGarmentHidden(slug: string, hidden: boolean) {
+  return run(async () => {
+    await saveContent((c) => ({
+      ...c,
+      garments: c.garments.map((g) => (g.slug === slug ? { ...g, hidden: hidden || undefined } : g)),
+    }));
+  });
+}
+
+/** Moves a garment up (-1) or down (1) in the collection's order. */
+export async function moveGarment(slug: string, by: -1 | 1) {
+  return run(async () => {
+    await saveContent((c) => {
+      const from = c.garments.findIndex((g) => g.slug === slug);
+      const to = from + by;
+      if (from < 0 || to < 0 || to >= c.garments.length) return c;
+      const garments = [...c.garments];
+      [garments[from], garments[to]] = [garments[to], garments[from]];
+      return { ...c, garments };
+    });
+  });
 }
 
 export async function createGarment() {
   return run(async () => {
     let slug = "";
     await saveContent((c: SiteContent) => {
-      slug = freeSlug(c.garments, "new-garment");
+      slug = "new-garment";
+      for (let n = 2; c.garments.some((g) => g.slug === slug); n++) slug = `new-garment-${n}`;
       const blank: Garment = {
         slug,
         no: String(c.garments.length + 1).padStart(2, "0"),
         titleLines: ["New garment"],
-        tagline: "",
+        hidden: true,
+        status: "Coming soon",
+        tagline: "Not yet released",
         price: "",
+        preview: { duration: "0:30" },
+        page: false,
         availability: "",
         remaining: "",
         size: "One size",
-        preview: { duration: "0:30" },
         gallery: [],
         requestPhoto: 0,
         details: [{ title: "Fabric & Making" }, { title: "Sizing" }, { title: "Shipping" }],
         concept: { paragraphs: [], image: { alt: "", width: 1836, height: 1056 }, quote: "" },
         credits: [],
         inside: { title: [], paragraphs: [], image: { alt: "", width: 560, height: 360 } },
+        room: { enabled: false, keyword: "", lyrics: [], verse: [], collage: "pelican" },
       };
       return { ...c, garments: [...c.garments, blank] };
-    });
-    return { slug };
-  });
-}
-
-export async function saveRoom(slug: string, value: unknown) {
-  return run(async () => {
-    const room = normalize.room(value);
-    await saveContent((c) => ({ ...c, rooms: upsert(c.rooms, slug, room, "room") }));
-    return { slug: room.slug };
-  });
-}
-
-export async function deleteRoom(slug: string) {
-  return run(async () => {
-    await saveContent((c) => ({ ...c, rooms: c.rooms.filter((r) => r.slug !== slug) }));
-  });
-}
-
-export async function createRoom() {
-  return run(async () => {
-    let slug = "";
-    await saveContent((c) => {
-      slug = freeSlug(c.rooms, "new-room");
-      const blank: Room = {
-        slug,
-        garmentNo: String(c.rooms.length + 1).padStart(2, "0"),
-        titleLines: ["New room"],
-        keyword: "",
-        lyrics: [],
-        verse: [],
-        collage: "pelican",
-      };
-      return { ...c, rooms: [...c.rooms, blank] };
     });
     return { slug };
   });

@@ -43,8 +43,8 @@ export default async function Dashboard() {
   const roomSecret = Boolean(process.env.ROOM_SECRET);
 
   const stats = [
-    { label: "Garments", value: content.garments.length, href: "/admin/garments" },
-    { label: "Listening Rooms", value: content.rooms.length, href: "/admin/rooms" },
+    { label: "Garments", value: content.garments.length, href: "/admin/collection" },
+    { label: "Open Listening Rooms", value: content.garments.filter((g) => g.room.enabled).length, href: "/admin/collection" },
     { label: "Open requests", value: openRequests, href: "/admin/inbox" },
     { label: "Subscribers", value: subscribers.length, href: "/admin/inbox#subscribers" },
     { label: "Marks on the Staircase", value: marks.filter((m) => !m.hidden).length, href: "/admin/staircase" },

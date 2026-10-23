@@ -73,9 +73,7 @@ Everything on the site is managed at **`/admin`**:
 | --- | --- |
 | Dashboard | Counts, latest requests and a setup checklist |
 | Home page | Hero text, manifesto, "For owners" steps, "Stay connected" texts |
-| Collection cards | The ten cards on the home page: order, status, price, 30-second preview, photo, link to the garment page |
-| Garments | Each `/collection/<address>` page: title, price, availability, preview (duration and waveform are measured on upload), gallery, details, concept, credits, "Inside this garment" — create and delete garments too |
-| Listening Rooms | Each `/room/<address>`: entry word, garment number, collage, gate photo, full track and lyrics (import an `.lrc`/`.srt` file, edit times, play the track against the lines, shift all) |
+| Collection | The garments, in home-page order: an On site / Hidden switch and ↑/↓ per garment, create and delete. Each garment has three tabs: **Card** (address, number, title, status, price, 30-second preview with measured waveform, card photo), **Garment page** (publish `/collection/<address>`; availability, gallery, details, concept, credits, "Inside this garment") and **Listening Room** (open `/room/<address>`; entry word, collage, gate photo, full track and lyrics — import an `.lrc`/`.srt` file, edit times, play the track against the lines, shift all) |
 | The Staircase | Every mark left on the shared wall: hide, show or delete |
 | Inbox | "Request this piece" requests and "Stay connected" sign-ups, with CSV downloads |
 | Media | Upload, browse, copy and delete photos and audio |
@@ -131,7 +129,8 @@ sent" screen (Figma "06 — Inquiry sent").
 garment (Figma "07 — Room gate", "08 — wrong word"; the room's photo beside
 the form on desktop). Point each garment's tag at `https://<domain>/room/<slug>`.
 
-- The entry word is set per room in the admin. It is checked on the server
+- The entry word is set per garment in the admin (Collection → garment →
+  Listening Room). It is checked on the server
   (`src/lib/rooms.ts`) and never sent to the browser. Case and punctuation
   are ignored.
 - A correct word sets a signed, httpOnly cookie that keeps the room open on

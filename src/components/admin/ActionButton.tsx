@@ -17,6 +17,7 @@ export function ActionButton({
   goTo,
   tone = "default",
   big,
+  disabled,
 }: {
   action: () => Promise<ActionResult>;
   label: string;
@@ -25,13 +26,14 @@ export function ActionButton({
   goTo?: string;
   tone?: "default" | "danger";
   big?: boolean;
+  disabled?: boolean;
 }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   return (
     <button
       type="button"
-      disabled={pending}
+      disabled={pending || disabled}
       onClick={() => {
         if (confirmText && !confirm(confirmText)) return;
         start(async () => {

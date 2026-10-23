@@ -435,6 +435,8 @@ type Layout = {
   listen: Place;
   intro: Place;
   exit: Place;
+  /** Where "NN / ROOM NAME" sits at the bottom of the phone layout. */
+  footerY?: number;
   /** Lines the lyric may take before it is set smaller: [phone, desktop]. */
   lyricLines?: [number, number];
 };
@@ -450,6 +452,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1140, 600] },
   },
   "paper-walls": {
+    footerY: 1418,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -458,6 +461,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1164, 600] },
   },
   blueprint: {
+    footerY: 1419,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -466,6 +470,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1164, 600] },
   },
   "soviet-sunset": {
+    footerY: 1419,
     height: [1466, 1330],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -474,6 +479,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1236, 600] },
   },
   symmetrica: {
+    footerY: 1416,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -482,6 +488,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
   },
   "aliens-and-herons": {
+    footerY: 1419,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -490,6 +497,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
   },
   "philosophy-of-form": {
+    footerY: 1419,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -498,6 +506,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
   },
   "the-signatures": {
+    footerY: 1419,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -508,6 +517,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     lyricLines: [5, 3],
   },
   funkce: {
+    footerY: 1406,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -516,6 +526,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
   },
   "stations-of-comfort": {
+    footerY: 1418,
     height: [1466, 1330],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
@@ -666,9 +677,6 @@ function PaperWallsCollage() {
           PAPER WALLS
         </p>
       </Placed>
-      <Placed place={{ m: [0, 1418, 390] }} className="text-center">
-        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">02 / PAPER WALLS</p>
-      </Placed>
     </>
   );
 }
@@ -711,9 +719,6 @@ function SovietSunsetCollage() {
           SOVIET SUNSET
         </p>
       </Placed>
-      <Placed place={{ m: [0, 1419, 390] }} className="text-center">
-        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">04 / SOVIET SUNSET</p>
-      </Placed>
     </>
   );
 }
@@ -746,9 +751,6 @@ function BlueprintCollage() {
         <Pictured key={`${picture.file}-${i}`} picture={picture} />
       ))}
 
-      <Placed place={{ m: [0, 1419, 390] }} className="text-center">
-        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">03 / THE BLUEPRINT</p>
-      </Placed>
     </>
   );
 }
@@ -789,9 +791,6 @@ function StationsOfComfortCollage() {
         <p className="font-bold leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(36, 20) }}>
           STATIONS OF COMFORT
         </p>
-      </Placed>
-      <Placed place={{ m: [0, 1418, 390] }} className="text-center">
-        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">05 / STATIONS OF COMFORT</p>
       </Placed>
     </>
   );
@@ -852,9 +851,6 @@ function SymmetricaCollage() {
         </p>
       </Placed>
 
-      <Placed place={{ m: [0, 1416, 390] }} className="text-center">
-        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">06 / SYMMETRICA</p>
-      </Placed>
     </>
   );
 }
@@ -882,9 +878,9 @@ function SideTitle({ place, children, size }: { place: Place; children: ReactNod
   );
 }
 
-function Footer({ children }: { children: ReactNode }) {
+function Footer({ y, children }: { y: number; children: ReactNode }) {
   return (
-    <Placed place={{ m: [0, 1419, 390] }} className="text-center">
+    <Placed place={{ m: [0, y, 390] }} className="text-center">
       <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">{children}</p>
     </Placed>
   );
@@ -920,7 +916,6 @@ function AliensAndHeronsCollage() {
       <SideTitle place={{ d: [1365, 610, 29, 257] }} size={24}>
         ALIENS AND HERONS
       </SideTitle>
-      <Footer>07 / ALIENS AND HERONS</Footer>
     </>
   );
 }
@@ -973,7 +968,6 @@ function PhilosophyOfFormCollage() {
       <SideTitle place={{ d: [1362, 592, 24, 232] }} size={20}>
         PHILOSOPHY OF FORM
       </SideTitle>
-      <Footer>08 / PHILOSOPHY OF FORM</Footer>
     </>
   );
 }
@@ -1046,7 +1040,6 @@ function TheSignaturesCollage() {
           <span className="block">SIGNATURES</span>
         </p>
       </Placed>
-      <Footer>09 / THE SIGNATURES</Footer>
     </>
   );
 }
@@ -1071,9 +1064,6 @@ function FunkceCollage() {
           <span className="block">UNTIL YOUR NEXT</span>
           <span className="block">UTOPIAN DREAM</span>
         </p>
-      </Placed>
-      <Placed place={{ m: [0, 1406, 390] }} className="text-center">
-        <p className="text-[16px] font-medium leading-[normal] text-[#efefef]">10 / FUNKCE</p>
       </Placed>
     </>
   );
@@ -1168,6 +1158,11 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           {room.collage === "philosophy-of-form" && <PhilosophyOfFormCollage />}
           {room.collage === "the-signatures" && <TheSignaturesCollage />}
           {room.collage === "funkce" && <FunkceCollage />}
+          {layout.footerY && (
+            <Footer y={layout.footerY}>
+              {room.garmentNo} / {room.titleLines.join(" ").toUpperCase()}
+            </Footer>
+          )}
 
           <Placed place={layout.exit} className="text-center">
             <Link

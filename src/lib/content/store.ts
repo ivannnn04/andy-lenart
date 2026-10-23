@@ -2,15 +2,27 @@ import "server-only";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { DEFAULT_CONTENT } from "./defaults";
 import { getStorage } from "./storage";
-import type { SiteContent } from "./types";
+import { fromLegacy } from "./legacy";
+import { garment as normalizeGarment } from "./normalize";
+import type { Room, SiteContent } from "./types";
 
 const KEY = "content";
 export const CONTENT_TAG = "content";
 
 /** The stored document, each top-level section falling back to the defaults. */
 async function readContent(): Promise<SiteContent> {
-  const stored = await getStorage().get<Partial<SiteContent>>(KEY);
-  return { ...DEFAULT_CONTENT, ...(stored ?? {}) };
+  const stored = await getStorage().get<Partial<SiteContent> & Record<string, unknown>>(KEY);
+  const legacy = stored && ("collection" in stored || "rooms" in stored);
+  return {
+    settings: stored?.settings ?? DEFAULT_CONTENT.settings,
+    home: stored?.home ?? DEFAULT_CONTENT.home,
+    // Checked on the way out too, so an older saved shape never breaks a page.
+    garments: legacy
+      ? fromLegacy(stored).map(normalizeGarment)
+      : Array.isArray(stored?.garments)
+        ? stored.garments.map(normalizeGarment)
+        : DEFAULT_CONTENT.garments,
+  };
 }
 
 /**
@@ -37,12 +49,18 @@ export async function saveContent(update: (content: SiteContent) => SiteContent)
   return next;
 }
 
+/** A garment whose page is published. */
 export async function getGarment(slug: string) {
-  return (await getContent()).garments.find((g) => g.slug === slug);
+  return (await getContent()).garments.find((g) => g.slug === slug && g.page);
 }
 
-export async function getRoom(slug: string) {
-  return (await getContent()).rooms.find((r) => r.slug === slug);
+/** The garment's Listening Room, when it is switched on. */
+export async function getRoom(slug: string): Promise<Room | undefined> {
+  const garment = (await getContent()).garments.find((g) => g.slug === slug);
+  if (!garment?.room.enabled) return undefined;
+  const { enabled, ...room } = garment.room;
+  void enabled;
+  return { ...room, slug: garment.slug, garmentNo: garment.no, titleLines: garment.titleLines };
 }
 
 export const garmentHref = (slug: string) => `/collection/${slug}`;

@@ -5,13 +5,12 @@
 import {
   COLLAGES,
   type Collage,
-  type CollectionCard,
   type Garment,
   type GarmentImage,
   type HomeContent,
   type Lyric,
   type NavItem,
-  type Room,
+  type RoomContent,
   type Settings,
 } from "./types";
 
@@ -66,21 +65,45 @@ export function lyrics(v: unknown): Lyric[] {
     .sort((a, b) => a.time - b.time);
 }
 
+function roomContent(v: unknown): RoomContent {
+  const o = obj(v);
+  const photo = image(o.photo);
+  const collage = str(o.collage) as Collage;
+  return {
+    enabled: o.enabled === true,
+    keyword: str(o.keyword, 80),
+    photo: photo.src ? photo : undefined,
+    track: mediaSrc(o.track),
+    lyrics: lyrics(o.lyrics),
+    verse: lines(o.verse, 300),
+    collage: COLLAGES.includes(collage) ? collage : "pelican",
+  };
+}
+
 export function garment(v: unknown): Garment {
   const o = obj(v);
   const preview = obj(o.preview);
   const concept = obj(o.concept);
   const inside = obj(o.inside);
   const gallery = arr(o.gallery).map(image);
+  const card = obj(o.cardImage);
+  const cardSrc = mediaSrc(card.src);
+  const titleSize = num(o.titleSize, 0);
   return {
     slug: slugify(o.slug) || "untitled",
     no: str(o.no, 10),
     titleLines: lines(o.titleLines, 120),
+
+    hidden: o.hidden === true || undefined,
+    cardTitle: optStr(o.cardTitle, 200),
+    titleSize: titleSize >= 12 && titleSize <= 40 ? titleSize : undefined,
+    status: str(o.status, 120),
+    statusHref: href(o.statusHref),
+    cardImage: cardSrc ? { src: cardSrc, alt: str(card.alt, 400) } : undefined,
+    dimmed: o.dimmed === true || undefined,
+
     tagline: str(o.tagline, 400),
     price: str(o.price, 60),
-    availability: str(o.availability, 120),
-    remaining: str(o.remaining, 120),
-    size: str(o.size, 120),
     preview: {
       src: mediaSrc(preview.src),
       duration: str(preview.duration, 10) || "0:30",
@@ -88,6 +111,11 @@ export function garment(v: unknown): Garment {
         ? arr(preview.waveform).map((h) => Math.min(33, Math.max(4, Math.round(num(h, 4)))))
         : undefined,
     },
+
+    page: o.page === true,
+    availability: str(o.availability, 120),
+    remaining: str(o.remaining, 120),
+    size: str(o.size, 120),
     gallery,
     requestPhoto: Math.min(Math.max(0, Math.round(num(o.requestPhoto))), Math.max(0, gallery.length - 1)),
     details: arr(o.details)
@@ -98,46 +126,8 @@ export function garment(v: unknown): Garment {
       .map((c) => ({ name: str(obj(c).name, 200), role: str(obj(c).role, 300) }))
       .filter((c) => c.name),
     inside: { title: lines(inside.title, 200), paragraphs: lines(inside.paragraphs, 3000), image: image(inside.image) },
-  };
-}
 
-export function room(v: unknown): Room {
-  const o = obj(v);
-  const photo = image(o.photo);
-  const collage = str(o.collage) as Collage;
-  return {
-    slug: slugify(o.slug) || "untitled",
-    garmentNo: str(o.garmentNo, 10),
-    titleLines: lines(o.titleLines, 120),
-    keyword: str(o.keyword, 80),
-    photo: photo.src ? photo : undefined,
-    track: mediaSrc(o.track),
-    lyrics: lyrics(o.lyrics),
-    verse: lines(o.verse, 300),
-    collage: COLLAGES.includes(collage) ? collage : "pelican",
-  };
-}
-
-export function card(v: unknown): CollectionCard {
-  const o = obj(v);
-  const preview = obj(o.preview);
-  const img = obj(o.image);
-  const imageSrc = mediaSrc(img.src);
-  const previewSrc = mediaSrc(preview.src);
-  const titleSize = num(o.titleSize, 0);
-  return {
-    no: str(o.no, 10),
-    title: str(o.title, 200),
-    description: str(o.description, 400),
-    status: str(o.status, 120),
-    statusHref: href(o.statusHref),
-    garmentSlug: slugify(o.garmentSlug) || undefined,
-    price: optStr(o.price, 60),
-    preview: previewSrc ? { src: previewSrc, duration: str(preview.duration, 10) || "0:30" } : undefined,
-    image: imageSrc ? { src: imageSrc, alt: str(img.alt, 400) } : undefined,
-    dimmed: o.dimmed === true || undefined,
-    hidden: o.hidden === true || undefined,
-    titleSize: titleSize >= 12 && titleSize <= 40 ? titleSize : undefined,
+    room: roomContent(o.room),
   };
 }
 

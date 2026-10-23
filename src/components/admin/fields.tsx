@@ -640,7 +640,7 @@ function TimeInput({ value, onChange }: { value: number; onChange: (v: number) =
 }
 
 /** An on/off switch ("On site" / "Hidden"). */
-function Toggle({ on, label, onChange }: { on: boolean; label: string; onChange: (on: boolean) => void }) {
+export function Toggle({ on, label, onChange }: { on: boolean; label: string; onChange: (on: boolean) => void }) {
   return (
     <button
       type="button"

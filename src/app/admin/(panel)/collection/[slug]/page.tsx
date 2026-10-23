@@ -10,23 +10,38 @@ import { getContentFresh } from "@/lib/content/store";
 
 export const metadata: Metadata = { title: "Edit garment" };
 
-export default async function GarmentEditor({ params }: { params: Promise<{ slug: string }> }) {
+export default async function GarmentEditor({ params }: PageProps<"/admin/collection/[slug]">) {
   const { slug } = await params;
   const garment = (await getContentFresh()).garments.find((g) => g.slug === slug);
   if (!garment) notFound();
+  const title = garment.titleLines.join(" ") || "Garment";
+  const link = "underline";
   return (
     <>
       <p className="mb-2 text-[13px]">
-        <Link href="/admin/garments" className="font-semibold text-[#666] underline">
-          ← Garments
+        <Link href="/admin/collection" className="font-semibold text-[#666] underline">
+          ← Collection
         </Link>
       </p>
       <PageHeader
-        title={garment.titleLines.join(" ") || "Garment"}
+        title={`${garment.no ? `${garment.no} · ` : ""}${title}`}
         intro={
-          <a href={`/collection/${garment.slug}`} target="_blank" className="underline">
-            /collection/{garment.slug} ↗
-          </a>
+          <span className="flex flex-wrap gap-x-4">
+            {garment.page ? (
+              <a href={`/collection/${garment.slug}`} target="_blank" className={link}>
+                Garment page ↗
+              </a>
+            ) : (
+              <span>Garment page not published</span>
+            )}
+            {garment.room.enabled ? (
+              <a href={`/room/${garment.slug}`} target="_blank" className={link}>
+                Listening Room ↗
+              </a>
+            ) : (
+              <span>Listening Room closed</span>
+            )}
+          </span>
         }
         actions={
           <ActionButton
@@ -34,8 +49,8 @@ export default async function GarmentEditor({ params }: { params: Promise<{ slug
             tone="danger"
             action={deleteGarment.bind(null, garment.slug)}
             label="Delete garment"
-            confirmText={`Delete “${garment.titleLines.join(" ")}”? Its page will be gone.`}
-            goTo="/admin/garments"
+            confirmText={`Delete “${title}”? Its card, page and Listening Room will be gone.`}
+            goTo="/admin/collection"
           />
         }
       />
@@ -44,7 +59,7 @@ export default async function GarmentEditor({ params }: { params: Promise<{ slug
         schema="garment"
         initial={garment}
         save={saveGarment.bind(null, garment.slug)}
-        basePath="/admin/garments"
+        basePath="/admin/collection"
         storageReady={getStorage().writable}
       />
     </>

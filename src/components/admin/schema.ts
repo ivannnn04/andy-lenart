@@ -32,6 +32,9 @@ export type Field =
       blank: Record<string, unknown>;
     };
 
+/** A plain list of fields, or tabs (each optionally scoped to a key of the document). */
+export type Schema = Field[] | { tabs: { label: string; key?: string; fields: Field[] }[] };
+
 const bold = "Use **double asterisks** for bold.";
 
 const image = (key: string, label: string, help?: string, optional?: boolean): Field => ({
@@ -96,115 +99,113 @@ export const SCHEMAS = {
       ],
     },
   ],
-  collection: [
-    {
-      kind: "list",
-      key: "cards",
-      label: "Collection cards",
-      help: "The cards on the home page, in order. Switch a card off to hide it from the site without deleting it.",
-      titleKey: "title",
-      hiddenKey: "hidden",
-      blank: { no: "", title: "New piece", description: "Not yet released", status: "Coming soon" },
-      fields: [
-        { kind: "text", key: "no", label: "Number", placeholder: "01" },
-        { kind: "text", key: "title", label: "Title" },
-        { kind: "textarea", key: "description", label: "Description" },
-        { kind: "text", key: "status", label: "Status line", placeholder: "Coming soon" },
-        { kind: "text", key: "statusHref", label: "Status link", help: "Optional, e.g. #stay-connected" },
-        { kind: "text", key: "garmentSlug", label: "Garment page", help: "Address of its garment page (links the card)." },
-        { kind: "text", key: "price", label: "Price" },
-        { kind: "preview", key: "preview", label: "30-second preview" },
-        image("image", "Photo", "Leave empty for the numbered placeholder.", true),
-        { kind: "number", key: "titleSize", label: "Title size (px)", help: "Optional; default 22." },
-        { kind: "checkbox", key: "dimmed", label: "Shown faded (a later chapter)" },
-      ],
-    },
-  ],
-  garment: [
-    { kind: "text", key: "slug", label: "Address", help: "The page lives at /collection/<address>." },
-    { kind: "text", key: "no", label: "Number", placeholder: "01" },
-    { kind: "lines", key: "titleLines", label: "Title", help: "One line per line, as it breaks.", rows: 2 },
-    { kind: "textarea", key: "tagline", label: "Tagline" },
-    { kind: "text", key: "price", label: "Price", placeholder: "£1,500" },
-    { kind: "text", key: "availability", label: "Availability", placeholder: "Limited edition · 12 remaining" },
-    { kind: "text", key: "remaining", label: "Stock line in the request drawer", placeholder: "12 remaining" },
-    { kind: "text", key: "size", label: "Size", placeholder: "One size" },
-    { kind: "preview", key: "preview", label: "30-second preview", waveform: true },
-    {
-      kind: "list",
-      key: "gallery",
-      label: "Gallery",
-      titleKey: "alt",
-      blank: { alt: "", width: 1253, height: 1875 },
-      fields: [image("", "Photo")],
-    },
-    { kind: "number", key: "requestPhoto", label: "Photo beside the request form", help: "Its position in the gallery, from 0." },
-    {
-      kind: "list",
-      key: "details",
-      label: "Details (accordion)",
-      titleKey: "title",
-      blank: { title: "New section", body: "" },
-      fields: [
-        { kind: "text", key: "title", label: "Title" },
-        { kind: "textarea", key: "body", label: "Text", help: "Empty shows “Details coming soon”." },
-      ],
-    },
-    {
-      kind: "group",
-      key: "concept",
-      label: "The concept",
-      fields: [
-        { kind: "lines", key: "paragraphs", label: "Paragraphs", help: `One paragraph per line. ${bold}`, rows: 6 },
-        image("image", "Photo"),
-        { kind: "text", key: "quote", label: "Quote" },
-      ],
-    },
-    {
-      kind: "list",
-      key: "credits",
-      label: "Music credits",
-      titleKey: "name",
-      blank: { name: "", role: "" },
-      fields: [
-        { kind: "text", key: "name", label: "Name" },
-        { kind: "text", key: "role", label: "Role" },
-      ],
-    },
-    {
-      kind: "group",
-      key: "inside",
-      label: "Inside this garment",
-      fields: [
-        { kind: "lines", key: "title", label: "Heading", rows: 2 },
-        { kind: "lines", key: "paragraphs", label: "Paragraphs", help: `One paragraph per line. ${bold}`, rows: 4 },
-        image("image", "Photo", "Empty shows the dark placeholder."),
-      ],
-    },
-  ],
-  room: [
-    { kind: "text", key: "slug", label: "Address", help: "The room lives at /room/<address> — point the garment’s NFC tag here." },
-    { kind: "text", key: "keyword", label: "Entry word", help: "What owners type to open the room. Case and punctuation don’t matter." },
-    { kind: "text", key: "garmentNo", label: "Garment number", placeholder: "01" },
-    { kind: "lines", key: "titleLines", label: "Room name", rows: 2 },
-    {
-      kind: "select",
-      key: "collage",
-      label: "Collage",
-      help: "The artwork of the room (hand-placed from Figma).",
-      options: COLLAGES.map((c) => ({ value: c, label: c.replace(/-/g, " ") })),
-    },
-    image("photo", "Photo beside the entry form", "Desktop only.", true),
-    { kind: "audio", key: "track", label: "Full track", help: "Plays when the tape is touched. AAC (.m4a) or MP3." },
-    {
-      kind: "lyrics",
-      key: "lyrics",
-      label: "Lyrics",
-      trackKey: "track",
-      help: "One line at a time, from the time it starts. Import an .lrc or .srt file, or edit here.",
-    },
-    { kind: "lines", key: "verse", label: "Printed verse", help: "Fixed text in the collage (the first room’s design only).", rows: 4 },
-  ],
-} satisfies Record<string, Field[]>;
+  garment: {
+    tabs: [
+      {
+        label: "Card",
+        fields: [
+          { kind: "text", key: "slug", label: "Address", help: "Used for both /collection/<address> and /room/<address>. Don’t change it once the NFC tags are written." },
+          { kind: "text", key: "no", label: "Number", placeholder: "01" },
+          { kind: "lines", key: "titleLines", label: "Title", help: "One line per line, as it breaks on the page and in the room.", rows: 2 },
+          { kind: "checkbox", key: "hidden", label: "Hidden from the home page" },
+          { kind: "text", key: "cardTitle", label: "Card title", help: "Optional, when the card shows a different title (e.g. with a translation)." },
+          { kind: "textarea", key: "tagline", label: "Card text / tagline", help: "Under the card’s title, and the tagline on the garment page." },
+          { kind: "text", key: "status", label: "Status line", placeholder: "Coming soon" },
+          { kind: "text", key: "statusHref", label: "Status link", help: "Optional, e.g. #stay-connected." },
+          { kind: "text", key: "price", label: "Price", placeholder: "£1,500", help: "Shown on the card and the page; leave empty to hide." },
+          { kind: "preview", key: "preview", label: "30-second preview", waveform: true },
+          image("cardImage", "Card photo", "Leave empty for the numbered placeholder.", true),
+          { kind: "number", key: "titleSize", label: "Card title size (px)", help: "Optional; default 22." },
+          { kind: "checkbox", key: "dimmed", label: "Card shown faded (a later chapter)" },
+        ],
+      },
+      {
+        label: "Garment page",
+        fields: [
+          { kind: "checkbox", key: "page", label: "Page published", help: "On: the page at /collection/<address> is live and the card links to it." },
+          { kind: "text", key: "availability", label: "Availability", placeholder: "Limited edition · 12 remaining" },
+          { kind: "text", key: "remaining", label: "Stock line in the request drawer", placeholder: "12 remaining" },
+          { kind: "text", key: "size", label: "Size", placeholder: "One size" },
+          {
+            kind: "list",
+            key: "gallery",
+            label: "Gallery",
+            titleKey: "alt",
+            blank: { alt: "", width: 1253, height: 1875 },
+            fields: [image("", "Photo")],
+          },
+          { kind: "number", key: "requestPhoto", label: "Photo beside the request form", help: "Its position in the gallery, from 0." },
+          {
+            kind: "list",
+            key: "details",
+            label: "Details (accordion)",
+            titleKey: "title",
+            blank: { title: "New section", body: "" },
+            fields: [
+              { kind: "text", key: "title", label: "Title" },
+              { kind: "textarea", key: "body", label: "Text", help: "Empty shows “Details coming soon”." },
+            ],
+          },
+          {
+            kind: "group",
+            key: "concept",
+            label: "The concept",
+            fields: [
+              { kind: "lines", key: "paragraphs", label: "Paragraphs", help: `One paragraph per line. ${bold}`, rows: 6 },
+              image("image", "Photo"),
+              { kind: "text", key: "quote", label: "Quote" },
+            ],
+          },
+          {
+            kind: "list",
+            key: "credits",
+            label: "Music credits",
+            titleKey: "name",
+            blank: { name: "", role: "" },
+            fields: [
+              { kind: "text", key: "name", label: "Name" },
+              { kind: "text", key: "role", label: "Role" },
+            ],
+          },
+          {
+            kind: "group",
+            key: "inside",
+            label: "Inside this garment",
+            fields: [
+              { kind: "lines", key: "title", label: "Heading", rows: 2 },
+              { kind: "lines", key: "paragraphs", label: "Paragraphs", help: `One paragraph per line. ${bold}`, rows: 4 },
+              image("image", "Photo", "Empty shows the dark placeholder."),
+            ],
+          },
+        ],
+      },
+      {
+        label: "Listening Room",
+        key: "room",
+        fields: [
+          { kind: "checkbox", key: "enabled", label: "Room open", help: "On: /room/<address> works — point the garment’s NFC tag there." },
+          { kind: "text", key: "keyword", label: "Entry word", help: "What owners type to open the room. Case and punctuation don’t matter." },
+          {
+            kind: "select",
+            key: "collage",
+            label: "Collage",
+            help: "The artwork of the room (hand-placed from Figma).",
+            options: COLLAGES.map((c) => ({ value: c, label: c.replace(/-/g, " ") })),
+          },
+          image("photo", "Photo beside the entry form", "Desktop only.", true),
+          { kind: "audio", key: "track", label: "Full track", help: "Plays when the tape is touched. AAC (.m4a) or MP3." },
+          {
+            kind: "lyrics",
+            key: "lyrics",
+            label: "Lyrics",
+            trackKey: "track",
+            help: "One line at a time, from the time it starts. Import an .lrc or .srt file, or edit here.",
+          },
+          { kind: "lines", key: "verse", label: "Printed verse", help: "Fixed text in the collage (the first room’s design only).", rows: 4 },
+        ],
+      },
+    ],
+  },
+} satisfies Record<string, Schema>;
 
 export type SchemaName = keyof typeof SCHEMAS;

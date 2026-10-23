@@ -28,27 +28,6 @@ export type Preview = {
   waveform?: number[];
 };
 
-export type Garment = {
-  slug: string;
-  no: string;
-  /** Title as it breaks in the design. */
-  titleLines: string[];
-  tagline: string;
-  price: string;
-  availability: string;
-  /** Stock line in the request drawer, e.g. "12 remaining". */
-  remaining: string;
-  size: string;
-  preview: Preview;
-  gallery: GarmentImage[];
-  /** Gallery index of the photo shown beside the request drawer. */
-  requestPhoto: number;
-  details: { title: string; body?: string }[];
-  concept: { paragraphs: string[]; image: GarmentImage; quote: string };
-  credits: { name: string; role: string }[];
-  inside: { title: string[]; paragraphs: string[]; image: GarmentImage };
-};
-
 /** The hand-placed collages in components/room/ListeningRoom.tsx. */
 export const COLLAGES = [
   "pelican",
@@ -64,11 +43,10 @@ export const COLLAGES = [
 ] as const;
 export type Collage = (typeof COLLAGES)[number];
 
-export type Room = {
-  slug: string;
-  /** The garment the room belongs to ("No. 01 / DEPARTURES 1322"). */
-  garmentNo: string;
-  titleLines: string[];
+/** A garment's private Listening Room at /room/<garment slug>. */
+export type RoomContent = {
+  /** Off: the room's address shows "not found". */
+  enabled: boolean;
   /** Entry word. Case and punctuation are ignored. */
   keyword: string;
   /** Shown beside the gate on desktop. */
@@ -77,29 +55,63 @@ export type Room = {
   track?: string;
   /** Each line with the time (seconds into the track) it starts. */
   lyrics: Lyric[];
-  /** Fixed text printed in the collage (the first room only). */
+  /** Fixed text printed in the collage (the first room's design only). */
   verse: string[];
   collage: Collage;
 };
 
-export type CollectionCard = {
+/**
+ * One piece of the collection: its card on the home page, its page at
+ * /collection/<slug> (once released) and its Listening Room at /room/<slug>.
+ */
+export type Garment = {
+  slug: string;
   no: string;
-  title: string;
-  description: string;
+  /** Title as it breaks in the design (page and room). */
+  titleLines: string[];
+
+  // The card on the home page
+  /** Off: the card is not shown on the home page. */
+  hidden?: boolean;
+  /** Card title when it differs from the title, e.g. with a translation. */
+  cardTitle?: string;
+  /** Card title size in px (default 22). */
+  titleSize?: number;
+  /** Status line, e.g. "Available · 12 left" or "Coming soon". */
   status: string;
-  /** Makes the status line a link, e.g. to the newsletter sign-up. */
+  /** Makes the status line a link, e.g. #stay-connected. */
   statusHref?: string;
-  /** Links the card to /collection/<slug>. */
-  garmentSlug?: string;
-  price?: string;
-  preview?: { src?: string; duration: string };
-  image?: { src: string; alt: string };
+  /** Card photo; without one the card shows its number. */
+  cardImage?: { src: string; alt: string };
   /** Chapters further out are shown faded. */
   dimmed?: boolean;
-  /** Kept in the admin but not shown on the site. */
-  hidden?: boolean;
-  titleSize?: number;
+
+  // Shared by the card and the page
+  /** Card text and the page's tagline. */
+  tagline: string;
+  price: string;
+  preview: Preview;
+
+  // The garment page
+  /** Off: no page yet (the card does not link anywhere). */
+  page: boolean;
+  availability: string;
+  /** Stock line in the request drawer, e.g. "12 remaining". */
+  remaining: string;
+  size: string;
+  gallery: GarmentImage[];
+  /** Gallery index of the photo shown beside the request drawer. */
+  requestPhoto: number;
+  details: { title: string; body?: string }[];
+  concept: { paragraphs: string[]; image: GarmentImage; quote: string };
+  credits: { name: string; role: string }[];
+  inside: { title: string[]; paragraphs: string[]; image: GarmentImage };
+
+  room: RoomContent;
 };
+
+/** A Listening Room as the room pages use it (from its garment). */
+export type Room = Omit<RoomContent, "enabled"> & { slug: string; garmentNo: string; titleLines: string[] };
 
 export type NavItem = { label: string; href: string };
 
@@ -128,9 +140,8 @@ export type Settings = {
 export type SiteContent = {
   settings: Settings;
   home: HomeContent;
-  collection: CollectionCard[];
+  /** The collection, in the order of the home page. */
   garments: Garment[];
-  rooms: Room[];
 };
 
 /** Longest thought a visitor can leave on the Staircase. */

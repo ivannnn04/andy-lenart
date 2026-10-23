@@ -10,7 +10,7 @@ import { StayConnected } from "@/components/sections/StayConnected";
 import { getContent } from "@/lib/content/store";
 
 export default async function Home() {
-  const { home, collection, settings } = await getContent();
+  const { home, garments, settings } = await getContent();
   return (
     <>
       {/* The inline-size container is what the design unit (--u) measures. */}
@@ -23,7 +23,7 @@ export default async function Home() {
           <Hero lines={home.heroLines} tagline={home.heroTagline} />
           <Departures />
           <Manifesto lines={home.manifesto} />
-          <Collection cards={collection} />
+          <Collection garments={garments} />
           <ForOwners owners={home.owners} />
           <StayConnected text={home.stayConnected} email={settings.contactEmail} />
         </main>
