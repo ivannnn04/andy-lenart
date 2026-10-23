@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type CSSProperties, type FormEvent } from "react";
-import { MAX_MARK_LENGTH, SEED_MARKS, type Mark } from "@/lib/staircase";
+import { leaveMark } from "@/app/actions";
+import { MAX_MARK_LENGTH, type Mark } from "@/lib/content/types";
 
-// Marks left on this device (the wall has no shared database yet).
+// Marks left on this device, when no store is connected to share them.
 const STORAGE_KEY = "staircase-marks";
 
 type Errors = Partial<Record<"name" | "city" | "text", string>>;
@@ -40,13 +41,15 @@ const PHONE_INDENTS = [0, 111, 9, 57, 9, 39, 143, 0, 46, 0];
  * "+ leave your mark" button, the bottom sheet it opens (Figma "Bottom
  * sheet") and the wall of marks below.
  */
-export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
+export function StaircaseWall({ slug, initialMarks }: { slug: string; initialMarks: Mark[] }) {
   const sheet = useRef<HTMLDialogElement>(null);
   const [mine, setMine] = useState<Mark[]>([]);
   const [fresh, setFresh] = useState<string | null>(null);
   const [errors, setErrors] = useState<Errors>({});
   const [attempted, setAttempted] = useState(false);
   const [count, setCount] = useState(0);
+  const [sending, setSending] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
   const id = useId();
 
   useEffect(() => {
@@ -61,12 +64,13 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
 
   const open = () => {
     setErrors({});
+    setFailure(null);
     setAttempted(false);
     sheet.current?.showModal();
   };
   const close = () => sheet.current?.close();
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -78,27 +82,36 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
       form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
-    const mark: Mark = {
-      id: `${Date.now()}`,
-      text: String(data.get("text")).trim(),
-      name: String(data.get("name")).trim(),
-      city: String(data.get("city")).trim(),
-      no: garmentNo,
-    };
+    setSending(true);
+    setFailure(null);
+    const result = await leaveMark(slug, {
+      text: String(data.get("text")),
+      name: String(data.get("name")),
+      city: String(data.get("city")),
+    }).catch(() => ({ ok: false as const, error: "Something went wrong — please try again." }));
+    setSending(false);
+    if (!result.ok || !result.mark) {
+      setFailure(result.ok ? "Something went wrong — please try again." : result.error);
+      return;
+    }
+    const mark = result.mark;
     const next = [mark, ...mine];
     setMine(next);
     setFresh(mark.id);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    } catch {
-      // Not saved for next time, but it is on the wall now.
+    if (!result.stored) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        // Not saved for next time, but it is on the wall now.
+      }
     }
     form.reset();
     setCount(0);
     close();
   };
 
-  const marks = [...mine, ...SEED_MARKS];
+  const shared = new Set(initialMarks.map((m) => m.id));
+  const marks = [...mine.filter((m) => !shared.has(m.id)), ...initialMarks];
   const field = (name: keyof Errors) => ({
     "aria-invalid": !!errors[name] || undefined,
     "aria-describedby": errors[name] ? `${id}-${name}-error` : undefined,
@@ -223,9 +236,15 @@ export function StaircaseWall({ garmentNo }: { garmentNo: string }) {
             <p className="-mt-3 text-[12px] text-[#d9d9d9] md:text-[16px]" aria-live="polite">
               {count} / {MAX_MARK_LENGTH}
             </p>
+            {failure && (
+              <p role="alert" className="text-[13px] leading-[1.4] normal-case tracking-normal text-[#ff8a7a]">
+                {failure}
+              </p>
+            )}
             <button
               type="submit"
-              className="mx-auto mt-[15px] h-[50px] w-full bg-white text-[15px] font-bold uppercase tracking-[0.06em] md:mt-1 md:max-w-[256px] md:text-[20px] text-black shadow-[inset_0_0_0_2px_#fff] transition-colors duration-300 hover:bg-black hover:text-white motion-reduce:transition-none"
+              disabled={sending}
+              className="mx-auto mt-[15px] disabled:opacity-60 h-[50px] w-full bg-white text-[15px] font-bold uppercase tracking-[0.06em] md:mt-1 md:max-w-[256px] md:text-[20px] text-black shadow-[inset_0_0_0_2px_#fff] transition-colors duration-300 hover:bg-black hover:text-white motion-reduce:transition-none"
             >
               Add to the wall
             </button>

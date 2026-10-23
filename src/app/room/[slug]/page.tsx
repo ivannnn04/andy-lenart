@@ -6,7 +6,7 @@ import { Photo } from "@/components/Photo";
 import { ListeningRoom } from "@/components/room/ListeningRoom";
 import { RoomGate } from "@/components/room/RoomGate";
 import { SiteHeader } from "@/components/sections/SiteHeader";
-import { getRoom } from "@/lib/listening-rooms";
+import { getRoom } from "@/lib/content/store";
 import { accessCookie, gateCookie, readGate, unsign } from "@/lib/rooms";
 import type { GateState } from "./actions";
 
@@ -34,7 +34,7 @@ const label = "text-[13px] leading-[normal] font-medium uppercase tracking-[0.1e
  */
 export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
   const { slug } = await params;
-  const room = getRoom(slug);
+  const room = await getRoom(slug);
   if (!room) notFound();
 
   const jar = await cookies();

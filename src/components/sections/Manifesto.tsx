@@ -1,9 +1,11 @@
+import { Fragment } from "react";
 import { Photo } from "@/components/Photo";
 import { fs, placer, stage } from "@/lib/design";
 
 const p = placer(3060);
 
-export function Manifesto() {
+/** `lines`: the quote, a line each on desktop. */
+export function Manifesto({ lines }: { lines: string[] }) {
   return (
     <section
       data-reveal-children
@@ -17,12 +19,17 @@ export function Manifesto() {
         className="place text-center text-[20px] font-bold uppercase leading-[1.25] md:text-[clamp(16px,calc(32*var(--u)),32px)]"
         style={p(132, 3096, 1175)}
       >
-        One night I dreamed I broke into the flat I grew up in and found
-        strangers asleep in every room. I wasn’t there to take anything.
-        {" "}
-        <br className="max-md:hidden" />
-        I just sat on the floor in grief. That’s where this collection
-        began.
+        {lines.map((line, i) => (
+          <Fragment key={i}>
+            {i > 0 && (
+              <>
+                {" "}
+                <br className="max-md:hidden" />
+              </>
+            )}
+            {line}
+          </Fragment>
+        ))}
       </p>
       <p
         // Phones: extra space after the quote (24px gap + 24px).

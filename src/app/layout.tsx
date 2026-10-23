@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { getContent } from "@/lib/content/store";
 import "./globals.css";
 
 // Fallback for Neue Haas Grotesk Display Pro (the design typeface), which is
@@ -12,11 +13,10 @@ const inter = Inter({
   style: ["normal", "italic"],
 });
 
-export const metadata: Metadata = {
-  title: "Andy Lenárt — Departures 1322",
-  description:
-    "Departures 1322, Collection 01 by Andy Lenárt: 10 designs, 10 tracks. Every garment holds a world of sound.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { settings } = await getContent();
+  return { title: settings.siteTitle, description: settings.siteDescription };
+}
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

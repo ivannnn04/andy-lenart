@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
-import { NAV } from "@/lib/nav";
+import { getContent } from "@/lib/content/store";
 
 const linkText = "link-draw font-black uppercase";
 
@@ -12,7 +12,7 @@ const linkText = "link-draw font-black uppercase";
  * navigation on the right; the phone bar below md. `tone` sets black-on-white
  * or white-on-black.
  */
-export function RoomHeader({
+export async function RoomHeader({
   tone,
   label,
   href,
@@ -28,9 +28,11 @@ export function RoomHeader({
   phoneExtra?: ReactNode;
 }) {
   const dark = tone === "dark";
+  const { nav } = (await getContent()).settings;
   return (
     <>
       <MobileNav
+        nav={nav}
         tone={tone}
         className="md:hidden"
         buttonExtra={phoneExtra}
@@ -65,7 +67,7 @@ export function RoomHeader({
         </Link>
         <nav aria-label="Primary" className="absolute top-[calc(112*var(--u))] right-[calc(72*var(--u))]">
           <ul className="flex gap-[max(12px,calc(25*var(--u)))] text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <li key={item.href}>
                 <a href={item.href} className={linkText}>
                   {item.label}

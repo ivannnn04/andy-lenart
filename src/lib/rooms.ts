@@ -3,14 +3,14 @@
  * component, it holds the logic that checks the keyword).
  *
  * An owner taps the NFC tag in their garment, lands on /room/[slug] and
- * enters the keyword: the third word of the concept text printed inside the
- * garment (not counting the title or collection name). A correct word sets a
- * signed, httpOnly cookie that keeps the room open on that device. Wrong
+ * enters the room's keyword (printed inside the garment; managed in the admin
+ * panel). A correct word sets a signed, httpOnly cookie that keeps the room
+ * open on that device. Wrong
  * words are counted in a second signed cookie; after MAX_ATTEMPTS the gate
  * locks for LOCK_MINUTES.
  */
 import { createHmac, timingSafeEqual } from "node:crypto";
-import type { ListeningRoomInfo } from "@/lib/listening-rooms";
+import type { Room } from "@/lib/content/types";
 
 export const MAX_ATTEMPTS = 3;
 export const LOCK_MINUTES = 10;
@@ -22,32 +22,9 @@ const SECRET = process.env.ROOM_SECRET ?? "andy-lenart-dev-room-secret";
 /** Lower-case letters and digits only, so "Is," / " is " / "IS" all match. */
 const normalise = (word: string) => word.toLowerCase().replace(/[^\p{L}\p{N}]/gu, "");
 
-// Temporary keywords while the rooms are being reviewed; remove an entry to
-// go back to the third word of the concept text.
-const KEYWORD_OVERRIDE: Record<string, string> = {
-  "born-by-the-pelican-sculpture": "andy",
-  "paper-walls": "andy02",
-  "the-blueprint": "andy03",
-  "soviet-sunset": "andy04",
-  "stations-of-comfort": "andy05",
-  "symmetrica": "andy06",
-  "aliens-and-herons": "andy07",
-  "philosophy-of-form": "andy08",
-  "the-signatures": "andy09",
-  "funkce": "andy10",
-};
-
-type Keyed = Pick<ListeningRoomInfo, "slug" | "concept">;
-
-export function roomKeyword(room: Keyed) {
-  const override = KEYWORD_OVERRIDE[room.slug];
-  if (override) return normalise(override);
-  const words = room.concept.join(" ").split(/\s+/).map(normalise).filter(Boolean);
-  return words[2] ?? "";
-}
-
-export const isKeyword = (room: Keyed, attempt: string) => {
-  const keyword = roomKeyword(room);
+/** The room's entry word (set in the admin panel). */
+export const isKeyword = (room: Pick<Room, "keyword">, attempt: string) => {
+  const keyword = normalise(room.keyword);
   return keyword !== "" && normalise(attempt) === keyword;
 };
 

@@ -7,8 +7,10 @@ import { Manifesto } from "@/components/sections/Manifesto";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { StayConnected } from "@/components/sections/StayConnected";
+import { getContent } from "@/lib/content/store";
 
-export default function Home() {
+export default async function Home() {
+  const { home, collection, settings } = await getContent();
   return (
     <>
       {/* The inline-size container is what the design unit (--u) measures. */}
@@ -18,12 +20,12 @@ export default function Home() {
       >
         <SiteHeader title="Home" />
         <main>
-          <Hero />
+          <Hero lines={home.heroLines} tagline={home.heroTagline} />
           <Departures />
-          <Manifesto />
-          <Collection />
-          <ForOwners />
-          <StayConnected />
+          <Manifesto lines={home.manifesto} />
+          <Collection cards={collection} />
+          <ForOwners owners={home.owners} />
+          <StayConnected text={home.stayConnected} email={settings.contactEmail} />
         </main>
       </div>
       <SiteFooter />

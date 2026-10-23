@@ -6,7 +6,8 @@ import { cookies } from "next/headers";
 import { notFound, redirect } from "next/navigation";
 import { RoomHeader } from "@/components/room/RoomHeader";
 import { StaircaseWall } from "@/components/room/StaircaseWall";
-import { getRoom } from "@/lib/listening-rooms";
+import { visibleMarks } from "@/lib/content/marks";
+import { getRoom } from "@/lib/content/store";
 import { accessCookie, unsign } from "@/lib/rooms";
 
 export const metadata: Metadata = {
@@ -26,7 +27,7 @@ const SCRAWL = "room-staircase-scrawl.png";
  */
 export default async function StaircasePage({ params }: PageProps<"/room/[slug]/staircase">) {
   const { slug } = await params;
-  const room = getRoom(slug);
+  const room = await getRoom(slug);
   if (!room) notFound();
   const jar = await cookies();
   if (unsign(jar.get(accessCookie(slug))?.value) !== "granted") redirect(`/room/${slug}`);
@@ -94,7 +95,7 @@ export default async function StaircasePage({ params }: PageProps<"/room/[slug]/
           </p>
           <span aria-hidden className="mt-[13px] block h-[3px] w-full max-w-[314px] bg-black md:mt-2.5 md:h-1.5 md:max-w-[574px] md:w-[calc(574*var(--u))]" />
 
-          <StaircaseWall garmentNo={room.garmentNo} />
+          <StaircaseWall slug={room.slug} initialMarks={await visibleMarks()} />
         </main>
       </div>
     </div>

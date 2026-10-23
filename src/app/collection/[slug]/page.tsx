@@ -11,14 +11,15 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { fs } from "@/lib/design";
-import { GARMENTS, getGarment } from "@/lib/garments";
+import { getContent, getGarment } from "@/lib/content/store";
+import { inline } from "@/lib/inline";
 
-export function generateStaticParams() {
-  return GARMENTS.map((g) => ({ slug: g.slug }));
+export async function generateStaticParams() {
+  return (await getContent()).garments.map((g) => ({ slug: g.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/collection/[slug]">): Promise<Metadata> {
-  const garment = getGarment((await params).slug);
+  const garment = await getGarment((await params).slug);
   if (!garment) return {};
   return {
     title: `${garment.titleLines.join(" ")} — No. ${garment.no} · Andy Lenárt`,
@@ -34,8 +35,9 @@ const sectionRule =
   "relative before:absolute before:top-0 before:left-1/2 before:h-px before:w-screen before:-translate-x-1/2 before:bg-[#d1d1d1]";
 
 export default async function GarmentPage({ params }: PageProps<"/collection/[slug]">) {
-  const garment = getGarment((await params).slug);
+  const garment = await getGarment((await params).slug);
   if (!garment) notFound();
+  const { settings } = await getContent();
 
   return (
     <>
@@ -116,6 +118,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     title={garment.titleLines.join(" ")}
                     summary={[garment.size.toUpperCase(), garment.price, garment.remaining].join(" · ")}
                     photo={garment.gallery[garment.requestPhoto]}
+                    email={settings.contactEmail}
                   />
 
                   <div className={divider} />
@@ -153,7 +156,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     className={`font-normal leading-[1.6] ${i ? "mt-[1.6em]" : ""}`}
                     style={{ fontSize: fs(22, 18) }}
                   >
-                    {text}
+                    {inline(text)}
                   </p>
                 ))}
                 <ImageSlot
@@ -203,21 +206,13 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     </span>
                   ))}
                 </h2>
-                {garment.inside.paragraphs.map((runs, i) => (
+                {garment.inside.paragraphs.map((text, i) => (
                   <p
                     key={i}
                     className={`max-w-[535px] font-medium leading-[1.55] ${i ? "mt-[1.55em]" : "mt-5"}`}
                     style={{ fontSize: fs(18, 16) }}
                   >
-                    {runs.map((run, j) =>
-                      run.strong ? (
-                        <strong key={j} className="font-bold">
-                          {run.text}
-                        </strong>
-                      ) : (
-                        <span key={j}>{run.text}</span>
-                      ),
-                    )}
+                    {inline(text)}
                   </p>
                 ))}
               </div>

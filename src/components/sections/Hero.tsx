@@ -9,7 +9,7 @@ const bigNumber = "place font-bold uppercase leading-[normal] max-md:order-3";
 const centerRowStart = "max-md:ml-auto";
 const centerRowEnd = "max-md:mr-auto";
 
-export function Hero() {
+export function Hero({ lines, tagline }: { lines: string[]; tagline: string }) {
   return (
     <section
       data-reveal-children
@@ -37,11 +37,13 @@ export function Hero() {
       >
         {/* Two lines as in the design; each line is kept whole. */}
         <p className="whitespace-nowrap">
-          I grew up in a post-communist block
-          <br />
-          with a mother who was a waitress.
+          {lines.map((line, i) => (
+            <span key={i} className="block">
+              {line}
+            </span>
+          ))}
         </p>
-        <p className="mt-[1.5em] font-bold">This is how it continues...</p>
+        <p className="mt-[1.5em] font-bold">{tagline}</p>
       </div>
 
       <p

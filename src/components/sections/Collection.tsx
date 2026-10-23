@@ -2,81 +2,12 @@ import Link from "next/link";
 import { Photo } from "@/components/Photo";
 import { CardPreview } from "@/components/product/PreviewPlayer";
 import { fs, sp } from "@/lib/design";
-import { garmentHref, getGarment } from "@/lib/garments";
-
-type Garment = {
-  no: string;
-  title: string;
-  description: string;
-  status: string;
-  /** Makes the status line a link, e.g. to the newsletter sign-up. */
-  statusHref?: string;
-  /** The garment's own page, once it exists. */
-  href?: string;
-  price?: string;
-  preview?: { src?: string; duration: string };
-  image?: { src: string; alt: string };
-  /** Chapters further out are shown faded. */
-  dimmed?: boolean;
-  titleSize?: number;
-};
-
-/** The 30-second preview of a garment's track, in public/audio. */
-const preview = (no: string) => ({ src: `/audio/garment-${no}-preview.aac`, duration: "0:30" });
-
-const GARMENTS: Garment[] = [
-  {
-    no: "01",
-    title: "Born by the Pelican Sculpture",
-    description: "One can depart, but the place does not release you.",
-    status: "Available · 12 left",
-    href: garmentHref("born-by-the-pelican-sculpture"),
-    price: "£ 1,500",
-    preview: getGarment("born-by-the-pelican-sculpture")?.preview,
-    image: {
-      src: "/images/garment-01.webp",
-      alt: "Garment 01: white coat with hand-drawn black lettering, worn on concrete steps beneath tower blocks",
-    },
-  },
-  {
-    no: "02",
-    title: "Paper Walls",
-    description: "Not yet released",
-    status: "Next release · Notify me",
-    statusHref: "#stay-connected",
-    preview: preview("02"),
-  },
-  { no: "03", title: "Symmetrica", description: "Not yet released", status: "Coming soon", preview: preview("03") },
-  {
-    no: "04",
-    title: "Aliens and Herons (Vetřelci a volavky)",
-    description: "Not yet released",
-    status: "Coming soon",
-    titleSize: 20,
-    preview: preview("04"),
-  },
-  ...(
-    [
-      ["05", "The Blueprint"],
-      ["06", "Soviet Sunset"],
-      ["07", "Stations of Comfort"],
-      ["08", "Philosophy of Form"],
-      ["09", "The Signatures"],
-      ["10", "Funkce"],
-    ] as const
-  ).map(([no, title]) => ({
-    no,
-    title,
-    description: "Not yet released",
-    status: "Coming soon",
-    dimmed: true,
-    preview: preview(no),
-  })),
-];
+import type { CollectionCard } from "@/lib/content/types";
+import { garmentHref } from "@/lib/content/store";
 
 const label = "text-[12px] leading-[normal] font-bold tracking-[0.14em] text-muted";
 
-export function Collection() {
+export function Collection({ cards }: { cards: CollectionCard[] }) {
   return (
     <section
       data-reveal-children
@@ -102,8 +33,8 @@ export function Collection() {
         className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-8 md:grid-cols-[repeat(4,calc(296*var(--u)))] md:gap-x-[calc(32*var(--u))] md:gap-y-[calc(64*var(--u))]"
         style={{ marginTop: sp(26, 20) }}
       >
-        {GARMENTS.map((garment) => (
-          <GarmentCard key={garment.no} {...garment} />
+        {cards.map((card, i) => (
+          <GarmentCard key={`${card.no}-${i}`} {...card} />
         ))}
       </ul>
 
@@ -140,13 +71,14 @@ function GarmentCard({
   description,
   status,
   statusHref,
-  href,
+  garmentSlug,
   price,
   preview,
   image,
   dimmed,
   titleSize = 22,
-}: Garment) {
+}: CollectionCard) {
+  const href = garmentSlug ? garmentHref(garmentSlug) : undefined;
   return (
     <li className={dimmed ? "opacity-80" : undefined}>
       <article className="flex flex-col gap-3.5">

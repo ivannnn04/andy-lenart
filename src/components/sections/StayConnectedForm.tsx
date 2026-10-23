@@ -2,7 +2,7 @@
 
 import { useId, useState, type FormEvent } from "react";
 import { fs, sp } from "@/lib/design";
-import { CONTACT_EMAIL } from "@/lib/site";
+import { subscribe } from "@/app/actions";
 import { emailError } from "@/lib/validate";
 
 const FIELDS = [
@@ -25,21 +25,23 @@ function validate(data: FormData): Errors {
 const fieldText = "font-normal uppercase leading-none";
 
 /**
- * There is no mailing-list backend yet, so submitting opens the visitor's
- * mail client with a pre-filled message to the studio address. Validation is
+ * Sign-ups go to the admin inbox; without a store connected, submitting
+ * opens the visitor's mail client with a pre-filled message instead. Validation is
  * our own (not the browser's bubbles): messages appear under the fields after
  * the first submit and update as the visitor types.
  */
-export function StayConnectedForm() {
+export function StayConnectedForm({ email }: { email: string }) {
   const [errors, setErrors] = useState<Errors>({});
   const [attempted, setAttempted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [status, setStatus] = useState<{ done?: boolean; error?: string }>({});
   const id = useId();
 
   function handleChange(event: FormEvent<HTMLFormElement>) {
     if (attempted) setErrors(validate(new FormData(event.currentTarget)));
   }
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -51,13 +53,29 @@ export function StayConnectedForm() {
       form.querySelector<HTMLElement>(`[name="${first.name}"]`)?.focus();
       return;
     }
+    setSending(true);
+    const result = await subscribe({
+      name: String(data.get("name") ?? ""),
+      email: String(data.get("email") ?? ""),
+      message: String(data.get("message") ?? ""),
+    }).catch(() => ({ ok: false as const, error: "Something went wrong — please try again." }));
+    setSending(false);
+    if (!result.ok) {
+      setStatus({ error: result.error });
+      return;
+    }
+    if (result.stored) {
+      form.reset();
+      setStatus({ done: true });
+      return;
+    }
     const body = [
       `Name: ${data.get("name")}`,
       `Email: ${data.get("email")}`,
       "",
       String(data.get("message") ?? ""),
     ].join("\n");
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(
       "Stay connected",
     )}&body=${encodeURIComponent(body)}`;
   }
@@ -101,9 +119,15 @@ export function StayConnectedForm() {
           );
         })}
       </div>
+      {(status.done || status.error) && (
+        <p role="status" className={`text-[16px] leading-[1.4] normal-case md:text-[18px] ${status.error ? "text-error" : ""}`}>
+          {status.error ?? "Thank you — we’ll write when the next garment is ready."}
+        </p>
+      )}
       <button
         type="submit"
-        className={`${fieldText} font-semibold! bg-black px-4 whitespace-nowrap text-white md:px-16 shadow-[inset_0_0_0_2px_#000] transition-colors duration-300 hover:bg-white hover:text-black motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black`}
+        disabled={sending}
+        className={`${fieldText} disabled:opacity-60 font-semibold! bg-black px-4 whitespace-nowrap text-white md:px-16 shadow-[inset_0_0_0_2px_#000] transition-colors duration-300 hover:bg-white hover:text-black motion-reduce:transition-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-black`}
         style={{ paddingBlock: sp(32, 20) }}
       >
         Stay connected

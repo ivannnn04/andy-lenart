@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getRoom } from "@/lib/listening-rooms";
+import { getRoom } from "@/lib/content/store";
 import {
   LOCK_MINUTES,
   MAX_ATTEMPTS,
@@ -27,7 +27,7 @@ const cookieOptions = {
 };
 
 export async function enterRoom(slug: string, _prev: GateState, form: FormData): Promise<GateState> {
-  const room = getRoom(slug);
+  const room = await getRoom(slug);
   if (!room) return { status: "idle" };
 
   const jar = await cookies();

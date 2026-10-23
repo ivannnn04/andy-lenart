@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef, type ReactNode } from "react";
-import { NAV } from "@/lib/nav";
+import type { NavItem } from "@/lib/content/types";
 
 const barText = "text-[16px] leading-[normal] font-semibold uppercase";
 
@@ -15,6 +15,7 @@ const barText = "text-[16px] leading-[normal] font-semibold uppercase";
  * closes it).
  */
 export function MobileNav({
+  nav,
   title,
   className = "",
   inset = "gutter",
@@ -22,6 +23,8 @@ export function MobileNav({
   buttonExtra,
 }: {
   /** Page name (or a link) on the left; without it "Public" goes there. */
+  /** Site navigation (from the admin settings). */
+  nav: NavItem[];
   title?: ReactNode;
   className?: string;
   /** Side padding of the bar, to line up with the page's own content. */
@@ -92,7 +95,7 @@ export function MobileNav({
         )}
         <nav aria-label="Primary" className={`pt-10 ${inset}`}>
           <ul className="flex flex-col gap-4">
-            {NAV.map((item) => (
+            {nav.map((item) => (
               <li key={item.href}>
                 <a
                   href={item.href}

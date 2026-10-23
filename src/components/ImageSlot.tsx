@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { Photo } from "@/components/Photo";
-import type { GarmentImage } from "@/lib/garments";
+import type { GarmentImage } from "@/lib/content/types";
 
 type ImageSlotProps = {
   image: GarmentImage;

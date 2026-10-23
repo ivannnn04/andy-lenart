@@ -1,11 +1,17 @@
 import { Photo } from "@/components/Photo";
 import { fs, placer, sp } from "@/lib/design";
-import { CONTACT_EMAIL } from "@/lib/site";
+import type { HomeContent } from "@/lib/content/types";
 import { StayConnectedForm } from "./StayConnectedForm";
 
 const p = placer(7185);
 
-export function StayConnected() {
+export function StayConnected({
+  text,
+  email,
+}: {
+  text: HomeContent["stayConnected"];
+  email: string;
+}) {
   return (
     <section
       data-reveal-children
@@ -20,15 +26,15 @@ export function StayConnected() {
           className="font-bold uppercase leading-none md:max-w-[calc(688*var(--u))]"
           style={{ fontSize: fs(72, 40) }}
         >
-          Hear when the next piece is out
+          {text.title}
         </h2>
         <p
           className="font-medium leading-[1.2] md:max-w-[calc(723*var(--u))]"
           style={{ marginTop: sp(24, 16), fontSize: fs(24, 18) }}
         >
-          Follow the collection. Receive an email when the next garment is ready.
+          {text.subtitle}
         </p>
-        <StayConnectedForm />
+        <StayConnectedForm email={email} />
       </div>
 
       <div
@@ -62,11 +68,11 @@ export function StayConnected() {
         style={{ marginTop: sp(142, 80) }}
       >
         <a
-          href={`mailto:${CONTACT_EMAIL}`}
+          href={`mailto:${email}`}
           className="font-bold leading-[1.2] whitespace-nowrap link-sweep"
           style={{ fontSize: "min(93px, calc(100cqw / 13.2))" }}
         >
-          {CONTACT_EMAIL}
+          {email}
         </a>
       </p>
     </section>

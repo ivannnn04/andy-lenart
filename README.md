@@ -65,72 +65,91 @@ Export these Figma layers as PNG into `public/images/`:
 "Source image, uncropped" layers are cropped in code exactly as in Figma, so
 export the original fill image rather than the cropped layer.
 
+## Admin panel
+
+Everything on the site is managed at **`/admin`**:
+
+| Section | What it edits |
+| --- | --- |
+| Dashboard | Counts, latest requests and a setup checklist |
+| Home page | Hero text, manifesto, "For owners" steps, "Stay connected" texts |
+| Collection cards | The ten cards on the home page: order, status, price, 30-second preview, photo, link to the garment page |
+| Garments | Each `/collection/<address>` page: title, price, availability, preview (duration and waveform are measured on upload), gallery, details, concept, credits, "Inside this garment" — create and delete garments too |
+| Listening Rooms | Each `/room/<address>`: entry word, garment number, collage, gate photo, full track and lyrics (import an `.lrc`/`.srt` file, edit times, play the track against the lines, shift all) |
+| The Staircase | Every mark left on the shared wall: hide, show or delete |
+| Inbox | "Request this piece" requests and "Stay connected" sign-ups, with CSV downloads |
+| Media | Upload, browse, copy and delete photos and audio |
+| Settings | Site title and description, contact email, the menu |
+
+Text fields accept `**double asterisks**` for bold. The hand-placed collages
+(home page art, the rooms' artwork) stay in code; a room picks one of them.
+
+### Setup on Vercel (once)
+
+1. **Storage** → Create Database → **Upstash for Redis** → connect it to
+   this project. It holds the content, the Staircase and the inbox
+   (`KV_REST_API_URL` / `KV_REST_API_TOKEN` are added for you).
+2. **Storage** → Create Database → **Blob** → connect it to this project.
+   It holds uploaded photos and audio (`BLOB_READ_WRITE_TOKEN`).
+3. **Settings → Environment Variables**: `ADMIN_PASSWORD` (the admin
+   sign-in) and `ROOM_SECRET` (any long random text; signs the room
+   cookies). Optionally `ADMIN_SECRET` to sign admin sessions separately.
+4. Redeploy.
+
+Until Redis is connected the site shows its built-in content
+(`src/lib/content/defaults.ts`) and the admin is read-only; the public forms
+fall back to the visitor's email app and the Staircase to the browser. The
+admin stays locked in production until `ADMIN_PASSWORD` is set.
+
+In local development no setup is needed: the password is `admin`, content
+is saved to `.data/` and uploads to `public/uploads/` (both ignored by git).
+
+### How it fits together
+
+- `src/lib/content/types.ts` — the content model; `defaults.ts` — what
+  ships with the site; `store.ts` — reads (cached, refreshed on every save)
+  and saves; `storage.ts` — Redis / local files; `marks.ts`, `inbox.ts` —
+  the Staircase and the inbox; `normalize.ts` — checks everything the admin
+  sends.
+- `src/app/admin` — the panel (pages and server actions);
+  `src/components/admin` — the form engine (`schema.ts` describes each
+  editor's fields), uploads and audio/lyrics tools.
+- `src/app/actions.ts` — the public forms (Staircase marks, requests,
+  sign-ups), rate-limited per visitor.
+
 ## Garment pages
 
-`/collection/[slug]` renders a garment from `src/lib/garments.ts` (Figma frame
-"04 — Garment page"). An image without `src` shows a labelled placeholder until
-its file is added; `preview.src` enables the audio preview.
-"Request this piece" opens the inquiry drawer (Figma "05 — Inquiry
-(drawer)"). With no backend yet, submitting it opens the visitor's email app
-with the request addressed to `CONTACT_EMAIL` and shows the "request
-sent" screen (Figma "06 — Inquiry sent"); swap `submit` in
-`RequestDrawer.tsx` for a form endpoint to receive requests directly. Garment 01 still
-needs these files in `public/images/`:
+`/collection/[slug]` renders a garment (Figma frame "04 — Garment page"). An
+image without `src` shows a labelled placeholder; `preview.src` enables the
+audio preview. "Request this piece" opens the inquiry drawer (Figma "05 —
+Inquiry (drawer)"); requests land in the admin inbox and show the "request
+sent" screen (Figma "06 — Inquiry sent").
 
-| Figma layer | Used for |
-| --- | --- |
-| (not in design yet) | the Listening Room image |
-
-## Listening Room gate
+## Listening Rooms
 
 `/room/[slug]` is where an owner lands after tapping the NFC tag in their
-garment (Figma "07 — Room gate", "08 — wrong word"; mobile first, with the
-garment photo beside the form on desktop). It uses the same header as the
-other pages. Point each garment's tag at
-`https://<domain>/room/<slug>`, e.g. `/room/born-by-the-pelican-sculpture`.
+garment (Figma "07 — Room gate", "08 — wrong word"; the room's photo beside
+the form on desktop). Point each garment's tag at `https://<domain>/room/<slug>`.
 
-- The keyword is the third word of the garment's concept text in
-  `src/lib/garments.ts` (for No. 01: "is"). It is checked on the server
-  (`src/lib/rooms.ts`) and never sent to the browser.
+- The entry word is set per room in the admin. It is checked on the server
+  (`src/lib/rooms.ts`) and never sent to the browser. Case and punctuation
+  are ignored.
 - A correct word sets a signed, httpOnly cookie that keeps the room open on
   that device. Three wrong words lock the gate for ten minutes.
-- Set `ROOM_SECRET` (any long random string) in the deployment environment;
-  it signs those cookies.
 - The page is `noindex`. Once the gate is open the same URL shows the
-  Listening Room (Figma "09" mobile, "14" desktop): a black collage around a
-  cassette that plays the garment's track. The tape plays the full track
-  (`room.track` in `src/lib/garments.ts`) and the big heading shows the lyrics
-  in real time, one line at a time, Spotify-style. Each line's start time
-  (seconds) is set in `room.lyrics`; No. 01's lyrics and timings are
-  placeholders until the real ones arrive. For review the No. 01 keyword is
-  temporarily "andy" (`KEYWORD_OVERRIDE` in `src/lib/rooms.ts`).
-- Rooms are listed in `src/lib/listening-rooms.ts`. The second room,
-  "Paper Walls" (Figma "02 — PAPER WALLS"), is at `/room/paper-walls`, keyword
-  "andy02" for review. It plays its own track (`public/audio/paper-walls-track.m4a`) and lyrics. Its
-  images (`room-02-*.png`) are 1× renders of the Figma layers; replace them
-  with 2× exports of the same layers for sharper photos.
-- The third room, "The Blueprint" (Figma "03 — THE BLUEPRINT"), is at
-  `/room/the-blueprint`, keyword "andy03"; same notes as Paper Walls
-  (`room-03-*.png`).
-- The fourth room, "Soviet Sunset" (Figma "04 — SOVIET SUNSET"), is at
-  `/room/soviet-sunset`, keyword "andy04" (`room-04-*.png`). Only its phone
-  collage is designed; desktop lays out the same pieces in two columns.
-- The fifth room, "Stations of Comfort" (Figma "05 — STATIONS OF COMFORT"),
-  is at `/room/stations-of-comfort`, keyword "andy05" (`room-05-*.png`);
-  desktop is laid out the same way as Soviet Sunset's.
-- The sixth room, "Symmetrica" (Figma "06 — SYMMETRICA" mobile, "07 —
-  SYMMETRICA" desktop), is at `/room/symmetrica`, keyword "andy06"
-  (`room-06-*.png`).
-- Rooms 7–10: "Aliens and Herons" (`/room/aliens-and-herons`, "andy07"),
-  "Philosophy of Form" (`/room/philosophy-of-form`, "andy08"), "The
-  Signatures" (`/room/the-signatures`, "andy09") and "Funkce"
-  (`/room/funkce`, "andy10").
+  Listening Room: a black collage around a cassette that plays the room's
+  full track, with the lyrics shown one line at a time as it plays. A line
+  too long for the room is set smaller so it never runs into the collage.
+- Built-in rooms: Born by the Pelican Sculpture ("andy"), Paper Walls
+  ("andy02"), The Blueprint ("andy03"), Soviet Sunset ("andy04"), Stations of
+  Comfort ("andy05"), Symmetrica ("andy06"), Aliens and Herons ("andy07"),
+  Philosophy of Form ("andy08"), The Signatures ("andy09"), Funkce ("andy10").
+  Soviet Sunset's and Stations of Comfort's desktop layouts are not in Figma
+  and set the phone pieces in two columns. Room images (`room-0N-*.png`) are
+  1× renders of the Figma layers; 2× exports would be sharper.
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
-  needs the room's access cookie. Its wall shows the design's marks
-  (`src/lib/staircase.ts`) plus the ones left on this device: there is no
-  shared database yet, so a new mark is only stored in that browser
-  (localStorage). Connecting a database (e.g. Vercel Postgres / Upstash) is
-  what makes the wall shared.
+  needs the room's access cookie. One wall is shared by every room; marks
+  are saved to the store and moderated in the admin.
 
 ### Listening Room images
 

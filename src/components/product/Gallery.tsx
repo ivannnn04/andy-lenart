@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ImageSlot } from "@/components/ImageSlot";
-import type { GarmentImage } from "@/lib/garments";
+import type { GarmentImage } from "@/lib/content/types";
 
 /** Main photo (723×880 in the design) with a row of four 167×250 thumbnails. */
 export function Gallery({ images }: { images: GarmentImage[] }) {
@@ -12,7 +12,8 @@ export function Gallery({ images }: { images: GarmentImage[] }) {
   return (
     <div>
       <ImageSlot
-        image={images[active]}
+        // A garment without photos yet shows the placeholder.
+        image={images[active] ?? { alt: "", width: 723, height: 880 }}
         frame={{ width: 723, height: 880 }}
         sizes="(min-width: 768px) 50vw, 100vw"
         preload={active === 0}
@@ -26,7 +27,7 @@ export function Gallery({ images }: { images: GarmentImage[] }) {
           const index = i + 1;
           const selected = active === index;
           return (
-            <li key={image.alt}>
+            <li key={`${index}-${image.src ?? image.alt}`}>
               <button
                 type="button"
                 onClick={() => setActive(selected ? 0 : index)}

@@ -1,7 +1,7 @@
 import { MobileNav } from "@/components/MobileNav";
 import { Photo } from "@/components/Photo";
 import { placer, stage } from "@/lib/design";
-import { NAV } from "@/lib/nav";
+import { getContent } from "@/lib/content/store";
 
 const p = placer(0);
 
@@ -37,7 +37,7 @@ const VARIANTS = {
  * Phones get the compact bar (page name · monogram · "Public" menu) on every
  * page; from md the art-directed header below takes over.
  */
-export function SiteHeader({
+export async function SiteHeader({
   variant = "home",
   title,
   inset,
@@ -49,9 +49,10 @@ export function SiteHeader({
   inset?: string;
 }) {
   const v = VARIANTS[variant];
+  const { nav } = (await getContent()).settings;
   return (
     <>
-    <MobileNav title={title} inset={inset} className="md:hidden" />
+    <MobileNav nav={nav} title={title} inset={inset} className="md:hidden" />
     <header
       data-reveal-children
       className="stage gutter max-md:hidden"
@@ -91,7 +92,7 @@ export function SiteHeader({
         <ul
           className="flex flex-wrap justify-center gap-x-[clamp(8px,4vw,20px)] gap-y-2 text-[clamp(11px,3.4vw,14px)] font-black uppercase leading-[0.9] whitespace-nowrap md:flex-nowrap md:justify-between md:gap-[max(12px,calc(25*var(--u)))] md:text-[clamp(11px,calc(18*var(--u)),18px)]"
         >
-          {NAV.map((item) => (
+          {nav.map((item) => (
             <li key={item.href}>
               <a href={item.href} className="link-draw">
                 {item.label}

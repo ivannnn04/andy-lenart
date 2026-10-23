@@ -7,7 +7,7 @@ import { RoomAudioProvider, RoomCurrentLine } from "@/components/room/RoomAudio"
 import { RoomHeader } from "@/components/room/RoomHeader";
 import { RoomTape } from "@/components/room/RoomTape";
 import { fs } from "@/lib/design";
-import type { ListeningRoomInfo } from "@/lib/listening-rooms";
+import type { Room as ListeningRoomInfo } from "@/lib/content/types";
 
 /**
  * Placement on the two artboards: [x, y, width, height?] in design px.

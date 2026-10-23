@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useId, useRef, useState, type FormEvent } from "react";
 import { Arrow } from "@/components/Arrow";
-import type { GarmentImage } from "@/lib/garments";
-import { CONTACT_EMAIL } from "@/lib/site";
+import type { GarmentImage } from "@/lib/content/types";
+import { sendRequest } from "@/app/actions";
 import { emailError } from "@/lib/validate";
 
 const buttonClass =
@@ -47,30 +47,36 @@ function validate(data: FormData): Errors {
 /**
  * "Request this piece" button and the inquiry drawer it opens (Figma
  * "05 — Inquiry (drawer)"). A native modal <dialog>: focus stays inside,
- * Esc closes it and the page behind is inert. There is no backend yet, so
- * submitting composes the request as an email to the studio.
+ * Esc closes it and the page behind is inert. Requests go to the admin
+ * inbox; without a store connected, they are composed as an email instead.
  */
 export function RequestDrawer({
   no,
   title,
   summary,
   photo,
+  email,
 }: {
   no: string;
   title: string;
   /** e.g. "ONE SIZE · £1,500 · 12 remaining" */
   summary: string;
   photo?: GarmentImage;
+  /** The studio address, for the email fallback. */
+  email: string;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
   const [sent, setSent] = useState(false);
   // Errors show after the first submit attempt, then update as the visitor types.
   const [errors, setErrors] = useState<Errors>({});
   const [attempted, setAttempted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [failure, setFailure] = useState<string | null>(null);
   const id = useId();
 
   const open = () => {
     setSent(false);
+    setFailure(null);
     setErrors({});
     setAttempted(false);
     dialog.current?.showModal();
@@ -81,7 +87,7 @@ export function RequestDrawer({
     if (attempted) setErrors(validate(new FormData(e.currentTarget)));
   };
 
-  const submit = (e: FormEvent<HTMLFormElement>) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
     const data = new FormData(form);
@@ -94,6 +100,24 @@ export function RequestDrawer({
       return;
     }
     const field = (name: string) => String(data.get(name) ?? "").trim();
+    setSending(true);
+    setFailure(null);
+    const result = await sendRequest({
+      garment: `No. ${no} — ${title}`,
+      name: field("name"),
+      city: field("city"),
+      email: field("email"),
+      message: field("message"),
+    }).catch(() => ({ ok: false as const, error: "Something went wrong — please try again." }));
+    setSending(false);
+    if (!result.ok) {
+      setFailure(result.error);
+      return;
+    }
+    if (result.stored) {
+      setSent(true);
+      return;
+    }
     const body = [
       `Piece: No. ${no} — ${title}`,
       `Name: ${field("name")}`,
@@ -102,7 +126,7 @@ export function RequestDrawer({
       "",
       field("message") || "(no message)",
     ].join("\n");
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(
       `Request: No. ${no} ${title}`,
     )}&body=${encodeURIComponent(body)}`;
     setSent(true);
@@ -282,7 +306,12 @@ export function RequestDrawer({
                   )}
                 </div>
 
-                <button type="submit" className={buttonClass}>
+                {failure && (
+                  <p role="alert" className={errorText}>
+                    {failure}
+                  </p>
+                )}
+                <button type="submit" disabled={sending} className={`${buttonClass} disabled:opacity-60`}>
                   Submit request
                   <Arrow className="ml-[0.65em]" />
                 </button>
