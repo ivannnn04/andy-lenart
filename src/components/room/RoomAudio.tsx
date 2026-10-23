@@ -32,10 +32,17 @@ type Line = { time: number; text: string };
 /** Index of the line being sung at `time` (-1 before the first one). */
 const lineAt = (lines: Line[], time: number) => lines.findLastIndex((line) => time >= line.time);
 
+/** Seconds a sung letter takes, roughly — the lyrics are timed per line, not per word. */
+const SECONDS_PER_LETTER = 0.1;
+
 /**
  * The lyric of the moment, one sentence at a time (Spotify-style): it
  * follows the track and each new line fades in. Before the music starts it
  * shows the first line.
+ *
+ * Karaoke: the line waits in semi-transparent white and lights up letter by
+ * letter as it is sung — at singing pace, and always finished before the
+ * next line starts.
  *
  * `maxLines` ([phone, desktop]) is the room the collage leaves for the line:
  * a longer one is set a little smaller so it never runs into the pictures.
@@ -50,7 +57,8 @@ export function RoomCurrentLine({
   className?: string;
 }) {
   const { time } = useRoomAudio();
-  const line = lines[Math.max(0, lineAt(lines, time))];
+  const at = Math.max(0, lineAt(lines, time));
+  const line = lines[at];
   const span = useRef<HTMLSpanElement>(null);
   const [phoneLines, desktopLines] = maxLines ?? [0, 0];
 
@@ -72,11 +80,32 @@ export function RoomCurrentLine({
   }, [line?.text, phoneLines, desktopLines]);
 
   if (!line) return null;
+  const letters = line.text.replace(/\s+/g, "").length;
+  const next = lines[at + 1]?.time;
+  const length = Math.min(letters * SECONDS_PER_LETTER + 0.4, next === undefined ? Infinity : (next - line.time) * 0.9);
+  const sung = Math.max(0, Math.min(1, (time - line.time) / length)) * letters;
+  let index = 0;
   return (
     // Not announced line by line: that would talk over the music.
     <p aria-live="off" className={className}>
       <span ref={span} key={line.text} className="room-line block">
-        {line.text}
+        <span className="sr-only">{line.text}</span>
+        <span aria-hidden>
+          {line.text.split(/(\s+)/).map((word, w) =>
+            /^\s*$/.test(word) ? (
+              word
+            ) : (
+              // A word never breaks across lines.
+              <span key={w} className="whitespace-nowrap">
+                {[...word].map((letter, l) => (
+                  <span key={l} className={`room-letter${index++ < sung ? " is-sung" : ""}`}>
+                    {letter}
+                  </span>
+                ))}
+              </span>
+            ),
+          )}
+        </span>
       </span>
     </p>
   );

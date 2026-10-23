@@ -409,6 +409,16 @@ html:has(.site-menu[open]) {
   }
 }
 
+/* Karaoke: letters still to be sung wait in semi-transparent white. */
+.room-letter {
+  opacity: 0.35;
+  transition: opacity 0.25s ease-out;
+}
+
+.room-letter.is-sung {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .room-line {
     animation: none;
