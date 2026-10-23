@@ -398,8 +398,9 @@ function ListInput({
         {value.map((item, i) => {
           const title = String((field.titleKey ? item?.[field.titleKey] : "") || `Item ${i + 1}`);
           const isOpen = open === i;
+          const hidden = field.hiddenKey ? item?.[field.hiddenKey] === true : false;
           return (
-            <li key={i} className="rounded-lg border border-[#e4e4e0] bg-white">
+            <li key={i} className={`rounded-lg border border-[#e4e4e0] ${hidden ? "bg-[#f3f3f0]" : "bg-white"}`}>
               <div className="flex items-center gap-2 px-3 py-2">
                 <button
                   type="button"
@@ -411,8 +412,18 @@ function ListInput({
                     ▶
                   </span>
                   <span className="text-[#999]">{i + 1}.</span>
-                  <span className="truncate">{title}</span>
+                  <span className={`truncate ${hidden ? "text-[#999] line-through" : ""}`}>{title}</span>
+                  {hidden && <span className="shrink-0 rounded bg-[#e4e4e0] px-1.5 py-0.5 text-[11px] text-[#666]">Hidden</span>}
                 </button>
+                {field.hiddenKey && (
+                  <Toggle
+                    on={!hidden}
+                    label={`${hidden ? "Show" : "Hide"} “${title}” on the site`}
+                    onChange={(on) =>
+                      onChange(value.map((x, j) => (j === i ? { ...x, [field.hiddenKey as string]: on ? undefined : true } : x)))
+                    }
+                  />
+                )}
                 <button type="button" onClick={() => move(i, i - 1)} disabled={i === 0} className={smallButton} aria-label="Move up">
                   ↑
                 </button>
@@ -625,5 +636,30 @@ function TimeInput({ value, onChange }: { value: number; onChange: (v: number) =
       aria-label="Start time (m:ss.xx)"
       className={`${input} w-[86px]! shrink-0 py-1.5 font-mono text-[12px]`}
     />
+  );
+}
+
+/** An on/off switch ("On site" / "Hidden"). */
+function Toggle({ on, label, onChange }: { on: boolean; label: string; onChange: (on: boolean) => void }) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={on}
+      aria-label={label}
+      title={label}
+      onClick={() => onChange(!on)}
+      className="flex shrink-0 items-center gap-2 rounded-md px-1.5 py-1 text-[12px] font-semibold text-[#555] hover:bg-[#f0f0ec]"
+    >
+      <span
+        aria-hidden
+        className={`relative h-5 w-9 rounded-full transition-colors ${on ? "bg-[#2e7d32]" : "bg-[#c9c9c4]"}`}
+      >
+        <span
+          className={`absolute top-0.5 left-0.5 size-4 rounded-full bg-white shadow transition-transform ${on ? "translate-x-4" : ""}`}
+        />
+      </span>
+      <span className="w-12 text-left">{on ? "On site" : "Hidden"}</span>
+    </button>
   );
 }

@@ -27,6 +27,8 @@ export type Field =
       fields: Field[];
       /** Key whose value titles each item in the list. */
       titleKey?: string;
+      /** Key of a boolean that hides the item on the site; adds an on/off switch to each row. */
+      hiddenKey?: string;
       blank: Record<string, unknown>;
     };
 
@@ -99,8 +101,9 @@ export const SCHEMAS = {
       kind: "list",
       key: "cards",
       label: "Collection cards",
-      help: "The cards on the home page, in order.",
+      help: "The cards on the home page, in order. Switch a card off to hide it from the site without deleting it.",
       titleKey: "title",
+      hiddenKey: "hidden",
       blank: { no: "", title: "New piece", description: "Not yet released", status: "Coming soon" },
       fields: [
         { kind: "text", key: "no", label: "Number", placeholder: "01" },

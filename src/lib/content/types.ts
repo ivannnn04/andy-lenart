@@ -96,6 +96,8 @@ export type CollectionCard = {
   image?: { src: string; alt: string };
   /** Chapters further out are shown faded. */
   dimmed?: boolean;
+  /** Kept in the admin but not shown on the site. */
+  hidden?: boolean;
   titleSize?: number;
 };
 

@@ -33,7 +33,7 @@ export function Collection({ cards }: { cards: CollectionCard[] }) {
         className="grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-8 md:grid-cols-[repeat(4,calc(296*var(--u)))] md:gap-x-[calc(32*var(--u))] md:gap-y-[calc(64*var(--u))]"
         style={{ marginTop: sp(26, 20) }}
       >
-        {cards.map((card, i) => (
+        {cards.filter((card) => !card.hidden).map((card, i) => (
           <GarmentCard key={`${card.no}-${i}`} {...card} />
         ))}
       </ul>

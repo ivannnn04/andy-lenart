@@ -136,6 +136,7 @@ export function card(v: unknown): CollectionCard {
     preview: previewSrc ? { src: previewSrc, duration: str(preview.duration, 10) || "0:30" } : undefined,
     image: imageSrc ? { src: imageSrc, alt: str(img.alt, 400) } : undefined,
     dimmed: o.dimmed === true || undefined,
+    hidden: o.hidden === true || undefined,
     titleSize: titleSize >= 12 && titleSize <= 40 ? titleSize : undefined,
   };
 }
