@@ -70,7 +70,7 @@ export async function SiteHeader({
       <a
         href={v.logoHref}
         title={v.logoTitle}
-        className="place w-16 transition-transform duration-300 ease-out hover:-rotate-3 hover:scale-105 focus-visible:scale-105 motion-reduce:transition-none"
+        className="place w-16 transition-transform duration-300 ease-out hover:scale-105 focus-visible:scale-105 motion-reduce:transition-none"
         style={v.logo}
       >
         <Photo
