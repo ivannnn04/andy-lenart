@@ -51,7 +51,7 @@ export function MobileNav({
         href="/"
         aria-label="Andy Lenárt — home"
         onClick={close}
-        className="w-[72px] self-start pt-5 transition-transform duration-300 hover:scale-105 motion-reduce:transition-none"
+        className="w-[72px] self-start pt-5"
       >
         <Image
           src="/images/logo-mark.png"

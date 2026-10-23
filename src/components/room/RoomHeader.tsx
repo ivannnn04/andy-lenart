@@ -53,7 +53,7 @@ export async function RoomHeader({
         <Link
           href="/"
           aria-label="Andy Lenárt — home"
-          className="absolute top-[calc(40*var(--u))] left-1/2 w-[calc(121*var(--u))] -translate-x-1/2 transition-transform duration-300 hover:scale-105 motion-reduce:transition-none"
+          className="absolute top-[calc(40*var(--u))] left-1/2 w-[calc(121*var(--u))] -translate-x-1/2"
         >
           <Image
             src="/images/logo-mark.png"
