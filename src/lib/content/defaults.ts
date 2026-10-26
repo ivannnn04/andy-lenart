@@ -1537,10 +1537,10 @@ export const DEFAULT_CONTENT: SiteContent = {
           {
             "time": 95.44,
             "text": "In the shadows of long night,",
-            "end": 97.15
+            "end": 99.6
           },
           {
-            "time": 101.3,
+            "time": 100,
             "text": "glass bottles following your path,",
             "end": 104.13
           },
@@ -1552,15 +1552,15 @@ export const DEFAULT_CONTENT: SiteContent = {
           {
             "time": 108.5,
             "text": "finding symbols of your trust.",
-            "end": 113.47
+            "end": 113.2
           },
           {
-            "time": 116.34,
+            "time": 113.3,
             "text": "Místo ztvárněno jen pro nás,",
-            "end": 119.17
+            "end": 118
           },
           {
-            "time": 121.11,
+            "time": 118.3,
             "text": "čas setkání znovu a zas,",
             "end": 123.71
           },
@@ -1573,31 +1573,6 @@ export const DEFAULT_CONTENT: SiteContent = {
             "time": 127.9,
             "text": "we are bound to the rituals.",
             "end": 130.69
-          },
-          {
-            "time": 140.98,
-            "text": "Through changing times,",
-            "end": 143.36
-          },
-          {
-            "time": 145.46,
-            "text": "the years that passed,"
-          },
-          {
-            "time": 151.03,
-            "text": "I am the temple with the neon signs."
-          },
-          {
-            "time": 155.3,
-            "text": "Through changing times,"
-          },
-          {
-            "time": 160.28,
-            "text": "the years that passed,"
-          },
-          {
-            "time": 163.44,
-            "text": "I am the temple with the neon signs."
           },
           {
             "time": 167.99,
