@@ -1958,12 +1958,13 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 97.62,
-            "text": "Já stojím v čase, který stéká jako chvíle."
+            "text": "Já stojím v čase, který stéká jako chvíle.",
+            "end": 102.5
           },
           {
-            "time": 104.95,
+            "time": 102.7,
             "text": "Stopy slova v mlze, ty zrcadlí mé cíle.",
-            "end": 107.19
+            "end": 107.1
           },
           {
             "time": 107.19,
