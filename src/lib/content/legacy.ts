@@ -58,9 +58,9 @@ export function fromLegacy(stored: Raw): unknown[] {
 }
 
 /**
- * Lyrics the site once shipped with (the machine transcriptions, then the
- * corrected texts without end times), by a hash of the list. A garment
- * saved while it still had them gets the current built-in lyrics; lyrics
+ * Lyrics the site once shipped with (a placeholder, the machine
+ * transcriptions, then the corrected texts without end times), by a hash
+ * of the list. A garment saved while it still had them gets the current built-in lyrics; lyrics
  * edited in the admin are left alone.
  */
 const REPLACED_LYRICS: Record<string, string[]> = {
@@ -71,6 +71,7 @@ const REPLACED_LYRICS: Record<string, string[]> = {
   "soviet-sunset": ["cbe4a2d37bd6540d", "1f45cfe1f519f65c"],
   "stations-of-comfort": ["4496b8534a7fcd4a", "b22055092e71efff"],
   "philosophy-of-form": ["82f2566b848fef8b", "8d62605bf1cf95c7"],
+  "the-blueprint": ["3fa5ab8731eea11d"],
   "the-signatures": ["9aff5db6a3ab0c5f", "77da473e1df4bd26"],
   funkce: ["6bf97d67526de514", "d8f936445835245c"],
 };

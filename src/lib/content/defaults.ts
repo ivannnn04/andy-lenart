@@ -1050,8 +1050,174 @@ export const DEFAULT_CONTENT: SiteContent = {
         "track": "/audio/the-blueprint-track.m4a",
         "lyrics": [
           {
-            "time": 0,
-            "text": "The Blueprint"
+            "time": 5.22,
+            "text": "On a Sunday afternoon: four walls,",
+            "end": 8.32
+          },
+          {
+            "time": 8.32,
+            "text": "a warm meal, and a circle of family.",
+            "end": 11.6
+          },
+          {
+            "time": 17.93,
+            "text": "We are hearing a familiar voice coming from the radio.",
+            "end": 23.28
+          },
+          {
+            "time": 24.36,
+            "text": "Dívají-li se však nepředpojatýma očima,",
+            "end": 27.42
+          },
+          {
+            "time": 27.42,
+            "text": "nenaleznou stopy po nezaměstnanosti,",
+            "end": 30.25
+          },
+          {
+            "time": 30.3,
+            "text": "podvyživených dětech či beznadějném stáří.",
+            "end": 33.08
+          },
+          {
+            "time": 34.25,
+            "text": "And suddenly,",
+            "end": 35.76
+          },
+          {
+            "time": 38.15,
+            "text": "the sun never left the sky.",
+            "end": 40.37
+          },
+          {
+            "time": 41.73,
+            "text": "We existed in the ultimate palette of neons.",
+            "end": 45.33
+          },
+          {
+            "time": 47.01,
+            "text": "We were the chosen ones.",
+            "end": 49.78
+          },
+          {
+            "time": 51.49,
+            "text": "Doves flying above me,",
+            "end": 53.78
+          },
+          {
+            "time": 55.69,
+            "text": "I am living in a flawless land.",
+            "end": 57.94
+          },
+          {
+            "time": 61.45,
+            "text": "Slunce zjevilo se před námi, v blahobytu.",
+            "end": 66.13
+          },
+          {
+            "time": 67.88,
+            "text": "Vždyť víš, že…v jednotě je síla…",
+            "end": 73.11
+          },
+          {
+            "time": 74.44,
+            "text": "…že v jednotě je síla.",
+            "end": 77.88
+          },
+          {
+            "time": 136.84,
+            "text": "The music played, the dance began,",
+            "end": 142.2
+          },
+          {
+            "time": 142.7,
+            "text": "Community, joyous land,",
+            "end": 147.5
+          },
+          {
+            "time": 148.04,
+            "text": "The culture rich, the spirit high,",
+            "end": 153.04
+          },
+          {
+            "time": 153.57,
+            "text": "A chance to forget about asking why.",
+            "end": 159
+          },
+          {
+            "time": 159.5,
+            "text": "But deep within, the truth did hide,",
+            "end": 165.2
+          },
+          {
+            "time": 165.7,
+            "text": "The cost of progress, the loss of pride,",
+            "end": 171.2
+          },
+          {
+            "time": 171.5,
+            "text": "The iron grip, the lack of choice,",
+            "end": 179.4
+          },
+          {
+            "time": 179.91,
+            "text": "The hidden voices, the silenced noise.",
+            "end": 183.45
+          },
+          {
+            "time": 196.04,
+            "text": "With passing nights and passing days,",
+            "end": 199.92
+          },
+          {
+            "time": 201.16,
+            "text": "we’ve created our tomorrows.",
+            "end": 204.5
+          },
+          {
+            "time": 209.22,
+            "text": "In forgiveness that we couldn’t see…",
+            "end": 213.11
+          },
+          {
+            "time": 213.86,
+            "text": "…růžový oblak kouře zrozen z našich hodnot.",
+            "end": 218.61
+          },
+          {
+            "time": 219.8,
+            "text": "The beauty of life stored in the idea of living.",
+            "end": 227
+          },
+          {
+            "time": 233.67,
+            "text": "And the laughter of all of us",
+            "end": 237.26
+          },
+          {
+            "time": 237.26,
+            "text": "with the hope in our hearts carried us through.",
+            "end": 243.09
+          },
+          {
+            "time": 243.35,
+            "text": "Nekonečná naděje a nekonečná láska.",
+            "end": 253.84
+          },
+          {
+            "time": 258.29,
+            "text": "Materiál změny.",
+            "end": 261.5
+          },
+          {
+            "time": 262.3,
+            "text": "Ta látka, co hýbe světem.",
+            "end": 269.43
+          },
+          {
+            "time": 279.49,
+            "text": "The substance that moves the world.",
+            "end": 281.46
           }
         ],
         "verse": [],
