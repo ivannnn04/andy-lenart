@@ -1144,7 +1144,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
               lines={room.lyrics}
               maxLines={layout.lyricLines ?? [5, 4]}
               // Scales with the collage, so a line wraps the same way at every width.
-              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[calc(24*var(--m))] leading-[0.85] font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[calc(40*var(--u))]"
+              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[calc(24*var(--m))] leading-none font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[calc(40*var(--u))]"
             />
           </Placed>
 
