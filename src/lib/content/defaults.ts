@@ -1557,22 +1557,22 @@ export const DEFAULT_CONTENT: SiteContent = {
           {
             "time": 113.3,
             "text": "Místo ztvárněno jen pro nás,",
-            "end": 118
+            "end": 116.3
           },
           {
-            "time": 118.3,
+            "time": 117.9,
             "text": "čas setkání znovu a zas,",
-            "end": 123.71
+            "end": 120.9
+          },
+          {
+            "time": 122.2,
+            "text": "bound to the rituals,",
+            "end": 124.6
           },
           {
             "time": 124.88,
-            "text": "bound to the rituals,",
-            "end": 127.9
-          },
-          {
-            "time": 127.9,
             "text": "we are bound to the rituals.",
-            "end": 130.69
+            "end": 129
           },
           {
             "time": 167.99,

@@ -69,7 +69,7 @@ const REPLACED_LYRICS: Record<string, string[]> = {
   symmetrica: ["61db855a231e118c", "d38aa7bef152970b"],
   "aliens-and-herons": ["b5426c8af9574a42", "5dfc16333b6a61e1"],
   "soviet-sunset": ["cbe4a2d37bd6540d", "1f45cfe1f519f65c"],
-  "stations-of-comfort": ["4496b8534a7fcd4a", "b22055092e71efff", "3af70522effced07"],
+  "stations-of-comfort": ["4496b8534a7fcd4a", "b22055092e71efff", "3af70522effced07", "6b3e5fce03d0350a"],
   "philosophy-of-form": ["82f2566b848fef8b", "8d62605bf1cf95c7"],
   "the-blueprint": ["3fa5ab8731eea11d"],
   "the-signatures": ["9aff5db6a3ab0c5f", "77da473e1df4bd26"],
