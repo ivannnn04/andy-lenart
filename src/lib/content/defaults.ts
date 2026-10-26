@@ -2176,19 +2176,19 @@ export const DEFAULT_CONTENT: SiteContent = {
             "end": 89.4
           },
           {
-            "time": 99.2,
+            "time": 93.8,
             "text": "Never needs questions,",
+            "end": 97.2
+          },
+          {
+            "time": 97.5,
+            "text": "what works never needs questions.",
             "end": 102.6
           },
           {
-            "time": 102.9,
-            "text": "what works never needs questions.",
-            "end": 108
-          },
-          {
-            "time": 108.4,
+            "time": 103,
             "text": "Never needs questions.",
-            "end": 112
+            "end": 106.6
           },
           {
             "time": 120.6,
