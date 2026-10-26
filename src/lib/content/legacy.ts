@@ -73,7 +73,7 @@ const REPLACED_LYRICS: Record<string, string[]> = {
   "philosophy-of-form": ["82f2566b848fef8b", "8d62605bf1cf95c7", "95bf2cc76d403c27"],
   "the-blueprint": ["3fa5ab8731eea11d"],
   "the-signatures": ["9aff5db6a3ab0c5f", "77da473e1df4bd26", "31daca72e6381096"],
-  funkce: ["6bf97d67526de514", "d8f936445835245c", "7977832bf5acc8c5"],
+  funkce: ["6bf97d67526de514", "d8f936445835245c", "7977832bf5acc8c5", "d98f97eaad22db64"],
 };
 
 export function withCurrentLyrics(garment: Garment): Garment {
