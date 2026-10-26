@@ -1761,17 +1761,17 @@ export const DEFAULT_CONTENT: SiteContent = {
           {
             "time": 125,
             "text": "lies a system where visions escape.",
-            "end": 127.52
+            "end": 131.3
           },
           {
-            "time": 128.56,
+            "time": 131.5,
             "text": "Curves and angles, harmonious in sight,",
-            "end": 133.83
+            "end": 136.9
           },
           {
-            "time": 134.55,
+            "time": 137.4,
             "text": "creating symphony of form and light.",
-            "end": 143.14
+            "end": 143.1
           },
           {
             "time": 158.07,
