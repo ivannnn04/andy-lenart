@@ -2183,12 +2183,12 @@ export const DEFAULT_CONTENT: SiteContent = {
           {
             "time": 97.5,
             "text": "what works never needs questions.",
-            "end": 102.6
+            "end": 102.1
           },
           {
-            "time": 103,
+            "time": 102.3,
             "text": "Never needs questions.",
-            "end": 106.6
+            "end": 105.9
           },
           {
             "time": 120.6,
