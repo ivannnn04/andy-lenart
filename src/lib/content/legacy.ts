@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { DEFAULT_CONTENT } from "./defaults";
 import type { Garment } from "./types";
 
@@ -54,4 +55,29 @@ export function fromLegacy(stored: Raw): unknown[] {
     ordered.push(g);
   }
   return [...ordered, ...garments.filter((g) => !ordered.includes(g))];
+}
+
+/**
+ * Lyrics the site once shipped with (machine transcriptions), by a hash of
+ * the list. A garment saved while it still had them gets the corrected
+ * built-in lyrics; lyrics edited in the admin are left alone.
+ */
+const REPLACED_LYRICS: Record<string, string> = {
+  "born-by-the-pelican-sculpture": "dc5c912c18a54791",
+  "paper-walls": "293f1758c3e06cbe",
+  symmetrica: "61db855a231e118c",
+  "aliens-and-herons": "b5426c8af9574a42",
+  "soviet-sunset": "cbe4a2d37bd6540d",
+  "stations-of-comfort": "4496b8534a7fcd4a",
+  "philosophy-of-form": "82f2566b848fef8b",
+  "the-signatures": "9aff5db6a3ab0c5f",
+  funkce: "6bf97d67526de514",
+};
+
+export function withCurrentLyrics(garment: Garment): Garment {
+  const old = REPLACED_LYRICS[garment.slug];
+  if (!old || createHash("sha256").update(JSON.stringify(garment.room.lyrics)).digest("hex").slice(0, 16) !== old)
+    return garment;
+  const lyrics = DEFAULT_CONTENT.garments.find((g) => g.slug === garment.slug)?.room.lyrics ?? garment.room.lyrics;
+  return { ...garment, room: { ...garment.room, lyrics } };
 }

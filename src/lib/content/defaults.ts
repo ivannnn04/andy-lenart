@@ -235,23 +235,23 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 57.33,
-            "text": "Vytvoření zpe"
+            "text": "Vytvořeni z betonu,"
           },
           {
             "time": 60.31,
-            "text": "Innocence is closed in the heart."
+            "text": "nevinnost uzavřena v blocích."
           },
           {
             "time": 70.68,
-            "text": "The case that held you at your arrival."
+            "text": "The cave that held you at your arrival."
           },
           {
             "time": 76.18,
-            "text": "The one he aimed for and falling endlessly."
+            "text": "The one you aimed for when falling endlessly,"
           },
           {
             "time": 82.77,
-            "text": "Coming back persistently."
+            "text": "coming back persistently."
           },
           {
             "time": 87.28,
@@ -259,47 +259,47 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 95.03,
-            "text": "You're the last friend."
+            "text": "Život vás všech"
           },
           {
             "time": 97.56,
-            "text": "Chastic not so me."
+            "text": "v částech nás samých."
           },
           {
             "time": 100.72,
-            "text": "Proceed."
+            "text": "V kruzích."
           },
           {
             "time": 108.6,
-            "text": "the circles of livelihood,"
+            "text": "The circles of livelihood"
           },
           {
             "time": 111.38,
-            "text": "Adnami Protein"
+            "text": "nad námi proudí."
           },
           {
             "time": 114.39,
-            "text": "Give a Thumbel Goal."
+            "text": "S životem v rukou,"
           },
           {
             "time": 116.88,
-            "text": "We are reaching for unity."
+            "text": "we are reaching for unity."
           },
           {
             "time": 120.37,
-            "text": "lying in squares made out of concrete."
+            "text": "Lying in squares made out of concrete."
           },
           {
             "time": 127.86,
-            "text": "You're feeling the warmth of your own echo."
+            "text": "You are feeling the warmth of your own echo."
           },
           {
             "time": 132.88,
-            "text": "It's better to just find one."
+            "text": "Tváře, co tě zformovaly."
           },
           {
             "time": 136.88,
-            "text": "my endless mirrors that could not feel more distant."
+            "text": "My endless mirrors that could not feel more distant."
           },
           {
             "time": 141.59,
@@ -307,35 +307,67 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 159.41,
-            "text": "I'm guiding you home."
+            "text": "I am guiding you home"
+          },
+          {
+            "time": 162.9,
+            "text": "Já vedu tě domů"
           },
           {
             "time": 165.17,
-            "text": "where the world is open."
+            "text": "Where the world is open"
+          },
+          {
+            "time": 168.6,
+            "text": "Kde svět je otevřen"
           },
           {
             "time": 171.96,
-            "text": "There are four models."
+            "text": "There are four walls"
+          },
+          {
+            "time": 174.2,
+            "text": "Jsou tam čtyři stěny"
           },
           {
             "time": 177.24,
-            "text": "where you will find"
+            "text": "Where you will find"
+          },
+          {
+            "time": 179.8,
+            "text": "Kde najdeš"
           },
           {
             "time": 183,
-            "text": "Your endless fire can achieve chaos in one moment."
+            "text": "Your endless time"
+          },
+          {
+            "time": 185,
+            "text": "Tvůj nekonečný čas"
+          },
+          {
+            "time": 187,
+            "text": "In one moment"
+          },
+          {
+            "time": 189.2,
+            "text": "V jednom momentu"
           },
           {
             "time": 191.6,
-            "text": "The one you never believed, was yours."
+            "text": "The one you never believed was yours"
+          },
+          {
+            "time": 195.5,
+            "text": "Ten, co jsi nikdy nevěřil, že ti patřil"
           },
           {
             "time": 198.9,
-            "text": "and he might have been right."
+            "text": "And you might have been right all along"
           },
           {
             "time": 202.52,
-            "text": "I don't know."
+            "text": "A možná jsi měl celou dobu pravdu"
           }
         ],
         "verse": [
@@ -413,75 +445,71 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 26.77,
-            "text": "Dílení se stin"
+            "text": "Sdíleni se stěnami."
           },
           {
             "time": 30.04,
-            "text": "overlapping with yours."
+            "text": "My life overlapping with yours."
           },
           {
             "time": 34.9,
-            "text": "Beautiful dance of voices."
+            "text": "The beautiful dance of voices."
           },
           {
-            "time": 41.01,
-            "text": "so far."
+            "time": 39.6,
+            "text": "Your life travels so far,"
           },
           {
             "time": 42.87,
-            "text": "I read Starling"
+            "text": "I can hear its story."
           },
           {
             "time": 48.08,
-            "text": "any link in the"
+            "text": "Spojeni linkami zvuku,"
           },
           {
             "time": 52.02,
-            "text": "I'm a tiny, spoutin' a so-dry"
+            "text": "zamotáni v pavučině osudů druhých."
           },
           {
             "time": 58.8,
-            "text": "about you."
+            "text": "About you, with you whilst apart."
+          },
+          {
+            "time": 64.5,
+            "text": "Whilst apart…"
           },
           {
             "time": 71.48,
-            "text": "The sound of your love."
+            "text": "The sound of your laugh,"
           },
           {
             "time": 76.34,
-            "text": "crying"
+            "text": "the sound of your crying,"
           },
           {
             "time": 79.16,
-            "text": "Sound."
-          },
-          {
-            "time": 80.92,
-            "text": "you exchange."
+            "text": "the sound of your exchange."
           },
           {
             "time": 84.37,
-            "text": "Where my life begins, where yours ends."
+            "text": "Kde můj život začíná a kde končí tvůj."
           },
           {
             "time": 88.95,
-            "text": "Where my life ends and your begins."
+            "text": "Where my life ends and yours begins."
           },
           {
             "time": 94,
-            "text": "She's in the vest middle."
+            "text": "Cizinci vesmíru,"
           },
           {
             "time": 95.8,
-            "text": "So sit down, let's talk"
+            "text": "sousedé lidstva."
           },
           {
             "time": 99.64,
-            "text": "Chum."
-          },
-          {
-            "time": 100.88,
-            "text": "Meho života"
+            "text": "Šum mého života."
           },
           {
             "time": 104.18,
@@ -489,47 +517,27 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 110.23,
-            "text": "transparent walls"
-          },
-          {
-            "time": 112.66,
-            "text": "Your hopes."
+            "text": "Transparent walls holding your hopes."
           },
           {
             "time": 116.28,
-            "text": "every layer"
-          },
-          {
-            "time": 118.32,
-            "text": "with every little story."
+            "text": "Every layer with every little story"
           },
           {
             "time": 121.78,
-            "text": "I love you."
-          },
-          {
-            "time": 123.99,
-            "text": "Always trusting them."
+            "text": "and you always trusting them…"
           },
           {
             "time": 128.21,
-            "text": "And you, always trust in them."
+            "text": "…and you always trusting them."
           },
           {
             "time": 138.64,
-            "text": "and when the sun"
-          },
-          {
-            "time": 140.72,
-            "text": "That she's thinking great walls"
+            "text": "And when the sun touches the concrete walls,"
           },
           {
             "time": 143.76,
-            "text": "You know."
-          },
-          {
-            "time": 147.03,
-            "text": "It's the morning."
+            "text": "you know it’s the morning."
           }
         ],
         "verse": [],
@@ -601,59 +609,59 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 50.71,
-            "text": "Modern method of transport is used to build a large settlement for 50,000 inhabitants."
+            "text": "Moderní proudovou metodou tu budují sídliště"
+          },
+          {
+            "time": 54.3,
+            "text": "pro padesát tisíc obyvatel."
           },
           {
             "time": 70.77,
-            "text": "Propanisat is its omnivore."
+            "text": "Pro padesát tisíc obyvatel."
           },
           {
-            "time": 89.43,
-            "text": "that exposed me."
+            "time": 87.9,
+            "text": "Of the colour that exposed me"
           },
           {
             "time": 94.36,
-            "text": "For life itself."
+            "text": "to life itself,"
           },
           {
             "time": 97.36,
-            "text": "where I see the meaning of myself being one with stone."
+            "text": "where I see the meaning of myself, being one with stone"
           },
           {
             "time": 102.71,
-            "text": "Taste yourself."
+            "text": "that is yourself,"
           },
           {
             "time": 105.81,
-            "text": "The recognition."
-          },
-          {
-            "time": 108.4,
-            "text": "of oneself"
+            "text": "the recognition of oneself."
           },
           {
             "time": 111.09,
-            "text": "I thought I was going to..."
+            "text": "Poutavé vzory,"
           },
           {
             "time": 113.75,
-            "text": "Such as this one here."
+            "text": "součástí sebe."
           },
           {
             "time": 116.79,
-            "text": "Where is this guy?"
-          },
-          {
-            "time": 119.57,
-            "text": "Yeah, I'm in"
+            "text": "Rozeznání mě a tebe."
           },
           {
             "time": 125.2,
-            "text": "Today, the first 10,000 inhabitants have found their new home."
+            "text": "Už dnes si našlo prvních deset tisíc obyvatel"
+          },
+          {
+            "time": 128.1,
+            "text": "svůj nový domov."
           },
           {
             "time": 135.22,
-            "text": "And as I stood there, in the dark,"
+            "text": "And as I stood there in the dark,"
           },
           {
             "time": 137.76,
@@ -661,7 +669,7 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 142.1,
-            "text": "light and structure."
+            "text": "light, and structure."
           },
           {
             "time": 143.59,
@@ -669,35 +677,43 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 149.01,
-            "text": "Ceramic pie square,"
+            "text": "Surrounded by a square"
           },
           {
             "time": 150.21,
-            "text": "that is the definition of who I am and will be."
+            "text": "that is the definition of who I am and will be,"
           },
           {
             "time": 153.65,
-            "text": "What I will dream of, where I will go."
+            "text": "what I will dream of, where I will go."
           },
           {
             "time": 156.31,
-            "text": "And staining ideals, I will go wherever you can trust thorns."
+            "text": "Entertaining ideas, I will go wherever a contrast starts."
           },
           {
             "time": 161.3,
-            "text": "Spin Kopa, standing on the sea."
+            "text": "Being called back, standing on the sea,"
           },
           {
             "time": 164.79,
-            "text": "prettier than any place."
+            "text": "further than any place."
           },
           {
             "time": 166.94,
-            "text": "You will never stop shaping me."
+            "text": "You will never stop shaping me,"
           },
           {
             "time": 169.72,
-            "text": "The one farm that is me."
+            "text": "the one form that is me."
+          },
+          {
+            "time": 173,
+            "text": "The neon signs, the neon signs."
+          },
+          {
+            "time": 178.4,
+            "text": "The neon signs, the neon signs."
           }
         ],
         "verse": [],
@@ -771,115 +787,103 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 90.45,
-            "text": "creating imagery."
+            "text": "Creating imagery,"
           },
           {
-            "time": 92.05,
-            "text": "Thank you."
-          },
-          {
-            "time": 95.83,
-            "text": "leaving"
-          },
-          {
-            "time": 98.07,
-            "text": "Your silhouette."
+            "time": 95.4,
+            "text": "I am leaving your silhouette."
           },
           {
             "time": 100.72,
-            "text": "in that black and white tone"
+            "text": "In the black and white tone,"
           },
           {
             "time": 105.75,
-            "text": "I'm exposing."
-          },
-          {
-            "time": 108.34,
-            "text": "All light."
+            "text": "I am exposing all light."
           },
           {
             "time": 110.61,
-            "text": "Náruči včerejších d"
+            "text": "V náručí včerejších dnů,"
           },
           {
             "time": 113.27,
-            "text": "That's why I have you."
+            "text": "bez pohybu,"
           },
           {
             "time": 115.86,
-            "text": "Do you have a tabby"
+            "text": "duch doby."
           },
           {
             "time": 118.2,
-            "text": "Such a scary expression."
+            "text": "V sochařské expresi,"
           },
           {
             "time": 120.79,
-            "text": "I see my days."
+            "text": "I see my days"
           },
           {
             "time": 123.38,
-            "text": "Great"
-          },
-          {
-            "time": 125.91,
-            "text": "in the familiarity"
+            "text": "engraved in the familiarity of stone."
           },
           {
             "time": 133.46,
-            "text": "In the crystal floor"
+            "text": "In the crystal form,"
           },
           {
             "time": 138.71,
-            "text": "My son."
+            "text": "like the last day I saw you."
           },
           {
             "time": 143.44,
-            "text": "Cok ticha odráží se."
+            "text": "Zvuk ticha odráží se,"
           },
           {
             "time": 148.6,
-            "text": "I'm closer."
+            "text": "na zem klesá."
           },
           {
             "time": 151.06,
-            "text": "The sound of silence echoes."
+            "text": "The sound of silence echoes,"
           },
           {
             "time": 155.99,
-            "text": "falling to their ground."
+            "text": "falling to the ground."
           },
           {
             "time": 163.76,
-            "text": "I'll be at the cabin."
+            "text": "Objekty kamene,"
           },
           {
             "time": 166.68,
-            "text": "Can't speak."
+            "text": "tvar dětství,"
           },
           {
             "time": 168.79,
-            "text": "Space to high."
+            "text": "space to hide."
           },
           {
             "time": 171.38,
-            "text": "I'm fragile."
+            "text": "Němá tvář s anonymní tváří,"
           },
           {
-            "time": 178.96,
-            "text": "Basically, it's a minute."
+            "time": 175.4,
+            "text": "showing a fragile face in solidity."
           },
           {
             "time": 181.56,
-            "text": "Like this stillness? Is there only blocks?"
+            "text": "Placed in stillness, surrounding blocks and land,"
           },
           {
-            "time": 194.16,
-            "text": "and blocks"
+            "time": 186.6,
+            "text": "our monumental art."
           },
           {
-            "time": 196.37,
-            "text": "And you're better now."
+            "time": 192.9,
+            "text": "With roots, facing blocks and your windows…"
+          },
+          {
+            "time": 199.6,
+            "text": "…your windows."
           }
         ],
         "verse": [],
@@ -1025,75 +1029,79 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 47.54,
-            "text": "The archaeological work is never completely free."
+            "text": "Architektonická tvorba není nikdy plně svobodná,"
           },
           {
             "time": 54.42,
-            "text": "It is a collective work."
+            "text": "je to tvorba kolektivní."
           },
           {
             "time": 81.2,
-            "text": "standing"
+            "text": "Standing"
           },
           {
             "time": 87.06,
-            "text": "The other side."
+            "text": "on the other side,"
           },
           {
             "time": 91.86,
-            "text": "We witness"
+            "text": "We witness time passing."
           },
           {
             "time": 103.35,
-            "text": "frozen in moments"
+            "text": "Frozen in moments,"
           },
           {
             "time": 111.67,
-            "text": "Frozen in patterns."
+            "text": "frozen in patterns."
           },
           {
             "time": 120.85,
-            "text": "De Belis mes polis."
+            "text": "Vždy byli jsme spolu,"
           },
           {
             "time": 128.53,
-            "text": "Ta-ta."
+            "text": "v řadách,"
           },
           {
             "time": 134.64,
-            "text": "Zippy Unity."
+            "text": "ve slibech a naději."
+          },
+          {
+            "time": 141.5,
+            "text": "Ve slibech a naději."
           },
           {
             "time": 160.66,
-            "text": "After using the houses,"
+            "text": "Použitím věžových domů"
           },
           {
             "time": 163.35,
-            "text": "he lost his uniform and became more"
+            "text": "ztratilo sídliště uniformní vzhled, stalo se vzdušnějším"
           },
           {
             "time": 167.45,
-            "text": "and more intelligent and open-minded."
+            "text": "a otevřelo pohled do krajiny."
           },
           {
             "time": 175.19,
-            "text": "I'm not."
+            "text": "Ve slibech a naději."
           },
           {
             "time": 183.09,
-            "text": "Yes, they were. I'm a genius."
+            "text": "Ve slibech a naději."
           },
           {
             "time": 191.03,
-            "text": "Best in the world, I don't know"
+            "text": "Ve slibech a naději."
           },
           {
             "time": 196.66,
-            "text": "I'm sure of all you have."
+            "text": "Ve slibech a naději…"
           },
           {
             "time": 209.46,
-            "text": "I'm sorry."
+            "text": "…a naději."
           }
         ],
         "verse": [],
@@ -1166,47 +1174,31 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 7.12,
-            "text": "Your beloved object."
-          },
-          {
-            "time": 9.27,
-            "text": "on display."
+            "text": "Your beloved objects on display."
           },
           {
             "time": 11.86,
-            "text": "Yes."
-          },
-          {
-            "time": 13.62,
-            "text": "and our music is displayed in the showcase."
+            "text": "Čas a naše léta vystavena ve vitrínách."
           },
           {
             "time": 18.87,
-            "text": "A face of sweetness."
+            "text": "The space of sweetness,"
           },
           {
             "time": 21.33,
-            "text": "The streets?"
-          },
-          {
-            "time": 22.9,
-            "text": "with stations of comfort."
+            "text": "the streets with stations of comfort."
           },
           {
             "time": 26.61,
-            "text": "Roses with sounds."
-          },
-          {
-            "time": 29.4,
-            "text": "my faded colors"
+            "text": "Roses with sounds, my faded colours."
           },
           {
             "time": 32.82,
-            "text": "Not spravazi, this hook is wonka."
+            "text": "Noc provází ty zvuky zvonku."
           },
           {
             "time": 37.97,
-            "text": "Melody of the step and the step away."
+            "text": "Melodie vstupu a odchodu."
           },
           {
             "time": 43.38,
@@ -1214,7 +1206,7 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 50.07,
-            "text": "At least my predishm naho jasso."
+            "text": "Vypili jsme příliš mnoho času"
           },
           {
             "time": 55.67,
@@ -1222,15 +1214,15 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 60.92,
-            "text": "The smell of old shoes."
+            "text": "Vůně starých budov,"
           },
           {
             "time": 67.67,
-            "text": "He's gonna say."
+            "text": "otisk nás všech."
           },
           {
             "time": 72.79,
-            "text": "You drank too much time."
+            "text": "We’ve drunk too much time"
           },
           {
             "time": 79.44,
@@ -1238,63 +1230,91 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 85.04,
-            "text": "smell of old buildings."
+            "text": "The smell of old buildings,"
           },
           {
             "time": 91.51,
-            "text": "imprint of all of us."
+            "text": "the imprint of all of us."
           },
           {
             "time": 95.44,
-            "text": "in the shadows"
+            "text": "In the shadows of long night,"
           },
           {
             "time": 101.3,
-            "text": "Gotta make your pounds"
+            "text": "glass bottles following your path,"
           },
           {
             "time": 104.53,
-            "text": "Between walls, between us, find examples of your trust."
+            "text": "between walls, between us,"
+          },
+          {
+            "time": 108.5,
+            "text": "finding symbols of your trust."
           },
           {
             "time": 116.34,
-            "text": "And we broke up."
-          },
-          {
-            "time": 118.52,
-            "text": "Yes."
+            "text": "Místo ztvárněno jen pro nás,"
           },
           {
             "time": 121.11,
-            "text": "has us out."
+            "text": "čas setkání znovu a zas,"
           },
           {
             "time": 124.88,
-            "text": "They are bound by their rituals."
+            "text": "bound to the rituals,"
+          },
+          {
+            "time": 127.9,
+            "text": "we are bound to the rituals."
           },
           {
             "time": 140.98,
-            "text": "Oh"
+            "text": "Through changing times,"
+          },
+          {
+            "time": 145.46,
+            "text": "the years that passed,"
+          },
+          {
+            "time": 151.03,
+            "text": "I am the temple with the neon signs."
+          },
+          {
+            "time": 155.3,
+            "text": "Through changing times,"
+          },
+          {
+            "time": 160.28,
+            "text": "the years that passed,"
+          },
+          {
+            "time": 163.44,
+            "text": "I am the temple with the neon signs."
           },
           {
             "time": 167.99,
-            "text": "Now can people find their justice?"
+            "text": "Through changing times,"
           },
           {
             "time": 173.68,
-            "text": "Yes, yes."
+            "text": "the years that passed,"
           },
           {
             "time": 176.98,
-            "text": "I'm keeping my mind in my system."
+            "text": "I am the temple with the neon signs."
           },
           {
             "time": 186,
-            "text": "Thank you."
+            "text": "Through changing times,"
           },
           {
             "time": 190.45,
-            "text": "La la la la la la la la la, you can't stop the blast"
+            "text": "the years that passed,"
+          },
+          {
+            "time": 195,
+            "text": "I am the temple with the neon signs."
           }
         ],
         "verse": [],
@@ -1367,119 +1387,111 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 8.6,
-            "text": "Walk in between ideas."
+            "text": "Walking between ideas,"
           },
           {
             "time": 13.36,
-            "text": "Unraveling the narratives of urban life."
+            "text": "unraveling the narratives of urban life."
           },
           {
             "time": 22.55,
-            "text": "formation and transformation of communities."
+            "text": "The formation and transformation of communities."
           },
           {
             "time": 39.54,
-            "text": "Multi-faceted tapestry of urban existence."
+            "text": "The multifaceted tapestry of urban existence."
           },
           {
             "time": 47.96,
-            "text": "Go and get him a big building under his feet. A place to sleep."
+            "text": "Roste mu pod rukama veliká stavebnice,"
+          },
+          {
+            "time": 50.9,
+            "text": "město z panelu."
           },
           {
             "time": 53.27,
-            "text": "so that children could play here on the lawn."
+            "text": "Aby si tu děti mohly hrát na trávníku"
           },
           {
             "time": 57.4,
-            "text": "Aby sesem vešul slons."
+            "text": "a aby se sem vešlo slunce."
           },
           {
             "time": 73.04,
-            "text": "I'm making space for the sun to fit into my concrete jungle,"
+            "text": "I am making space for the sun to fit into my concrete jungle."
           },
           {
             "time": 77.58,
-            "text": "for the kids to play on the green grass."
+            "text": "For the kids to play on the green grass,"
           },
           {
             "time": 81.84,
-            "text": "Permit bell."
-          },
-          {
-            "time": 83.76,
-            "text": "Acetate panels"
+            "text": "for me to build a city of panels."
           },
           {
             "time": 98.29,
-            "text": "Symmetric fade, refining this."
+            "text": "Symmetric fate with lively structure,"
           },
           {
             "time": 106.1,
-            "text": "And the staff? Love you."
+            "text": "with voices in the mirror line."
           },
           {
             "time": 110.32,
-            "text": "Best connection."
+            "text": "With connection,"
           },
           {
             "time": 116.88,
-            "text": "Linear perfection. In the space you can see me."
+            "text": "linear perfection."
+          },
+          {
+            "time": 119.3,
+            "text": "In the space of design"
           },
           {
             "time": 122.61,
-            "text": "Our principles take shape. Voices speak."
+            "text": "where principles take shape,"
+          },
+          {
+            "time": 125,
+            "text": "lies a system where visions escape."
           },
           {
             "time": 128.56,
-            "text": "Where Fishing is Misery, Cursing and Diss"
+            "text": "Curves and angles, harmonious in sight,"
           },
           {
             "time": 134.55,
-            "text": "I am the news."
-          },
-          {
-            "time": 137.46,
-            "text": "Take a seat."
-          },
-          {
-            "time": 140.56,
-            "text": "He's here."
-          },
-          {
-            "time": 142.23,
-            "text": "Amen."
+            "text": "creating symphony of form and light."
           },
           {
             "time": 158.07,
-            "text": "Unraveling the narratives"
-          },
-          {
-            "time": 160.31,
-            "text": "I've written my..."
+            "text": "Unraveling the narratives of urban life."
           },
           {
             "time": 167.8,
-            "text": "the formation and transformation of communities."
+            "text": "The formation and transformation of communities."
           },
           {
             "time": 181.81,
-            "text": "multifaceted tapestry of existence."
+            "text": "The multifaceted tapestry of urban existence."
           },
           {
             "time": 197.08,
-            "text": "It's two shapes, but cannot be the same, nor do objects equal."
+            "text": "Since two shapes cannot be the same, nor two objects equal,"
           },
           {
             "time": 202.14,
-            "text": "Concepts, such as shape and number, have to belong to a random,"
+            "text": "concepts such as shape and number have to belong to a realm"
           },
           {
             "time": 207.29,
-            "text": "beyond sense, and experience."
+            "text": "beyond sense and experience."
           },
           {
             "time": 210.48,
-            "text": "I love you guys. I love you guys."
+            "text": "The realm of forms and ideas."
           }
         ],
         "verse": [],
@@ -1552,127 +1564,119 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 9.65,
-            "text": "Samostatný život svój."
+            "text": "Samostatný život svůj."
           },
           {
             "time": 11.8,
-            "text": "See you come time."
-          },
-          {
-            "time": 13.59,
-            "text": "I'm not the"
+            "text": "Vznikám tam, kde prázdnota se jeví."
           },
           {
             "time": 16.79,
-            "text": "and my own system breaking yours."
+            "text": "I am my own system breaking yours."
           },
           {
             "time": 21.59,
-            "text": "Given clues, I divide streets from greeners."
+            "text": "Given clues, I divide streets from greyness."
           },
           {
             "time": 26.52,
-            "text": "Damn you, Star Momma Pong."
+            "text": "Tvé město, má mapa."
           },
           {
             "time": 28.92,
-            "text": "The Ritz give conflict to."
+            "text": "Lyricky v konfliktu,"
           },
           {
             "time": 31.28,
-            "text": "As I am never known, I arise."
+            "text": "jazykem nepoznaným."
           },
           {
-            "time": 36.37,
-            "text": "where the void appears."
+            "time": 34,
+            "text": "I arise where the void appears."
           },
           {
             "time": 41.17,
-            "text": "I've been the world the way I see it. My art is in my face."
+            "text": "I paint the world the way I see it,"
           },
           {
-            "time": 46.16,
-            "text": "Can you hear? Tonight I'm releasing the imprint of my mind."
+            "time": 43.5,
+            "text": "my art is in my voice, can you hear it?"
+          },
+          {
+            "time": 47.3,
+            "text": "The nights are witnessing the imprint of my mind,"
           },
           {
             "time": 53.36,
-            "text": "And the messages, I will always write for you to find after all."
+            "text": "onto the messages that I will always write for you to find."
           },
           {
-            "time": 60.72,
-            "text": "This is the land of me people. Yes, the image is there."
+            "time": 59.6,
+            "text": "After all, this is the land of my people."
           },
           {
-            "time": 70.55,
-            "text": "My being seems so real."
+            "time": 63.6,
+            "text": "Já stojím v čase, který stéká jako chvíle."
+          },
+          {
+            "time": 68.4,
+            "text": "With endless canvas, my being seems so real."
           },
           {
             "time": 75.57,
-            "text": "I'm the voice of the city, can you feel?"
-          },
-          {
-            "time": 81.43,
-            "text": "Can you feel?"
+            "text": "I am the voice of the city, can you feel?"
           },
           {
             "time": 97.62,
-            "text": "I'm standing in time."
+            "text": "Já stojím v čase, který stéká jako chvíle."
           },
           {
             "time": 104.95,
-            "text": "You are the heart of my soul."
+            "text": "Stopy slova v mlze, ty zrcadlí mé cíle."
           },
           {
             "time": 107.19,
-            "text": "Without any silence."
-          },
-          {
-            "time": 108.73,
-            "text": "You want to escape from the night."
+            "text": "Ve stěnách ticha zachytíš odstín noci,"
           },
           {
             "time": 111.35,
-            "text": "Heart is running away from the night."
+            "text": "srdce mi bije s nocí,"
           },
           {
             "time": 114.64,
-            "text": "Put the light on when the sun is about to rise."
+            "text": "stavíš svět na půdorysu moci."
           },
           {
             "time": 119.54,
-            "text": "I bend the roadway I see My artist in my face"
+            "text": "I paint the world the way I see it,"
           },
           {
-            "time": 124.56,
-            "text": "Can you hear it? The night I released the imprint of my mind"
+            "time": 121.9,
+            "text": "my art is in my voice, can you hear it?"
+          },
+          {
+            "time": 125.7,
+            "text": "The nights are witnessing the imprint of my mind,"
           },
           {
             "time": 130.77,
-            "text": "Messages."
+            "text": "onto the messages that I will always write for you to find."
           },
           {
-            "time": 134.26,
-            "text": "So I'll always wait for you to find us all."
-          },
-          {
-            "time": 139.14,
-            "text": "This is the land of my people."
+            "time": 138.4,
+            "text": "After all, this is the land of my people."
           },
           {
             "time": 142.54,
-            "text": "Here's the images I've released."
+            "text": "Já stojím v čase, který stéká jako chvíle."
           },
           {
             "time": 146.39,
-            "text": "We found this camera."
-          },
-          {
-            "time": 148.92,
-            "text": "My being seems so real."
+            "text": "With endless canvas, my being seems so real."
           },
           {
             "time": 153.94,
-            "text": "I'm the voice of the city. Can you feel?"
+            "text": "I am the voice of the city, can you feel?"
           }
         ],
         "verse": [],
@@ -1745,135 +1749,127 @@ export const DEFAULT_CONTENT: SiteContent = {
         "lyrics": [
           {
             "time": 8.02,
-            "text": "in the utilitarian landscape."
+            "text": "In the utilitarian landscape,"
           },
           {
             "time": 12.5,
-            "text": "We quietly observe."
-          },
-          {
-            "time": 14.68,
-            "text": "Our grandmas."
+            "text": "we quietly observe our purpose."
           },
           {
             "time": 16.85,
-            "text": "the purpose of material"
+            "text": "The purpose of material,"
           },
           {
             "time": 21.36,
-            "text": "Rhythmus."
-          },
-          {
-            "time": 23.44,
-            "text": "Brilliant, my feng tse."
+            "text": "rytmus proměněn ve funkci."
           },
           {
             "time": 25.68,
-            "text": "Beauty."
-          },
-          {
-            "time": 27.54,
-            "text": "an old principle of naivety."
+            "text": "Beauty, an old principle of naivety."
           },
           {
             "time": 33.78,
-            "text": "Without simplicity."
+            "text": "Offering simplicity,"
           },
           {
             "time": 38.07,
-            "text": "We have built a modern"
-          },
-          {
-            "time": 42.71,
-            "text": "universe."
+            "text": "we have built a modern universe."
           },
           {
             "time": 46.74,
-            "text": "Water Universe."
+            "text": "A modern universe."
           },
           {
             "time": 51.03,
-            "text": "A different angle."
+            "text": "Šedá plocha, popsaná slovy."
+          },
+          {
+            "time": 54.5,
+            "text": "A different angle,"
           },
           {
             "time": 57.52,
-            "text": "In our never-hate questions, I'm barking."
+            "text": "inner knowing."
           },
           {
-            "time": 61.72,
-            "text": "For the whole of New Visions, one more."
+            "time": 60.2,
+            "text": "I am walking through the hall of new visions, one wall."
           },
           {
             "time": 68.02,
-            "text": "Study a language."
-          },
-          {
-            "time": 70.39,
-            "text": "and it's Prince."
+            "text": "Study of language and its principle,"
           },
           {
             "time": 72.5,
-            "text": "It's a novelty."
-          },
-          {
-            "time": 74.58,
-            "text": "Visual America."
+            "text": "it’s a novelty, visual miracle."
           },
           {
             "time": 76.79,
-            "text": "It's a way"
+            "text": "It’s a way to behave in a space,"
           },
           {
-            "time": 78.96,
-            "text": "to behave."
+            "time": 82.6,
+            "text": "your functional grace."
           },
           {
-            "time": 81.11,
-            "text": "In space."
+            "time": 88,
+            "text": "Never needs questions,"
+          },
+          {
+            "time": 91.5,
+            "text": "what works never needs questions."
           },
           {
             "time": 99.22,
-            "text": "Thank you."
+            "text": "Never needs questions."
+          },
+          {
+            "time": 120.6,
+            "text": "Funkcionalisté ve svém úsilí přivést na svět"
+          },
+          {
+            "time": 123.6,
+            "text": "moderní výtvarnou řeč odpovídající nové době"
           },
           {
             "time": 127.03,
-            "text": "If you are a member of the community, you will"
+            "text": "vycházeli z teze své doktríny."
           },
           {
             "time": 129.56,
-            "text": "Because they, new forms, hide in their tasks."
+            "text": "Totiž že ony nové formy se skrývají ve funkčních úkolech."
           },
           {
             "time": 134.1,
-            "text": "So, you also need to understand the term functionalism."
+            "text": "Tak je také třeba rozumět termínu funkcionalismus."
           },
           {
             "time": 138.52,
-            "text": "The name for the method was brought to me by a designer with a"
+            "text": "Bylo to jméno pro metodu, která měla přivést designéra"
           },
           {
-            "time": 142.32,
-            "text": "hidden, inherent form."
+            "time": 141.9,
+            "text": "k oněm skrytým inherentním formám."
           },
           {
             "time": 143.67,
-            "text": "In other words, the functionalists did not create a functional"
+            "text": "Jinými slovy, funkcionalisté neplédovali pro funkční metodu"
           },
           {
             "time": 147.47,
-            "text": "method because they had in mind a better functioning of"
+            "text": "kvůli tomu, že měli na mysli lepší fungování budov"
           },
           {
             "time": 150.85,
-            "text": "buildings and therefore better users."
+            "text": "a tím dobro uživatelů,"
           },
           {
             "time": 153.36,
-            "text": "mainly because they had a new, strong language that could be"
+            "text": "nýbrž kvůli tomu, že měli na mysli novou výtvarnou řeč,"
           },
           {
             "time": 157.82,
-            "text": "used in their methodologies."
+            "text": "která měla touto metodou vzniknout."
           }
         ],
         "verse": [],
