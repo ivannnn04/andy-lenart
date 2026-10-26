@@ -59,13 +59,13 @@ export function fromLegacy(stored: Raw): unknown[] {
 
 /**
  * Lyrics the site once shipped with (a placeholder, the machine
- * transcriptions, then the corrected texts without end times), by a hash
+ * transcriptions, then earlier timings of the corrected texts), by a hash
  * of the list. A garment saved while it still had them gets the current built-in lyrics; lyrics
  * edited in the admin are left alone.
  */
 const REPLACED_LYRICS: Record<string, string[]> = {
   "born-by-the-pelican-sculpture": ["dc5c912c18a54791", "02bc606ab22dc7b7"],
-  "paper-walls": ["293f1758c3e06cbe", "453ab96fdce3f5c5"],
+  "paper-walls": ["293f1758c3e06cbe", "453ab96fdce3f5c5", "8685fdebb79d7ca8"],
   symmetrica: ["61db855a231e118c", "d38aa7bef152970b"],
   "aliens-and-herons": ["b5426c8af9574a42", "5dfc16333b6a61e1"],
   "soviet-sunset": ["cbe4a2d37bd6540d", "1f45cfe1f519f65c"],

@@ -479,7 +479,8 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 30.04,
-            "text": "My life overlapping with yours."
+            "text": "My life overlapping with yours.",
+            "end": 34.6
           },
           {
             "time": 34.9,
@@ -507,11 +508,13 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 58.8,
-            "text": "About you, with you whilst apart."
+            "text": "About you, with you whilst apart.",
+            "end": 64.2
           },
           {
             "time": 64.5,
-            "text": "Whilst apart…"
+            "text": "Whilst apart…",
+            "end": 70.9
           },
           {
             "time": 71.48,
