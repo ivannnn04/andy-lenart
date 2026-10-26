@@ -70,13 +70,13 @@ export function RoomCurrentLine({
     const watch = new ResizeObserver(fit);
     watch.observe(el.parentElement ?? el);
     return () => watch.disconnect();
-  }, [line?.text, phoneLines, desktopLines]);
+  }, [at, line?.text, phoneLines, desktopLines]);
 
   if (!line) return null;
   return (
     // Not announced line by line: that would talk over the music.
     <p aria-live="off" className={className}>
-      <span ref={span} key={line.text} className="room-line block">
+      <span ref={span} key={at} className="room-line block">
         <span className="sr-only">{line.text}</span>
         <KaraokeLetters text={line.text} sung={sungLetters(line, lines[at + 1]?.time, time)} />
       </span>

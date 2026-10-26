@@ -2167,19 +2167,28 @@ export const DEFAULT_CONTENT: SiteContent = {
           },
           {
             "time": 82.6,
-            "text": "your functional grace."
+            "text": "your functional grace.",
+            "end": 85.8
           },
           {
-            "time": 88,
-            "text": "Never needs questions,"
+            "time": 86,
+            "text": "your functional grace.",
+            "end": 89.4
           },
           {
-            "time": 91.5,
-            "text": "what works never needs questions."
+            "time": 89.6,
+            "text": "Never needs questions,",
+            "end": 93.4
           },
           {
-            "time": 99.22,
-            "text": "Never needs questions."
+            "time": 93.8,
+            "text": "what works never needs questions.",
+            "end": 98.9
+          },
+          {
+            "time": 99.2,
+            "text": "Never needs questions.",
+            "end": 102.6
           },
           {
             "time": 120.6,
