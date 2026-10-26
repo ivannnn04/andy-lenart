@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import type { Lyric } from "@/lib/content/types";
+import { KaraokeLetters, sungLetters } from "@/components/room/karaoke";
+import { lyricWords, type Lyric } from "@/lib/content/types";
 import { analyseAudio, formatTime, imageSize, parseLyrics, parseTime, uploadFile } from "./client-tools";
 import type { Field } from "./schema";
 
@@ -475,6 +476,11 @@ function ListInput({
 }
 
 /** The lyric lines with their start times, an importer and a player to check the timing. */
+/** Where the word tapping is: the line and the word to tap next. `only`: stop after this line. */
+type SyncAt = { line: number; word: number; only: boolean };
+
+const seconds = (n: number) => Math.round(n * 100) / 100;
+
 function LyricsInput({
   field,
   value,
@@ -491,18 +497,38 @@ function LyricsInput({
   const [now, setNow] = useState(0);
   const [shift, setShift] = useState("0");
   const [message, setMessage] = useState<string | null>(null);
+  const [sync, setSync] = useState<SyncAt | null>(null);
+  const history = useRef<{ value: Lyric[]; at: SyncAt }[]>([]);
 
+  // Follows the player every frame while it plays, so the karaoke preview is smooth.
   useEffect(() => {
     const el = audio.current;
     if (!el) return;
-    const tick = () => setNow(el.currentTime);
-    el.addEventListener("timeupdate", tick);
-    return () => el.removeEventListener("timeupdate", tick);
+    let frame = 0;
+    const tick = () => {
+      setNow(el.currentTime);
+      if (!el.paused) frame = requestAnimationFrame(tick);
+    };
+    const start = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(tick);
+    };
+    const show = () => setNow(el.currentTime);
+    el.addEventListener("play", start);
+    el.addEventListener("seeked", show);
+    el.addEventListener("pause", show);
+    return () => {
+      cancelAnimationFrame(frame);
+      el.removeEventListener("play", start);
+      el.removeEventListener("seeked", show);
+      el.removeEventListener("pause", show);
+    };
   }, [track]);
 
   const current = value.findLastIndex((l) => now >= l.time);
   const update = (i: number, patch: Partial<Lyric>) => onChange(value.map((l, j) => (j === i ? { ...l, ...patch } : l)));
   const sorted = (lines: Lyric[]) => [...lines].sort((a, b) => a.time - b.time);
+  const hasWords = (l: Lyric) => l.words?.length === lyricWords(l.text).length;
 
   const importText = (text: string) => {
     const lines = parseLyrics(text);
@@ -514,6 +540,66 @@ function LyricsInput({
     onChange(lines);
     setMessage(`Imported ${lines.length} lines. Stray “you” lines, *tags* and ♪ marks were left out.`);
   };
+
+  const startSync = (line: number, only: boolean) => {
+    const el = audio.current;
+    if (!el || !value[line]) return;
+    history.current = [];
+    setMessage(null);
+    setSync({ line, word: 0, only });
+    el.currentTime = Math.max(0, value[line].time - 3);
+    void el.play();
+  };
+
+  const stopSync = (note?: string) => {
+    setSync(null);
+    audio.current?.pause();
+    if (note) setMessage(note);
+  };
+
+  /** Marks the start of the next word at the player's position. */
+  const tap = () => {
+    const el = audio.current;
+    const line = sync && value[sync.line];
+    if (!sync || !line || !el) return;
+    const t = seconds(el.currentTime);
+    history.current.push({ value, at: sync });
+    const words = [...(sync.word ? (line.words ?? []).slice(0, sync.word) : []), t];
+    const { end, ...rest } = line;
+    const next: Lyric = { ...rest, words, ...(sync.word === 0 && { time: t }) };
+    // An end before the last word no longer holds.
+    if (end !== undefined && end > t) next.end = end;
+    onChange(value.map((l, j) => (j === sync.line ? next : l)));
+    if (sync.word + 1 < lyricWords(line.text).length) setSync({ ...sync, word: sync.word + 1 });
+    else if (!sync.only && sync.line + 1 < value.length) setSync({ ...sync, line: sync.line + 1, word: 0 });
+    else stopSync("Word times set — save to keep them.");
+  };
+
+  const undo = () => {
+    const last = history.current.pop();
+    if (!last) return;
+    onChange(last.value);
+    setSync(last.at);
+    if (audio.current) audio.current.currentTime = Math.max(0, audio.current.currentTime - 2);
+  };
+
+  useEffect(() => {
+    if (!sync) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.repeat) return;
+      if (e.code === "Space") {
+        e.preventDefault();
+        tap();
+      } else if (e.key === "Backspace") {
+        e.preventDefault();
+        undo();
+      } else if (e.key === "Escape") stopSync();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
+
+  const syncLine = sync ? value[sync.line] : undefined;
 
   return (
     <div className="flex flex-col gap-3">
@@ -533,6 +619,11 @@ function LyricsInput({
             if (f) importText(await f.text());
           }}
         />
+        {track && value.length > 0 && (
+          <button type="button" onClick={() => startSync(Math.max(0, current), false)} className={smallButton}>
+            ♪ Tap words from the highlighted line
+          </button>
+        )}
         <span className="ml-2 text-[12px] text-[#777]">Shift all by</span>
         <input value={shift} onChange={(e) => setShift(e.target.value)} className={`${input} w-20!`} aria-label="Seconds" />
         <span className="text-[12px] text-[#777]">s</span>
@@ -540,27 +631,79 @@ function LyricsInput({
           type="button"
           onClick={() => {
             const by = Number(shift);
-            if (Number.isFinite(by) && by) onChange(value.map((l) => ({ ...l, time: Math.max(0, Math.round((l.time + by) * 100) / 100) })));
+            const move = (t: number) => Math.max(0, seconds(t + by));
+            if (Number.isFinite(by) && by)
+              onChange(
+                value.map((l) => ({
+                  ...l,
+                  time: move(l.time),
+                  ...(l.end !== undefined && { end: move(l.end) }),
+                  ...(l.words && { words: l.words.map(move) }),
+                })),
+              );
           }}
           className={smallButton}
         >
           Apply
         </button>
       </div>
+      <p className={helpText}>
+        For karaoke that follows the voice exactly, tap the words: the track plays and you press Space (or the Tap
+        button) as each word starts. Backspace steps back, Esc stops. Lines with tapped words are marked ♪.
+      </p>
       {message && <p className={helpText}>{message}</p>}
       {track ? (
-        <div className="sticky top-2 z-10 flex flex-col gap-1 rounded-lg border border-[#e4e4e0] bg-white p-2 shadow-sm">
+        <div className="sticky top-2 z-10 flex flex-col gap-2 rounded-lg border border-[#e4e4e0] bg-white p-2 shadow-sm">
           <audio ref={audio} controls preload="metadata" src={track} className="h-9 w-full" />
-          <p className="min-h-[1.4em] text-center text-[13px] font-bold uppercase">
-            {current >= 0 ? value[current]?.text : "…"}
-          </p>
+          {sync && syncLine ? (
+            <div className="flex flex-col items-center gap-2 rounded-md bg-[#fff6d6] p-3">
+              <p className="text-center text-[15px] font-bold uppercase">
+                {lyricWords(syncLine.text).map((w, i) => (
+                  <span
+                    key={i}
+                    className={i < sync.word ? "text-ink" : i === sync.word ? "text-ink underline decoration-2 underline-offset-4" : "text-[#aaa]"}
+                  >
+                    {w}{" "}
+                  </span>
+                ))}
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={tap}
+                  className="rounded-md bg-ink px-6 py-2.5 text-[13px] font-semibold text-white"
+                >
+                  Tap “{lyricWords(syncLine.text)[sync.word]}” (Space)
+                </button>
+                <button type="button" onClick={undo} className={smallButton}>
+                  Undo
+                </button>
+                <button type="button" onClick={() => stopSync()} className={smallButton}>
+                  Stop
+                </button>
+              </div>
+            </div>
+          ) : (
+            <p className="min-h-[1.4em] text-center text-[13px] font-bold uppercase">
+              {current >= 0 && value[current] ? (
+                <KaraokeLetters text={value[current].text} sung={sungLetters(value[current], value[current + 1]?.time, now)} />
+              ) : (
+                "…"
+              )}
+            </p>
+          )}
         </div>
       ) : (
         <p className={helpText}>Add the full track above to play it against the lines.</p>
       )}
       <ol className="flex max-h-[520px] flex-col gap-1 overflow-y-auto rounded-lg border border-[#e4e4e0] bg-white p-2">
         {value.map((line, i) => (
-          <li key={i} className={`flex items-center gap-2 rounded-md px-1 py-0.5 ${i === current ? "bg-[#fff6d6]" : ""}`}>
+          <li
+            key={i}
+            className={`flex items-center gap-2 rounded-md px-1 py-0.5 ${
+              sync?.line === i || (!sync && i === current) ? "bg-[#fff6d6]" : ""
+            }`}
+          >
             <TimeInput value={line.time} onChange={(time) => update(i, { time })} />
             <input
               value={line.text}
@@ -571,8 +714,19 @@ function LyricsInput({
             {track && (
               <button
                 type="button"
+                title={hasWords(line) ? "Words tapped — tap them again" : "Tap this line’s words"}
+                aria-label={`Tap the words of line ${i + 1}`}
+                onClick={() => startSync(i, true)}
+                className={`${smallButton} ${hasWords(line) ? "border-[#2e7d32]! text-[#2e7d32]" : "text-[#999]"}`}
+              >
+                ♪
+              </button>
+            )}
+            {track && (
+              <button
+                type="button"
                 title="Set to the player’s position"
-                onClick={() => update(i, { time: Math.round((audio.current?.currentTime ?? 0) * 100) / 100 })}
+                onClick={() => update(i, { time: seconds(audio.current?.currentTime ?? 0) })}
                 className={smallButton}
               >
                 ⏱
@@ -607,9 +761,7 @@ function LyricsInput({
       <div className="flex gap-2">
         <button
           type="button"
-          onClick={() =>
-            onChange(sorted([...value, { time: Math.round((audio.current?.currentTime ?? value.at(-1)?.time ?? 0) * 100) / 100, text: "" }]))
-          }
+          onClick={() => onChange(sorted([...value, { time: seconds(audio.current?.currentTime ?? value.at(-1)?.time ?? 0), text: "" }]))}
           className={smallButton}
         >
           + Add line

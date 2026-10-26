@@ -9,6 +9,7 @@ import {
   type GarmentImage,
   type HomeContent,
   type Lyric,
+  lyricWords,
   type NavItem,
   type RoomContent,
   type Settings,
@@ -58,9 +59,24 @@ export function image(v: unknown): GarmentImage {
   };
 }
 
+const seconds = (v: unknown) => Math.max(0, Math.round(num(v) * 100) / 100);
+
 export function lyrics(v: unknown): Lyric[] {
   return arr(v)
-    .map((l) => ({ time: Math.max(0, Math.round(num(obj(l).time) * 100) / 100), text: str(obj(l).text, 300) }))
+    .map((l): Lyric => {
+      const o = obj(l);
+      const time = seconds(o.time);
+      const text = str(o.text, 300);
+      const end = o.end === undefined ? undefined : seconds(o.end);
+      const until = end !== undefined && end > time ? end : undefined;
+      const words = arr(o.words).map(seconds);
+      // Word times are kept only when there is one per word, in order, within the line.
+      const wordsFit =
+        words.length > 0 &&
+        words.length === lyricWords(text).length &&
+        words.every((w, i) => w >= (i ? words[i - 1] : time) && (until === undefined || w < until));
+      return { time, text, ...(until !== undefined && { end: until }), ...(wordsFit && { words }) };
+    })
     .filter((l) => l.text)
     .sort((a, b) => a.time - b.time);
 }

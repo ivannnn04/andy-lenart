@@ -121,7 +121,8 @@ const round = (n: number) => Math.round(n * 100) / 100;
 
 /**
  * Lyrics from an .srt or .lrc file. Long subtitle lines are split into
- * phrases, timed across their cue by length.
+ * phrases, timed across their cue by length; subtitles also give each
+ * line's end (when the voice stops).
  */
 export function parseLyrics(source: string): Lyric[] {
   const lines: Lyric[] = [];
@@ -139,8 +140,9 @@ export function parseLyrics(source: string): Lyric[] {
       const total = parts.reduce((n, p) => n + p.length, 0);
       let at = start;
       for (const p of parts) {
-        lines.push({ time: round(at), text: p });
-        at += ((end - start) * p.length) / total;
+        const next = at + ((end - start) * p.length) / total;
+        lines.push({ time: round(at), text: p, end: round(next) });
+        at = next;
       }
     }
     return lines;

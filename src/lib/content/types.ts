@@ -14,7 +14,15 @@ export type GarmentImage = {
   height: number;
 };
 
-export type Lyric = { time: number; text: string };
+/**
+ * One line of a song. `time` is when it starts; `end`, when the voice stops
+ * (optional); `words`, when each word of `text` starts (optional, one per
+ * word) — the karaoke follows them when they are there.
+ */
+export type Lyric = { time: number; text: string; end?: number; words?: number[] };
+
+/** The words of a lyric line, as `Lyric.words` counts them. */
+export const lyricWords = (text: string) => text.trim().split(/\s+/).filter(Boolean);
 
 /** The 30-second clip on the cards and the garment page. */
 export type Preview = {

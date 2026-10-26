@@ -73,7 +73,7 @@ Everything on the site is managed at **`/admin`**:
 | --- | --- |
 | Dashboard | Counts, latest requests and a setup checklist |
 | Home page | Hero text, manifesto, "For owners" steps, "Stay connected" texts |
-| Collection | The garments, in home-page order: an On site / Hidden switch and ↑/↓ per garment, create and delete. Each garment has three tabs: **Card** (address, number, title, status, price, 30-second preview with measured waveform, card photo), **Garment page** (publish `/collection/<address>`; availability, gallery, details, concept, credits, "Inside this garment") and **Listening Room** (open `/room/<address>`; entry word, collage, gate photo, full track and lyrics — import an `.lrc`/`.srt` file, edit times, play the track against the lines, shift all) |
+| Collection | The garments, in home-page order: an On site / Hidden switch and ↑/↓ per garment, create and delete. Each garment has three tabs: **Card** (address, number, title, status, price, 30-second preview with measured waveform, card photo), **Garment page** (publish `/collection/<address>`; availability, gallery, details, concept, credits, "Inside this garment") and **Listening Room** (open `/room/<address>`; entry word, collage, gate photo, full track and lyrics — import an `.lrc`/`.srt` file, edit times, play the track against the lines, shift all, and tap each word as it is sung for exact karaoke) |
 | The Staircase | Every mark left on the shared wall: hide, show or delete |
 | Inbox | "Request this piece" requests and "Stay connected" sign-ups, with CSV downloads |
 | Media | Upload, browse, copy and delete photos and audio |
@@ -137,7 +137,10 @@ the form on desktop). Point each garment's tag at `https://<domain>/room/<slug>`
   that device. Three wrong words lock the gate for ten minutes.
 - The page is `noindex`. Once the gate is open the same URL shows the
   Listening Room: a black collage around a cassette that plays the room's
-  full track, with the lyrics shown one line at a time as it plays. A line
+  full track, with the lyrics shown one line at a time as it plays, karaoke
+  style: a line waits in semi-transparent white and lights up as it is sung
+  (by its tapped word times, else over the time the voice takes, from the
+  subtitle file, else at a singing pace). A line
   too long for the room is set smaller so it never runs into the collage.
 - Built-in rooms: Born by the Pelican Sculpture ("andy"), Paper Walls
   ("andy02"), The Blueprint ("andy03"), Soviet Sunset ("andy04"), Stations of

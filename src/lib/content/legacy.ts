@@ -58,25 +58,26 @@ export function fromLegacy(stored: Raw): unknown[] {
 }
 
 /**
- * Lyrics the site once shipped with (machine transcriptions), by a hash of
- * the list. A garment saved while it still had them gets the corrected
- * built-in lyrics; lyrics edited in the admin are left alone.
+ * Lyrics the site once shipped with (the machine transcriptions, then the
+ * corrected texts without end times), by a hash of the list. A garment
+ * saved while it still had them gets the current built-in lyrics; lyrics
+ * edited in the admin are left alone.
  */
-const REPLACED_LYRICS: Record<string, string> = {
-  "born-by-the-pelican-sculpture": "dc5c912c18a54791",
-  "paper-walls": "293f1758c3e06cbe",
-  symmetrica: "61db855a231e118c",
-  "aliens-and-herons": "b5426c8af9574a42",
-  "soviet-sunset": "cbe4a2d37bd6540d",
-  "stations-of-comfort": "4496b8534a7fcd4a",
-  "philosophy-of-form": "82f2566b848fef8b",
-  "the-signatures": "9aff5db6a3ab0c5f",
-  funkce: "6bf97d67526de514",
+const REPLACED_LYRICS: Record<string, string[]> = {
+  "born-by-the-pelican-sculpture": ["dc5c912c18a54791", "02bc606ab22dc7b7"],
+  "paper-walls": ["293f1758c3e06cbe", "453ab96fdce3f5c5"],
+  symmetrica: ["61db855a231e118c", "d38aa7bef152970b"],
+  "aliens-and-herons": ["b5426c8af9574a42", "5dfc16333b6a61e1"],
+  "soviet-sunset": ["cbe4a2d37bd6540d", "1f45cfe1f519f65c"],
+  "stations-of-comfort": ["4496b8534a7fcd4a", "b22055092e71efff"],
+  "philosophy-of-form": ["82f2566b848fef8b", "8d62605bf1cf95c7"],
+  "the-signatures": ["9aff5db6a3ab0c5f", "77da473e1df4bd26"],
+  funkce: ["6bf97d67526de514", "d8f936445835245c"],
 };
 
 export function withCurrentLyrics(garment: Garment): Garment {
   const old = REPLACED_LYRICS[garment.slug];
-  if (!old || createHash("sha256").update(JSON.stringify(garment.room.lyrics)).digest("hex").slice(0, 16) !== old)
+  if (!old?.includes(createHash("sha256").update(JSON.stringify(garment.room.lyrics)).digest("hex").slice(0, 16)))
     return garment;
   const lyrics = DEFAULT_CONTENT.garments.find((g) => g.slug === garment.slug)?.room.lyrics ?? garment.room.lyrics;
   return { ...garment, room: { ...garment.room, lyrics } };
