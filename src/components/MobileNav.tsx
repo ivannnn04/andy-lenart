@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useRef, type ReactNode } from "react";
 import type { NavItem } from "@/lib/content/types";
 
@@ -37,6 +38,7 @@ export function MobileNav({
   const dark = tone === "dark";
   const menu = useRef<HTMLDialogElement>(null);
   const close = () => menu.current?.close();
+  const path = usePathname();
 
   const bar = (button: ReactNode) => (
     // Three columns: the side ones share what the monogram leaves, so a long
@@ -50,7 +52,14 @@ export function MobileNav({
       <Link
         href="/"
         aria-label="Andy Lenárt — home"
-        onClick={close}
+        onClick={(e) => {
+          close();
+          // Already home: the logo takes you back to the top.
+          if (path === "/") {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
+        }}
         className="w-[72px] self-start pt-5"
       >
         <Image
