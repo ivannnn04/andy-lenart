@@ -211,9 +211,10 @@ export const DEFAULT_CONTENT: SiteContent = {
           "Each room leads directly into **The Staircase: a communal digital space** where owners of every piece connect to share their thoughts."
         ],
         "image": {
-          "alt": "Blurred glimpse of the Listening Room",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-born-by-the-pelican-sculpture.webp",
+          "alt": "Blurred glimpse of the Born by the Pelican Sculpture Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -450,9 +451,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-paper-walls.webp",
+          "alt": "Blurred glimpse of the Paper Walls Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -636,9 +638,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-the-blueprint.webp",
+          "alt": "Blurred glimpse of the The Blueprint Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -874,9 +877,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-soviet-sunset.webp",
+          "alt": "Blurred glimpse of the Soviet Sunset Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -1037,9 +1041,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-stations-of-comfort.webp",
+          "alt": "Blurred glimpse of the Stations of Comfort Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -1255,9 +1260,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-symmetrica.webp",
+          "alt": "Blurred glimpse of the Symmetrica Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -1459,9 +1465,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-aliens-and-herons.webp",
+          "alt": "Blurred glimpse of the Aliens and Herons Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -1651,9 +1658,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-philosophy-of-form.webp",
+          "alt": "Blurred glimpse of the Philosophy of Form Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -1855,9 +1863,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-the-signatures.webp",
+          "alt": "Blurred glimpse of the The Signatures Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {
@@ -2068,9 +2077,10 @@ export const DEFAULT_CONTENT: SiteContent = {
         "title": [],
         "paragraphs": [],
         "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
+          "src": "/images/room-glimpse-funkce.webp",
+          "alt": "Blurred glimpse of the Funkce Listening Room",
+          "width": 1120,
+          "height": 720
         }
       },
       "room": {

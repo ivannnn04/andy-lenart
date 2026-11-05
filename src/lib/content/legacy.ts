@@ -167,9 +167,16 @@ function withCurrentFiles(garment: Garment): Garment {
   };
 }
 
+/** "Inside this garment" was an empty placeholder; it now shows a blurred glimpse of the room. */
+function withRoomGlimpse(garment: Garment): Garment {
+  if (garment.inside.image.src) return garment;
+  const image = DEFAULT_CONTENT.garments.find((g) => g.slug === garment.slug)?.inside.image;
+  return image?.src ? { ...garment, inside: { ...garment.inside, image } } : garment;
+}
+
 /** Built-in content that has since been corrected, brought up to date in a saved garment. */
 export const withCurrentDefaults = (garment: Garment) =>
-  withCurrentFiles(withCurrentGallery(withCurrentPrice(withCurrentLyrics(garment))));
+  withRoomGlimpse(withCurrentFiles(withCurrentGallery(withCurrentPrice(withCurrentLyrics(garment)))));
 
 /** The order the collection once shipped in, before it followed the album. */
 const REPLACED_ORDER = [

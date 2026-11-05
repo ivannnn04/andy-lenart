@@ -165,6 +165,7 @@ outlined placeholder with the layer name holds its place.
 | File | Figma layer |
 | --- | --- |
 | `room-cassette.webp`, `room-cassette-spin.webp` | spinning_cassette_realistic 1 (the GIF's first frame, and the GIF as an animated WebP shown while the track plays) |
+| `room-glimpse-<slug>.webp` | not a Figma layer: each room's desktop collage, screenshotted below its header, cropped to 560:360, blurred and saved at 1120×720 — the "Inside this garment" image on the garment page. Redo it when a room changes. |
 | `room-listen.png` | Unnamed 1 (the "LISTEN" lettering) |
 | `room-photo-road.webp` | R1-01944-0028 2 |
 | `room-hold-on.png` | so endlessly 2 3 ("hold on —") |
