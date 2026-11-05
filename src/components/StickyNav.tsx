@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import type { NavItem } from "@/lib/content/types";
 import { MobileNav } from "./MobileNav";
@@ -26,13 +26,18 @@ export function StickyNav({
   inset,
   logoHref,
   logoTitle,
+  tone = "light",
 }: {
   nav: NavItem[];
-  title?: string;
+  /** The page's name (or a link) on the left of the phone bar. */
+  title?: ReactNode;
   inset?: string;
   logoHref: string;
   logoTitle: string;
+  /** "dark": white on black (the Listening Room). */
+  tone?: "light" | "dark";
 }) {
+  const dark = tone === "dark";
   // False while rendering on the server, true in the browser (where the portal can go).
   const mounted = useSyncExternalStore(
     () => () => {},
@@ -91,14 +96,23 @@ export function StickyNav({
     <div
       inert={!shown}
       aria-hidden={!shown}
-      className={`fixed inset-x-0 top-0 z-40 bg-white text-ink shadow-[0_1px_0_#e5e5e5] transition-transform duration-300 ease-out motion-reduce:transition-none ${
+      className={`fixed inset-x-0 top-0 z-40 transition-transform duration-300 ease-out motion-reduce:transition-none ${
+        dark ? "bg-black text-white shadow-[0_1px_0_#333]" : "bg-white text-ink shadow-[0_1px_0_#e5e5e5]"
+      } ${
         shown ? "translate-y-0" : "-translate-y-[calc(100%+1px)]"
       }`}
     >
-      <MobileNav nav={nav} title={title} inset={inset} className="md:hidden" />
+      <MobileNav nav={nav} title={title} inset={inset} tone={tone} className="md:hidden" />
       <div className="gutter mx-auto flex h-[72px] max-w-[1440px] items-center justify-between max-md:hidden">
         <a href={logoHref} title={logoTitle} className="w-[46px]">
-          <Image src="/images/logo-mark.png" alt="Andy Lenárt monogram" width={332} height={282} sizes="46px" />
+          <Image
+            src="/images/logo-mark.png"
+            alt="Andy Lenárt monogram"
+            width={332}
+            height={282}
+            sizes="46px"
+            className={dark ? "invert" : undefined}
+          />
         </a>
         <nav aria-label="Primary">
           <ul className="flex gap-6 text-[15px] leading-[0.9] font-black whitespace-nowrap uppercase">

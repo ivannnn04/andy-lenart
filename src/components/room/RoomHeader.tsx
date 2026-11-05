@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
+import { StickyNav } from "@/components/StickyNav";
 import { getContent } from "@/lib/content/store";
 
 const linkText = "link-draw font-black uppercase";
@@ -29,18 +30,20 @@ export async function RoomHeader({
 }) {
   const dark = tone === "dark";
   const { nav } = (await getContent()).settings;
+  const pageLink = (
+    <Link href={href} className="link-draw">
+      {label}
+    </Link>
+  );
   return (
     <>
+      <StickyNav nav={nav} title={pageLink} tone={tone} logoHref="/" logoTitle="Home" />
       <MobileNav
         nav={nav}
         tone={tone}
         className="md:hidden"
         buttonExtra={phoneExtra}
-        title={
-          <Link href={href} className="link-draw">
-            {label}
-          </Link>
-        }
+        title={pageLink}
       />
 
       <header className="relative h-[calc(200*var(--u))] max-md:hidden">
