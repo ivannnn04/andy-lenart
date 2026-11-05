@@ -78,7 +78,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "alt": "Garment 01: white coat with hand-drawn black lettering, worn on concrete steps beneath tower blocks"
       },
       "tagline": "One can depart, but the place does not release you.",
-      "price": "£1,500",
+      "price": "£1,600",
       "preview": {
         "src": "/audio/garment-01-preview.aac",
         "duration": "0:30",

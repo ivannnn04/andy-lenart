@@ -76,10 +76,24 @@ const REPLACED_LYRICS: Record<string, string[]> = {
   funkce: ["6bf97d67526de514", "d8f936445835245c", "7977832bf5acc8c5", "d98f97eaad22db64", "b124288f523a139c", "15450c980c1d0f51"],
 };
 
-export function withCurrentLyrics(garment: Garment): Garment {
+function withCurrentLyrics(garment: Garment): Garment {
   const old = REPLACED_LYRICS[garment.slug];
   if (!old?.includes(createHash("sha256").update(JSON.stringify(garment.room.lyrics)).digest("hex").slice(0, 16)))
     return garment;
   const lyrics = DEFAULT_CONTENT.garments.find((g) => g.slug === garment.slug)?.room.lyrics ?? garment.room.lyrics;
   return { ...garment, room: { ...garment.room, lyrics } };
 }
+
+/** Prices the site once shipped with: a garment still saved with one shows the current built-in price. */
+const REPLACED_PRICES: Record<string, string[]> = {
+  "born-by-the-pelican-sculpture": ["£1,500"],
+};
+
+function withCurrentPrice(garment: Garment): Garment {
+  if (!REPLACED_PRICES[garment.slug]?.includes(garment.price)) return garment;
+  const price = DEFAULT_CONTENT.garments.find((g) => g.slug === garment.slug)?.price;
+  return price ? { ...garment, price } : garment;
+}
+
+/** Built-in content that has since been corrected, brought up to date in a saved garment. */
+export const withCurrentDefaults = (garment: Garment) => withCurrentPrice(withCurrentLyrics(garment));

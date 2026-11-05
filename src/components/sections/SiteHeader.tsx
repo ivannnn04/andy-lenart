@@ -1,5 +1,6 @@
 import { MobileNav } from "@/components/MobileNav";
 import { Photo } from "@/components/Photo";
+import { StickyNav } from "@/components/StickyNav";
 import { placer, stage } from "@/lib/design";
 import { getContent } from "@/lib/content/store";
 
@@ -53,6 +54,7 @@ export async function SiteHeader({
   return (
     <>
     <MobileNav nav={nav} title={title} inset={inset} className="md:hidden" />
+    <StickyNav nav={nav} title={title} inset={inset} logoHref={v.logoHref} logoTitle={v.logoTitle} />
     <header
       data-reveal-children
       className="stage gutter max-md:hidden"
@@ -67,9 +69,11 @@ export async function SiteHeader({
         className="place w-28"
         style={v.wave}
       />
+      {/* The logo never moves: no reveal, no hover effect. */}
       <a
         href={v.logoHref}
         title={v.logoTitle}
+        data-reveal-skip
         className="place w-16"
         style={v.logo}
       >

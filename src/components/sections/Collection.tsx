@@ -60,6 +60,16 @@ export function Collection({ garments }: { garments: Garment[] }) {
         Design: strip 981 wide at x=72, caption 400 wide at x=728 (66.9%).
       */}
       <div className="relative mt-44 md:mt-[calc(146*var(--u))] md:w-[calc(981*var(--u))]">
+        {/*
+          "Listen" in the menu lands here, so the strip and its caption open the
+          "For owners" section. The anchor starts where the lettering does, in
+          the lower ~30% of the caption image (the rest of it is empty).
+        */}
+        <span
+          id="listen"
+          aria-hidden
+          className="pointer-events-none absolute right-0 bottom-full aspect-[400/70] w-[60%] scroll-mt-6 md:right-auto md:left-[66.87%] md:w-[40.77%] md:scroll-mt-10"
+        />
         <Photo
           src="/images/signature-connectivity.png"
           alt="Handwritten: Connectivity"

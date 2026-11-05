@@ -10,6 +10,7 @@ const MAX_DELAY = 360;
  * Fades elements in as they scroll into view. Direct children of any
  * `[data-reveal-children]` container are revealed (a child that is itself
  * such a container is skipped, so its own children animate instead).
+ * `data-reveal-skip` keeps a child still (the logo).
  *
  * Only elements that start below or above the viewport are hidden, so
  * nothing already on screen flickers while the page hydrates.
@@ -20,7 +21,7 @@ export function ScrollReveal() {
 
     const items = Array.from(
       document.querySelectorAll<HTMLElement>("[data-reveal-children] > *"),
-    ).filter((el) => !el.hasAttribute("data-reveal-children"));
+    ).filter((el) => !el.hasAttribute("data-reveal-children") && !el.hasAttribute("data-reveal-skip"));
 
     const offscreen = items.filter((el) => {
       const rect = el.getBoundingClientRect();

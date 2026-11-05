@@ -15,12 +15,12 @@ export function StayConnected({
   return (
     <section
       data-reveal-children
-      id="stay-connected"
       aria-labelledby="stay-connected-title"
       className="gutter relative"
       style={{ paddingTop: sp(238, 96), paddingBottom: sp(193, 80) }}
     >
-      <div data-reveal-children className="md:pl-[calc(26*var(--u))]">
+      {/* "Own" lands on the heading, with a little white space above it. */}
+      <div id="stay-connected" data-reveal-children className="scroll-mt-10 md:scroll-mt-16 md:pl-[calc(26*var(--u))]">
         <h2
           id="stay-connected-title"
           className="font-bold uppercase leading-none md:max-w-[calc(688*var(--u))]"

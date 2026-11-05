@@ -7,7 +7,6 @@ export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
   return (
     <section
       data-reveal-children
-      id="listen"
       aria-labelledby="owners-title"
       className="gutter"
       style={{ paddingTop: sp(66, 64) }}
