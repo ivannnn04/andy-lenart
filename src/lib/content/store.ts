@@ -2,7 +2,7 @@ import "server-only";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { DEFAULT_CONTENT } from "./defaults";
 import { getStorage } from "./storage";
-import { fromLegacy, withCurrentDefaults, withCurrentOrder } from "./legacy";
+import { fromLegacy, withCurrentDefaults, withCurrentOrder, withCurrentPrivacy } from "./legacy";
 import { garment as normalizeGarment } from "./normalize";
 import type { Room, SiteContent } from "./types";
 
@@ -16,7 +16,7 @@ async function readContent(): Promise<SiteContent> {
   return {
     settings: stored?.settings ?? DEFAULT_CONTENT.settings,
     home: stored?.home ?? DEFAULT_CONTENT.home,
-    privacy: stored?.privacy ?? DEFAULT_CONTENT.privacy,
+    privacy: stored?.privacy ? withCurrentPrivacy(stored.privacy) : DEFAULT_CONTENT.privacy,
     // Checked on the way out too, so an older saved shape never breaks a page.
     garments: legacy
       ? withCurrentOrder(fromLegacy(stored).map(normalizeGarment).map(withCurrentDefaults))

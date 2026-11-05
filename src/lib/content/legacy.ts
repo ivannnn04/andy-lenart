@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import { DEFAULT_CONTENT } from "./defaults";
-import type { Garment } from "./types";
+import type { Garment, Privacy } from "./types";
 
 type Raw = Record<string, unknown>;
 const list = (v: unknown): Raw[] => (Array.isArray(v) ? v.filter((x): x is Raw => Boolean(x) && typeof x === "object") : []);
@@ -215,4 +215,18 @@ export function withCurrentOrder(garments: Garment[]): Garment[] {
         dimmed: oldDimmed === builtInDimmed ? fresh.dimmed : g.dimmed,
       };
     });
+}
+
+/** Privacy texts the site once shipped with (the draft with placeholders), by a hash of the body. */
+const REPLACED_PRIVACY = ["62c5a3e88b4889e7"];
+
+/** A privacy policy saved while it was still the built-in draft gets the current built-in text; edits are left alone. */
+export function withCurrentPrivacy(privacy: Privacy): Privacy {
+  const hash = createHash("sha256").update(privacy.body).digest("hex").slice(0, 16);
+  if (!REPLACED_PRIVACY.includes(hash)) return privacy;
+  return {
+    ...privacy,
+    body: DEFAULT_CONTENT.privacy.body,
+    updated: privacy.updated === "[DATE]" ? DEFAULT_CONTENT.privacy.updated : privacy.updated,
+  };
 }
