@@ -28,10 +28,12 @@ Below the `md` breakpoint (768px) the same markup falls back to a stacked mobile
 
 ### Typeface
 
-The design uses **Neue Haas Grotesk Display Pro** (commercial). It is picked
-up automatically when available; otherwise Inter is used. To self-host it, add
-the licensed files and load them with `next/font/local` in
-`src/app/layout.tsx`, exposing the family first in `--font-sans`.
+The design uses **Neue Haas Grotesk Display Pro** (commercial, licensed by
+the client). Its five cuts are self-hosted from `src/app/fonts/` (WOFF2) and
+loaded with `next/font/local` in `src/app/layout.tsx` as `--font-sans`. Inter
+is the fallback while it loads, and `font-ui` for the few details the design
+sets in Inter. There are no italic cuts, so italic text is slanted by the
+browser.
 
 Weights used map to the family's cuts: 300 = 45 Light, 400 = 55 Roman,
 500 = 65 Medium, 700 = 75 Bold, 900 = 95 Black. Button labels are 600
@@ -147,28 +149,29 @@ the form on desktop). Point each garment's tag at `https://<domain>/room/<slug>`
   Comfort ("andy05"), Symmetrica ("andy06"), Aliens and Herons ("andy07"),
   Philosophy of Form ("andy08"), The Signatures ("andy09"), Funkce ("andy10").
   Soviet Sunset's and Stations of Comfort's desktop layouts are not in Figma
-  and set the phone pieces in two columns. Room images (`room-0N-*.png`) are
-  1× renders of the Figma layers; 2× exports would be sharper.
+  and set the phone pieces in two columns. The room photos (`*.webp`) are
+  cut from the Figma originals at 2–3× (hand lettering stays PNG).
 - The Staircase (`/room/<slug>/staircase`, Figma "15" + its bottom sheet)
   needs the room's access cookie. One wall is shared by every room; marks
   are saved to the store and moderated in the admin.
 
 ### Listening Room images
 
-Export these Figma layers (the layer as cropped in the frame, PNG at 2x) into
-`public/images/`. Until a file is there, an outlined placeholder with the
-layer name holds its place.
+Export these Figma layers (the layer as cropped in the frame) into
+`public/images/`: photos as WebP cut from the layer's original image at 2–3×
+(Figma's own export stops at 1×), lettering as PNG. Until a file is there, an
+outlined placeholder with the layer name holds its place.
 
 | File | Figma layer |
 | --- | --- |
-| `room-cassette.webp` | spinning_cassette_realistic 1 (static; the reel hubs are turned in CSS while the track plays) |
+| `room-cassette.webp`, `room-cassette-spin.webp` | spinning_cassette_realistic 1 (the GIF's first frame, and the GIF as an animated WebP shown while the track plays) |
 | `room-listen.png` | Unnamed 1 (the "LISTEN" lettering) |
-| `room-photo-road.png` | R1-01944-0028 2 |
+| `room-photo-road.webp` | R1-01944-0028 2 |
 | `room-hold-on.png` | so endlessly 2 3 ("hold on —") |
-| `room-photo-sledges.png` | R1-01944-0028 1 |
-| `room-photo-tortoise.png` | R1-01944-0028 3 |
+| `room-photo-sledges.webp` | R1-01944-0028 1 |
+| `room-photo-tortoise.webp` | R1-01944-0028 3 |
 | `room-so-endlessly.png` | so endlessly 2 1 ("so endlessly fragmented") |
-| `room-photo-pelican.png` | R1-01944-0030 1 |
+| `room-photo-pelican.webp` | R1-01944-0030 1 |
 | `room-was-that.png` | was that.... 1 |
 | `room-staircase-graffiti.png` | the two "R1-01944-0028 4" crops behind THE STAIRCASE, exported together (299×284) |
 | `room-staircase-scrawl.png` | text 4 (the scrawl beside "LISTENING ROOM") |

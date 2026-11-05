@@ -58,7 +58,7 @@ type Picture = {
 // Order is stacking order: the lettering comes after the photo it overlaps.
 const PELICAN_PICTURES: Picture[] = [
   {
-    file: "room-photo-road.png",
+    file: "room-photo-road.webp",
     alt: "Faded colour photo of a road past prefab tower blocks, a car driving by",
     layer: "R1-01944-0028 2",
     place: { m: [69, 437, 250, 179], d: [242, 435, 348, 250] },
@@ -71,14 +71,14 @@ const PELICAN_PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-photo-sledges.png",
+    file: "room-photo-sledges.webp",
     alt: "Black-and-white photo of children pulling sledges through the snow",
     layer: "R1-01944-0028 1",
     place: { m: [28, 784, 160, 113], d: [154, 872, 238, 167] },
     objectPosition: "bottom",
   },
   {
-    file: "room-photo-tortoise.png",
+    file: "room-photo-tortoise.webp",
     alt: "Black-and-white photo of hands holding a small tortoise",
     layer: "R1-01944-0028 3",
     place: { m: [199, 784, 160, 113], d: [408, 872, 237, 167] },
@@ -91,7 +91,7 @@ const PELICAN_PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-photo-pelican.png",
+    file: "room-photo-pelican.webp",
     alt: "Black-and-white photo of the pelican sculpture on its plinth in a reedy pond",
     layer: "R1-01944-0030 1",
     place: { m: [85, 975, 160, 220], d: [723, 557, 273, 375] },
@@ -108,19 +108,19 @@ const PELICAN_PICTURES: Picture[] = [
 // "Paper Walls" (Figma "02 — PAPER WALLS"); the photos and the line sit under its lettering.
 const PAPER_WALLS_PICTURES: Picture[] = [
   {
-    file: "room-02-photo-paper-walls.png",
+    file: "room-02-photo-paper-walls.webp",
     alt: "Black-and-white photo of two men at a table in front of a bookcase",
     layer: "2026-10-05 14-50 page 5 4",
     place: { m: [73, 1008, 243, 156], d: [718, 602, 464, 298] },
   },
   {
-    file: "room-02-photo-decanter.png",
+    file: "room-02-photo-decanter.webp",
     alt: "Black-and-white photo of a crystal decanter and glasses on a shelf beside a child's portrait",
     layer: "2026-10-05 14-50 page 5 2",
     place: { m: [49, 443, 292, 205], d: [202, 431, 412, 289] },
   },
   {
-    file: "room-02-photo-sofa.png",
+    file: "room-02-photo-sofa.webp",
     alt: "Faded colour photo of a child standing by a sofa in a dim living room",
     layer: "2026-10-05 14-50 page 5 1",
     place: { m: [107, 684, 181, 127], d: [307, 785, 275, 193] },
@@ -144,14 +144,14 @@ const PAPER_WALLS_PICTURES: Picture[] = [
 // "The Blueprint" (Figma "03 — THE BLUEPRINT"). The family photo appears
 // three times, smaller each time.
 const FAMILY = {
-  file: "room-03-photo-family.png",
+  file: "room-03-photo-family.webp",
   alt: "Black-and-white photo of a mother with two small children on her lap",
   layer: "2026-10-05 14-50 page 5 6",
 };
 
 const BLUEPRINT_PICTURES: Picture[] = [
   {
-    file: "room-03-photo-tv.png",
+    file: "room-03-photo-tv.webp",
     alt: "Faded colour photo of an old television on a small table between patterned curtains",
     layer: "2026-10-05 14-50 page 5 6",
     place: { m: [70, 450, 257, 169.8], d: [233, 433, 390.5, 258] },
@@ -165,7 +165,7 @@ const BLUEPRINT_PICTURES: Picture[] = [
     blend: "plus-lighter",
   },
   {
-    file: "room-03-photo-kitchen.png",
+    file: "room-03-photo-kitchen.webp",
     alt: "Black-and-white photo of a woman sitting at a glass table in a living room",
     layer: "2026-10-05 14-50 page 5 5",
     place: { m: [110, 699, 236, 164], d: [327, 774, 335, 233] },
@@ -186,7 +186,7 @@ const BLUEPRINT_PICTURES: Picture[] = [
 // "Soviet Sunset" (Figma "04 — SOVIET SUNSET"). Only the phone collage is
 // designed; desktop sets the same pieces in two columns, 1.5× the phone size.
 const SUNSET_SQUARE: Picture = {
-  file: "room-04-photo-square.png",
+  file: "room-04-photo-square.webp",
   alt: "Faded photo of a crowd with flags filling a square in front of a domed museum",
   layer: "2026-10-05 14-50 page 5 9",
   place: { m: [100.8, 480.7, 172.6, 133.3], d: [295.7, 571.5, 258.9, 200] },
@@ -201,7 +201,7 @@ const SUNSET_PICTURES: Picture[] = [
     place: { m: [41, 756, 247.1, 114.2], d: [839.6, 500, 370.6, 171.3] },
   },
   {
-    file: "room-04-photo-protest.png",
+    file: "room-04-photo-protest.webp",
     alt: "Faded photo of a crowd in front of a monument covered in posters and flags",
     layer: "2026-10-05 14-50 page 5 8",
     place: { m: [56, 909, 273, 166], d: [862.6, 729.5, 409.5, 249] },
@@ -227,7 +227,7 @@ const COMFORT_PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-05-photo-tower.png",
+    file: "room-05-photo-tower.webp",
     alt: "Dim photo of a tower block against the sky",
     layer: "2026-10-05 14-50 page 5 15",
     place: { m: [75, 960, 229, 158], d: [832.5, 791, 343.5, 237] },
@@ -235,19 +235,19 @@ const COMFORT_PICTURES: Picture[] = [
     blend: "lighten",
   },
   {
-    file: "room-05-photo-bench.png",
+    file: "room-05-photo-bench.webp",
     alt: "Black-and-white photo of an empty park bench",
     layer: "2026-10-05 14-50 page 5 14",
     place: { m: [229, 986, 121, 95], d: [1063.5, 830, 181.5, 142.5] },
   },
   {
-    file: "room-05-photo-sculpture.png",
+    file: "room-05-photo-sculpture.webp",
     alt: "Black-and-white photo of a concrete sculpture between bushes in front of a housing block",
     layer: "2026-10-05 14-50 page 5 11",
     place: { m: [48, 464, 122, 165], d: [170, 552.8, 183, 247.5] },
   },
   {
-    file: "room-05-photo-doorway.png",
+    file: "room-05-photo-doorway.webp",
     alt: "Black-and-white photo of a graffitied doorway with a bicycle in front",
     layer: "2026-10-05 14-50 page 5 13",
     place: { m: [190, 464, 110, 165], d: [383, 552.8, 165, 247.5] },
@@ -255,7 +255,7 @@ const COMFORT_PICTURES: Picture[] = [
 ];
 
 const COMFORT_FRUIT: Picture = {
-  file: "room-05-photo-fruit.png",
+  file: "room-05-photo-fruit.webp",
   alt: "Black-and-white photo of a table heaped with fruit",
   layer: "2026-10-05 14-50 page 5 10",
   place: { m: [82, 766, 173, 125], d: [843, 500, 259.5, 187.5] },
@@ -272,13 +272,13 @@ const SYMMETRICA_PICTURES: Picture[] = [
   { ...STRIP, file: "room-06-strip-2.png", place: { m: [46, 535, 408, 28], d: [84, 537.5, 585, 40] } },
   { ...STRIP, file: "room-06-strip-3.png", place: { m: [46, 574, 408, 28], d: [84, 603.9, 585, 40] } },
   {
-    file: "room-06-photo-blocks.png",
+    file: "room-06-photo-blocks.webp",
     alt: "Black-and-white photo of prefab housing blocks behind dark trees",
     layer: "2026-10-05 14-50 page 5 22",
     place: { m: [144, 751, 182, 122], d: [319, 825.8, 302.3, 202.2] },
   },
   {
-    file: "room-06-photo-tower.png",
+    file: "room-06-photo-tower.webp",
     alt: "Black-and-white photo of a long housing block above trees",
     layer: "R1-04911-0012 3",
     place: { m: [176, 693, 166, 151], d: [394, 748, 275.4, 250.5] },
@@ -287,7 +287,7 @@ const SYMMETRICA_PICTURES: Picture[] = [
 ];
 
 const SYMMETRICA_TERRACES: Picture = {
-  file: "room-06-photo-terraces.png",
+  file: "room-06-photo-terraces.webp",
   alt: "Black-and-white photo of a terraced housing block between trees",
   layer: "R1-04911-0012 2",
   place: { m: [-64, 950, 415, 130], d: [782, 705, 546, 171] },
@@ -296,7 +296,7 @@ const SYMMETRICA_TERRACES: Picture = {
 // "Aliens and Herons" (Figma "07 — ALIENS AND HERONS").
 const ALIENS_PICTURES: Picture[] = [
   {
-    file: "room-07-photo-hand.png",
+    file: "room-07-photo-hand.webp",
     alt: "Black-and-white photo of a hand resting on a weathered stone sculpture",
     layer: "2026-10-05 14-50 page 5 12",
     place: { m: [74, 431, 221, 326], d: [777, 491, 305.7, 450.6] },
@@ -309,7 +309,7 @@ const ALIENS_PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-07-photo-sculpture.png",
+    file: "room-07-photo-sculpture.webp",
     alt: "Black-and-white photo of an abstract stone sculpture on a lawn",
     layer: "2026-10-05 14-50 page 5 11",
     place: { m: [91, 939, 246, 155], d: [283.4, 648, 359.1, 226.2] },
@@ -328,13 +328,13 @@ const ALIENS_POWER: Picture = {
 // is exported with its blend already applied.
 const FORM_PICTURES: Picture[] = [
   {
-    file: "room-08-photo-shadows.png",
+    file: "room-08-photo-shadows.webp",
     alt: "Black-and-white photos of a tower block with leaf shadows across it",
     layer: "Group 1503:170",
     place: { m: [81, 449, 229, 291.9], d: [298, 431, 349.1, 445] },
   },
   {
-    file: "room-08-photo-vase.png",
+    file: "room-08-photo-vase.webp",
     alt: "Photos of a lamp-lit interior and a tower block with a blue vase painted on its side",
     layer: "Group 1503:173",
     place: { m: [33, 839, 213, 250], d: [692.6, 594.3, 310.7, 371.3] },
@@ -344,7 +344,7 @@ const FORM_PICTURES: Picture[] = [
 // "The Signatures" (Figma "09 — THE SIGNATURES").
 const SIGNATURES_PICTURES: Picture[] = [
   {
-    file: "room-09-graffiti.png",
+    file: "room-09-graffiti.webp",
     alt: "Black-and-white photos of graffiti tags layered over each other",
     layer: "Group 1503:229",
     place: { m: [40, 463, 246, 323], d: [297.5, 375.7, 420.6, 552.3] },
@@ -357,7 +357,7 @@ const SIGNATURES_PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-09-photo-flats.png",
+    file: "room-09-photo-flats.webp",
     alt: "Faded photo of a long block of flats",
     layer: "Group 1503:235",
     place: { m: [177, 749, 166, 87], d: [857.1, 509.3, 240.4, 126] },
@@ -367,19 +367,19 @@ const SIGNATURES_PICTURES: Picture[] = [
 // "Funkce" (Figma "10 — FUNKCE" desktop and mobile).
 const FUNKCE_PICTURES: Picture[] = [
   {
-    file: "room-10-photo-building.png",
+    file: "room-10-photo-building.webp",
     alt: "Black-and-white photo of a concrete building raised on pillars",
     layer: "R1-04911-0000 2",
     place: { m: [56, 451, 155, 164], d: [248, 405, 262, 278] },
   },
   {
-    file: "room-10-photo-flats.png",
+    file: "room-10-photo-flats.webp",
     alt: "Black-and-white photo of a block of flats behind trees",
     layer: "R1-04911-0000 3",
     place: { m: [56, 632, 156, 68], d: [248, 712, 265, 116] },
   },
   {
-    file: "room-10-photo-bird.png",
+    file: "room-10-photo-bird.webp",
     alt: "Grainy photo of a dark bird's wing against a window",
     layer: "R1-04911-0001 2",
     place: { m: [242, 516, 75, 144], d: [564, 515, 127, 244] },
@@ -410,7 +410,7 @@ const FUNKCE_PICTURES: Picture[] = [
     lettering: true,
   },
   {
-    file: "room-10-photo-family.png",
+    file: "room-10-photo-family.webp",
     alt: "Faded colour photo of a family around a coffee table with bottles and fruit",
     layer: "2026-10-09 14-28 page 18 1",
     place: { m: [66, 919, 236, 162], d: [787, 628, 394, 270] },
@@ -536,38 +536,9 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
   },
 };
 
-// The cassette photo is 1177×748; its reel hubs sit at x 342 / 837, y 322.
-const CASSETTE = { w: 1177, h: 748, cy: 322, r: 95 };
-const REELS = [342, 837];
-
-/**
- * A reel hub cut out of the photo as a circle; it turns while the track
- * plays (see .room-reel in globals.css).
- */
-function Reel({ cx }: { cx: number }) {
-  const { w, h, cy, r } = CASSETTE;
-  const d = 2 * r;
-  return (
-    <span
-      aria-hidden
-      className="room-reel absolute aspect-square overflow-hidden rounded-full"
-      style={{ left: `${((cx - r) / w) * 100}%`, top: `${((cy - r) / h) * 100}%`, width: `${(d / w) * 100}%` }}
-    >
-      <span
-        className="absolute block"
-        style={{
-          left: `${(-(cx - r) / d) * 100}%`,
-          top: `${(-(cy - r) / d) * 100}%`,
-          width: `${(w / d) * 100}%`,
-          height: `${(h / d) * 100}%`,
-          backgroundImage: `url(/images/${TAPE_FILE})`,
-          backgroundSize: "100% 100%",
-        }}
-      />
-    </span>
-  );
-}
-
+// The cassette from Figma ("spinning_cassette_realistic"): its reels turn in
+// the animated version, shown while the track plays; the still is its first frame.
+const TAPE_SPIN_FILE = "room-cassette-spin.webp";
 
 const imageExists = (file: string) => existsSync(path.join(process.cwd(), "public/images", file));
 
@@ -1125,7 +1096,10 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
             <RoomTape title={`the track of ${room.titleLines.join(" ")}`}>
               <span className="relative block size-full">
                 <Art picture={tape} sizes="(min-width: 768px) 23vw, 50vw" />
-                {imageExists(TAPE_FILE) && REELS.map((cx) => <Reel key={cx} cx={cx} />)}
+                {imageExists(TAPE_SPIN_FILE) && (
+                  // eslint-disable-next-line @next/next/no-img-element -- an animated WebP, served as is
+                  <img src={`/images/${TAPE_SPIN_FILE}`} alt="" aria-hidden className="room-tape-spin absolute inset-0 size-full" />
+                )}
               </span>
             </RoomTape>
           </Placed>

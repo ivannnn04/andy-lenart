@@ -2,7 +2,7 @@ import "server-only";
 import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { DEFAULT_CONTENT } from "./defaults";
 import { getStorage } from "./storage";
-import { fromLegacy, withCurrentDefaults } from "./legacy";
+import { fromLegacy, withCurrentDefaults, withCurrentOrder } from "./legacy";
 import { garment as normalizeGarment } from "./normalize";
 import type { Room, SiteContent } from "./types";
 
@@ -18,9 +18,9 @@ async function readContent(): Promise<SiteContent> {
     home: stored?.home ?? DEFAULT_CONTENT.home,
     // Checked on the way out too, so an older saved shape never breaks a page.
     garments: legacy
-      ? fromLegacy(stored).map(normalizeGarment).map(withCurrentDefaults)
+      ? withCurrentOrder(fromLegacy(stored).map(normalizeGarment).map(withCurrentDefaults))
       : Array.isArray(stored?.garments)
-        ? stored.garments.map(normalizeGarment).map(withCurrentDefaults)
+        ? withCurrentOrder(stored.garments.map(normalizeGarment).map(withCurrentDefaults))
         : DEFAULT_CONTENT.garments,
   };
 }

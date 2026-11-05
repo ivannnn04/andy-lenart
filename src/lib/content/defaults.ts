@@ -139,20 +139,14 @@ export const DEFAULT_CONTENT: SiteContent = {
       "size": "One size",
       "gallery": [
         {
-          "src": "/images/garment-01.webp",
+          "src": "/images/garment-01-main.webp",
           "alt": "White coat with hand-drawn black lettering, worn on concrete steps beneath tower blocks",
-          "width": 590,
-          "height": 760
+          "width": 1446,
+          "height": 1760
         },
         {
           "src": "/images/garment-01-2.webp",
           "alt": "Model in the coat with painted beige sleeves, a blue checked bag over her shoulder, in front of a brutalist housing block",
-          "width": 1253,
-          "height": 1875
-        },
-        {
-          "src": "/images/garment-01-3.webp",
-          "alt": "Close-up of the coat's spray-painted lettering, a string bag of oranges on her arm, a balconied tower behind",
           "width": 1253,
           "height": 1875
         },
@@ -169,7 +163,7 @@ export const DEFAULT_CONTENT: SiteContent = {
           "height": 1875
         }
       ],
-      "requestPhoto": 3,
+      "requestPhoto": 2,
       "details": [
         {
           "title": "Fabric & Making"
@@ -465,7 +459,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "enabled": true,
         "keyword": "andy02",
         "photo": {
-          "src": "/images/room-02-photo-paper-walls.png",
+          "src": "/images/room-02-photo-paper-walls.webp",
           "alt": "Black-and-white photo of two men at a table in front of a bookcase",
           "width": 464,
           "height": 298
@@ -596,406 +590,12 @@ export const DEFAULT_CONTENT: SiteContent = {
       }
     },
     {
-      "slug": "symmetrica",
-      "no": "03",
-      "titleLines": [
-        "Symmetrica"
-      ],
-      "status": "Coming soon",
-      "tagline": "Not yet released",
-      "price": "",
-      "preview": {
-        "src": "/audio/garment-03-preview.aac",
-        "duration": "0:30"
-      },
-      "page": false,
-      "availability": "",
-      "remaining": "",
-      "size": "One size",
-      "gallery": [],
-      "requestPhoto": 0,
-      "details": [
-        {
-          "title": "Fabric & Making"
-        },
-        {
-          "title": "Sizing"
-        },
-        {
-          "title": "Shipping"
-        },
-        {
-          "title": "Sound tech & Listening Rooms"
-        }
-      ],
-      "concept": {
-        "paragraphs": [],
-        "image": {
-          "alt": "",
-          "width": 1836,
-          "height": 1056
-        },
-        "quote": ""
-      },
-      "credits": [],
-      "inside": {
-        "title": [],
-        "paragraphs": [],
-        "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
-        }
-      },
-      "room": {
-        "enabled": true,
-        "keyword": "andy06",
-        "photo": {
-          "src": "/images/room-06-photo-tower.png",
-          "alt": "Black-and-white photo of a long housing block above trees",
-          "width": 275,
-          "height": 250
-        },
-        "track": "/audio/symmetrica-track.m4a",
-        "lyrics": [
-          {
-            "time": 50.71,
-            "text": "Moderní proudovou metodou tu budují sídliště",
-            "end": 54.3
-          },
-          {
-            "time": 54.3,
-            "text": "pro padesát tisíc obyvatel.",
-            "end": 57.12
-          },
-          {
-            "time": 70.77,
-            "text": "Pro padesát tisíc obyvatel.",
-            "end": 73.47
-          },
-          {
-            "time": 87.9,
-            "text": "Of the colour that exposed me",
-            "end": 91.46
-          },
-          {
-            "time": 94.36,
-            "text": "to life itself,",
-            "end": 96
-          },
-          {
-            "time": 97.36,
-            "text": "where I see the meaning of myself, being one with stone",
-            "end": 101.79
-          },
-          {
-            "time": 102.71,
-            "text": "that is yourself,",
-            "end": 104.19
-          },
-          {
-            "time": 105.81,
-            "text": "the recognition of oneself.",
-            "end": 109.63
-          },
-          {
-            "time": 111.09,
-            "text": "Poutavé vzory,",
-            "end": 112.67
-          },
-          {
-            "time": 113.75,
-            "text": "součástí sebe.",
-            "end": 115.43
-          },
-          {
-            "time": 116.79,
-            "text": "Rozeznání mě a tebe.",
-            "end": 120.48
-          },
-          {
-            "time": 125.2,
-            "text": "Už dnes si našlo prvních deset tisíc obyvatel",
-            "end": 128.1
-          },
-          {
-            "time": 128.1,
-            "text": "svůj nový domov.",
-            "end": 129.92
-          },
-          {
-            "time": 135.22,
-            "text": "And as I stood there in the dark,",
-            "end": 137.76
-          },
-          {
-            "time": 137.76,
-            "text": "I saw that I was standing in a world made out of patterns,",
-            "end": 142.1
-          },
-          {
-            "time": 142.1,
-            "text": "light, and structure.",
-            "end": 143.59
-          },
-          {
-            "time": 143.59,
-            "text": "Projected onto the walls, I could no longer see the skies.",
-            "end": 147.93
-          },
-          {
-            "time": 149.01,
-            "text": "Surrounded by a square",
-            "end": 150.21
-          },
-          {
-            "time": 150.21,
-            "text": "that is the definition of who I am and will be,",
-            "end": 153.19
-          },
-          {
-            "time": 153.65,
-            "text": "what I will dream of, where I will go.",
-            "end": 156.31
-          },
-          {
-            "time": 156.31,
-            "text": "Entertaining ideas, I will go wherever a contrast starts.",
-            "end": 160.58
-          },
-          {
-            "time": 161.3,
-            "text": "Being called back, standing on the sea,",
-            "end": 164.23
-          },
-          {
-            "time": 164.79,
-            "text": "further than any place.",
-            "end": 166.94
-          },
-          {
-            "time": 166.94,
-            "text": "You will never stop shaping me,",
-            "end": 169.72
-          },
-          {
-            "time": 169.72,
-            "text": "the one form that is me.",
-            "end": 171.87
-          },
-          {
-            "time": 173,
-            "text": "The neon signs, the neon signs."
-          },
-          {
-            "time": 178.4,
-            "text": "The neon signs, the neon signs."
-          }
-        ],
-        "verse": [],
-        "collage": "symmetrica"
-      }
-    },
-    {
-      "slug": "aliens-and-herons",
-      "no": "04",
-      "titleLines": [
-        "Aliens and Herons"
-      ],
-      "cardTitle": "Aliens and Herons (Vetřelci a volavky)",
-      "titleSize": 20,
-      "status": "Coming soon",
-      "tagline": "Not yet released",
-      "price": "",
-      "preview": {
-        "src": "/audio/garment-04-preview.aac",
-        "duration": "0:30"
-      },
-      "page": false,
-      "availability": "",
-      "remaining": "",
-      "size": "One size",
-      "gallery": [],
-      "requestPhoto": 0,
-      "details": [
-        {
-          "title": "Fabric & Making"
-        },
-        {
-          "title": "Sizing"
-        },
-        {
-          "title": "Shipping"
-        },
-        {
-          "title": "Sound tech & Listening Rooms"
-        }
-      ],
-      "concept": {
-        "paragraphs": [],
-        "image": {
-          "alt": "",
-          "width": 1836,
-          "height": 1056
-        },
-        "quote": ""
-      },
-      "credits": [],
-      "inside": {
-        "title": [],
-        "paragraphs": [],
-        "image": {
-          "alt": "",
-          "width": 560,
-          "height": 360
-        }
-      },
-      "room": {
-        "enabled": true,
-        "keyword": "andy07",
-        "photo": {
-          "src": "/images/room-07-photo-hand.png",
-          "alt": "Black-and-white photo of a hand resting on a weathered stone sculpture",
-          "width": 306,
-          "height": 451
-        },
-        "track": "/audio/aliens-and-herons-track.m4a",
-        "lyrics": [
-          {
-            "time": 90.45,
-            "text": "Creating imagery,",
-            "end": 92.67
-          },
-          {
-            "time": 95.4,
-            "text": "I am leaving your silhouette.",
-            "end": 98.91
-          },
-          {
-            "time": 100.72,
-            "text": "In the black and white tone,",
-            "end": 102.5
-          },
-          {
-            "time": 105.75,
-            "text": "I am exposing all light.",
-            "end": 109.03
-          },
-          {
-            "time": 110.61,
-            "text": "V náručí včerejších dnů,",
-            "end": 112.61
-          },
-          {
-            "time": 113.27,
-            "text": "bez pohybu,",
-            "end": 114.47
-          },
-          {
-            "time": 115.86,
-            "text": "duch doby.",
-            "end": 116.99
-          },
-          {
-            "time": 118.2,
-            "text": "V sochařské expresi,",
-            "end": 120.03
-          },
-          {
-            "time": 120.79,
-            "text": "I see my days",
-            "end": 123.04
-          },
-          {
-            "time": 123.38,
-            "text": "engraved in the familiarity of stone.",
-            "end": 128
-          },
-          {
-            "time": 133.46,
-            "text": "In the crystal form,",
-            "end": 135.39
-          },
-          {
-            "time": 138.71,
-            "text": "like the last day I saw you."
-          },
-          {
-            "time": 143.44,
-            "text": "Zvuk ticha odráží se,",
-            "end": 145.57
-          },
-          {
-            "time": 148.6,
-            "text": "na zem klesá.",
-            "end": 150.11
-          },
-          {
-            "time": 151.06,
-            "text": "The sound of silence echoes,",
-            "end": 153.6
-          },
-          {
-            "time": 155.99,
-            "text": "falling to the ground.",
-            "end": 157.51
-          },
-          {
-            "time": 163.76,
-            "text": "Objekty kamene,",
-            "end": 165.22
-          },
-          {
-            "time": 166.68,
-            "text": "tvar dětství,",
-            "end": 168.07
-          },
-          {
-            "time": 168.79,
-            "text": "space to hide.",
-            "end": 170.27
-          },
-          {
-            "time": 171.38,
-            "text": "Němá tvář s anonymní tváří,",
-            "end": 175.4
-          },
-          {
-            "time": 175.4,
-            "text": "showing a fragile face in solidity.",
-            "end": 180.58
-          },
-          {
-            "time": 181.56,
-            "text": "Placed in stillness, surrounding blocks and land,",
-            "end": 185.73
-          },
-          {
-            "time": 186.6,
-            "text": "our monumental art."
-          },
-          {
-            "time": 192.9,
-            "text": "With roots, facing blocks and your windows…",
-            "end": 198.63
-          },
-          {
-            "time": 199.6,
-            "text": "…your windows."
-          }
-        ],
-        "verse": [],
-        "collage": "aliens-and-herons"
-      }
-    },
-    {
       "slug": "the-blueprint",
-      "no": "05",
+      "no": "03",
       "titleLines": [
         "The Blueprint"
       ],
       "status": "Coming soon",
-      "dimmed": true,
       "tagline": "Not yet released",
       "price": "",
       "preview": {
@@ -1045,7 +645,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "enabled": true,
         "keyword": "andy03",
         "photo": {
-          "src": "/images/room-03-photo-family.png",
+          "src": "/images/room-03-photo-family.webp",
           "alt": "Black-and-white photo of a mother with two small children on her lap",
           "width": 201,
           "height": 265
@@ -1229,12 +829,11 @@ export const DEFAULT_CONTENT: SiteContent = {
     },
     {
       "slug": "soviet-sunset",
-      "no": "06",
+      "no": "04",
       "titleLines": [
         "Soviet Sunset"
       ],
       "status": "Coming soon",
-      "dimmed": true,
       "tagline": "Not yet released",
       "price": "",
       "preview": {
@@ -1284,7 +883,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "enabled": true,
         "keyword": "andy04",
         "photo": {
-          "src": "/images/room-04-photo-protest.png",
+          "src": "/images/room-04-photo-protest.webp",
           "alt": "Faded colour photo of a crowd in front of a monument covered in posters and flags",
           "width": 273,
           "height": 166
@@ -1392,7 +991,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     },
     {
       "slug": "stations-of-comfort",
-      "no": "07",
+      "no": "05",
       "titleLines": [
         "Stations of Comfort"
       ],
@@ -1447,7 +1046,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "enabled": true,
         "keyword": "andy05",
         "photo": {
-          "src": "/images/room-05-photo-sculpture.png",
+          "src": "/images/room-05-photo-sculpture.webp",
           "alt": "Black-and-white photo of a concrete sculpture between bushes in front of a housing block",
           "width": 122,
           "height": 165
@@ -1610,6 +1209,401 @@ export const DEFAULT_CONTENT: SiteContent = {
       }
     },
     {
+      "slug": "symmetrica",
+      "no": "06",
+      "titleLines": [
+        "Symmetrica"
+      ],
+      "status": "Coming soon",
+      "tagline": "Not yet released",
+      "price": "",
+      "preview": {
+        "src": "/audio/garment-03-preview.aac",
+        "duration": "0:30"
+      },
+      "page": false,
+      "availability": "",
+      "remaining": "",
+      "size": "One size",
+      "gallery": [],
+      "requestPhoto": 0,
+      "details": [
+        {
+          "title": "Fabric & Making"
+        },
+        {
+          "title": "Sizing"
+        },
+        {
+          "title": "Shipping"
+        },
+        {
+          "title": "Sound tech & Listening Rooms"
+        }
+      ],
+      "concept": {
+        "paragraphs": [],
+        "image": {
+          "alt": "",
+          "width": 1836,
+          "height": 1056
+        },
+        "quote": ""
+      },
+      "credits": [],
+      "inside": {
+        "title": [],
+        "paragraphs": [],
+        "image": {
+          "alt": "",
+          "width": 560,
+          "height": 360
+        }
+      },
+      "room": {
+        "enabled": true,
+        "keyword": "andy06",
+        "photo": {
+          "src": "/images/room-06-photo-tower.webp",
+          "alt": "Black-and-white photo of a long housing block above trees",
+          "width": 275,
+          "height": 250
+        },
+        "track": "/audio/symmetrica-track.m4a",
+        "lyrics": [
+          {
+            "time": 50.71,
+            "text": "Moderní proudovou metodou tu budují sídliště",
+            "end": 54.3
+          },
+          {
+            "time": 54.3,
+            "text": "pro padesát tisíc obyvatel.",
+            "end": 57.12
+          },
+          {
+            "time": 70.77,
+            "text": "Pro padesát tisíc obyvatel.",
+            "end": 73.47
+          },
+          {
+            "time": 87.9,
+            "text": "Of the colour that exposed me",
+            "end": 91.46
+          },
+          {
+            "time": 94.36,
+            "text": "to life itself,",
+            "end": 96
+          },
+          {
+            "time": 97.36,
+            "text": "where I see the meaning of myself, being one with stone",
+            "end": 101.79
+          },
+          {
+            "time": 102.71,
+            "text": "that is yourself,",
+            "end": 104.19
+          },
+          {
+            "time": 105.81,
+            "text": "the recognition of oneself.",
+            "end": 109.63
+          },
+          {
+            "time": 111.09,
+            "text": "Poutavé vzory,",
+            "end": 112.67
+          },
+          {
+            "time": 113.75,
+            "text": "součástí sebe.",
+            "end": 115.43
+          },
+          {
+            "time": 116.79,
+            "text": "Rozeznání mě a tebe.",
+            "end": 120.48
+          },
+          {
+            "time": 125.2,
+            "text": "Už dnes si našlo prvních deset tisíc obyvatel",
+            "end": 128.1
+          },
+          {
+            "time": 128.1,
+            "text": "svůj nový domov.",
+            "end": 129.92
+          },
+          {
+            "time": 135.22,
+            "text": "And as I stood there in the dark,",
+            "end": 137.76
+          },
+          {
+            "time": 137.76,
+            "text": "I saw that I was standing in a world made out of patterns,",
+            "end": 142.1
+          },
+          {
+            "time": 142.1,
+            "text": "light, and structure.",
+            "end": 143.59
+          },
+          {
+            "time": 143.59,
+            "text": "Projected onto the walls, I could no longer see the skies.",
+            "end": 147.93
+          },
+          {
+            "time": 149.01,
+            "text": "Surrounded by a square",
+            "end": 150.21
+          },
+          {
+            "time": 150.21,
+            "text": "that is the definition of who I am and will be,",
+            "end": 153.19
+          },
+          {
+            "time": 153.65,
+            "text": "what I will dream of, where I will go.",
+            "end": 156.31
+          },
+          {
+            "time": 156.31,
+            "text": "Entertaining ideas, I will go wherever a contrast starts.",
+            "end": 160.58
+          },
+          {
+            "time": 161.3,
+            "text": "Being called back, standing on the sea,",
+            "end": 164.23
+          },
+          {
+            "time": 164.79,
+            "text": "further than any place.",
+            "end": 166.94
+          },
+          {
+            "time": 166.94,
+            "text": "You will never stop shaping me,",
+            "end": 169.72
+          },
+          {
+            "time": 169.72,
+            "text": "the one form that is me.",
+            "end": 171.87
+          },
+          {
+            "time": 173,
+            "text": "The neon signs, the neon signs."
+          },
+          {
+            "time": 178.4,
+            "text": "The neon signs, the neon signs."
+          }
+        ],
+        "verse": [],
+        "collage": "symmetrica"
+      },
+      "dimmed": true
+    },
+    {
+      "slug": "aliens-and-herons",
+      "no": "07",
+      "titleLines": [
+        "Aliens and Herons"
+      ],
+      "cardTitle": "Aliens and Herons (Vetřelci a volavky)",
+      "titleSize": 20,
+      "status": "Coming soon",
+      "tagline": "Not yet released",
+      "price": "",
+      "preview": {
+        "src": "/audio/garment-04-preview.aac",
+        "duration": "0:30"
+      },
+      "page": false,
+      "availability": "",
+      "remaining": "",
+      "size": "One size",
+      "gallery": [],
+      "requestPhoto": 0,
+      "details": [
+        {
+          "title": "Fabric & Making"
+        },
+        {
+          "title": "Sizing"
+        },
+        {
+          "title": "Shipping"
+        },
+        {
+          "title": "Sound tech & Listening Rooms"
+        }
+      ],
+      "concept": {
+        "paragraphs": [],
+        "image": {
+          "alt": "",
+          "width": 1836,
+          "height": 1056
+        },
+        "quote": ""
+      },
+      "credits": [],
+      "inside": {
+        "title": [],
+        "paragraphs": [],
+        "image": {
+          "alt": "",
+          "width": 560,
+          "height": 360
+        }
+      },
+      "room": {
+        "enabled": true,
+        "keyword": "andy07",
+        "photo": {
+          "src": "/images/room-07-photo-hand.webp",
+          "alt": "Black-and-white photo of a hand resting on a weathered stone sculpture",
+          "width": 306,
+          "height": 451
+        },
+        "track": "/audio/aliens-and-herons-track.m4a",
+        "lyrics": [
+          {
+            "time": 90.45,
+            "text": "Creating imagery,",
+            "end": 92.67
+          },
+          {
+            "time": 95.4,
+            "text": "I am leaving your silhouette.",
+            "end": 98.91
+          },
+          {
+            "time": 100.72,
+            "text": "In the black and white tone,",
+            "end": 102.5
+          },
+          {
+            "time": 105.75,
+            "text": "I am exposing all light.",
+            "end": 109.03
+          },
+          {
+            "time": 110.61,
+            "text": "V náručí včerejších dnů,",
+            "end": 112.61
+          },
+          {
+            "time": 113.27,
+            "text": "bez pohybu,",
+            "end": 114.47
+          },
+          {
+            "time": 115.86,
+            "text": "duch doby.",
+            "end": 116.99
+          },
+          {
+            "time": 118.2,
+            "text": "V sochařské expresi,",
+            "end": 120.03
+          },
+          {
+            "time": 120.79,
+            "text": "I see my days",
+            "end": 123.04
+          },
+          {
+            "time": 123.38,
+            "text": "engraved in the familiarity of stone.",
+            "end": 128
+          },
+          {
+            "time": 133.46,
+            "text": "In the crystal form,",
+            "end": 135.39
+          },
+          {
+            "time": 138.71,
+            "text": "like the last day I saw you."
+          },
+          {
+            "time": 143.44,
+            "text": "Zvuk ticha odráží se,",
+            "end": 145.57
+          },
+          {
+            "time": 148.6,
+            "text": "na zem klesá.",
+            "end": 150.11
+          },
+          {
+            "time": 151.06,
+            "text": "The sound of silence echoes,",
+            "end": 153.6
+          },
+          {
+            "time": 155.99,
+            "text": "falling to the ground.",
+            "end": 157.51
+          },
+          {
+            "time": 163.76,
+            "text": "Objekty kamene,",
+            "end": 165.22
+          },
+          {
+            "time": 166.68,
+            "text": "tvar dětství,",
+            "end": 168.07
+          },
+          {
+            "time": 168.79,
+            "text": "space to hide.",
+            "end": 170.27
+          },
+          {
+            "time": 171.38,
+            "text": "Němá tvář s anonymní tváří,",
+            "end": 175.4
+          },
+          {
+            "time": 175.4,
+            "text": "showing a fragile face in solidity.",
+            "end": 180.58
+          },
+          {
+            "time": 181.56,
+            "text": "Placed in stillness, surrounding blocks and land,",
+            "end": 185.73
+          },
+          {
+            "time": 186.6,
+            "text": "our monumental art."
+          },
+          {
+            "time": 192.9,
+            "text": "With roots, facing blocks and your windows…",
+            "end": 198.63
+          },
+          {
+            "time": 199.6,
+            "text": "…your windows."
+          }
+        ],
+        "verse": [],
+        "collage": "aliens-and-herons"
+      },
+      "dimmed": true
+    },
+    {
       "slug": "philosophy-of-form",
       "no": "08",
       "titleLines": [
@@ -1666,7 +1660,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "enabled": true,
         "keyword": "andy08",
         "photo": {
-          "src": "/images/room-08-photo-shadows.png",
+          "src": "/images/room-08-photo-shadows.webp",
           "alt": "Black-and-white photo of a tower block with leaf shadows across it",
           "width": 350,
           "height": 446
@@ -1870,7 +1864,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "enabled": true,
         "keyword": "andy09",
         "photo": {
-          "src": "/images/room-09-graffiti.png",
+          "src": "/images/room-09-graffiti.webp",
           "alt": "Black-and-white photos of graffiti tags layered over each other",
           "width": 421,
           "height": 553
@@ -2083,7 +2077,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         "enabled": true,
         "keyword": "andy10",
         "photo": {
-          "src": "/images/room-10-photo-family.png",
+          "src": "/images/room-10-photo-family.webp",
           "alt": "Faded colour photo of a family around a coffee table with bottles and fruit",
           "width": 394,
           "height": 270

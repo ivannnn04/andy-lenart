@@ -95,5 +95,117 @@ function withCurrentPrice(garment: Garment): Garment {
   return price ? { ...garment, price } : garment;
 }
 
+/** Galleries the site once shipped with, by their photos in order. */
+const REPLACED_GALLERIES: Record<string, string[]> = {
+  "born-by-the-pelican-sculpture": [
+    "/images/garment-01.webp",
+    "/images/garment-01-2.webp",
+    "/images/garment-01-3.webp",
+    "/images/garment-01-4.webp",
+    "/images/garment-01-5.webp",
+  ],
+};
+
+function withCurrentGallery(garment: Garment): Garment {
+  const old = REPLACED_GALLERIES[garment.slug];
+  if (!old || garment.gallery.map((i) => i.src).join() !== old.join()) return garment;
+  const fresh = DEFAULT_CONTENT.garments.find((g) => g.slug === garment.slug);
+  if (!fresh) return garment;
+  // The photo beside the request form stays the same photo.
+  const requestSrc = garment.gallery[garment.requestPhoto]?.src;
+  const requestPhoto = fresh.gallery.findIndex((i) => i.src === requestSrc);
+  return { ...garment, gallery: fresh.gallery, requestPhoto: requestPhoto < 0 ? fresh.requestPhoto : requestPhoto };
+}
+
+/** Photos re-exported from Figma at high resolution as WebP; the PNGs are gone. */
+const REPLACED_PNGS = new Set([
+  "room-photo-road",
+  "room-photo-sledges",
+  "room-photo-tortoise",
+  "room-photo-pelican",
+  "room-02-photo-paper-walls",
+  "room-02-photo-decanter",
+  "room-02-photo-sofa",
+  "room-03-photo-family",
+  "room-03-photo-tv",
+  "room-03-photo-kitchen",
+  "room-04-photo-square",
+  "room-04-photo-protest",
+  "room-05-photo-tower",
+  "room-05-photo-bench",
+  "room-05-photo-sculpture",
+  "room-05-photo-doorway",
+  "room-05-photo-fruit",
+  "room-06-photo-blocks",
+  "room-06-photo-tower",
+  "room-06-photo-terraces",
+  "room-07-photo-hand",
+  "room-07-photo-sculpture",
+  "room-08-photo-shadows",
+  "room-08-photo-vase",
+  "room-09-graffiti",
+  "room-09-photo-flats",
+  "room-10-photo-building",
+  "room-10-photo-flats",
+  "room-10-photo-bird",
+  "room-10-photo-family",
+]);
+
+const currentFile = <T extends { src?: string }>(image: T): T => {
+  const name = image.src?.match(/^\/images\/(.+)\.png$/)?.[1];
+  return name && REPLACED_PNGS.has(name) ? { ...image, src: `/images/${name}.webp` } : image;
+};
+
+function withCurrentFiles(garment: Garment): Garment {
+  return {
+    ...garment,
+    cardImage: garment.cardImage && currentFile(garment.cardImage),
+    gallery: garment.gallery.map(currentFile),
+    concept: { ...garment.concept, image: currentFile(garment.concept.image) },
+    inside: { ...garment.inside, image: currentFile(garment.inside.image) },
+    room: { ...garment.room, photo: garment.room.photo && currentFile(garment.room.photo) },
+  };
+}
+
 /** Built-in content that has since been corrected, brought up to date in a saved garment. */
-export const withCurrentDefaults = (garment: Garment) => withCurrentPrice(withCurrentLyrics(garment));
+export const withCurrentDefaults = (garment: Garment) =>
+  withCurrentFiles(withCurrentGallery(withCurrentPrice(withCurrentLyrics(garment))));
+
+/** The order the collection once shipped in, before it followed the album. */
+const REPLACED_ORDER = [
+  "born-by-the-pelican-sculpture",
+  "paper-walls",
+  "symmetrica",
+  "aliens-and-herons",
+  "the-blueprint",
+  "soviet-sunset",
+  "stations-of-comfort",
+  "philosophy-of-form",
+  "the-signatures",
+  "funkce",
+];
+
+/**
+ * A collection still saved in that old built-in order takes the album
+ * order, with the numbers and faded cards that go with it. An order
+ * changed in the admin is left alone.
+ */
+export function withCurrentOrder(garments: Garment[]): Garment[] {
+  if (garments.map((g) => g.slug).join() !== REPLACED_ORDER.join()) return garments;
+  const at = (slug: string) => DEFAULT_CONTENT.garments.findIndex((g) => g.slug === slug);
+  if (garments.some((g) => at(g.slug) < 0)) return garments;
+  const oldDimmed = garments.map((g) => Boolean(g.dimmed)).join();
+  const builtInDimmed = REPLACED_ORDER.map((_, i) => i >= 4).join();
+  return [...garments]
+    .sort((a, b) => at(a.slug) - at(b.slug))
+    .map((g, i) => {
+      const old = REPLACED_ORDER.indexOf(g.slug);
+      const fresh = DEFAULT_CONTENT.garments[i];
+      return {
+        ...g,
+        // Only numbers and fading that were still the built-in ones move.
+        no: g.no === String(old + 1).padStart(2, "0") ? fresh.no : g.no,
+        dimmed: oldDimmed === builtInDimmed ? fresh.dimmed : g.dimmed,
+      };
+    });
+}

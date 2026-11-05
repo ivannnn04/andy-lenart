@@ -45,8 +45,9 @@ function validate(data: FormData): Errors {
 }
 
 /**
- * "Request this piece" button and the inquiry drawer it opens (Figma
- * "05 — Inquiry (drawer)"). A native modal <dialog>: focus stays inside,
+ * "Request this piece" button and the inquiry window it opens (after Figma
+ * "05 — Inquiry (drawer)", made smaller than the design's full-screen
+ * version: a window, not a takeover). A native modal <dialog>: focus stays inside,
  * Esc closes it and the page behind is inert. Requests go to the admin
  * inbox; without a store connected, they are composed as an email instead.
  */
@@ -140,189 +141,203 @@ export function RequestDrawer({
       </button>
 
       <dialog ref={dialog} aria-labelledby={`${id}-title`} className="drawer">
-        {/* Photo and form move as one sheet, rising from the bottom. */}
-        <div className="drawer-sheet absolute inset-0 flex">
-          {photo?.src && (
-            // The garment beside the form; clicking it closes the drawer.
-            <div aria-hidden className="relative min-w-0 flex-1 max-md:hidden" onClick={close}>
-              {/* Eager, so the photo is ready by the time the drawer opens. */}
-              <Image src={photo.src} alt="" fill sizes="60vw" loading="eager" className="object-cover object-[50%_30%]" />
-            </div>
-          )}
+        {/*
+          A window in the middle of the screen (from md), a sheet rising from
+          the bottom on phones. A click beside it closes it.
+        */}
+        <div
+          className="absolute inset-0 flex items-end justify-center md:items-center md:p-6"
+          onClick={(e) => e.target === e.currentTarget && close()}
+        >
+          <div className="drawer-sheet flex max-h-[92dvh] w-full overflow-hidden bg-white max-md:rounded-t-xl md:max-h-[min(780px,calc(100dvh-48px))] md:max-w-[960px]">
+            {photo?.src && (
+              <div aria-hidden className="relative w-[40%] shrink-0 max-md:hidden">
+                {/* Eager, so the photo is ready by the time the window opens. */}
+                <Image
+                  src={photo.src}
+                  alt=""
+                  fill
+                  sizes="(min-width: 768px) 384px, 1px"
+                  loading="eager"
+                  className="object-cover object-[50%_25%]"
+                />
+              </div>
+            )}
 
-          <div className="ml-auto flex h-full w-full shrink-0 flex-col gap-6 overflow-y-auto bg-white px-4 py-8 text-ink md:w-[clamp(440px,41.667vw,600px)] md:px-14 md:py-12">
-          <div className="flex items-start justify-between">
-            <p className="text-[12px] leading-[normal] font-semibold uppercase tracking-[0.12em] text-muted">
-              {sent ? "Request sent" : "Request"}
-            </p>
-            <button
-              type="button"
-              onClick={close}
-              aria-label="Close"
-              className="-m-2 p-2 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-black"
-            >
-              <svg aria-hidden viewBox="0 0 14 14" className="size-3.5" stroke="currentColor" strokeWidth="1.4">
-                <path d="M1 1l12 12M13 1 1 13" />
-              </svg>
-            </button>
-          </div>
-
-          {!sent && (
-          <div className="flex flex-col gap-1 border-y border-[#d9d9d9] py-4 leading-[normal]">
-            <p className="text-[15px] font-semibold">
-              No. {no} — <span className="uppercase">{title}</span>
-            </p>
-            <p className="text-[13px] text-muted">{summary}</p>
-          </div>
-          )}
-
-          {sent ? (
-            <div className="mt-4 flex flex-col gap-6" role="status">
-              <h2 id={`${id}-title`} className="text-[32px] leading-[1.2] font-semibold">
-                Your request has been received
-              </h2>
-              <ol className="flex flex-col gap-6">
-                {NEXT_STEPS.map((step, i) => (
-                  <li key={step.title} className="flex items-start gap-5 border-t border-[#d9d9d9] pt-4">
-                    <span aria-hidden className="w-[1ch] text-[28px] leading-[normal] font-bold text-[#bfbfbf]">
-                      {i + 1}
-                    </span>
-                    <div className="flex min-w-0 flex-1 flex-col gap-1">
-                      <p className="text-[17px] leading-[normal] font-semibold">{step.title}</p>
-                      <p className="text-[14px] leading-[1.5] text-muted">
-                        {step.lines.map((line, j) => (
-                          <span key={j} className="block">
-                            {line}
-                          </span>
-                        ))}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-              <Link href="/#collection" onClick={close} className={`${outlineButtonClass} mt-3.5`}>
-                Back to the collection
-              </Link>
-            </div>
-          ) : (
-            <>
-              <h2 id={`${id}-title`} className="text-[28px] leading-[normal] font-semibold">
-                Why this garment?
-              </h2>
-
-              <form noValidate onSubmit={submit} onChange={recheck} className="flex flex-col gap-6">
-                <div className="grid grid-cols-2 gap-4 max-[480px]:grid-cols-1 max-[480px]:gap-6">
-                  <label className="flex min-w-0 flex-col gap-2">
-                    <span className={fieldLabel}>Name</span>
-                    <input
-                      name="name"
-                      required
-                      autoComplete="name"
-                      placeholder="Your name"
-                      aria-invalid={!!errors.name || undefined}
-                      aria-describedby={errors.name ? `${id}-name-error` : undefined}
-                      className={fieldInput}
-                    />
-                    {errors.name && (
-                      <span id={`${id}-name-error`} className={errorText}>
-                        {errors.name}
-                      </span>
-                    )}
-                  </label>
-                  <label className="flex min-w-0 flex-col gap-2">
-                    <span className={fieldLabel}>City</span>
-                    <input
-                      name="city"
-                      required
-                      autoComplete="address-level2"
-                      placeholder="London"
-                      aria-invalid={!!errors.city || undefined}
-                      aria-describedby={errors.city ? `${id}-city-error` : undefined}
-                      className={fieldInput}
-                    />
-                    {errors.city && (
-                      <span id={`${id}-city-error`} className={errorText}>
-                        {errors.city}
-                      </span>
-                    )}
-                  </label>
-                </div>
-                <label className="flex flex-col gap-2">
-                  <span className={fieldLabel}>Email</span>
-                  <input
-                    name="email"
-                    type="email"
-                    required
-                    autoComplete="email"
-                    placeholder="you@email.com"
-                    aria-invalid={!!errors.email || undefined}
-                    aria-describedby={errors.email ? `${id}-email-error` : undefined}
-                    className={fieldInput}
-                  />
-                  {errors.email && (
-                    <span id={`${id}-email-error`} className={errorText}>
-                      {errors.email}
-                    </span>
-                  )}
-                </label>
-                <label className="flex flex-col gap-2">
-                  <span className={fieldLabel}>Message</span>
-                  <textarea
-                    name="message"
-                    rows={3}
-                    placeholder="What draws you in? Share why you want to be part of this movement"
-                    className={`${fieldInput} min-h-[114px] resize-y`}
-                  />
-                </label>
-
-                <div className="flex flex-col gap-2">
-                  <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-[18px] text-[#595959]">
-                    <span className="relative flex size-[18px] shrink-0">
-                      <input
-                        type="checkbox"
-                        name="consent"
-                        required
-                        aria-invalid={!!errors.consent || undefined}
-                        aria-describedby={errors.consent ? `${id}-consent-error` : undefined}
-                        className="peer size-full cursor-pointer appearance-none rounded-none border border-ink bg-white checked:bg-ink aria-invalid:border-error focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
-                      />
-                      <svg
-                        aria-hidden
-                        viewBox="0 0 18 18"
-                        className="pointer-events-none absolute inset-0 hidden text-white peer-checked:block"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="1.6"
-                      >
-                        <path d="M4.5 9.5l3 3 6-7" />
-                      </svg>
-                    </span>
-                    I understand order approval and payment details are handled via email.
-                  </label>
-                  {errors.consent && (
-                    <span id={`${id}-consent-error`} className={`${errorText} pl-[30px]`}>
-                      {errors.consent}
-                    </span>
-                  )}
-                </div>
-
-                {failure && (
-                  <p role="alert" className={errorText}>
-                    {failure}
-                  </p>
-                )}
-                <button type="submit" disabled={sending} className={`${buttonClass} disabled:opacity-60`}>
-                  Submit request
-                  <Arrow className="ml-[0.65em]" />
-                </button>
-              </form>
-
-              <p className="text-[13px] leading-[1.4] text-muted">
-                Each request is read personally. If selected, you will receive an email to
-                complete your purchase.
+            <div className="flex min-w-0 flex-1 flex-col gap-6 overflow-y-auto px-4 py-8 text-ink md:px-12 md:py-10">
+            <div className="flex items-start justify-between">
+              <p className="text-[12px] leading-[normal] font-semibold uppercase tracking-[0.12em] text-muted">
+                {sent ? "Request sent" : "Request"}
               </p>
-            </>
-          )}
+              <button
+                type="button"
+                onClick={close}
+                aria-label="Close"
+                className="-m-2 p-2 transition-opacity hover:opacity-60 focus-visible:outline-2 focus-visible:outline-black"
+              >
+                <svg aria-hidden viewBox="0 0 14 14" className="size-3.5" stroke="currentColor" strokeWidth="1.4">
+                  <path d="M1 1l12 12M13 1 1 13" />
+                </svg>
+              </button>
+            </div>
+
+            {!sent && (
+            <div className="flex flex-col gap-1 border-y border-[#d9d9d9] py-4 leading-[normal]">
+              <p className="text-[15px] font-semibold">
+                No. {no} — <span className="uppercase">{title}</span>
+              </p>
+              <p className="text-[13px] text-muted">{summary}</p>
+            </div>
+            )}
+
+            {sent ? (
+              <div className="mt-4 flex flex-col gap-6" role="status">
+                <h2 id={`${id}-title`} className="text-[32px] leading-[1.2] font-semibold">
+                  Your request has been received
+                </h2>
+                <ol className="flex flex-col gap-6">
+                  {NEXT_STEPS.map((step, i) => (
+                    <li key={step.title} className="flex items-start gap-5 border-t border-[#d9d9d9] pt-4">
+                      <span aria-hidden className="w-[1ch] text-[28px] leading-[normal] font-bold text-[#bfbfbf]">
+                        {i + 1}
+                      </span>
+                      <div className="flex min-w-0 flex-1 flex-col gap-1">
+                        <p className="text-[17px] leading-[normal] font-semibold">{step.title}</p>
+                        <p className="text-[14px] leading-[1.5] text-muted">
+                          {step.lines.map((line, j) => (
+                            <span key={j} className="block">
+                              {line}
+                            </span>
+                          ))}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+                <Link href="/#collection" onClick={close} className={`${outlineButtonClass} mt-3.5`}>
+                  Back to the collection
+                </Link>
+              </div>
+            ) : (
+              <>
+                <h2 id={`${id}-title`} className="text-[28px] leading-[normal] font-semibold">
+                  Why this garment?
+                </h2>
+
+                <form noValidate onSubmit={submit} onChange={recheck} className="flex flex-col gap-6">
+                  <div className="grid grid-cols-2 gap-4 max-[480px]:grid-cols-1 max-[480px]:gap-6">
+                    <label className="flex min-w-0 flex-col gap-2">
+                      <span className={fieldLabel}>Name</span>
+                      <input
+                        name="name"
+                        required
+                        autoComplete="name"
+                        placeholder="Your name"
+                        aria-invalid={!!errors.name || undefined}
+                        aria-describedby={errors.name ? `${id}-name-error` : undefined}
+                        className={fieldInput}
+                      />
+                      {errors.name && (
+                        <span id={`${id}-name-error`} className={errorText}>
+                          {errors.name}
+                        </span>
+                      )}
+                    </label>
+                    <label className="flex min-w-0 flex-col gap-2">
+                      <span className={fieldLabel}>City</span>
+                      <input
+                        name="city"
+                        required
+                        autoComplete="address-level2"
+                        placeholder="London"
+                        aria-invalid={!!errors.city || undefined}
+                        aria-describedby={errors.city ? `${id}-city-error` : undefined}
+                        className={fieldInput}
+                      />
+                      {errors.city && (
+                        <span id={`${id}-city-error`} className={errorText}>
+                          {errors.city}
+                        </span>
+                      )}
+                    </label>
+                  </div>
+                  <label className="flex flex-col gap-2">
+                    <span className={fieldLabel}>Email</span>
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      autoComplete="email"
+                      placeholder="you@email.com"
+                      aria-invalid={!!errors.email || undefined}
+                      aria-describedby={errors.email ? `${id}-email-error` : undefined}
+                      className={fieldInput}
+                    />
+                    {errors.email && (
+                      <span id={`${id}-email-error`} className={errorText}>
+                        {errors.email}
+                      </span>
+                    )}
+                  </label>
+                  <label className="flex flex-col gap-2">
+                    <span className={fieldLabel}>Message</span>
+                    <textarea
+                      name="message"
+                      rows={3}
+                      placeholder="What draws you in? Share why you want to be part of this movement"
+                      className={`${fieldInput} min-h-[114px] resize-y`}
+                    />
+                  </label>
+
+                  <div className="flex flex-col gap-2">
+                    <label className="flex cursor-pointer items-start gap-3 text-[13px] leading-[18px] text-[#595959]">
+                      <span className="relative flex size-[18px] shrink-0">
+                        <input
+                          type="checkbox"
+                          name="consent"
+                          required
+                          aria-invalid={!!errors.consent || undefined}
+                          aria-describedby={errors.consent ? `${id}-consent-error` : undefined}
+                          className="peer size-full cursor-pointer appearance-none rounded-none border border-ink bg-white checked:bg-ink aria-invalid:border-error focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+                        />
+                        <svg
+                          aria-hidden
+                          viewBox="0 0 18 18"
+                          className="pointer-events-none absolute inset-0 hidden text-white peer-checked:block"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                        >
+                          <path d="M4.5 9.5l3 3 6-7" />
+                        </svg>
+                      </span>
+                      I understand order approval and payment details are handled via email.
+                    </label>
+                    {errors.consent && (
+                      <span id={`${id}-consent-error`} className={`${errorText} pl-[30px]`}>
+                        {errors.consent}
+                      </span>
+                    )}
+                  </div>
+
+                  {failure && (
+                    <p role="alert" className={errorText}>
+                      {failure}
+                    </p>
+                  )}
+                  <button type="submit" disabled={sending} className={`${buttonClass} disabled:opacity-60`}>
+                    Submit request
+                    <Arrow className="ml-[0.65em]" />
+                  </button>
+                </form>
+
+                <p className="text-[13px] leading-[1.4] text-muted">
+                  Each request is read personally. If selected, you will receive an email to
+                  complete your purchase.
+                </p>
+              </>
+            )}
+            </div>
           </div>
         </div>
       </dialog>

@@ -23,8 +23,7 @@
   /* Form errors: a deep red that still reads as part of the monochrome palette. */
   --color-error: #b3261e;
   --font-sans:
-    "Neue Haas Grotesk Display Pro", "Neue Haas Grotesk Display",
-    var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+    var(--font-neue-haas), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   /* The few details the design sets in Inter (price, player clock, labels). */
   --font-ui: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 }
@@ -187,9 +186,10 @@ summary {
 }
 
 /*
- * Request drawer (components/product/RequestDrawer.tsx): a full-screen modal
- * <dialog>. The photo and the form are one sheet that rises from the bottom
- * while the page behind dims; closing sends it back down. @starting-style
+ * Request window (components/product/RequestDrawer.tsx): a modal <dialog>
+ * over the dimmed page. On phones the form is a sheet that rises from the
+ * bottom; from md the photo and form are a window in the middle that rises a
+ * little as it fades in. Closing reverses it. @starting-style
  * gives the entry state; allow-discrete keeps the dialog in the top layer
  * until the exit has finished. Each transition's timing comes from the state
  * it moves *to*, hence separate open / closed timings.
@@ -222,9 +222,18 @@ summary {
 
 .drawer-sheet {
   translate: 0 100%;
-  /* Its own compositor layer, so the big photo moves without repainting. */
-  will-change: translate;
-  transition: translate 0.5s ease-in;
+  /* Its own compositor layer, so the photo moves without repainting. */
+  will-change: translate, opacity;
+  transition:
+    translate 0.5s ease-in,
+    opacity 0.5s ease-in;
+}
+
+@media (min-width: 768px) {
+  .drawer-sheet {
+    translate: 0 32px;
+    opacity: 0;
+  }
 }
 
 /* Open state (and the timing used while opening). */
@@ -238,7 +247,10 @@ summary {
 
 .drawer[open] .drawer-sheet {
   translate: 0 0;
-  transition: translate 0.7s ease-out;
+  opacity: 1;
+  transition:
+    translate 0.7s ease-out,
+    opacity 0.5s ease-out;
 }
 
 @starting-style {
@@ -248,6 +260,15 @@ summary {
 
   .drawer[open] .drawer-sheet {
     translate: 0 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  @starting-style {
+    .drawer[open] .drawer-sheet {
+      translate: 0 32px;
+      opacity: 0;
+    }
   }
 }
 
@@ -375,25 +396,18 @@ html:has(.site-menu[open]) {
   }
 }
 
-/* The tape rocks while the track plays. */
-/* The cassette's reel hubs turn while the track plays. */
-.room-reel {
-  animation: room-reel 2.2s linear infinite paused;
+/* The cassette's reels turn (the animated image) only while the track plays. */
+.room-tape-spin {
+  visibility: hidden;
 }
 
-.room-tape[data-playing] .room-reel {
-  animation-play-state: running;
-}
-
-@keyframes room-reel {
-  to {
-    rotate: -360deg;
-  }
+.room-tape[data-playing] .room-tape-spin {
+  visibility: visible;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .room-reel {
-    animation: none;
+  .room-tape[data-playing] .room-tape-spin {
+    visibility: hidden;
   }
 }
 
