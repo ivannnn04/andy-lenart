@@ -57,6 +57,12 @@ export async function saveHome(value: unknown) {
   });
 }
 
+export async function savePrivacy(value: unknown) {
+  return run(async () => {
+    await saveContent((c) => ({ ...c, privacy: normalize.privacy(value) }));
+  });
+}
+
 /** Saves under `slug` (the address it had), so renaming the address moves it. */
 export async function saveGarment(slug: string, value: unknown) {
   return run(async () => {

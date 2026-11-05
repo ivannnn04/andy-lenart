@@ -145,9 +145,19 @@ export type Settings = {
   nav: NavItem[];
 };
 
+/** The privacy policy page (/privacy). */
+export type Privacy = {
+  title: string;
+  /** Shown as "Last updated …". */
+  updated: string;
+  /** Paragraphs split by blank lines; "## " headings, "- " list items, **bold**. */
+  body: string;
+};
+
 export type SiteContent = {
   settings: Settings;
   home: HomeContent;
+  privacy: Privacy;
   /** The collection, in the order of the home page. */
   garments: Garment[];
 };

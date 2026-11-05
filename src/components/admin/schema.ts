@@ -5,7 +5,7 @@ import { COLLAGES } from "@/lib/content/types";
  * kind of value lives under `key` and how to edit it.
  */
 export type Field =
-  | { kind: "text" | "textarea" | "number" | "email"; key: string; label: string; help?: string; placeholder?: string }
+  | { kind: "text" | "textarea" | "number" | "email"; key: string; label: string; help?: string; placeholder?: string; rows?: number }
   | { kind: "checkbox"; key: string; label: string; help?: string }
   | { kind: "select"; key: string; label: string; help?: string; options: { value: string; label: string }[] }
   /** string[], one per line */
@@ -97,6 +97,17 @@ export const SCHEMAS = {
         { kind: "text", key: "title", label: "Heading" },
         { kind: "textarea", key: "subtitle", label: "Text" },
       ],
+    },
+  ],
+  privacy: [
+    { kind: "text", key: "title", label: "Title" },
+    { kind: "text", key: "updated", label: "Last updated", placeholder: "1 December 2026" },
+    {
+      kind: "textarea",
+      key: "body",
+      label: "Text",
+      rows: 30,
+      help: "A blank line starts a new paragraph. “## ” at the start of a line makes a heading, “- ” a list item. **Double asterisks** for bold; email addresses become links.",
     },
   ],
   garment: {

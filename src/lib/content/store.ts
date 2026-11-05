@@ -16,6 +16,7 @@ async function readContent(): Promise<SiteContent> {
   return {
     settings: stored?.settings ?? DEFAULT_CONTENT.settings,
     home: stored?.home ?? DEFAULT_CONTENT.home,
+    privacy: stored?.privacy ?? DEFAULT_CONTENT.privacy,
     // Checked on the way out too, so an older saved shape never breaks a page.
     garments: legacy
       ? withCurrentOrder(fromLegacy(stored).map(normalizeGarment).map(withCurrentDefaults))

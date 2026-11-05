@@ -11,6 +11,7 @@ import {
   type Lyric,
   lyricWords,
   type NavItem,
+  type Privacy,
   type RoomContent,
   type Settings,
 } from "./types";
@@ -178,4 +179,9 @@ export function home(v: unknown): HomeContent {
     },
     stayConnected: { title: str(stay.title, 200), subtitle: str(stay.subtitle, 500) },
   };
+}
+
+export function privacy(v: unknown): Privacy {
+  const o = obj(v);
+  return { title: str(o.title, 200), updated: str(o.updated, 100), body: str(o.body, 40000) };
 }

@@ -10,6 +10,7 @@ const SECTIONS = [
   { href: "/admin/staircase", label: "The Staircase" },
   { href: "/admin/inbox", label: "Inbox" },
   { href: "/admin/media", label: "Media" },
+  { href: "/admin/privacy", label: "Privacy policy" },
   { href: "/admin/settings", label: "Settings" },
 ];
 

@@ -1,9 +1,16 @@
+import Link from "next/link";
+
 export function SiteFooter() {
   return (
     <footer className="border-t border-[#404040] bg-black text-[12px] leading-[normal]">
       <div className="gutter mx-auto flex max-w-[1440px] items-start justify-between gap-4 pt-4 pb-5">
         <p className="font-medium tracking-[0.1em] text-[#999]">ANDY LENÁRT · LONDON</p>
-        <p className="font-light text-subtle">© 2026</p>
+        <div className="flex items-start gap-6">
+          <Link href="/privacy" className="link-draw font-medium tracking-[0.1em] text-[#999] uppercase">
+            Privacy policy
+          </Link>
+          <p className="font-light text-subtle">© 2026</p>
+        </div>
       </div>
     </footer>
   );

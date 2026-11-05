@@ -85,7 +85,7 @@ function FieldEditor({
           <Label field={field} htmlFor={id} />
           <textarea
             id={id}
-            rows={3}
+            rows={"rows" in field ? (field.rows ?? 3) : 3}
             value={String(value ?? "")}
             placeholder={field.placeholder}
             onChange={(e) => onChange(e.target.value)}

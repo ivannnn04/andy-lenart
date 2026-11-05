@@ -79,6 +79,7 @@ Everything on the site is managed at **`/admin`**:
 | The Staircase | Every mark left on the shared wall: hide, show or delete |
 | Inbox | "Request this piece" requests and "Stay connected" sign-ups, with CSV downloads |
 | Media | Upload, browse, copy and delete photos and audio |
+| Privacy policy | The `/privacy` page linked from the footer: title, “last updated” date and text (blank lines between paragraphs, `## ` headings, `- ` lists). The built-in draft has placeholders in [square brackets] to fill in and should be checked by a lawyer |
 | Settings | Site title and description, contact email, the menu |
 
 Text fields accept `**double asterisks**` for bold. The hand-placed collages
