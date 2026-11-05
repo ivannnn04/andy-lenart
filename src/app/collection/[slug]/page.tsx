@@ -27,8 +27,8 @@ export async function generateMetadata({ params }: PageProps<"/collection/[slug]
   };
 }
 
-const label = "text-[12px] leading-[normal] font-bold uppercase tracking-[0.12em] text-muted";
-const sectionLabel = "text-[14px] leading-[normal] font-bold uppercase tracking-[0.14em] md:text-[16px]";
+const label = "text-[12px] leading-[normal] font-medium uppercase tracking-[0.12em] text-muted";
+const sectionLabel = "text-[14px] leading-[normal] font-medium uppercase tracking-[0.14em] md:text-[16px]";
 const divider = "h-px w-full bg-[#d1d1d1]";
 // A top rule spanning the full viewport width, beyond the 1440px page.
 const sectionRule =
@@ -84,7 +84,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                       </span>
                     ))}
                   </h1>
-                  <p className="font-normal italic leading-[1.4] text-[#595959]" style={{ fontSize: fs(20, 18) }}>
+                  <p className="font-light italic leading-[1.4] text-[#595959]" style={{ fontSize: fs(20, 18) }}>
                     {garment.tagline}
                   </p>
 
@@ -94,7 +94,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                       duration={garment.preview.duration}
                       waveform={garment.preview.waveform}
                     />
-                    <p className="text-[13px] font-normal text-muted">
+                    <p className="text-[13px] font-light text-muted">
                       Preview · 30 seconds. You’ll find the full track in this garment’s Listening Room.
                     </p>
                   </div>
@@ -105,11 +105,11 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                     <p className="font-ui font-bold leading-[normal] text-ink" style={{ fontSize: fs(32, 26) }}>
                       {garment.price}
                     </p>
-                    <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-[#595959]">
+                    <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#595959]">
                       {garment.availability}
                     </p>
                   </div>
-                  <p className="text-[15px] font-bold uppercase tracking-[0.1em] text-[#595959]">
+                  <p className="text-[15px] font-medium uppercase tracking-[0.1em] text-[#595959]">
                     {garment.size}
                   </p>
 
@@ -153,7 +153,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 {garment.concept.paragraphs.map((text, i) => (
                   <p
                     key={i}
-                    className={`font-normal leading-[1.6] ${i ? "mt-[1.6em]" : ""}`}
+                    className={`font-light leading-[1.6] ${i ? "mt-[1.6em]" : ""}`}
                     style={{ fontSize: fs(22, 18) }}
                   >
                     {inline(text)}
@@ -165,7 +165,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                   className="mt-10 w-full md:mt-[calc(40*var(--u))] md:-ml-[calc(9*var(--u))] md:w-[calc(918*var(--u))]"
                 />
                 <blockquote
-                  className="mt-7 text-center font-normal italic leading-[1.35] md:mt-[calc(28*var(--u))]"
+                  className="mt-7 text-center font-light italic leading-[1.35] md:mt-[calc(28*var(--u))]"
                   style={{ fontSize: fs(30, 22) }}
                 >
                   {garment.concept.quote}
@@ -176,10 +176,10 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
               <ul className="mt-4 flex flex-col gap-6 md:mt-[calc(100*var(--u))] md:flex-row md:gap-[calc(80*var(--u))]">
                 {garment.credits.map((credit) => (
                   <li key={credit.name} className="md:w-[calc(410*var(--u))]">
-                    <p className="font-bold" style={{ fontSize: fs(20, 18) }}>
+                    <p className="font-medium" style={{ fontSize: fs(20, 18) }}>
                       {credit.name}
                     </p>
-                    <p className="mt-1.5 font-normal text-muted" style={{ fontSize: fs(18, 16) }}>
+                    <p className="mt-1.5 font-light text-muted" style={{ fontSize: fs(18, 16) }}>
                       {credit.role}
                     </p>
                   </li>
@@ -209,10 +209,10 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 {garment.inside.paragraphs.map((text, i) => (
                   <p
                     key={i}
-                    className={`max-w-[535px] font-medium leading-[1.55] ${i ? "mt-[1.55em]" : "mt-5"}`}
+                    className={`max-w-[535px] font-normal leading-[1.55] ${i ? "mt-[1.55em]" : "mt-5"}`}
                     style={{ fontSize: fs(18, 16) }}
                   >
-                    {inline(text)}
+                    {inline(text, "font-medium")}
                   </p>
                 ))}
               </div>

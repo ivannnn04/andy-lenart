@@ -29,7 +29,7 @@ export function Hero({ lines, tagline }: { lines: string[]; tagline: string }) {
       />
 
       <div
-        className="place w-full text-[min(22px,4.3vw)] font-normal uppercase leading-[1.5] max-md:order-5 md:text-[clamp(18px,calc(36*var(--u)),36px)]"
+        className="place w-full text-[min(22px,4.3vw)] font-light uppercase leading-[1.5] max-md:order-5 md:text-[clamp(18px,calc(36*var(--u)),36px)]"
         // Two lines at every width. Phones: up to 22px, shrinking with the
         // screen (4.3vw) so each line still fits. From md: slightly larger
         // than the design's 32px, scaled with the layout.

@@ -11,7 +11,7 @@ export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
       className="gutter"
       style={{ paddingTop: sp(66, 64) }}
     >
-      <p className="text-[12px] leading-[normal] font-bold tracking-[0.14em] text-muted">{owners.label}</p>
+      <p className="text-[12px] leading-[normal] font-medium tracking-[0.14em] text-muted">{owners.label}</p>
       <h2
         id="owners-title"
         className="mt-3 font-bold leading-[normal]"
@@ -30,7 +30,7 @@ export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
               {step.title}
             </h3>
             <p
-              className="mt-1.5 font-medium leading-[1.55] text-body md:max-w-[calc(1227*var(--u))]"
+              className="mt-1.5 font-normal leading-[1.55] text-body md:max-w-[calc(1227*var(--u))]"
               style={{ fontSize: fs(20, 16) }}
             >
               {inline(step.body)}
@@ -51,10 +51,10 @@ export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
           // From md: behind the text at the design position.
           className="pointer-events-none w-4/5 max-md:order-last max-md:-mt-[calc(13%-8px)] md:absolute! md:top-[calc(16*var(--u))] md:left-[calc(5*var(--u))] md:w-[calc(583*var(--u))]"
         />
-        <p className="relative text-[22px] font-medium leading-[1.2] md:text-[clamp(24px,calc(40*var(--u)),40px)]">
+        <p className="relative text-[22px] font-normal leading-[1.2] md:text-[clamp(24px,calc(40*var(--u)),40px)]">
           {owners.statement}
           <br />
-          <span className="font-bold">{owners.statementBold}</span>
+          <span className="font-medium">{owners.statementBold}</span>
         </p>
       </div>
     </section>

@@ -5,7 +5,7 @@ import { fs, sp } from "@/lib/design";
 import type { Garment } from "@/lib/content/types";
 import { garmentHref } from "@/lib/content/store";
 
-const label = "text-[12px] leading-[normal] font-bold tracking-[0.14em] text-muted";
+const label = "text-[12px] leading-[normal] font-medium tracking-[0.14em] text-muted";
 
 export function Collection({ garments }: { garments: Garment[] }) {
   return (
@@ -24,7 +24,7 @@ export function Collection({ garments }: { garments: Garment[] }) {
       >
         10 DESIGNS 10 TRACKS
       </h2>
-      <p className="font-bold leading-[1.2]" style={{ fontSize: fs(24, 16) }}>
+      <p className="font-medium leading-[1.2]" style={{ fontSize: fs(24, 16) }}>
         MADE TO ORDER: ALLOW 4 - 6 WEEKS
       </p>
 
@@ -147,7 +147,7 @@ function GarmentCard({
         )}
 
         <div className="flex items-start justify-between text-[12px] font-medium">
-          <span className="font-bold tracking-[0.08em] text-muted">No. {no}</span>
+          <span className="font-medium tracking-[0.08em] text-muted">No. {no}</span>
           {preview && <CardPreview title={title} src={preview.src} duration={preview.duration} />}
         </div>
 
@@ -164,9 +164,9 @@ function GarmentCard({
           )}
         </h3>
 
-        <p className="text-[14px] font-normal leading-[1.4] text-muted">{description}</p>
+        <p className="text-[14px] font-light leading-[1.4] text-muted">{description}</p>
 
-        <div className="flex items-start justify-between font-bold">
+        <div className="flex items-start justify-between font-medium">
           {statusHref ? (
             <a
               href={statusHref}

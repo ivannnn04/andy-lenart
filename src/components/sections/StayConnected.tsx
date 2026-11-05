@@ -29,7 +29,7 @@ export function StayConnected({
           {text.title}
         </h2>
         <p
-          className="font-medium leading-[1.2] md:max-w-[calc(723*var(--u))]"
+          className="font-normal leading-[1.2] md:max-w-[calc(723*var(--u))]"
           style={{ marginTop: sp(24, 16), fontSize: fs(24, 18) }}
         >
           {text.subtitle}
@@ -69,7 +69,7 @@ export function StayConnected({
       >
         <a
           href={`mailto:${email}`}
-          className="font-bold leading-[1.2] whitespace-nowrap link-sweep"
+          className="font-medium leading-[1.2] whitespace-nowrap link-sweep"
           style={{ fontSize: "min(93px, calc(100cqw / 13.2))" }}
         >
           {email}

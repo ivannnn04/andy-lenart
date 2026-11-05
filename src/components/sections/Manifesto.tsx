@@ -16,7 +16,7 @@ export function Manifesto({ lines }: { lines: string[] }) {
     >
       <p
         // 20px on phones (no forced line break); from md, scaled with the layout.
-        className="place text-center text-[20px] font-bold uppercase leading-[1.25] md:text-[clamp(16px,calc(32*var(--u)),32px)]"
+        className="place text-center text-[20px] font-medium uppercase leading-[1.25] md:text-[clamp(16px,calc(32*var(--u)),32px)]"
         style={p(132, 3096, 1175)}
       >
         {lines.map((line, i) => (
