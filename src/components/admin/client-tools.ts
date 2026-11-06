@@ -7,8 +7,22 @@ import type { Lyric } from "@/lib/content/types";
 
 let mode: Promise<string> | undefined;
 
+/** SHA-256 of a file's contents, as hex. */
+async function sha256(file: File) {
+  const digest = await crypto.subtle.digest("SHA-256", await file.arrayBuffer());
+  return [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
 /** Uploads a file to the site's storage and returns its URL. */
 export async function uploadFile(file: File): Promise<string> {
+  return (await uploadFileInfo(file)).url;
+}
+
+/**
+ * Uploads a file and returns its URL; `existing` when the same file was
+ * already uploaded (then that one is used and nothing is uploaded again).
+ */
+export async function uploadFileInfo(file: File): Promise<{ url: string; existing: boolean }> {
   mode ??= fetch("/api/admin/upload")
     .then((r) => r.json())
     .then((r) => r.mode ?? "none");
@@ -17,22 +31,23 @@ export async function uploadFile(file: File): Promise<string> {
     const res = await fetch("/api/admin/upload", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name: file.name, type: file.type, size: file.size }),
+      body: JSON.stringify({ name: file.name, type: file.type, size: file.size, hash: await sha256(file) }),
     });
     const target = await res.json();
     if (!res.ok) throw new Error(target.error ?? "Upload failed.");
+    if (target.existing) return { url: target.url, existing: true };
     const put = await fetch(target.uploadUrl, {
       method: "PUT",
       headers: { "Content-Type": file.type || "application/octet-stream", "cache-control": "max-age=31536000" },
       body: file,
     });
     if (!put.ok) throw new Error(`Upload failed (${put.status}). ${(await put.text()).slice(0, 200)}`);
-    return target.url;
+    return { url: target.url, existing: false };
   }
   if (how === "blob") {
     const name = file.name.normalize("NFKD").replace(/[^a-zA-Z0-9.-]+/g, "-");
     const blob = await upload(`uploads/${name}`, file, { access: "public", handleUploadUrl: "/api/admin/upload" });
-    return blob.url;
+    return { url: blob.url, existing: false };
   }
   if (how === "local") {
     const body = new FormData();
@@ -40,7 +55,7 @@ export async function uploadFile(file: File): Promise<string> {
     const res = await fetch("/api/admin/upload?local", { method: "POST", body });
     const json = await res.json();
     if (!res.ok) throw new Error(json.error ?? "Upload failed.");
-    return json.url;
+    return { url: json.url, existing: false };
   }
   throw new Error("No file storage is connected (connect Supabase — see the dashboard).");
 }

@@ -37,13 +37,18 @@ export async function POST(request: NextRequest) {
   // one-off address issued here (only to a signed-in admin).
   if (mode === "supabase") {
     if (!(await isAdmin())) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
-    const { name, type, size } = (await request.json()) as { name?: string; type?: string; size?: number };
+    const { name, type, size, hash } = (await request.json()) as {
+      name?: string;
+      type?: string;
+      size?: number;
+      hash?: string;
+    };
     if (!name || typeof size !== "number") return NextResponse.json({ error: "No file." }, { status: 400 });
     if (!allowed(type || "application/octet-stream"))
       return NextResponse.json({ error: "This kind of file can't be uploaded." }, { status: 400 });
     if (size > MAX_BYTES) return NextResponse.json({ error: "The file is too large." }, { status: 400 });
     try {
-      return NextResponse.json(await supabaseUploadTarget(name));
+      return NextResponse.json(await supabaseUploadTarget(name, hash));
     } catch (error) {
       return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }

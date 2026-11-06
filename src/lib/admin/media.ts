@@ -29,14 +29,28 @@ const FOLDER = "uploads";
 export const supabasePublicUrl = (name: string) =>
   `${supabaseConfig()?.url}/storage/v1/object/public/${BUCKET}/${FOLDER}/${encodeURIComponent(name)}`;
 
-/** A one-off address the admin's browser uploads a file to, and where the file will then be served. */
-export async function supabaseUploadTarget(fileName: string) {
-  const name = `${Date.now().toString(36)}-${safeName(fileName)}`;
+/**
+ * Where the admin's browser should upload a file: a one-off upload address
+ * and where the file will then be served. Files are named after a hash of
+ * their contents, so a file that is already in the bucket is found and used
+ * instead of being uploaded again (`existing`).
+ */
+export async function supabaseUploadTarget(fileName: string, hash?: string) {
+  const id = hash && /^[0-9a-f]{64}$/.test(hash) ? hash.slice(0, 16) : undefined;
+  if (id) {
+    const res = await supabaseFetch(`/storage/v1/object/list/${BUCKET}`, {
+      method: "POST",
+      body: JSON.stringify({ prefix: FOLDER, search: id, limit: 10 }),
+    });
+    const same = ((await res.json()) as { id: string | null; name: string }[]).find((r) => r.id && r.name.startsWith(`${id}-`));
+    if (same) return { url: supabasePublicUrl(same.name), existing: true as const };
+  }
+  const name = `${id ?? Date.now().toString(36)}-${safeName(fileName)}`;
   const res = await supabaseFetch(`/storage/v1/object/upload/sign/${BUCKET}/${FOLDER}/${encodeURIComponent(name)}`, {
     method: "POST",
   });
   const { url } = (await res.json()) as { url: string };
-  return { uploadUrl: `${supabaseConfig()?.url}/storage/v1${url}`, url: supabasePublicUrl(name) };
+  return { uploadUrl: `${supabaseConfig()?.url}/storage/v1${url}`, url: supabasePublicUrl(name), existing: false as const };
 }
 
 /** Puts a file into the bucket from the server (used when copying old uploads across). */
