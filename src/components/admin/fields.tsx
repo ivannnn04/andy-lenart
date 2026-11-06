@@ -151,7 +151,7 @@ function FieldEditor({
       );
     case "group":
       return (
-        <fieldset className="flex flex-col gap-4 rounded-lg border border-[#e4e4e0] bg-[#fbfbf9] p-4">
+        <fieldset className="flex min-w-0 flex-col gap-4 rounded-lg border border-[#e4e4e0] bg-[#fbfbf9] p-4">
           <legend className="px-1 text-[13px] font-bold uppercase tracking-[0.08em] text-[#555]">{field.label}</legend>
           {field.help && <p className={helpText}>{field.help}</p>}
           <Fields fields={field.fields} value={(value as Obj) ?? {}} onChange={onChange} />
@@ -251,7 +251,7 @@ function MediaInput({
           value={value}
           placeholder="/images/… or https://…"
           onChange={(e) => onChange(e.target.value)}
-          className={`${input} font-mono text-[12px]`}
+          className={`${input} min-w-0 font-mono text-[12px]`}
         />
         <UploadButton accept={accept} busy={upload.busy} onFile={upload.start} />
       </div>
@@ -288,20 +288,20 @@ function ImageInput({ field, value, onChange }: { field: Field; value: Obj; onCh
             onChange={(e) => update({ alt: e.target.value })}
             className={input}
           />
-          <div className="flex items-center gap-2 text-[12px] text-[#777]">
+          <div className="flex flex-wrap items-center gap-2 text-[12px] text-[#777]">
             Size
             <input
               type="number"
               value={Number(value.width ?? 0)}
               onChange={(e) => update({ width: Number(e.target.value) })}
-              className={`${input} w-24!`}
+              className={`${input} w-20! sm:w-24!`}
             />
             ×
             <input
               type="number"
               value={Number(value.height ?? 0)}
               onChange={(e) => update({ height: Number(e.target.value) })}
-              className={`${input} w-24!`}
+              className={`${input} w-20! sm:w-24!`}
             />
             {"optional" in field && field.optional && src && (
               <button type="button" onClick={() => onChange(undefined)} className={smallButton}>
@@ -364,7 +364,7 @@ function PreviewInput({ field, value, onChange }: { field: Field; value: Obj; on
       {error && <p className="text-[12px] text-error">{error}</p>}
       {src && <audio controls preload="none" src={src} className="h-9 w-full" />}
       {wantsWave && waveform.length > 0 && (
-        <div aria-label="Waveform" className="flex h-[33px] items-center gap-[2px]">
+        <div aria-label="Waveform" className="flex h-[33px] items-center gap-[2px] overflow-hidden">
           {waveform.map((h, i) => (
             <span key={i} className="w-[3px] rounded-full bg-ink" style={{ height: h }} />
           ))}
@@ -402,7 +402,7 @@ function ListInput({
           const hidden = field.hiddenKey ? item?.[field.hiddenKey] === true : false;
           return (
             <li key={i} className={`rounded-lg border border-[#e4e4e0] ${hidden ? "bg-[#f3f3f0]" : "bg-white"}`}>
-              <div className="flex items-center gap-2 px-3 py-2">
+              <div className="flex items-center gap-1.5 px-3 py-2 sm:gap-2">
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
@@ -446,8 +446,11 @@ function ListInput({
                     }
                   }}
                   className={`${smallButton} text-error`}
+                  aria-label={`Remove “${title}”`}
                 >
-                  Remove
+                  {/* Just a cross on a phone, so the title has room. */}
+                  <span aria-hidden className="sm:hidden">✕</span>
+                  <span aria-hidden className="max-sm:hidden">Remove</span>
                 </button>
               </div>
               {isOpen && (
