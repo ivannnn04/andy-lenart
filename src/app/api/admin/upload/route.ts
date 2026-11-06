@@ -3,13 +3,16 @@ import path from "node:path";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import { NextResponse, type NextRequest } from "next/server";
 import { isAdmin } from "@/lib/admin/auth";
-import { LOCAL_DIR, safeName, uploadMode } from "@/lib/admin/media";
+import { LOCAL_DIR, safeName, supabaseUploadTarget, uploadMode } from "@/lib/admin/media";
 
 /** Images, audio and lyric files the admin can upload. */
 const ALLOWED = ["image/*", "audio/*", "video/mp4", "text/plain", "application/x-subrip", "application/octet-stream"];
 const MAX_BYTES = 200 * 1024 * 1024;
 
-/** How uploads work here ("blob", "local" or "none"). */
+const allowed = (type: string) =>
+  ALLOWED.some((a) => (a.endsWith("/*") ? type.startsWith(a.slice(0, -1)) : type === a));
+
+/** How uploads work here ("supabase", "blob", "local" or "none"). */
 export async function GET() {
   if (!(await isAdmin())) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
   return NextResponse.json({ mode: uploadMode() });
@@ -28,6 +31,22 @@ export async function POST(request: NextRequest) {
     await mkdir(LOCAL_DIR, { recursive: true });
     await writeFile(path.join(LOCAL_DIR, name), Buffer.from(await file.arrayBuffer()));
     return NextResponse.json({ url: `/uploads/${name}` });
+  }
+
+  // Supabase Storage: the browser uploads straight to the bucket, to a
+  // one-off address issued here (only to a signed-in admin).
+  if (mode === "supabase") {
+    if (!(await isAdmin())) return NextResponse.json({ error: "Not signed in." }, { status: 401 });
+    const { name, type, size } = (await request.json()) as { name?: string; type?: string; size?: number };
+    if (!name || typeof size !== "number") return NextResponse.json({ error: "No file." }, { status: 400 });
+    if (!allowed(type || "application/octet-stream"))
+      return NextResponse.json({ error: "This kind of file can't be uploaded." }, { status: 400 });
+    if (size > MAX_BYTES) return NextResponse.json({ error: "The file is too large." }, { status: 400 });
+    try {
+      return NextResponse.json(await supabaseUploadTarget(name));
+    } catch (error) {
+      return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    }
   }
 
   // Vercel Blob: the browser uploads straight to storage with a short-lived

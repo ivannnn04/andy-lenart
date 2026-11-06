@@ -13,6 +13,22 @@ export async function uploadFile(file: File): Promise<string> {
     .then((r) => r.json())
     .then((r) => r.mode ?? "none");
   const how = await mode;
+  if (how === "supabase") {
+    const res = await fetch("/api/admin/upload", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: file.name, type: file.type, size: file.size }),
+    });
+    const target = await res.json();
+    if (!res.ok) throw new Error(target.error ?? "Upload failed.");
+    const put = await fetch(target.uploadUrl, {
+      method: "PUT",
+      headers: { "Content-Type": file.type || "application/octet-stream", "cache-control": "max-age=31536000" },
+      body: file,
+    });
+    if (!put.ok) throw new Error(`Upload failed (${put.status}). ${(await put.text()).slice(0, 200)}`);
+    return target.url;
+  }
   if (how === "blob") {
     const name = file.name.normalize("NFKD").replace(/[^a-zA-Z0-9.-]+/g, "-");
     const blob = await upload(`uploads/${name}`, file, { access: "public", handleUploadUrl: "/api/admin/upload" });
@@ -26,7 +42,7 @@ export async function uploadFile(file: File): Promise<string> {
     if (!res.ok) throw new Error(json.error ?? "Upload failed.");
     return json.url;
   }
-  throw new Error("No file storage is connected (set up Vercel Blob — see the dashboard).");
+  throw new Error("No file storage is connected (connect Supabase — see the dashboard).");
 }
 
 /** Natural size of an image file. */

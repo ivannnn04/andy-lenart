@@ -6,13 +6,15 @@ import { Redis } from "@upstash/redis";
 /**
  * Where the admin panel keeps its data:
  *
+ * - "supabase": Supabase (tables made by supabase/schema.sql). Used whenever
+ *   its URL and secret key are in the environment.
  * - "redis": Upstash Redis (Vercel → Storage → Upstash for Redis). Used
  *   whenever its REST URL and token are in the environment.
  * - "file": JSON files in .data/ — local development only.
  * - "none": production without Redis. Everything reads as empty and the
  *   site falls back to the content it ships with; saving is disabled.
  */
-export type StorageKind = "redis" | "file" | "none";
+export type StorageKind = "supabase" | "redis" | "file" | "none";
 
 type Hash<T> = Record<string, T>;
 
@@ -50,6 +52,88 @@ function redisStorage(url: string, token: string): Storage {
       const count = await redis.incr(PREFIX + key);
       if (count === 1) await redis.expire(PREFIX + key, ttl);
       return count;
+    },
+  };
+}
+
+/** Supabase's URL and secret key, when the site is connected to it. */
+export function supabaseConfig() {
+  const url = process.env.SUPABASE_URL ?? process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+  return url && key ? { url: url.replace(/\/+$/, ""), key } : undefined;
+}
+
+/**
+ * Calls Supabase's REST API with the secret key (server only). A legacy
+ * service_role key is a JWT and also goes in the Authorization header.
+ */
+export async function supabaseFetch(path: string, init: RequestInit = {}) {
+  const config = supabaseConfig();
+  if (!config) throw new Error("Supabase is not connected.");
+  const headers = new Headers(init.headers);
+  headers.set("apikey", config.key);
+  if (config.key.startsWith("eyJ")) headers.set("Authorization", `Bearer ${config.key}`);
+  if (init.body && !headers.has("Content-Type")) headers.set("Content-Type", "application/json");
+  const res = await fetch(`${config.url}${path}`, { ...init, headers, cache: "no-store" });
+  if (!res.ok) throw new Error(`Supabase: ${res.status} ${(await res.text()).slice(0, 300)}`);
+  return res;
+}
+
+/** The table behind each list the site keeps (see supabase/schema.sql). */
+const SUPABASE_TABLES: Record<string, string> = {
+  requests: "piece_requests",
+  subscribers: "subscribers",
+  marks: "staircase_marks",
+};
+
+function supabaseStorage(): Storage {
+  const table = (key: string) => {
+    const name = SUPABASE_TABLES[key];
+    if (!name) throw new Error(`No Supabase table for "${key}".`);
+    return name;
+  };
+  const upsert = { Prefer: "resolution=merge-duplicates,return=minimal" };
+  const PAGE = 1000;
+  return {
+    kind: "supabase",
+    writable: true,
+    get: async <T>(key: string) => {
+      const res = await supabaseFetch(`/rest/v1/content?select=value&key=eq.${encodeURIComponent(key)}`);
+      const rows = (await res.json()) as { value: T }[];
+      return rows[0]?.value ?? null;
+    },
+    set: async (key, value) => {
+      await supabaseFetch("/rest/v1/content", {
+        method: "POST",
+        headers: upsert,
+        body: JSON.stringify({ key, value, updated_at: new Date().toISOString() }),
+      });
+    },
+    hGetAll: async <T>(key: string) => {
+      const all: Hash<T> = {};
+      for (let offset = 0; ; offset += PAGE) {
+        const res = await supabaseFetch(`/rest/v1/${table(key)}?select=id,data&order=id&limit=${PAGE}&offset=${offset}`);
+        const rows = (await res.json()) as { id: string; data: T }[];
+        for (const row of rows) all[row.id] = row.data;
+        if (rows.length < PAGE) return all;
+      }
+    },
+    hSet: async (key, field, value) => {
+      await supabaseFetch(`/rest/v1/${table(key)}`, {
+        method: "POST",
+        headers: upsert,
+        body: JSON.stringify({ id: field, data: value }),
+      });
+    },
+    hDel: async (key, field) => {
+      await supabaseFetch(`/rest/v1/${table(key)}?id=eq.${encodeURIComponent(field)}`, { method: "DELETE" });
+    },
+    incr: async (key, ttl) => {
+      const res = await supabaseFetch("/rest/v1/rpc/hit_rate_limit", {
+        method: "POST",
+        body: JSON.stringify({ p_key: key, p_ttl: ttl }),
+      });
+      return Number(await res.json());
     },
   };
 }
@@ -112,12 +196,19 @@ const noStorage: Storage = {
 
 let storage: Storage | undefined;
 
-export function getStorage(): Storage {
-  if (storage) return storage;
+/** Upstash Redis, when its keys are set (used to copy old data into Supabase). */
+export function upstashStorage(): Storage | undefined {
   // Vercel's Upstash integration sets KV_REST_API_*; a direct Upstash setup sets UPSTASH_REDIS_REST_*.
   const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (url && token) storage = redisStorage(url, token);
+  return url && token ? redisStorage(url, token) : undefined;
+}
+
+export function getStorage(): Storage {
+  if (storage) return storage;
+  const redis = upstashStorage();
+  if (supabaseConfig()) storage = supabaseStorage();
+  else if (redis) storage = redis;
   else if (process.env.NODE_ENV !== "production" || process.env.CONTENT_DIR)
     storage = fileStorage(process.env.CONTENT_DIR ?? path.join(process.cwd(), ".data"));
   else storage = noStorage;

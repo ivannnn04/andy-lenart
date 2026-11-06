@@ -78,29 +78,49 @@ Everything on the site is managed at **`/admin`**:
 | Collection | The garments, in home-page order: an On site / Hidden switch and ↑/↓ per garment, create and delete. Each garment has three tabs: **Card** (address, number, title, status, price, 30-second preview with measured waveform, card photo), **Garment page** (publish `/collection/<address>`; availability, gallery, details, concept, credits, "Inside this garment") and **Listening Room** (open `/room/<address>`; entry word, collage, gate photo, full track and lyrics — import an `.lrc`/`.srt` file, edit times, play the track against the lines, shift all, and tap each word as it is sung for exact karaoke) |
 | The Staircase | Every mark left on the shared wall: hide, show or delete |
 | Inbox | "Request this piece" requests and "Stay connected" sign-ups, with CSV downloads |
-| Media | Upload, browse, copy and delete photos and audio |
+| Media | Upload, browse, copy and delete photos and audio (Supabase Storage, `media` bucket) |
 | Privacy policy | The `/privacy` page linked from the footer: title, “last updated” date and text (blank lines between paragraphs, `## ` headings, `- ` lists). The built-in draft has placeholders in [square brackets] to fill in and should be checked by a lawyer |
 | Settings | Site title and description, contact email, the menu |
 
 Text fields accept `**double asterisks**` for bold. The hand-placed collages
 (home page art, the rooms' artwork) stay in code; a room picks one of them.
 
-### Setup on Vercel (once)
+### Setup (once)
 
-1. **Storage** → Create Database → **Upstash for Redis** → connect it to
-   this project. It holds the content, the Staircase and the inbox
-   (`KV_REST_API_URL` / `KV_REST_API_TOKEN` are added for you).
-2. **Storage** → Create Database → **Blob** → connect it to this project.
-   It holds uploaded photos and audio (`BLOB_READ_WRITE_TOKEN`).
-3. **Settings → Environment Variables**: `ADMIN_PASSWORD` (the admin
-   sign-in) and `ROOM_SECRET` (any long random text; signs the room
-   cookies). Optionally `ADMIN_SECRET` to sign admin sessions separately.
-4. Redeploy.
+The site keeps everything in **Supabase**: the content edited in the admin,
+the Staircase marks, requests and sign-ups (tables) and uploaded photos and
+audio (the public `media` bucket in Storage).
 
-Until Redis is connected the site shows its built-in content
-(`src/lib/content/defaults.ts`) and the admin is read-only; the public forms
-fall back to the visitor's email app and the Staircase to the browser. The
-admin stays locked in production until `ADMIN_PASSWORD` is set.
+1. **Supabase → SQL Editor → New query**: paste `supabase/schema.sql` and
+   run it. It creates the tables (each shows readable columns — name, email,
+   text… — plus the raw `data`), the rate-limit function and the `media`
+   bucket. Row level security is on with no policies, so only the site's
+   server, with the secret key, can read or write.
+2. **Vercel → Settings → Environment Variables**:
+   - `SUPABASE_URL` — `https://<project-ref>.supabase.co`
+   - `SUPABASE_SECRET_KEY` — Supabase → Project Settings → API Keys →
+     secret key (`sb_secret_…`; a legacy `service_role` key in
+     `SUPABASE_SERVICE_ROLE_KEY` also works). Never the publishable key.
+   - `ADMIN_PASSWORD` (the admin sign-in) and `ROOM_SECRET` (any long
+     random text; signs the room cookies). Optionally `ADMIN_SECRET` to sign
+     admin sessions separately.
+3. Redeploy.
+4. Moving from Upstash Redis / Vercel Blob: while their variables are still
+   set, the dashboard shows **Copy old data into Supabase**. It copies the
+   content, marks, requests, sign-ups and uploaded files (and points the
+   content at the copied files). It is safe to run again. Afterwards the
+   Upstash and Blob stores can be disconnected.
+
+Saving in the admin updates the site at once. A change made straight in
+Supabase's table editor shows within a minute.
+
+Without Supabase the site falls back to Upstash Redis
+(`KV_REST_API_URL` / `KV_REST_API_TOKEN`) and Vercel Blob
+(`BLOB_READ_WRITE_TOKEN`) if those are set. With no storage at all it shows
+its built-in content (`src/lib/content/defaults.ts`) and the admin is
+read-only; the public forms fall back to the visitor's email app and the
+Staircase to the browser. The admin stays locked in production until
+`ADMIN_PASSWORD` is set.
 
 In local development no setup is needed: the password is `admin`, content
 is saved to `.data/` and uploads to `public/uploads/` (both ignored by git).
@@ -109,7 +129,7 @@ is saved to `.data/` and uploads to `public/uploads/` (both ignored by git).
 
 - `src/lib/content/types.ts` — the content model; `defaults.ts` — what
   ships with the site; `store.ts` — reads (cached, refreshed on every save)
-  and saves; `storage.ts` — Redis / local files; `marks.ts`, `inbox.ts` —
+  and saves; `storage.ts` — Supabase / Redis / local files; `marks.ts`, `inbox.ts` —
   the Staircase and the inbox; `normalize.ts` — checks everything the admin
   sends.
 - `src/app/admin` — the panel (pages and server actions);

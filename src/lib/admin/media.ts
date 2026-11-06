@@ -2,14 +2,17 @@ import "server-only";
 import { readdir, stat, unlink } from "node:fs/promises";
 import path from "node:path";
 import { del, list } from "@vercel/blob";
+import { supabaseConfig, supabaseFetch } from "@/lib/content/storage";
 
 /**
- * Uploaded files: Vercel Blob when BLOB_READ_WRITE_TOKEN is set, otherwise
+ * Uploaded files: the "media" bucket in Supabase Storage when Supabase is
+ * connected, else Vercel Blob when BLOB_READ_WRITE_TOKEN is set, otherwise
  * public/uploads in local development.
  */
-export type UploadMode = "blob" | "local" | "none";
+export type UploadMode = "supabase" | "blob" | "local" | "none";
 
 export function uploadMode(): UploadMode {
+  if (supabaseConfig()) return "supabase";
   if (process.env.BLOB_READ_WRITE_TOKEN) return "blob";
   return process.env.NODE_ENV !== "production" ? "local" : "none";
 }
@@ -18,8 +21,52 @@ export const LOCAL_DIR = path.join(process.cwd(), "public", "uploads");
 
 export type MediaFile = { url: string; name: string; size: number; uploadedAt: number };
 
+/** Supabase Storage bucket and folder for uploads (see supabase/schema.sql). */
+export const BUCKET = "media";
+const FOLDER = "uploads";
+
+/** Public address of a file in the bucket. */
+export const supabasePublicUrl = (name: string) =>
+  `${supabaseConfig()?.url}/storage/v1/object/public/${BUCKET}/${FOLDER}/${encodeURIComponent(name)}`;
+
+/** A one-off address the admin's browser uploads a file to, and where the file will then be served. */
+export async function supabaseUploadTarget(fileName: string) {
+  const name = `${Date.now().toString(36)}-${safeName(fileName)}`;
+  const res = await supabaseFetch(`/storage/v1/object/upload/sign/${BUCKET}/${FOLDER}/${encodeURIComponent(name)}`, {
+    method: "POST",
+  });
+  const { url } = (await res.json()) as { url: string };
+  return { uploadUrl: `${supabaseConfig()?.url}/storage/v1${url}`, url: supabasePublicUrl(name) };
+}
+
+/** Puts a file into the bucket from the server (used when copying old uploads across). */
+export async function supabaseUpload(name: string, body: Blob, contentType: string) {
+  await supabaseFetch(`/storage/v1/object/${BUCKET}/${FOLDER}/${encodeURIComponent(name)}`, {
+    method: "POST",
+    headers: { "Content-Type": contentType, "x-upsert": "true" },
+    body,
+  });
+  return supabasePublicUrl(name);
+}
+
 export async function listMedia(): Promise<MediaFile[]> {
   const mode = uploadMode();
+  if (mode === "supabase") {
+    const files: MediaFile[] = [];
+    const PAGE = 1000;
+    for (let offset = 0; ; offset += PAGE) {
+      const res = await supabaseFetch(`/storage/v1/object/list/${BUCKET}`, {
+        method: "POST",
+        body: JSON.stringify({ prefix: FOLDER, limit: PAGE, offset, sortBy: { column: "created_at", order: "desc" } }),
+      });
+      const rows = (await res.json()) as { id: string | null; name: string; created_at: string; metadata?: { size?: number } }[];
+      for (const r of rows)
+        if (r.id) // folders have no id
+          files.push({ url: supabasePublicUrl(r.name), name: r.name, size: r.metadata?.size ?? 0, uploadedAt: +new Date(r.created_at) });
+      if (rows.length < PAGE) break;
+    }
+    return files.sort((a, b) => b.uploadedAt - a.uploadedAt);
+  }
   if (mode === "blob") {
     const files: MediaFile[] = [];
     let cursor: string | undefined;
@@ -46,7 +93,14 @@ export async function listMedia(): Promise<MediaFile[]> {
 
 export async function deleteMedia(url: string) {
   const mode = uploadMode();
-  if (mode === "blob" && /^https:\/\//.test(url)) await del(url);
+  const prefix = mode === "supabase" ? supabasePublicUrl("") : "";
+  if (mode === "supabase" && url.startsWith(prefix)) {
+    const name = decodeURIComponent(url.slice(prefix.length));
+    await supabaseFetch(`/storage/v1/object/${BUCKET}`, {
+      method: "DELETE",
+      body: JSON.stringify({ prefixes: [`${FOLDER}/${name}`] }),
+    });
+  } else if (mode === "blob" && /^https:\/\//.test(url)) await del(url);
   else if (mode === "local" && url.startsWith("/uploads/"))
     await unlink(path.join(LOCAL_DIR, path.basename(url))).catch(() => {});
 }

@@ -14,7 +14,7 @@ export default async function MediaPage() {
         title="Media"
         intro={
           mode === "none"
-            ? "Uploads are off until Vercel Blob is connected (see Dashboard). Files already in the site (/images, /audio) still work."
+            ? "Uploads are off until Supabase is connected (see Dashboard). Files already in the site (/images, /audio) still work."
             : "Photos and audio you upload. Upload here or straight from any editor; copy a file’s address to use it anywhere."
         }
       />

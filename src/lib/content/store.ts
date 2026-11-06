@@ -28,13 +28,15 @@ async function readContent(): Promise<SiteContent> {
 
 /**
  * The site's content. Cached across requests and refreshed whenever the
- * admin panel saves (saveContent revalidates the tag and every page).
+ * admin panel saves (saveContent revalidates the tag and every page), and
+ * at least once a minute, so a change made straight in the database (e.g.
+ * Supabase's table editor) also shows on the site.
  */
 export const getContent = unstable_cache(
   readContent,
   // Per deployment, so new built-in content (and code) never meets an older cache.
   ["site-content", process.env.VERCEL_DEPLOYMENT_ID ?? process.env.VERCEL_GIT_COMMIT_SHA ?? "local"],
-  { tags: [CONTENT_TAG] },
+  { tags: [CONTENT_TAG], revalidate: 60 },
 );
 
 /** Uncached read, for the admin panel (always shows what is stored now). */

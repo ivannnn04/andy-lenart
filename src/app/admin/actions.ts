@@ -1,13 +1,15 @@
 "use server";
 
 import { cookies, headers } from "next/headers";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { assertAdmin, checkPassword, SESSION_COOKIE, sessionMaxAge, sessionValue } from "@/lib/admin/auth";
 import { deleteMedia as removeMediaFile } from "@/lib/admin/media";
+import { moveToSupabase, type MoveReport } from "@/lib/admin/move-to-supabase";
 import { deleteRequest, deleteSubscriber, setRequestDone, withinLimit } from "@/lib/content/inbox";
 import { deleteMark, updateMark } from "@/lib/content/marks";
 import * as normalize from "@/lib/content/normalize";
-import { saveContent } from "@/lib/content/store";
+import { CONTENT_TAG, saveContent } from "@/lib/content/store";
 import type { Garment, SiteContent } from "@/lib/content/types";
 
 export type ActionResult = { ok: true; slug?: string } | { ok: false; error: string };
@@ -169,4 +171,18 @@ export async function removeSubscriber(id: string) {
 
 export async function removeMedia(url: string) {
   return run(() => removeMediaFile(url));
+}
+
+// --- Moving to Supabase ------------------------------------------------------
+
+export async function copyToSupabase(): Promise<{ ok: true; report: MoveReport } | { ok: false; error: string }> {
+  try {
+    await assertAdmin();
+    const report = await moveToSupabase();
+    revalidateTag(CONTENT_TAG, { expire: 0 });
+    revalidatePath("/", "layout");
+    return { ok: true, report };
+  } catch (error) {
+    return { ok: false, error: (error as Error).message || "Could not copy." };
+  }
 }

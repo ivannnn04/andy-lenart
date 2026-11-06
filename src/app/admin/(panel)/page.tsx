@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { uploadMode } from "@/lib/admin/media";
+import { canMoveToSupabase } from "@/lib/admin/move-to-supabase";
+import { MoveToSupabase } from "@/components/admin/MoveToSupabase";
 import { listRequests, listSubscribers } from "@/lib/content/inbox";
 import { allMarks } from "@/lib/content/marks";
 import { getStorage } from "@/lib/content/storage";
@@ -69,28 +71,58 @@ export default async function Dashboard() {
         <section className={card}>
           <h2 className="text-[15px] font-bold">Setup</h2>
           <ul className="mt-4 flex flex-col gap-4">
-            <Check ok={storage.kind === "redis"} title={storage.kind === "redis" ? "Content storage: Upstash Redis" : storage.kind === "file" ? "Content storage: local files (.data/)" : "Content storage: not connected"}>
-              {storage.kind === "redis" ? (
-                "Edits, Staircase marks and the inbox are saved."
+            <Check
+              ok={storage.kind === "supabase"}
+              title={
+                storage.kind === "supabase"
+                  ? "Content storage: Supabase"
+                  : storage.kind === "redis"
+                    ? "Content storage: Upstash Redis"
+                    : storage.kind === "file"
+                      ? "Content storage: local files (.data/)"
+                      : "Content storage: not connected"
+              }
+            >
+              {storage.kind === "supabase" ? (
+                <>
+                  Edits, Staircase marks and the inbox are saved in Supabase.
+                  {canMoveToSupabase() && (
+                    <>
+                      {" "}
+                      Upstash or Vercel Blob is still connected: copy what is there into Supabase once. It is safe to run
+                      again, and edits made since are kept.
+                      <MoveToSupabase />
+                    </>
+                  )}
+                </>
               ) : storage.kind === "file" ? (
-                "Fine for local development. On Vercel, connect Upstash Redis (below)."
+                "Fine for local development. On Vercel, connect Supabase (see README)."
               ) : (
                 <>
-                  Vercel → your project → <strong>Storage</strong> → <strong>Create Database</strong> →{" "}
-                  <strong>Upstash for Redis</strong> → connect it to this project, then redeploy. Until then the site shows
-                  its built-in content and nothing can be saved.
+                  {storage.kind === "redis" ? "Saved in Upstash Redis. To move to Supabase: " : "Nothing can be saved yet. "}
+                  run <strong>supabase/schema.sql</strong> in Supabase → SQL Editor, then in Vercel → Settings →
+                  Environment Variables add <strong>SUPABASE_URL</strong> and <strong>SUPABASE_SECRET_KEY</strong> and
+                  redeploy.
                 </>
               )}
             </Check>
-            <Check ok={uploads === "blob"} title={uploads === "blob" ? "File uploads: Vercel Blob" : uploads === "local" ? "File uploads: public/uploads (local)" : "File uploads: not connected"}>
-              {uploads === "blob" ? (
-                "Photos and audio you upload are stored and served by Vercel Blob."
-              ) : (
-                <>
-                  Vercel → <strong>Storage</strong> → <strong>Create Database</strong> → <strong>Blob</strong> → connect it to
-                  this project, then redeploy.
-                </>
-              )}
+            <Check
+              ok={uploads === "supabase" || uploads === "blob"}
+              title={
+                uploads === "supabase"
+                  ? "File uploads: Supabase Storage"
+                  : uploads === "blob"
+                    ? "File uploads: Vercel Blob"
+                    : uploads === "local"
+                      ? "File uploads: public/uploads (local)"
+                      : "File uploads: not connected"
+              }
+            >
+              {uploads === "supabase"
+                ? "Photos and audio you upload are stored in the “media” bucket in Supabase."
+                : uploads === "blob"
+                  ? "Photos and audio you upload are stored and served by Vercel Blob."
+                  : "Connect Supabase (above) to upload photos and audio."}
             </Check>
             <Check ok={Boolean(process.env.ADMIN_PASSWORD)} title="Admin password">
               {process.env.ADMIN_PASSWORD
