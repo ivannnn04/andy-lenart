@@ -6,7 +6,8 @@ import type { GarmentImage } from "@/lib/content/types";
 
 /**
  * Main photo (723×880 in the design) with a row of 167×250 thumbnails, one
- * per photo, the main one included, so it is always one tap away.
+ * per photo, the main one included, so it is always one tap away. Four fit
+ * across; more scroll sideways in the same row.
  */
 export function Gallery({ images }: { images: GarmentImage[] }) {
   const [active, setActive] = useState(0);
@@ -23,16 +24,23 @@ export function Gallery({ images }: { images: GarmentImage[] }) {
       />
       {images.length > 1 && (
         <ul
-          className="mt-2 grid grid-cols-4 gap-2 md:mt-[calc(18*var(--u))] md:gap-[calc(17*var(--u))]"
+          // The 4px padding (cancelled by the negative margin) keeps the selected outline from being clipped.
+          className="-mx-1 mt-1 flex snap-x snap-mandatory scroll-px-1 gap-2 overflow-x-auto overscroll-x-contain p-1 [scrollbar-width:thin] md:mt-[calc(18*var(--u)-4px)] md:gap-[calc(17*var(--u))]"
           aria-label="Photos"
         >
           {images.map((image, index) => {
             const selected = active === index;
             return (
-              <li key={`${index}-${image.src ?? image.alt}`}>
+              <li
+                key={`${index}-${image.src ?? image.alt}`}
+                className="shrink-0 basis-[calc((100%-1.5rem)/4)] snap-start md:basis-[calc((100%-51*var(--u))/4)]"
+              >
                 <button
                   type="button"
-                  onClick={() => setActive(index)}
+                  onClick={(e) => {
+                    setActive(index);
+                    e.currentTarget.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "nearest" });
+                  }}
                   aria-pressed={selected}
                   aria-label={`Show photo: ${image.alt}`}
                   className={`block w-full outline-offset-2 transition-opacity duration-300 hover:opacity-80 focus-visible:outline-2 focus-visible:outline-black ${
