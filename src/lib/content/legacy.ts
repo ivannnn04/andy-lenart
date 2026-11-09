@@ -175,8 +175,27 @@ function withRoomGlimpse(garment: Garment): Garment {
 }
 
 /** Built-in content that has since been corrected, brought up to date in a saved garment. */
+/** The first room's printed verse as it once shipped (before it followed the design: "fragments of us"). */
+const REPLACED_VERSES: Record<string, string[][]> = {
+  "born-by-the-pelican-sculpture": [
+    [
+      "I look for truth in the early 2000s.",
+      "I look for reimagined fragments of me,",
+      "and the rest of you, in the simplicity of early technology.",
+      "I pull the white noise closer to me, hoping it will take me along.",
+    ],
+  ],
+};
+
+function withCurrentVerse(garment: Garment): Garment {
+  const old = REPLACED_VERSES[garment.slug];
+  if (!old?.some((v) => v.join("\n") === garment.room.verse.join("\n"))) return garment;
+  const verse = DEFAULT_CONTENT.garments.find((g) => g.slug === garment.slug)?.room.verse;
+  return verse ? { ...garment, room: { ...garment.room, verse } } : garment;
+}
+
 export const withCurrentDefaults = (garment: Garment) =>
-  withRoomGlimpse(withCurrentFiles(withCurrentGallery(withCurrentPrice(withCurrentLyrics(garment)))));
+  withCurrentVerse(withRoomGlimpse(withCurrentFiles(withCurrentGallery(withCurrentPrice(withCurrentLyrics(garment))))));
 
 /** The order the collection once shipped in, before it followed the album. */
 const REPLACED_ORDER = [

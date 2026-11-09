@@ -223,7 +223,7 @@ export const SCHEMAS = {
             trackKey: "track",
             help: "One line at a time, from the time it starts. Import an .lrc or .srt file, or edit here.",
           },
-          { kind: "lines", key: "verse", label: "Printed verse", help: "Fixed text in the collage (the first room’s design only).", rows: 4 },
+          { kind: "lines", key: "verse", label: "Printed verse", help: "Fixed text in the collage (the first room’s design only). One line each; on phones the fourth line sits lower, broken after its comma.", rows: 4 },
         ],
       },
     ],

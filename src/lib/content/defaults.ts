@@ -406,8 +406,8 @@ export const DEFAULT_CONTENT: SiteContent = {
         ],
         "verse": [
           "I look for truth in the early 2000s.",
-          "I look for reimagined fragments of me,",
-          "and the rest of you, in the simplicity of early technology.",
+          "I look for reimagined fragments of us",
+          "in the simplicity of early technology.",
           "I pull the white noise closer to me, hoping it will take me along."
         ],
         "collage": "pelican"

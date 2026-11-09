@@ -56,6 +56,8 @@ type Picture = {
 };
 
 // Order is stacking order: the lettering comes after the photo it overlaps.
+// Phone places of the lettering come from the mobile design's crops of the
+// same drawings, worked back to where the whole exported file sits.
 const PELICAN_PICTURES: Picture[] = [
   {
     file: "room-photo-road.webp",
@@ -67,7 +69,7 @@ const PELICAN_PICTURES: Picture[] = [
     file: "room-hold-on.webp",
     alt: "Handwritten: Hold on —",
     layer: "so endlessly 2 3",
-    place: { m: [251, 546, 135, 170], d: [496, 587, 188, 237] },
+    place: { m: [228, 525.6, 173.6, 219.1], d: [496, 587, 188, 237] },
     lettering: true,
   },
   {
@@ -87,7 +89,7 @@ const PELICAN_PICTURES: Picture[] = [
     file: "room-so-endlessly.webp",
     alt: "Handwritten: So endlessly fragmented",
     layer: "so endlessly 2 1",
-    place: { m: [109, 837, 272, 170], d: [274, 950, 404, 252] },
+    place: { m: [-42, 1148.8, 252, 157.5], d: [274, 950, 404, 252] },
     lettering: true,
   },
   {
@@ -100,7 +102,7 @@ const PELICAN_PICTURES: Picture[] = [
     file: "room-was-that.webp",
     alt: "Handwritten: Was that the only way to survive?",
     layer: "was that.... 1",
-    place: { m: [115, 953, 293, 183], d: [775, 519, 500, 313] },
+    place: { m: [75, 930.9, 317, 198.1], d: [775, 519, 500, 313] },
     lettering: true,
   },
 ];
@@ -449,8 +451,8 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     // The export already carries the layer's slight tilt.
     listen: { m: [171, 131, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [48, 265, 300], d: [98, 138, 420] },
-    // Figma: y 1398 (phone) / 1357 (desktop), less the header the page draws itself.
-    exit: { m: [0, 1277, 390], d: [420, 1155, 600] },
+    // Figma: y 1398 (phone) / 1357 (desktop), on the collage's grid like the photos.
+    exit: { m: [0, 1298, 390], d: [420, 1173, 600] },
   },
   "paper-walls": {
     footerY: 1418,
@@ -598,15 +600,28 @@ function PelicanCollage({ room }: { room: ListeningRoomInfo }) {
         <Pictured key={picture.file} picture={picture} />
       ))}
 
-      <Placed place={{ m: [20, 666, 350], d: [175, 744, 481] }} className="text-center">
-        <p className="font-normal leading-[normal] text-[12px] md:text-[clamp(12px,calc(16*var(--u)),16px)]">
-          {room.verse.map((line) => (
-            <span key={line} className="block">
+      {/* Figma: centred, all four lines on desktop; on phones the first three
+          sit left-aligned and the rest further down, broken after its comma. */}
+      <Placed place={{ m: [45, 675, 340], d: [179, 744, 466] }} className="md:text-center">
+        <p className="font-normal leading-[normal] text-[14px] md:text-[clamp(14px,calc(16*var(--u)),16px)]">
+          {room.verse.map((line, i) => (
+            <span key={line} className={i < 3 ? "block" : "block max-md:hidden"}>
               {line}
             </span>
           ))}
         </p>
       </Placed>
+      {room.verse.length > 3 && (
+        <Placed place={{ m: [154, 916, 340] }} className="md:hidden">
+          <p className="font-normal leading-[normal] text-[13px]">
+            {room.verse.slice(3).flatMap((line) => line.split(/(?<=,) /)).map((part) => (
+              <span key={part} className="block">
+                {part}
+              </span>
+            ))}
+          </p>
+        </Placed>
+      )}
 
       <Placed place={{ d: [916, 793, 482] }}>
         <p className="font-bold leading-[normal] uppercase text-[#efefef]" style={{ fontSize: fs(40, 24) }}>
