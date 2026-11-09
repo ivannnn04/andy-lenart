@@ -8,29 +8,42 @@ import blocklist from "./blocklist.json";
  */
 
 /**
+ * Spellings people use to get a slur past such lists: a vowel left out.
+ * (Only where the shortened word is not an ordinary one.)
+ */
+const VOWELLESS = ["ngga", "nggr", "ngger", "nggers", "niggr", "ngr", "nigg", "fggt", "fgt", "fgot", "fagt", "faggt", "trnny", "chnk", "kyke"];
+
+/**
  * The slurs: dsojevic/profanity-list (MIT, see blocklist.LICENSE), cut down to
- * the severe entries. In a term, "x*" means one or more "x". Whole words only
- * (with a plural "s"/"es"), so words that merely contain one still pass.
+ * the slurs, plus the spellings above. In a term, "x*" means one or more "x";
+ * a vowel may also be written as a symbol ("n*gga"). Whole words only (with a
+ * plural "s"/"es"), so words that merely contain one still pass.
  */
 const SLURS = new RegExp(
-  `(?<![a-z])(?:${blocklist.terms
+  `(?<![a-z])(?:${[...blocklist.terms, ...VOWELLESS]
     .map((term) =>
       term
         .replace(/[.+?^${}()|[\]\\-]/g, "\\$&")
         .replace(/\*/g, "+")
-        .replace(/\\-| /g, "[\\s_-]*"),
+        .replace(/\\-| /g, "[\\s_-]*")
+        .replace(/[aeiou]/g, "(?:$&|[*#%?!])"),
     )
     .join("|")})(?:e?s)?(?![a-z])`,
 );
 
 /** Look-alike digits and symbols read as letters, accents dropped. */
-const LOOKALIKE: Record<string, string> = { "0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "@": "a", $: "s" };
+const LOOKALIKE: Record<string, string> = { "0": "o", "1": "i", "3": "e", "4": "a", "5": "s", "7": "t", "9": "g", "@": "a", $: "s" };
 const plain = (text: string) =>
   text
     .normalize("NFKD")
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase()
-    .replace(/[013457@$]/g, (c) => LOOKALIKE[c]);
+    .replace(/[0134579@$]/g, (c) => LOOKALIKE[c])
+    // Letters split up to slip through: "n.i.g.g.a", "n-i-g-g-a", "n i g g a".
+    .replace(/(?<=[a-z])[._-]+(?=[a-z])/g, "")
+    .replace(/(?<=(?:^|[^a-z])[a-z]) (?=[a-z](?:[^a-z]|$))/g, "")
+    // The one everyday phrase that holds a listed word.
+    .replace(/\bspick?[\s-]+(?:and|&|n)[\s-]+span\b/g, "");
 
 const TLD =
   "com|net|org|io|co|uk|me|info|biz|xyz|app|dev|ly|gg|tv|ru|ua|cz|sk|pl|de|fr|it|es|eu|us|online|site|link|shop|store|club|top|live|pro|ai|to|cc|tk";
