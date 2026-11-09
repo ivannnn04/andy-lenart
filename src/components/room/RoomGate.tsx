@@ -50,7 +50,7 @@ export function RoomGate({ slug, initial, error }: { slug: string; initial: Gate
       {failed && (
         // The cross sits in the line, so the message wraps back to the left
         // edge rather than hanging beside it.
-        <p id="room-word-error" role="alert" className={`mt-3.5 text-[13px] leading-[1.45] font-medium ${ERROR_BLUE}`}>
+        <p id="room-word-error" role="alert" className={`mt-3.5 text-[13px] leading-[1.45] font-normal ${ERROR_BLUE}`}>
           <svg
             aria-hidden
             viewBox="0 0 12 12"
@@ -60,24 +60,24 @@ export function RoomGate({ slug, initial, error }: { slug: string; initial: Gate
           >
             <path d="M1 1l10 10M11 1 1 11" />
           </svg>
-          {inline(error)}
+          {inline(error, "font-medium")}
         </p>
       )}
 
       <button
         type="submit"
         disabled={pending || locked !== null}
-        className={`mt-6 flex h-[50px] items-center justify-center bg-ink text-[15px] font-semibold uppercase tracking-[0.1em] text-[#f2f2f2] shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-[#f2f2f2] motion-reduce:transition-none`}
+        className={`mt-6 flex h-[50px] items-center justify-center bg-ink text-[15px] font-bold uppercase tracking-[0.1em] text-[#f2f2f2] shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink disabled:cursor-not-allowed disabled:hover:bg-ink disabled:hover:text-[#f2f2f2] motion-reduce:transition-none`}
       >
         {pending ? "Checking…" : failed ? "Try again" : "Enter the room"}
       </button>
 
       {locked !== null && (
-        <p id="room-locked" role="status" className="mt-[30px] text-center text-[12px] leading-[1.5] font-medium text-black">
+        <p id="room-locked" role="status" className="mt-[30px] text-center text-[12px] leading-[1.5] font-normal text-black">
           Maximum attempts reached.
           <br />
           The room is locked;{" "}
-          <strong className="font-bold">
+          <strong className="font-medium">
             try again in {locked} {locked === 1 ? "minute" : "minutes"}.
           </strong>
         </p>

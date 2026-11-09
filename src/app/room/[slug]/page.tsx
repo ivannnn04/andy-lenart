@@ -22,7 +22,7 @@ function gateState(cookie: string | undefined): GateState {
   return lockedUntil > Date.now() ? { status: "locked", lockedUntil } : { status: "idle" };
 }
 
-const label = "text-[13px] leading-[normal] font-medium uppercase tracking-[0.1em] text-muted";
+const label = "text-[13px] leading-[normal] font-normal uppercase tracking-[0.1em] text-muted";
 
 /**
  * Listening Room entrance — the page an owner lands on after tapping the
@@ -67,10 +67,10 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
               {room.titleLines.join(" ")}
             </h1>
 
-            <p className="mt-6 text-[20px] leading-[1.5] font-medium text-ink">{inline(room.gate.text)}</p>
+            <p className="mt-6 text-[20px] leading-[1.5] font-normal text-ink">{inline(room.gate.text, "font-medium")}</p>
             {room.gate.note && (
-              <p className="mt-0.5 text-[12px] leading-[normal] font-medium uppercase tracking-[0.1em] text-muted">
-                {inline(room.gate.note)}
+              <p className="mt-1 text-[12px] leading-[normal] font-normal uppercase tracking-[0.1em] text-muted">
+                {inline(room.gate.note, "font-medium")}
               </p>
             )}
             <div className="mt-2.5">

@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { useRef, type ReactNode } from "react";
 import type { NavItem } from "@/lib/content/types";
 
-const barText = "text-[16px] leading-[normal] font-semibold uppercase";
+const barText = "text-[16px] leading-[normal] font-medium uppercase";
 
 /**
  * The phone header used on every page: the page's name on the left, the
