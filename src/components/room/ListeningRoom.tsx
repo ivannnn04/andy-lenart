@@ -844,7 +844,8 @@ function SymmetricaCollage() {
         </p>
       </Placed>
 
-      <Placed place={{ m: [225, 1127, 126, 10], d: [1152, 924, 176, 10] }} className="bg-white">
+      {/* Figma's line has 5px square caps on each end, so it starts where the text does. */}
+      <Placed place={{ m: [220, 1127, 136, 10], d: [1147, 924, 186, 10] }} className="bg-white">
         <span />
       </Placed>
       <Placed place={{ m: [219, 1144, 150], d: [1147, 943, 208] }}>
