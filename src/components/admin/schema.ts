@@ -98,7 +98,7 @@ export const SCHEMAS = {
       kind: "group",
       key: "preloader",
       label: "Opening screen",
-      help: "Shown while the home page loads, once per visit.",
+      help: "Shown each time the home page is opened or reloaded.",
       fields: [
         { kind: "lines", key: "lines", label: "Text", help: "One line per line (up to 4).", rows: 2 },
         {

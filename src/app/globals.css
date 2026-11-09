@@ -575,12 +575,8 @@ select:autofill {
 /*
  * The opening screen (Preloader.tsx). Each word rises from under a mask,
  * one after another; a hairline fills while the page loads; then the words
- * leave upwards and the black lifts away. Seen already in this tab: hidden
- * before paint (the inline script sets data-intro).
+ * leave upwards and the black lifts away.
  */
-[data-intro="seen"] .preloader {
-  display: none;
-}
 html:has(.preloader:not(.is-leaving)) {
   overflow: hidden;
 }

@@ -2,29 +2,13 @@
 
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
 
-// Once per visit: later visits to the home page in the same tab skip it.
-const SEEN_KEY = "intro-seen";
 // The shortest time the opening stays up, so the words can be read.
 const MIN_MS = 2600;
 const VOLUME = 0.6;
 
-const store = {
-  get: (s: Storage | undefined, key: string) => {
-    try {
-      return s?.getItem(key) ?? null;
-    } catch {
-      return null;
-    }
-  },
-  set: (s: Storage | undefined, key: string, value: string) => {
-    try {
-      s?.setItem(key, value);
-    } catch {
-      // Private mode: nothing remembered, the page still works.
-    }
-  },
-};
-const session = () => (typeof window === "undefined" ? undefined : window.sessionStorage);
+// Shown on every load or reload of the page; coming back to the home page
+// by a link inside the site (no reload) skips it.
+let shownThisLoad = false;
 
 /**
  * The opening screen (Figma "Desktop - 35"): the line of text rises word by
@@ -33,7 +17,7 @@ const session = () => (typeof window === "undefined" ? undefined : window.sessio
  * a small switch in the corner keeps it at hand afterwards.
  */
 export function Preloader({ lines, track }: { lines: string[]; track: string }) {
-  const [phase, setPhase] = useState<"open" | "leaving" | "gone">("open");
+  const [phase, setPhase] = useState<"open" | "leaving" | "gone">(() => (shownThisLoad ? "gone" : "open"));
   const [sound, setSound] = useState(false);
   // Whether the visitor has picked on or off yet (until then both read grey, as in the design).
   const [picked, setPicked] = useState(false);
@@ -41,14 +25,8 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
   const fade = useRef<number>(undefined);
 
   const leave = useCallback(() => {
-    store.set(session(), SEEN_KEY, "1");
+    shownThisLoad = true;
     setPhase((p) => (p === "open" ? "leaving" : p));
-  }, []);
-
-  // Seen already in this tab: the inline script hid it before paint; drop it.
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- reading browser storage after hydration
-    if (store.get(session(), SEEN_KEY)) setPhase("gone");
   }, []);
 
   // Leave once the page has loaded and the words have had their time.
@@ -194,5 +172,3 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
   );
 }
 
-/** Hides the opening before paint when it was already seen in this tab. */
-export const PRELOADER_SEEN_SCRIPT = `try{if(sessionStorage.getItem("${SEEN_KEY}"))document.documentElement.dataset.intro="seen"}catch(e){}`;
