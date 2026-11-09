@@ -185,35 +185,42 @@ const BLUEPRINT_PICTURES: Picture[] = [
   },
 ];
 
-// "Soviet Sunset" (Figma "04 — SOVIET SUNSET"). Only the phone collage is
-// designed; desktop sets the same pieces in two columns, 1.5× the phone size.
+// "Soviet Sunset" (Figma "04 — SOVIET SUNSET"): the phone frame, and on desktop
+// the layers placed over the 04 desktop frame.
 const SUNSET_SQUARE: Picture = {
   file: "room-04-photo-square.webp",
   alt: "Faded photo of a crowd with flags filling a square in front of a domed museum",
   layer: "2026-10-05 14-50 page 5 9",
-  place: { m: [100.8, 480.7, 172.6, 133.3], d: [295.7, 571.5, 258.9, 200] },
+  place: { m: [100.8, 480.7, 172.6, 133.3], d: [337.8, 418.7, 290, 224] },
   blend: "luminosity",
 };
 
 const SUNSET_PICTURES: Picture[] = [
+  // The two layouts arrange this collage differently, so each has its own file.
   {
-    file: "room-04-walls-and-wires.png",
+    file: "room-04-walls-and-wires-m.webp",
     alt: "Two men in a living room; handwritten: walls and wires",
-    layer: "Group 1418:297",
-    place: { m: [41, 756, 247.1, 114.2], d: [839.6, 500, 370.6, 171.3] },
+    layer: "Group 2085663293",
+    place: { m: [41, 756, 247.1, 114.2] },
+  },
+  {
+    file: "room-04-walls-and-wires-d.webp",
+    alt: "Two men in a living room; handwritten: walls and wires",
+    layer: "Group 2085663285",
+    place: { d: [768, 650, 448.3, 217] },
   },
   {
     file: "room-04-photo-protest.webp",
     alt: "Faded photo of a crowd in front of a monument covered in posters and flags",
     layer: "2026-10-05 14-50 page 5 8",
-    place: { m: [56, 909, 273, 166], d: [862.6, 729.5, 409.5, 249] },
+    place: { m: [56, 909, 273, 166], d: [261, 769, 347, 211] },
     blend: "luminosity",
   },
   {
     file: "room-04-stand.webp",
     alt: "Handwritten: Stand",
     layer: "Group 1347:69",
-    place: { m: [14.3, 1064, 184.6, 100.7], d: [780, 1050, 240, 131] },
+    place: { m: [14.3, 1064, 184.6, 100.7], d: [202.3, 961, 227.5, 124.1] },
     lettering: true,
   },
 ];
@@ -475,12 +482,12 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
   },
   "soviet-sunset": {
     footerY: 1419,
-    height: [1466, 1330],
+    height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1293, 390], d: [420, 1234, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1162, 600] },
   },
   symmetrica: {
     footerY: 1416,
@@ -671,26 +678,31 @@ function PaperWallsCollage() {
 
 // The big SUN / SET letters break inside their narrow boxes, as in the design.
 const bigLetters =
-  "text-center font-medium leading-[1.2] text-[#efefef] text-[calc(90*var(--m))] md:text-[calc(135*var(--u))]";
+  "text-center font-medium leading-[1.2] text-[#efefef] text-[calc(90*var(--m))] md:text-[calc(120*var(--u))]";
 
 function SovietSunsetCollage() {
   return (
     <>
-      <Placed place={{ m: [17, 433, 172.4], d: [170, 500, 258.6] }} className="pointer-events-none">
+      <Placed place={{ m: [17, 433, 172.4], d: [225, 337, 172.4] }} className="pointer-events-none">
         <p aria-hidden className={bigLetters}>
           <span className="block">SU</span>
           <span className="block">N</span>
         </p>
       </Placed>
-      <Placed place={{ m: [189.4, 576.8, 161.6], d: [428.6, 715.8, 242.4] }} className="pointer-events-none mix-blend-difference">
+      <Placed place={{ m: [189.4, 576.8, 161.6], d: [558, 477, 161.6] }} className="pointer-events-none mix-blend-difference">
+        {/* "SE / T" on phones, "S / ET" on desktop (where the design's wider letters break it so). */}
         <p aria-hidden className={bigLetters}>
-          <span className="block">SE</span>
-          <span className="block">T</span>
+          <span className="block">
+            S<span className="md:hidden">E</span>
+          </span>
+          <span className="block">
+            <span className="max-md:hidden">E</span>T
+          </span>
         </p>
       </Placed>
       <Pictured picture={SUNSET_SQUARE} />
 
-      <Placed place={{ m: [29, 678, 310], d: [188, 867.5, 465] }}>
+      <Placed place={{ m: [29, 678, 310], d: [193, 689, 386] }}>
         <blockquote className="font-bold leading-[1.1] text-white text-[12px] md:text-[clamp(14px,calc(18*var(--u)),18px)]">
           <span className="block">‘Let us not falsify words and concepts.</span>
           <span className="block">What is crooked cannot be straight,</span>
@@ -702,7 +714,7 @@ function SovietSunsetCollage() {
         <Pictured key={picture.file} picture={picture} />
       ))}
 
-      <Placed place={{ d: [972, 992, 300] }} className="text-right">
+      <Placed place={{ d: [669, 905, 296] }} className="text-center">
         <p className="font-bold leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(36, 20) }}>
           SOVIET SUNSET
         </p>
