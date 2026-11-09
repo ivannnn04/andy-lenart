@@ -436,11 +436,19 @@ const FUNKCE_PICTURES: Picture[] = [
     place: { m: [255, 759, 56, 32], d: [585.8, 927.2, 96, 55] },
     lettering: true,
   },
+  // With the white lines drawn over it in Figma (dotted outlines round the
+  // heads, a line across the faces), rendered per layout.
   {
-    file: "room-10-photo-family.webp",
-    alt: "Faded colour photo of a family around a coffee table with bottles and fruit",
-    layer: "2026-10-09 14-28 page 18 1",
-    place: { m: [66, 919, 236, 162], d: [787, 628, 394, 270] },
+    file: "room-10-photo-family-m.webp",
+    alt: "Faded colour photo of a family around a coffee table with bottles and fruit, white lines drawn over their faces",
+    layer: "Group 2085663315 (mobile)",
+    place: { m: [66, 919, 236, 162] },
+  },
+  {
+    file: "room-10-photo-family-d.webp",
+    alt: "Faded colour photo of a family around a coffee table with bottles and fruit, white lines drawn over their faces",
+    layer: "Group 2085663315 (desktop)",
+    place: { d: [787, 628, 394, 270] },
   },
   {
     file: "room-10-star.webp",
