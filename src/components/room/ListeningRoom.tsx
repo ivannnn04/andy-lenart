@@ -1135,9 +1135,9 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           // Figma "01 — … (mobile)": "The / Staircase" at 35px from the left and
           // 45px from the top, "Public" 32px from the right and 55px down.
           phone={{ inset: "pl-[35px] pr-8", logoWidth: 76, top: { title: 44, button: 52, logo: 28 } }}
-          // The monogram as large as in the room designs: its mark 118 px wide, 52 px from the top
+          // The monogram as large as in the room designs: its mark 118 px wide, 45 px from the top
           // (phone: 52 px wide, 30 px down). The image has a little margin around the mark.
-          logo={{ width: 172, top: 47 }}
+          logo={{ width: 172, top: 40 }}
         />
 
         <RoomAudioProvider src={room.track}>
