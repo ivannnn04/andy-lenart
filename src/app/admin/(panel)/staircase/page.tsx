@@ -2,12 +2,16 @@ import type { Metadata } from "next";
 import { removeMark, restoreReportedMark, setMarkHidden } from "@/app/admin/actions";
 import { ActionButton } from "@/components/admin/ActionButton";
 import { PageHeader } from "@/components/admin/PageHeader";
+import Link from "next/link";
 import { allMarks } from "@/lib/content/marks";
+import { getContentFresh } from "@/lib/content/store";
+import { BUILT_IN_TERMS } from "@/lib/moderation";
 
 export const metadata: Metadata = { title: "The Staircase" };
 
 export default async function StaircaseAdmin() {
   // Marks taken down by reports come first: they wait for a decision.
+  const { settings } = await getContentFresh();
   const marks = (await allMarks()).sort((a, b) => Number(Boolean(b.reported)) - Number(Boolean(a.reported)));
   return (
     <>
@@ -58,6 +62,30 @@ export default async function StaircaseAdmin() {
         ))}
         {!marks.length && <li className="text-[14px] text-[#777]">No marks yet.</li>}
       </ul>
+
+      <section className="mb-12 rounded-xl border border-[#e4e4e0] bg-white p-4 text-[14px] leading-[1.5]">
+        <h2 className="text-[16px] font-bold">Word filter</h2>
+        <p className="mt-1 text-[#555]">
+          Marks with a slur from the built-in list, or with a link, email or @handle, can&apos;t be posted. Ordinary swearing
+          passes. Add your own words, or let one from the list through, in{" "}
+          <Link href="/admin/settings" className="underline underline-offset-2">
+            Settings
+          </Link>
+          .
+        </p>
+        <p className="mt-2 text-[#555]">
+          Also blocked: {settings.blockedWords.length ? settings.blockedWords.join(", ") : "nothing yet"}.
+          <br />
+          Allowed from the list: {settings.allowedWords.length ? settings.allowedWords.join(", ") : "nothing yet"}.
+        </p>
+        <details className="mt-3">
+          <summary className="cursor-pointer font-semibold">Built-in filter list ({BUILT_IN_TERMS.length}) — offensive words</summary>
+          <p className="mt-2 text-[12px] text-[#777]">
+            Slurs on race, sexuality, gender and religion (dsojevic/profanity-list, MIT). “x*” means one or more “x”.
+          </p>
+          <p className="mt-2 text-[13px] [overflow-wrap:anywhere] text-[#333]">{BUILT_IN_TERMS.join(" · ")}</p>
+        </details>
+      </section>
     </>
   );
 }

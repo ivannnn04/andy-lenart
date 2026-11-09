@@ -173,6 +173,8 @@ export function settings(v: unknown): Settings {
     roomAttempts: Math.min(20, Math.max(0, Math.round(num(o.roomAttempts, 5)))),
     roomLockMinutes: Math.min(60, Math.max(1, Math.round(num(o.roomLockMinutes, 1)))),
     markReports: Math.min(20, Math.max(1, Math.round(num(o.markReports, 3)))),
+    blockedWords: lines(o.blockedWords, 80).slice(0, 500),
+    allowedWords: lines(o.allowedWords, 80).slice(0, 500),
   };
 }
 

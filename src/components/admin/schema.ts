@@ -69,6 +69,20 @@ export const SCHEMAS = {
       help: "A mark reported by this many visitors leaves the wall until you restore or delete it (1–20).",
     },
     {
+      kind: "lines",
+      key: "blockedWords",
+      label: "The Staircase: also block",
+      help: "One word or phrase per line. A mark with it as a whole word can't be posted (plurals and spellings like “n*me”, “n4me” included). Marks already on the wall stay.",
+      rows: 4,
+    },
+    {
+      kind: "lines",
+      key: "allowedWords",
+      label: "The Staircase: allow from the built-in list",
+      help: "One per line, spelled as in the built-in list (Admin → The Staircase → Built-in filter list).",
+      rows: 3,
+    },
+    {
       kind: "list",
       key: "nav",
       label: "Navigation",

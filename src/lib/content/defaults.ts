@@ -13,6 +13,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     "roomAttempts": 5,
     "roomLockMinutes": 1,
     "markReports": 3,
+    "blockedWords": [],
+    "allowedWords": [],
     "nav": [
       {
         "label": "Manifesto",

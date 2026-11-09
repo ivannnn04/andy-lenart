@@ -42,7 +42,8 @@ export async function leaveMark(slug: string, input: { name: string; city: strin
     createdAt: Date.now(),
   };
   if (!mark.name || !mark.city || !mark.text) return { ok: false, error: "Please fill in every field." };
-  const problem = markProblem(mark.text, mark.name, mark.city);
+  const { blockedWords, allowedWords } = (await getContent()).settings;
+  const problem = markProblem([mark.text, mark.name, mark.city], { block: blockedWords, allow: allowedWords });
   if (problem) return { ok: false, error: problem };
   if (!getStorage().writable) return { ok: true, stored: false, mark };
   const from = await visitor();
