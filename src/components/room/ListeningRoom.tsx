@@ -445,14 +445,15 @@ type Layout = {
 
 const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
   pelican: {
-    height: [1380, 1258],
+    height: [1466, 1258],
+    footerY: 1419,
     touch: { m: [95, 38, 200], d: [556, 65, 324] },
     tape: { m: [105, 75, 189, 120], d: [556, 120, 324, 206] },
     // The export already carries the layer's slight tilt.
     listen: { m: [171, 131, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [48, 265, 300], d: [98, 138, 420] },
     // Figma: y 1398 (phone) / 1357 (desktop), on the collage's grid like the photos.
-    exit: { m: [0, 1298, 390], d: [420, 1173, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1173, 600] },
   },
   "paper-walls": {
     footerY: 1418,
@@ -461,7 +462,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1164, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1164, 600] },
   },
   blueprint: {
     footerY: 1419,
@@ -470,7 +471,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1164, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1164, 600] },
   },
   "soviet-sunset": {
     footerY: 1419,
@@ -479,7 +480,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1236, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1236, 600] },
   },
   symmetrica: {
     footerY: 1416,
@@ -488,7 +489,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1119, 600] },
   },
   "aliens-and-herons": {
     footerY: 1419,
@@ -497,7 +498,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1119, 600] },
   },
   "philosophy-of-form": {
     footerY: 1419,
@@ -506,7 +507,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1119, 600] },
   },
   "the-signatures": {
     footerY: 1419,
@@ -515,7 +516,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1119, 600] },
     // The "1322" lettering sits close under the line on desktop.
     lyricLines: [5, 3],
   },
@@ -526,7 +527,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1119, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1119, 600] },
   },
   "stations-of-comfort": {
     footerY: 1418,
@@ -535,7 +536,7 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1236, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1236, 600] },
   },
 };
 
