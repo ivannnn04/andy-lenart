@@ -225,21 +225,29 @@ const SUNSET_PICTURES: Picture[] = [
   },
 ];
 
-// "Stations of Comfort" (Figma "05 — STATIONS OF COMFORT"). Only the phone
-// collage is designed; desktop sets it in two columns, 1.5× the phone size.
+// "Stations of Comfort" (Figma "05 — STATIONS OF COMFORT"): the phone frame,
+// and on desktop the layers placed over the 05 desktop frame.
 const COMFORT_PICTURES: Picture[] = [
   {
     file: "room-05-abstract.webp",
     alt: "",
     layer: "ABSTRACT 1",
-    place: { m: [0, 819, 390, 381], d: [720, 579.5, 585, 571.5] },
+    // The phone frame cuts the brush stroke at its right edge; desktop shows all of it.
+    place: { m: [0, 819, 390, 381] },
+    lettering: true,
+  },
+  {
+    file: "room-05-abstract-d.webp",
+    alt: "",
+    layer: "ABSTRACT 1",
+    place: { d: [716, 587, 560, 512.9] },
     lettering: true,
   },
   {
     file: "room-05-photo-tower.webp",
     alt: "Dim photo of a tower block against the sky",
     layer: "2026-10-05 14-50 page 5 15",
-    place: { m: [75, 960, 229, 158], d: [832.5, 791, 343.5, 237] },
+    place: { m: [75, 960, 229, 158], d: [817, 776.8, 308.3, 212.7] },
     // The layer is at 20% opacity, so the brush stroke shows through it.
     blend: "lighten",
   },
@@ -247,19 +255,19 @@ const COMFORT_PICTURES: Picture[] = [
     file: "room-05-photo-bench.webp",
     alt: "Black-and-white photo of an empty park bench",
     layer: "2026-10-05 14-50 page 5 14",
-    place: { m: [229, 986, 121, 95], d: [1063.5, 830, 181.5, 142.5] },
+    place: { m: [229, 986, 121, 95], d: [1024.3, 811.8, 162.9, 127.9] },
   },
   {
     file: "room-05-photo-sculpture.webp",
     alt: "Black-and-white photo of a concrete sculpture between bushes in front of a housing block",
     layer: "2026-10-05 14-50 page 5 11",
-    place: { m: [48, 464, 122, 165], d: [170, 552.8, 183, 247.5] },
+    place: { m: [48, 464, 122, 165], d: [242, 486, 220, 299] },
   },
   {
     file: "room-05-photo-doorway.webp",
     alt: "Black-and-white photo of a graffitied doorway with a bicycle in front",
     layer: "2026-10-05 14-50 page 5 13",
-    place: { m: [190, 464, 110, 165], d: [383, 552.8, 165, 247.5] },
+    place: { m: [190, 464, 110, 165], d: [503, 486, 199, 299] },
   },
 ];
 
@@ -267,7 +275,7 @@ const COMFORT_FRUIT: Picture = {
   file: "room-05-photo-fruit.webp",
   alt: "Black-and-white photo of a table heaped with fruit",
   layer: "2026-10-05 14-50 page 5 10",
-  place: { m: [82, 766, 173, 125], d: [843, 500, 259.5, 187.5] },
+  place: { m: [82, 766, 173, 125], d: [788, 524, 278, 200] },
 };
 
 // "Symmetrica" (Figma "06 — SYMMETRICA" mobile, "07 — SYMMETRICA" desktop).
@@ -538,12 +546,12 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
   },
   "stations-of-comfort": {
     footerY: 1418,
-    height: [1466, 1330],
+    height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
     tape: { m: [103, 91, 189, 120], d: [556, 120, 324, 206] },
     listen: { m: [169, 147, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [46, 281, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1293, 390], d: [420, 1234, 600] },
+    exit: { m: [0, 1293, 390], d: [420, 1162, 600] },
   },
 };
 
@@ -762,28 +770,28 @@ function StationsOfComfortCollage() {
         <Pictured key={picture.file} picture={picture} />
       ))}
 
-      <Placed place={{ m: [96, 428.8, 200], d: [242, 500, 300] }} className="pointer-events-none mix-blend-difference">
-        <p aria-hidden className="font-bold leading-[1.1] text-white text-[calc(64*var(--m))] md:text-[calc(96*var(--u))]">
+      <Placed place={{ m: [96, 428.8, 200], d: [356, 422, 300] }} className="pointer-events-none mix-blend-difference">
+        <p aria-hidden className="font-bold leading-[1.1] text-white text-[calc(64*var(--m))] md:text-[calc(95*var(--u))]">
           1322
         </p>
       </Placed>
 
       <Pictured picture={COMFORT_FRUIT} />
 
-      <Placed place={{ m: [66, 665, 300], d: [197, 854.3, 460] }}>
-        <p className="font-medium leading-[normal] text-[#efefef] text-[14px] md:text-[clamp(16px,calc(21*var(--u)),21px)]">
+      <Placed place={{ m: [66, 665, 300], d: [242, 826, 460] }}>
+        <p className="font-normal leading-[normal] text-[#efefef] text-[14px] md:text-[clamp(16px,calc(24*var(--u)),24px)]">
           <span className="block">Ritualistic simplicity.</span>
           <span className="block">Testing life early.</span>
           <span className="block font-bold">Places designed to design us in return.</span>
         </p>
       </Placed>
 
-      <Placed place={{ m: [179, 1135, 200], d: [988.5, 1053.5, 300] }}>
-        <p className="font-medium leading-[normal] whitespace-nowrap text-[#efefef] text-[12px] md:text-[clamp(13px,calc(18*var(--u)),18px)]">
+      <Placed place={{ m: [179, 1135, 200], d: [890, 1005, 300] }}>
+        <p className="font-medium leading-[normal] whitespace-nowrap text-[#efefef] text-[12px] md:text-[clamp(13px,calc(16*var(--u)),16px)]">
           …with smoke and a few bottles.
         </p>
       </Placed>
-      <Placed place={{ m: [266, 1154.3, 81, 41], d: [1119, 1082.4, 121.5, 61.5] }} className="pointer-events-none">
+      <Placed place={{ m: [266, 1154.3, 81, 41], d: [1042, 1032.3, 80.2, 40] }} className="pointer-events-none">
         <Art picture={{ file: "room-05-and-more.webp", alt: "Handwritten: and more", layer: "Group 2085663286", place: {}, lettering: true }} sizes="120px" />
       </Placed>
 
