@@ -449,7 +449,8 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     // The export already carries the layer's slight tilt.
     listen: { m: [171, 131, 202.5, 133.8], d: [669.2, 216.5, 347.4, 229.5] },
     intro: { m: [48, 265, 300], d: [98, 138, 420] },
-    exit: { m: [0, 1298, 390], d: [420, 1140, 600] },
+    // Figma: y 1398 (phone) / 1357 (desktop), less the header the page draws itself.
+    exit: { m: [0, 1277, 390], d: [420, 1155, 600] },
   },
   "paper-walls": {
     footerY: 1418,
@@ -1141,7 +1142,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           <Placed place={layout.exit} className="text-center">
             <Link
               href={staircase}
-              className="text-[15px] font-medium uppercase text-[#efefef] underline underline-offset-4 transition-opacity hover:opacity-70 md:text-[clamp(15px,calc(20*var(--u)),20px)]"
+              className="text-[15px] leading-[normal] font-normal uppercase text-[#efefef] underline decoration-from-font [text-decoration-skip-ink:none] [text-underline-position:from-font] transition-opacity hover:opacity-70 md:text-[clamp(15px,calc(24*var(--u)),24px)]"
             >
               Exit to the Staircase
             </Link>
