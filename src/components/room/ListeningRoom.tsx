@@ -1079,7 +1079,14 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
   return (
     <div className="min-h-dvh overflow-x-clip bg-black text-white">
       <div className="mx-auto w-full max-w-[1440px] [container-type:inline-size]">
-        <RoomHeader tone="dark" label="The Staircase" href={staircase} />
+        <RoomHeader
+          tone="dark"
+          label="The Staircase"
+          href={staircase}
+          // Figma "01 — … (mobile)": "The / Staircase" at 35px from the left and
+          // 45px from the top, "Public" 32px from the right and 55px down.
+          phone={{ inset: "pl-[35px] pr-8", top: { title: 44, button: 52, logo: 20 } }}
+        />
 
         <RoomAudioProvider src={room.track}>
         <main

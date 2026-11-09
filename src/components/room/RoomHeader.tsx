@@ -29,13 +29,26 @@ export async function RoomHeader({
   /** The same on the phone bar, beside "Public". */
   phoneExtra?: ReactNode;
   /** Phone bar layout where the page's design differs from the default. */
-  phone?: { inset?: string; logoWidth?: number; align?: "center" | "top" };
+  phone?: { inset?: string; logoWidth?: number; top?: { title: number; button: number; logo: number } };
 }) {
   const dark = tone === "dark";
   const { nav } = (await getContent()).settings;
   const pageLink = (
     <Link href={href} className="link-draw">
       {label}
+    </Link>
+  );
+  // On the phone bar the name breaks after its first word ("The / Staircase"), as in the designs.
+  const [first, ...rest] = label.split(" ");
+  const phoneLink = (
+    <Link href={href} className="link-draw">
+      {first}
+      {rest.length > 0 && (
+        <>
+          <br />
+          {rest.join(" ")}
+        </>
+      )}
     </Link>
   );
   return (
@@ -46,7 +59,7 @@ export async function RoomHeader({
         tone={tone}
         className="md:hidden"
         buttonExtra={phoneExtra}
-        title={pageLink}
+        title={phoneLink}
         {...phone}
       />
 

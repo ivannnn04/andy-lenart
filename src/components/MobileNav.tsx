@@ -23,7 +23,7 @@ export function MobileNav({
   tone = "light",
   buttonExtra,
   logoWidth = 72,
-  align = "center",
+  top,
 }: {
   /** Page name (or a link) on the left; without it "Public" goes there. */
   /** Site navigation (from the admin settings). */
@@ -38,14 +38,16 @@ export function MobileNav({
   buttonExtra?: ReactNode;
   /** Width of the monogram, px. */
   logoWidth?: number;
-  /** "top": the page name and "Public" sit at the top of the bar (The Staircase) instead of mid-height. */
-  align?: "center" | "top";
+  /**
+   * Distances from the top of the bar, px, as in the private pages' designs
+   * (page name, "Public", monogram). Without it everything sits mid-height.
+   */
+  top?: { title: number; button: number; logo: number };
 }) {
   const dark = tone === "dark";
   const menu = useRef<HTMLDialogElement>(null);
   const close = () => menu.current?.close();
   const path = usePathname();
-  const top = align === "top";
 
   const bar = (button: ReactNode) => (
     // Three columns: the side ones share what the monogram leaves, so a long
@@ -55,9 +57,13 @@ export function MobileNav({
       style={{ gridTemplateColumns: `minmax(0,1fr) ${logoWidth}px minmax(0,1fr)` }}
     >
       {title ? (
-        <span className={`${barText} ${top ? "pt-[35px] leading-[1.2]" : "leading-[1.1] pb-[0.08em]"}`}>{title}</span>
+        <span className={`${barText} ${top ? "leading-[1.2]" : "leading-[1.1] pb-[0.08em]"}`} style={top && { paddingTop: top.title }}>
+          {title}
+        </span>
       ) : (
-        <div className={`flex ${top ? "pt-9" : ""}`}>{button}</div>
+        <div className="flex" style={top && { paddingTop: top.button }}>
+          {button}
+        </div>
       )}
       <Link
         href="/"
@@ -70,8 +76,8 @@ export function MobileNav({
             window.scrollTo({ top: 0, behavior: "smooth" });
           }
         }}
-        className={`self-start ${top ? "pt-[18px]" : "pt-5"}`}
-        style={{ width: logoWidth }}
+        className="self-start pt-5"
+        style={{ width: logoWidth, ...(top && { paddingTop: top.logo }) }}
       >
         <Image
           src="/images/logo-mark.png"
@@ -83,7 +89,11 @@ export function MobileNav({
           className={dark ? "invert" : undefined}
         />
       </Link>
-      {title && <div className={`relative flex justify-end ${top ? "pt-[33px]" : ""}`}>{button}</div>}
+      {title && (
+        <div className="relative flex justify-end" style={top && { paddingTop: top.button }}>
+          {button}
+        </div>
+      )}
     </div>
   );
 

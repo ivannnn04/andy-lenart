@@ -41,7 +41,7 @@ export default async function StaircasePage({ params }: PageProps<"/room/[slug]/
           href={`/room/${slug}`}
           // Figma "11 — The Staircase (wall)": 28px sides, a 79px monogram, the
           // page name (two lines) and Public along the top.
-          phone={{ inset: "px-7", logoWidth: 79, align: "top" }}
+          phone={{ inset: "px-7", logoWidth: 79, top: { title: 35, button: 33, logo: 18 } }}
           phoneExtra={
             hasImage(SCRAWL) && (
               <Image
