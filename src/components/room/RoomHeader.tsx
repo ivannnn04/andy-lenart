@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
@@ -20,6 +20,7 @@ export async function RoomHeader({
   extra,
   phoneExtra,
   phone,
+  logo = { width: 121, top: 40 },
 }: {
   tone: "light" | "dark";
   label: string;
@@ -30,6 +31,8 @@ export async function RoomHeader({
   phoneExtra?: ReactNode;
   /** Phone bar layout where the page's design differs from the default. */
   phone?: { inset?: string; logoWidth?: number; top?: { title: number; button: number; logo: number } };
+  /** Desktop monogram: width and distance from the top, in design px. */
+  logo?: { width: number; top: number };
 }) {
   const dark = tone === "dark";
   const { nav } = (await getContent()).settings;
@@ -73,14 +76,15 @@ export async function RoomHeader({
         <Link
           href="/"
           aria-label="Andy Lenárt — home"
-          className="absolute top-[calc(40*var(--u))] left-1/2 w-[calc(121*var(--u))] -translate-x-1/2"
+          className="absolute top-[calc(var(--logo-top)*var(--u))] left-1/2 w-[calc(var(--logo-w)*var(--u))] -translate-x-1/2"
+          style={{ "--logo-top": logo.top, "--logo-w": logo.width } as CSSProperties}
         >
           <Image
             src="/images/logo-mark.png"
             alt=""
             width={332}
             height={282}
-            sizes="10vw"
+            sizes={`${Math.ceil((logo.width / 1440) * 100)}vw`}
             className={dark ? "invert" : undefined}
             preload
           />
