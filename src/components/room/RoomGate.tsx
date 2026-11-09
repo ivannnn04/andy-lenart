@@ -43,7 +43,7 @@ export function RoomGate({ slug, initial }: { slug: string; initial: GateState }
               ? `locked-${state.lockedUntil}`
               : "word"
         }
-        className="h-[54px] w-full rounded-none border-b border-[#333] bg-transparent pt-3.5 pb-2.5 font-(family-name:--font-courier) text-[26px] leading-[normal] text-ink outline-none placeholder:text-[#808080] focus:border-ink disabled:cursor-not-allowed"
+        className="h-[54px] w-full rounded-none border-b border-[#333] bg-transparent pt-3.5 pb-2.5 text-[26px] leading-[normal] font-normal text-ink outline-none placeholder:text-[#808080] focus:border-ink disabled:cursor-not-allowed"
       />
 
       {failed && (

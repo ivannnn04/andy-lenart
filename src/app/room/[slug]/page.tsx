@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Courier_Prime } from "next/font/google";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { Photo } from "@/components/Photo";
@@ -9,9 +8,6 @@ import { SiteHeader } from "@/components/sections/SiteHeader";
 import { getRoom } from "@/lib/content/store";
 import { accessCookie, gateCookie, readGate, unsign } from "@/lib/rooms";
 import type { GateState } from "./actions";
-
-// The typewriter face of the keyword field.
-const courier = Courier_Prime({ weight: "400", subsets: ["latin", "latin-ext"], variable: "--font-courier" });
 
 export const metadata: Metadata = {
   title: "Listening Room · Andy Lenárt",
@@ -45,7 +41,7 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
   const { photo } = room;
 
   return (
-    <div className={`${courier.variable} overflow-x-clip`}>
+    <div className="overflow-x-clip">
       {/* Same header as the other pages; the inline-size container is what the design unit (--u) measures. */}
       <div className="mx-auto w-full max-w-[1440px] [container-type:inline-size]">
         <SiteHeader variant="compact" inset="px-7" />
