@@ -19,6 +19,7 @@ export async function RoomHeader({
   href,
   extra,
   phoneExtra,
+  phone,
 }: {
   tone: "light" | "dark";
   label: string;
@@ -27,6 +28,8 @@ export async function RoomHeader({
   extra?: ReactNode;
   /** The same on the phone bar, beside "Public". */
   phoneExtra?: ReactNode;
+  /** Phone bar layout where the page's design differs from the default. */
+  phone?: { inset?: string; logoWidth?: number; align?: "center" | "top" };
 }) {
   const dark = tone === "dark";
   const { nav } = (await getContent()).settings;
@@ -44,6 +47,7 @@ export async function RoomHeader({
         className="md:hidden"
         buttonExtra={phoneExtra}
         title={pageLink}
+        {...phone}
       />
 
       <header className="relative h-[calc(200*var(--u))] max-md:hidden">

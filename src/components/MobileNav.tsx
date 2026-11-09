@@ -22,6 +22,8 @@ export function MobileNav({
   inset = "gutter",
   tone = "light",
   buttonExtra,
+  logoWidth = 72,
+  align = "center",
 }: {
   /** Page name (or a link) on the left; without it "Public" goes there. */
   /** Site navigation (from the admin settings). */
@@ -34,20 +36,28 @@ export function MobileNav({
   tone?: "light" | "dark";
   /** Drawn beside "Public" (hand-lettering), not part of the button. */
   buttonExtra?: ReactNode;
+  /** Width of the monogram, px. */
+  logoWidth?: number;
+  /** "top": the page name and "Public" sit at the top of the bar (The Staircase) instead of mid-height. */
+  align?: "center" | "top";
 }) {
   const dark = tone === "dark";
   const menu = useRef<HTMLDialogElement>(null);
   const close = () => menu.current?.close();
   const path = usePathname();
+  const top = align === "top";
 
   const bar = (button: ReactNode) => (
     // Three columns: the side ones share what the monogram leaves, so a long
     // page name wraps instead of running under it.
-    <div className={`grid h-[101px] grid-cols-[minmax(0,1fr)_72px_minmax(0,1fr)] items-center gap-3 ${inset}`}>
+    <div
+      className={`grid h-[101px] gap-3 ${top ? "items-start" : "items-center"} ${inset}`}
+      style={{ gridTemplateColumns: `minmax(0,1fr) ${logoWidth}px minmax(0,1fr)` }}
+    >
       {title ? (
-        <span className={`${barText} leading-[1.1] pb-[0.08em]`}>{title}</span>
+        <span className={`${barText} ${top ? "pt-[35px] leading-[1.2]" : "leading-[1.1] pb-[0.08em]"}`}>{title}</span>
       ) : (
-        <div className="flex">{button}</div>
+        <div className={`flex ${top ? "pt-9" : ""}`}>{button}</div>
       )}
       <Link
         href="/"
@@ -60,19 +70,20 @@ export function MobileNav({
             window.scrollTo({ top: 0, behavior: "smooth" });
           }
         }}
-        className="w-[72px] self-start pt-5"
+        className={`self-start ${top ? "pt-[18px]" : "pt-5"}`}
+        style={{ width: logoWidth }}
       >
         <Image
           src="/images/logo-mark.png"
           alt=""
           width={332}
           height={282}
-          sizes="72px"
+          sizes={`${logoWidth}px`}
           preload
           className={dark ? "invert" : undefined}
         />
       </Link>
-      {title && <div className="relative flex justify-end">{button}</div>}
+      {title && <div className={`relative flex justify-end ${top ? "pt-[33px]" : ""}`}>{button}</div>}
     </div>
   );
 
