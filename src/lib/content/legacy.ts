@@ -236,8 +236,13 @@ export function withCurrentOrder(garments: Garment[]): Garment[] {
     });
 }
 
-/** Privacy texts the site once shipped with (the draft with placeholders), by a hash of the body. */
-const REPLACED_PRIVACY = ["62c5a3e88b4889e7"];
+/**
+ * Privacy texts the site once shipped with (the draft with placeholders, then
+ * the text before the Staircase note and Supabase), by a hash of the body.
+ */
+const REPLACED_PRIVACY = ["62c5a3e88b4889e7", "5f7425945bf1fac7"];
+/** Dates those texts carried. */
+const REPLACED_PRIVACY_DATES = ["[DATE]", "5 November 2026"];
 
 /** A privacy policy saved while it was still the built-in draft gets the current built-in text; edits are left alone. */
 export function withCurrentPrivacy(privacy: Privacy): Privacy {
@@ -246,6 +251,6 @@ export function withCurrentPrivacy(privacy: Privacy): Privacy {
   return {
     ...privacy,
     body: DEFAULT_CONTENT.privacy.body,
-    updated: privacy.updated === "[DATE]" ? DEFAULT_CONTENT.privacy.updated : privacy.updated,
+    updated: REPLACED_PRIVACY_DATES.includes(privacy.updated) ? DEFAULT_CONTENT.privacy.updated : privacy.updated,
   };
 }

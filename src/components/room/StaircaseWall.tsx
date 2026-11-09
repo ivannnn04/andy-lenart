@@ -236,6 +236,13 @@ export function StaircaseWall({ slug, initialMarks }: { slug: string; initialMar
             <p className="-mt-3 text-[12px] text-[#d9d9d9] md:text-[16px]" aria-live="polite">
               {count} / {MAX_MARK_LENGTH}
             </p>
+            {/* Andy's note on privacy: what is shared, and where to read more (a new tab keeps the thought typed so far). */}
+            <p className="text-[12px] leading-[1.45] text-[#d9d9d9] md:text-[14px]">
+              Your mark is public: everyone who owns a piece can read it. Use a nickname and don’t share personal details.{" "}
+              <a href="/privacy" target="_blank" className="underline underline-offset-2 transition-opacity hover:opacity-60">
+                Privacy policy
+              </a>
+            </p>
             {failure && (
               <p role="alert" className="text-[13px] leading-[1.4] normal-case tracking-normal text-[#ff8a7a]">
                 {failure}
