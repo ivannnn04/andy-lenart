@@ -10,6 +10,17 @@ const VOLUME = 0.6;
 // by a link inside the site (no reload) skips it.
 let shownThisLoad = false;
 
+// Whether this browser lets the page change the volume (iOS does not).
+let volumeWorks: boolean | undefined;
+const canFade = () => {
+  if (volumeWorks === undefined) {
+    const probe = new Audio();
+    probe.volume = 0.5;
+    volumeWorks = probe.volume === 0.5;
+  }
+  return volumeWorks;
+};
+
 /**
  * The opening screen (Figma "Desktop - 35"): the line of text rises word by
  * word while the page loads, then the black lifts away. "Sound on / off"
@@ -76,10 +87,13 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
     setSound(on);
     setPicked(true);
     if (!el) return;
+    // iPhones and iPads don't let a page set the volume: no fade there, just play and pause.
+    const smooth = canFade();
     if (on) {
-      el.volume = 0;
-      el.play().then(() => ramp(VOLUME)).catch(() => setSound(false));
-    } else ramp(0, () => el.pause());
+      if (smooth) el.volume = 0;
+      el.play().then(() => smooth && ramp(VOLUME)).catch(() => setSound(false));
+    } else if (smooth) ramp(0, () => el.pause());
+    else el.pause();
   };
 
   // Any other sound on the page (a garment's preview) takes over from the background track.
