@@ -678,18 +678,18 @@ function PaperWallsCollage() {
 
 // The big SUN / SET letters break inside their narrow boxes, as in the design.
 const bigLetters =
-  "text-center font-medium leading-[1.2] text-[#efefef] text-[calc(90*var(--m))] md:text-[calc(120*var(--u))]";
+  "text-center font-medium leading-[1.2] text-[#efefef] text-[calc(90*var(--m))] md:text-[calc(120*var(--u))] md:leading-[1.25]";
 
 function SovietSunsetCollage() {
   return (
     <>
-      <Placed place={{ m: [17, 433, 172.4], d: [225, 337, 172.4] }} className="pointer-events-none">
+      <Placed place={{ m: [17, 433, 172.4], d: [225, 339, 172.4] }} className="pointer-events-none">
         <p aria-hidden className={bigLetters}>
           <span className="block">SU</span>
           <span className="block">N</span>
         </p>
       </Placed>
-      <Placed place={{ m: [189.4, 576.8, 161.6], d: [558, 477, 161.6] }} className="pointer-events-none mix-blend-difference">
+      <Placed place={{ m: [189.4, 576.8, 161.6], d: [558, 479, 161.6] }} className="pointer-events-none mix-blend-difference">
         {/* "SE / T" on phones, "S / ET" on desktop (where the design's wider letters break it so). */}
         <p aria-hidden className={bigLetters}>
           <span className="block">
