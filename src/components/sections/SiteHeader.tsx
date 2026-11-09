@@ -1,5 +1,6 @@
 import { MobileNav } from "@/components/MobileNav";
 import { Photo } from "@/components/Photo";
+import { SoundWave } from "@/components/SoundWave";
 import { StickyNav } from "@/components/StickyNav";
 import { placer, stage } from "@/lib/design";
 import { getContent } from "@/lib/content/store";
@@ -60,15 +61,16 @@ export async function SiteHeader({
       className="stage gutter max-md:hidden"
       style={stage(v.height)}
     >
-      <Photo
-        src="/images/radio-wave.png"
-        alt="Hand-drawn sound wave"
-        width={308}
-        height={194}
-        sizes="(min-width: 768px) 22vw, 112px"
-        className="place w-28"
-        style={v.wave}
-      />
+      {/* Also the switch for the home page's background track (see Preloader). */}
+      <SoundWave className="place w-28" style={v.wave}>
+        <Photo
+          src="/images/radio-wave.png"
+          alt="Hand-drawn sound wave"
+          width={308}
+          height={194}
+          sizes="(min-width: 768px) 22vw, 112px"
+        />
+      </SoundWave>
       {/* The logo never moves: no reveal, no hover effect. */}
       <a
         href={v.logoHref}

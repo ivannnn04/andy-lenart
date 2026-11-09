@@ -696,3 +696,41 @@ html:has(.preloader:not(.is-leaving)) {
     opacity: 0;
   }
 }
+
+/* The header's sound wave while the background track plays: it pulses like a level meter. */
+.sound-wave > * {
+  transform-origin: 50% 55%;
+  transition: transform 0.4s ease;
+}
+.sound-wave:not(:disabled):hover > * {
+  transform: scaleY(1.08);
+}
+.sound-wave.is-playing > * {
+  animation: wave-play 1.6s ease-in-out infinite;
+}
+@keyframes wave-play {
+  0%,
+  100% {
+    transform: scaleY(1);
+  }
+  15% {
+    transform: scaleY(0.55);
+  }
+  32% {
+    transform: scaleY(1.25);
+  }
+  50% {
+    transform: scaleY(0.7);
+  }
+  68% {
+    transform: scaleY(1.15);
+  }
+  84% {
+    transform: scaleY(0.85);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sound-wave.is-playing > * {
+    animation: none;
+  }
+}

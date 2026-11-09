@@ -1,25 +1,14 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
+import { backgroundSound } from "@/lib/background-sound";
 
 // The shortest time the opening stays up, so the words can be read.
 const MIN_MS = 2600;
-const VOLUME = 0.6;
 
 // Shown on every load or reload of the page; coming back to the home page
 // by a link inside the site (no reload) skips it.
 let shownThisLoad = false;
-
-// Whether this browser lets the page change the volume (iOS does not).
-let volumeWorks: boolean | undefined;
-const canFade = () => {
-  if (volumeWorks === undefined) {
-    const probe = new Audio();
-    probe.volume = 0.5;
-    volumeWorks = probe.volume === 0.5;
-  }
-  return volumeWorks;
-};
 
 /**
  * The opening screen (Figma "Desktop - 35"): the line of text rises word by
@@ -29,11 +18,16 @@ const canFade = () => {
  */
 export function Preloader({ lines, track }: { lines: string[]; track: string }) {
   const [phase, setPhase] = useState<"open" | "leaving" | "gone">(() => (shownThisLoad ? "gone" : "open"));
-  const [sound, setSound] = useState(false);
+  const sound = useSyncExternalStore(backgroundSound.subscribe, backgroundSound.isPlaying, () => false);
   // Whether the visitor has picked on or off yet (until then both read grey, as in the design).
   const [picked, setPicked] = useState(false);
   const audio = useRef<HTMLAudioElement>(null);
-  const fade = useRef<number>(undefined);
+
+  // The track is shared with the header's sound wave and the corner switch.
+  useEffect(() => {
+    backgroundSound.attach(audio.current);
+    return () => backgroundSound.attach(null);
+  }, [track]);
 
   const leave = useCallback(() => {
     shownThisLoad = true;
@@ -68,47 +62,10 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
     return () => window.clearTimeout(t);
   }, [phase]);
 
-  const ramp = (to: number, then?: () => void) => {
-    const el = audio.current;
-    if (!el) return;
-    window.clearInterval(fade.current);
-    fade.current = window.setInterval(() => {
-      const next = el.volume + (to > el.volume ? 0.04 : -0.06);
-      if ((to > el.volume && next >= to) || (to <= el.volume && next <= to)) {
-        el.volume = Math.max(0, Math.min(1, to));
-        window.clearInterval(fade.current);
-        then?.();
-      } else el.volume = Math.max(0, Math.min(1, next));
-    }, 60);
-  };
-
   const turn = (on: boolean) => {
-    const el = audio.current;
-    setSound(on);
     setPicked(true);
-    if (!el) return;
-    // iPhones and iPads don't let a page set the volume: no fade there, just play and pause.
-    const smooth = canFade();
-    if (on) {
-      if (smooth) el.volume = 0;
-      el.play().then(() => smooth && ramp(VOLUME)).catch(() => setSound(false));
-    } else if (smooth) ramp(0, () => el.pause());
-    else el.pause();
+    backgroundSound.turn(on);
   };
-
-  // Any other sound on the page (a garment's preview) takes over from the background track.
-  useEffect(() => {
-    const other = (e: Event) => {
-      if (e.target !== audio.current && sound) {
-        audio.current?.pause();
-        setSound(false);
-      }
-    };
-    document.addEventListener("play", other, true);
-    return () => document.removeEventListener("play", other, true);
-  }, [sound]);
-
-  useEffect(() => () => window.clearInterval(fade.current), []);
 
   const words = lines.map((line) => line.split(/\s+/).filter(Boolean));
   let n = 0;
@@ -169,7 +126,7 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
       {track && phase === "gone" && (
         <button
           type="button"
-          onClick={() => turn(!sound)}
+          onClick={() => backgroundSound.toggle()}
           aria-pressed={sound}
           aria-label={sound ? "Sound off" : "Sound on"}
           className="sound-switch fixed bottom-4 left-4 z-50 flex items-center gap-2 text-[12px] tracking-[0.12em] text-white mix-blend-difference md:bottom-6 md:left-6"
