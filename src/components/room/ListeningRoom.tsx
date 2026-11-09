@@ -489,6 +489,8 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1293, 390], d: [420, 1171, 600] },
   },
   "paper-walls": {
+    // At 110% a fifth line on phones would reach the photo below.
+    lyricLines: [4, 4],
     footerY: 1418,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
@@ -507,6 +509,8 @@ const LAYOUTS: Record<ListeningRoomInfo["collage"], Layout> = {
     exit: { m: [0, 1293, 390], d: [420, 1162, 600] },
   },
   "soviet-sunset": {
+    // At 110% a fifth line on phones would reach SUN.
+    lyricLines: [4, 4],
     footerY: 1419,
     height: [1466, 1258],
     touch: { m: [95, 54, 200], d: [556, 65, 324] },
@@ -1180,7 +1184,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
               lines={room.lyrics}
               maxLines={layout.lyricLines ?? [5, 4]}
               // Scales with the collage, so a line wraps the same way at every width.
-              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[calc(24*var(--m))] leading-none font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[calc(40*var(--u))]"
+              className="mt-[calc(15*var(--m))] w-[calc(220*var(--m))] text-[calc(24*var(--m))] leading-[1.1] font-bold uppercase md:mt-[calc(13*var(--u))] md:w-[calc(333*var(--u))] md:text-[calc(40*var(--u))]"
             />
           </Placed>
 
