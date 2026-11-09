@@ -360,18 +360,20 @@ const FORM_PICTURES: Picture[] = [
 
 // "The Signatures" (Figma "09 — THE SIGNATURES").
 const SIGNATURES_PICTURES: Picture[] = [
+  // The graffiti photos and the 1322 lettering under them, rendered together
+  // from Figma with the layers' blend modes (the top photo's "difference"
+  // inverts part of 1322). The two layouts arrange them differently.
   {
-    file: "room-09-graffiti.webp",
-    alt: "Black-and-white photos of graffiti tags layered over each other",
-    layer: "Group 1503:229",
-    place: { m: [40, 463, 246, 323], d: [297.5, 375.7, 420.6, 552.3] },
+    file: "room-09-graffiti-m.webp",
+    alt: "Black-and-white photos of graffiti tags layered over each other, with 1322 written above them",
+    layer: "Group 2085663279 + communal shame 7 (mobile)",
+    place: { m: [38.55, 423.99, 247.45, 362.01] },
   },
   {
-    file: "room-09-1322.webp",
-    alt: "Handwritten: 1322",
-    layer: "communal shame 7",
-    place: { m: [38.6, 424, 134.9, 100], d: [295, 309, 230.8, 170.9] },
-    lettering: true,
+    file: "room-09-graffiti-d.webp",
+    alt: "Black-and-white photos of graffiti tags layered over each other, with 1322 written above them",
+    layer: "Group 2085663270 (desktop)",
+    place: { d: [295, 309, 423.11, 619] },
   },
   {
     file: "room-09-photo-flats.webp",
