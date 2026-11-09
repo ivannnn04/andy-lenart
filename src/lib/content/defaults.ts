@@ -225,6 +225,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/garment-01-4.webp",
           "alt": "Model in the coat on concrete steps beside a handrail, holding a large blue checked bag",
@@ -465,6 +470,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy02",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-02-photo-paper-walls.webp",
           "alt": "Black-and-white photo of two men at a table in front of a bookcase",
@@ -652,6 +662,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy03",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-03-photo-family.webp",
           "alt": "Black-and-white photo of a mother with two small children on her lap",
@@ -891,6 +906,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy04",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-04-photo-protest.webp",
           "alt": "Faded colour photo of a crowd in front of a monument covered in posters and flags",
@@ -1055,6 +1075,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy05",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-05-photo-sculpture.webp",
           "alt": "Black-and-white photo of a concrete sculpture between bushes in front of a housing block",
@@ -1274,6 +1299,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy06",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-06-photo-tower.webp",
           "alt": "Black-and-white photo of a long housing block above trees",
@@ -1479,6 +1509,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy07",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-07-photo-hand.webp",
           "alt": "Black-and-white photo of a hand resting on a weathered stone sculpture",
@@ -1672,6 +1707,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy08",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-08-photo-shadows.webp",
           "alt": "Black-and-white photo of a tower block with leaf shadows across it",
@@ -1877,6 +1917,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy09",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-09-graffiti.webp",
           "alt": "Black-and-white photos of graffiti tags layered over each other",
@@ -2091,6 +2136,11 @@ export const DEFAULT_CONTENT: SiteContent = {
       "room": {
         "enabled": true,
         "keyword": "andy10",
+        "gate": {
+          "text": "Enter the **third word** of the concept text, found inside your garment.",
+          "note": "(Excludes title & collection name)",
+          "error": "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above."
+        },
         "photo": {
           "src": "/images/room-10-photo-family.webp",
           "alt": "Faded colour photo of a family around a coffee table with bottles and fruit",

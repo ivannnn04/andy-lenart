@@ -10,7 +10,7 @@ import { deleteRequest, deleteSubscriber, setRequestDone, withinLimit } from "@/
 import { deleteMark, updateMark } from "@/lib/content/marks";
 import * as normalize from "@/lib/content/normalize";
 import { CONTENT_TAG, saveContent } from "@/lib/content/store";
-import type { Garment, SiteContent } from "@/lib/content/types";
+import { DEFAULT_GATE_TEXT, type Garment, type SiteContent } from "@/lib/content/types";
 
 export type ActionResult = { ok: true; slug?: string } | { ok: false; error: string };
 
@@ -135,7 +135,7 @@ export async function createGarment() {
         concept: { paragraphs: [], image: { alt: "", width: 1836, height: 1056 }, quote: "" },
         credits: [],
         inside: { title: [], paragraphs: [], image: { alt: "", width: 560, height: 360 } },
-        room: { enabled: false, keyword: "", lyrics: [], verse: [], collage: "pelican" },
+        room: { enabled: false, keyword: "", gate: DEFAULT_GATE_TEXT, lyrics: [], verse: [], collage: "pelican" },
       };
       return { ...c, garments: [...c.garments, blank] };
     });

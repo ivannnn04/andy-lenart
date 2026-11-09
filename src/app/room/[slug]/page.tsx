@@ -6,6 +6,7 @@ import { ListeningRoom } from "@/components/room/ListeningRoom";
 import { RoomGate } from "@/components/room/RoomGate";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { getRoom } from "@/lib/content/store";
+import { inline } from "@/lib/inline";
 import { accessCookie, gateCookie, readGate, unsign } from "@/lib/rooms";
 import type { GateState } from "./actions";
 
@@ -66,15 +67,14 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
               {room.titleLines.join(" ")}
             </h1>
 
-            <p className="mt-6 text-[20px] leading-[1.5] font-medium text-ink">
-              Enter the <strong className="font-bold">third word</strong> of the concept text,
-              found inside your garment.
-            </p>
-            <p className="mt-0.5 text-[12px] leading-[normal] font-medium uppercase tracking-[0.1em] text-muted">
-              (Excludes title &amp; collection name)
-            </p>
+            <p className="mt-6 text-[20px] leading-[1.5] font-medium text-ink">{inline(room.gate.text)}</p>
+            {room.gate.note && (
+              <p className="mt-0.5 text-[12px] leading-[normal] font-medium uppercase tracking-[0.1em] text-muted">
+                {inline(room.gate.note)}
+              </p>
+            )}
             <div className="mt-2.5">
-              <RoomGate slug={slug} initial={initial} />
+              <RoomGate slug={slug} initial={initial} error={room.gate.error} />
             </div>
           </main>
         </div>

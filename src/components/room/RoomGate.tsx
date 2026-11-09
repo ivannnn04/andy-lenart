@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { enterRoom, type GateState } from "@/app/room/[slug]/actions";
+import { inline } from "@/lib/inline";
 
 const ERROR_BLUE = "text-[#2137e1]";
 
@@ -10,7 +11,7 @@ const ERROR_BLUE = "text-[#2137e1]";
  * "08 — Room gate · wrong word"). The word is checked on the server; this
  * component only shows the result.
  */
-export function RoomGate({ slug, initial }: { slug: string; initial: GateState }) {
+export function RoomGate({ slug, initial, error }: { slug: string; initial: GateState; error: string }) {
   const [state, formAction, pending] = useActionState(enterRoom.bind(null, slug), initial);
   const locked = useLockCountdown(state);
   // A wrong word, or the lock that the last wrong word triggered.
@@ -19,7 +20,7 @@ export function RoomGate({ slug, initial }: { slug: string; initial: GateState }
   return (
     <form action={formAction} className="flex flex-col">
       <label htmlFor="room-word" className="sr-only">
-        Third word of the concept text
+        Entry word
       </label>
       <input
         id="room-word"
@@ -59,8 +60,7 @@ export function RoomGate({ slug, initial }: { slug: string; initial: GateState }
           >
             <path d="M1 1l10 10M11 1 1 11" />
           </svg>
-          Incorrect word. Check the <strong className="font-bold">concept text</strong> printed
-          inside the garment and try again, following the guide above.
+          {inline(error)}
         </p>
       )}
 

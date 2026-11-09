@@ -52,11 +52,29 @@ export const COLLAGES = [
 export type Collage = (typeof COLLAGES)[number];
 
 /** A garment's private Listening Room at /room/<garment slug>. */
+/** What the room's entry page says; `**double asterisks**` for bold. */
+export type RoomGateText = {
+  /** The instruction above the field. */
+  text: string;
+  /** The small capitals line under it. */
+  note: string;
+  /** Shown after a wrong word. */
+  error: string;
+};
+
+export const DEFAULT_GATE_TEXT: RoomGateText = {
+  text: "Enter the **third word** of the concept text, found inside your garment.",
+  note: "(Excludes title & collection name)",
+  error: "Incorrect word. Check the **concept text** printed inside the garment and try again, following the guide above.",
+};
+
 export type RoomContent = {
   /** Off: the room's address shows "not found". */
   enabled: boolean;
   /** Entry word. Case and punctuation are ignored. */
   keyword: string;
+  /** Texts of the entry page (the built-in ones when left empty). */
+  gate: RoomGateText;
   /** Shown beside the gate on desktop. */
   photo?: GarmentImage;
   /** The full track the tape plays. */

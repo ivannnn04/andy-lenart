@@ -197,6 +197,17 @@ export const SCHEMAS = {
           { kind: "checkbox", key: "enabled", label: "Room open", help: "On: /room/<address> works — point the garment’s NFC tag there." },
           { kind: "text", key: "keyword", label: "Entry word", help: "What owners type to open the room. Case and punctuation don’t matter." },
           {
+            kind: "group",
+            key: "gate",
+            label: "Entry page",
+            help: "What the page before the room says. Use **double asterisks** for bold. Empty a field to bring back the original text.",
+            fields: [
+              { kind: "textarea", key: "text", label: "Instruction", help: "Above the field, e.g. which word of the concept text to enter.", rows: 2 },
+              { kind: "text", key: "note", label: "Small line under it" },
+              { kind: "textarea", key: "error", label: "After a wrong word", rows: 3 },
+            ],
+          },
+          {
             kind: "select",
             key: "collage",
             label: "Collage",

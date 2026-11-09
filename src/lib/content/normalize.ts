@@ -5,6 +5,7 @@
 import {
   COLLAGES,
   type Collage,
+  DEFAULT_GATE_TEXT,
   type Garment,
   type GarmentImage,
   type HomeContent,
@@ -13,6 +14,7 @@ import {
   type NavItem,
   type Privacy,
   type RoomContent,
+  type RoomGateText,
   type Settings,
 } from "./types";
 
@@ -82,6 +84,16 @@ export function lyrics(v: unknown): Lyric[] {
     .sort((a, b) => a.time - b.time);
 }
 
+/** An emptied field brings back the built-in text. */
+function gateText(v: unknown): RoomGateText {
+  const o = obj(v);
+  return {
+    text: str(o.text, 400) || DEFAULT_GATE_TEXT.text,
+    note: str(o.note, 200) || DEFAULT_GATE_TEXT.note,
+    error: str(o.error, 400) || DEFAULT_GATE_TEXT.error,
+  };
+}
+
 function roomContent(v: unknown): RoomContent {
   const o = obj(v);
   const photo = image(o.photo);
@@ -89,6 +101,7 @@ function roomContent(v: unknown): RoomContent {
   return {
     enabled: o.enabled === true,
     keyword: str(o.keyword, 80),
+    gate: gateText(o.gate),
     photo: photo.src ? photo : undefined,
     track: mediaSrc(o.track),
     lyrics: lyrics(o.lyrics),
