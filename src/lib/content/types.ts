@@ -165,6 +165,8 @@ export type Settings = {
   roomAttempts: number;
   /** How long that pause lasts, in minutes. */
   roomLockMinutes: number;
+  /** Reports that take a Staircase mark off the wall until the admin looks at it. */
+  markReports: number;
 };
 
 /** The privacy policy page (/privacy). */
@@ -185,7 +187,7 @@ export type SiteContent = {
 };
 
 /** Longest thought a visitor can leave on the Staircase. */
-export const MAX_MARK_LENGTH = 240;
+export const MAX_MARK_LENGTH = 500;
 
 export type Mark = {
   id: string;
@@ -198,7 +200,14 @@ export type Mark = {
   room?: string;
   createdAt: number;
   hidden?: boolean;
+  /** Visitors who reported it (hashed, one per visitor); cleared when the admin restores it. */
+  reports?: string[];
+  /** Taken off the wall by reports, waiting for the admin. */
+  reported?: boolean;
 };
+
+/** A mark as the wall shows it (who reported it stays on the server). */
+export type PublicMark = Omit<Mark, "reports" | "reported">;
 
 export type PieceRequest = {
   id: string;

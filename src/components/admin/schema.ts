@@ -63,6 +63,12 @@ export const SCHEMAS = {
       help: "How long the room stays closed after that (1–60).",
     },
     {
+      kind: "number",
+      key: "markReports",
+      label: "The Staircase: reports that hide a mark",
+      help: "A mark reported by this many visitors leaves the wall until you restore or delete it (1–20).",
+    },
+    {
       kind: "list",
       key: "nav",
       label: "Navigation",

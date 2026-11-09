@@ -172,6 +172,7 @@ export function settings(v: unknown): Settings {
     nav: arr(o.nav).map(navItem).filter((n) => n.label),
     roomAttempts: Math.min(20, Math.max(0, Math.round(num(o.roomAttempts, 5)))),
     roomLockMinutes: Math.min(60, Math.max(1, Math.round(num(o.roomLockMinutes, 1)))),
+    markReports: Math.min(20, Math.max(1, Math.round(num(o.markReports, 3)))),
   };
 }
 

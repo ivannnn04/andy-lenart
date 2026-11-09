@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useId, useRef, useState, type CSSProperties, type FormEvent } from "react";
-import { leaveMark } from "@/app/actions";
-import { MAX_MARK_LENGTH, type Mark } from "@/lib/content/types";
+import { leaveMark, reportMark } from "@/app/actions";
+import { MAX_MARK_LENGTH, type PublicMark as Mark } from "@/lib/content/types";
 
 // Marks left on this device, when no store is connected to share them.
 const STORAGE_KEY = "staircase-marks";
+// Marks this device has reported, so each shows "Reported" and is not sent twice.
+const REPORTED_KEY = "staircase-reported";
 
 type Errors = Partial<Record<"name" | "city" | "text", string>>;
 
@@ -50,6 +52,7 @@ export function StaircaseWall({ slug, initialMarks }: { slug: string; initialMar
   const [count, setCount] = useState(0);
   const [sending, setSending] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
+  const [reported, setReported] = useState<string[]>([]);
   const id = useId();
 
   useEffect(() => {
@@ -57,10 +60,28 @@ export function StaircaseWall({ slug, initialMarks }: { slug: string; initialMar
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "[]");
       // eslint-disable-next-line react-hooks/set-state-in-effect -- reading browser storage after hydration
       if (Array.isArray(saved)) setMine(saved);
+      const flagged = JSON.parse(localStorage.getItem(REPORTED_KEY) ?? "[]");
+      if (Array.isArray(flagged)) setReported(flagged);
     } catch {
       // Storage unavailable or corrupt: start with the shared wall only.
     }
   }, []);
+
+  const report = async (mark: Mark) => {
+    if (!confirm("Report this mark as spam or abusive? It will be reviewed.")) return;
+    const result = await reportMark(slug, mark.id).catch(() => ({ ok: false }));
+    if (!result.ok) {
+      alert("The report could not be sent — please try again later.");
+      return;
+    }
+    const next = [...reported, mark.id];
+    setReported(next);
+    try {
+      localStorage.setItem(REPORTED_KEY, JSON.stringify(next));
+    } catch {
+      // Not remembered on this device; the server still counts it once.
+    }
+  };
 
   const open = () => {
     setErrors({});
@@ -174,6 +195,19 @@ export function StaircaseWall({ slug, initialMarks }: { slug: string; initialMar
                 </p>
                 <footer className="mt-1.5 text-[13px] tracking-[0.04em] text-[#333] md:mt-2 md:text-[clamp(13px,calc(16*var(--u)),16px)]">
                   {mark.name} · {mark.city} · {mark.no}
+                  {shared.has(mark.id) &&
+                    (reported.includes(mark.id) ? (
+                      <span className="ml-2 text-[11px] tracking-normal text-[#888] md:text-[12px]">Reported — thank you</span>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() => report(mark)}
+                        aria-label={`Report the mark by ${mark.name}`}
+                        className="ml-2 text-[11px] tracking-normal text-[#888] underline underline-offset-2 transition-colors hover:text-black md:text-[12px]"
+                      >
+                        Report
+                      </button>
+                    ))}
                 </footer>
               </blockquote>
             </li>

@@ -7,7 +7,7 @@ import { assertAdmin, checkPassword, SESSION_COOKIE, sessionMaxAge, sessionValue
 import { deleteMedia as removeMediaFile } from "@/lib/admin/media";
 import { moveToSupabase, type MoveReport } from "@/lib/admin/move-to-supabase";
 import { deleteRequest, deleteSubscriber, setRequestDone, withinLimit } from "@/lib/content/inbox";
-import { deleteMark, updateMark } from "@/lib/content/marks";
+import { deleteMark, restoreMark, updateMark } from "@/lib/content/marks";
 import * as normalize from "@/lib/content/normalize";
 import { CONTENT_TAG, saveContent } from "@/lib/content/store";
 import { DEFAULT_GATE_TEXT, type Garment, type SiteContent } from "@/lib/content/types";
@@ -147,6 +147,11 @@ export async function createGarment() {
 
 export async function setMarkHidden(id: string, hidden: boolean) {
   return run(() => updateMark(id, { hidden }));
+}
+
+/** A reported mark back on the wall, its reports cleared. */
+export async function restoreReportedMark(id: string) {
+  return run(() => restoreMark(id));
 }
 
 export async function removeMark(id: string) {

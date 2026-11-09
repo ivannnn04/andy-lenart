@@ -50,13 +50,14 @@ export default async function Dashboard() {
     { label: "Open requests", value: openRequests, href: "/admin/inbox" },
     { label: "Subscribers", value: subscribers.length, href: "/admin/inbox#subscribers" },
     { label: "Marks on the Staircase", value: marks.filter((m) => !m.hidden).length, href: "/admin/staircase" },
+    { label: "Reported marks to review", value: marks.filter((m) => m.reported).length, href: "/admin/staircase" },
   ];
 
   return (
     <>
       <PageHeader title="Dashboard" intro="Everything on the site, in one place. Changes go live as soon as you save." />
 
-      <ul className="grid grid-cols-2 gap-3 md:grid-cols-5">
+      <ul className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-6">
         {stats.map((s) => (
           <li key={s.label}>
             <Link href={s.href} className={`${card} block transition-colors hover:border-ink`}>

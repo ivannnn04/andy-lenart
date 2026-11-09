@@ -1,6 +1,6 @@
 import "server-only";
 import { getStorage } from "./storage";
-import { MAX_MARK_LENGTH, type Mark } from "./types";
+import { MAX_MARK_LENGTH, type Mark, type PublicMark } from "./types";
 
 /**
  * The Staircase: one wall shared by every room. The starter marks from the
@@ -48,9 +48,25 @@ export async function allMarks(): Promise<Mark[]> {
   return marks.sort((a, b) => b.createdAt - a.createdAt);
 }
 
-/** What visitors see on the wall. */
-export async function visibleMarks() {
-  return (await allMarks()).filter((m) => !m.hidden);
+/** What visitors see on the wall (without who reported what). */
+export async function visibleMarks(): Promise<PublicMark[]> {
+  return (await allMarks()).filter((m) => !m.hidden).map(({ reports, reported, ...mark }) => (void reports, void reported, mark));
+}
+
+/**
+ * A visitor's report. Each visitor counts once; at `threshold` reports the
+ * mark leaves the wall until the admin restores or deletes it. Marks the
+ * admin has hidden themselves are left as they are.
+ */
+export async function reportMark(id: string, visitor: string, threshold: number) {
+  const storage = getStorage();
+  const mark = (await storage.hGetAll<Mark>(KEY))[id];
+  if (!mark || mark.hidden) return;
+  const reports = mark.reports ?? [];
+  if (reports.includes(visitor)) return;
+  const next = [...reports, visitor];
+  const hide = next.length >= threshold;
+  await storage.hSet(KEY, id, { ...mark, reports: next, ...(hide && { hidden: true, reported: true }) });
 }
 
 export async function addMark(mark: Mark) {
@@ -61,6 +77,11 @@ export async function updateMark(id: string, change: Partial<Mark>) {
   const storage = getStorage();
   const current = (await storage.hGetAll<Mark>(KEY))[id];
   if (current) await storage.hSet(KEY, id, { ...current, ...change, id });
+}
+
+/** Back on the wall, its reports cleared. */
+export async function restoreMark(id: string) {
+  await updateMark(id, { hidden: false, reported: false, reports: [] });
 }
 
 export async function deleteMark(id: string) {

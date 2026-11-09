@@ -238,9 +238,10 @@ export function withCurrentOrder(garments: Garment[]): Garment[] {
 
 /**
  * Privacy texts the site once shipped with (the draft with placeholders, then
- * the text before the Staircase note and Supabase), by a hash of the body.
+ * the text before the Staircase note and Supabase, then before reports), by a
+ * hash of the body.
  */
-const REPLACED_PRIVACY = ["62c5a3e88b4889e7", "5f7425945bf1fac7"];
+const REPLACED_PRIVACY = ["62c5a3e88b4889e7", "5f7425945bf1fac7", "d5d05cc9e338727f"];
 /** Dates those texts carried. */
 const REPLACED_PRIVACY_DATES = ["[DATE]", "5 November 2026"];
 

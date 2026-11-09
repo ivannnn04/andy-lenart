@@ -26,11 +26,11 @@ export const deleteRequest = (id: string) => getStorage().hDel(REQUESTS, id);
 export const deleteSubscriber = (id: string) => getStorage().hDel(SUBSCRIBERS, id);
 
 /**
- * At most `limit` submissions per visitor per hour for a kind of form (the
- * forms are public, so this keeps the store from being flooded).
+ * At most `limit` submissions per visitor per hour (or per `seconds`) for a
+ * kind of form (the forms are public, so this keeps the store from being flooded).
  */
-export async function withinLimit(kind: string, visitor: string, limit: number) {
+export async function withinLimit(kind: string, visitor: string, limit: number, seconds = 3600) {
   const storage = getStorage();
   if (!storage.writable) return true;
-  return (await storage.incr(`limit:${kind}:${visitor}`, 3600)) <= limit;
+  return (await storage.incr(`limit:${kind}:${visitor}`, seconds)) <= limit;
 }

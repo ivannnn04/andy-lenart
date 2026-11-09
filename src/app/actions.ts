@@ -1,14 +1,15 @@
 "use server";
 
-import { randomUUID } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { cookies, headers } from "next/headers";
 import { addRequest, addSubscriber, withinLimit } from "@/lib/content/inbox";
-import { addMark, MAX_MARK_LENGTH } from "@/lib/content/marks";
+import { addMark, MAX_MARK_LENGTH, reportMark as fileReport } from "@/lib/content/marks";
 import { str } from "@/lib/content/normalize";
 import { getStorage } from "@/lib/content/storage";
-import { getRoom } from "@/lib/content/store";
+import { getContent, getRoom } from "@/lib/content/store";
 import type { Mark } from "@/lib/content/types";
 import { accessCookie, unsign } from "@/lib/rooms";
+import { markProblem } from "@/lib/moderation";
 import { emailError } from "@/lib/validate";
 
 /**
@@ -41,10 +42,29 @@ export async function leaveMark(slug: string, input: { name: string; city: strin
     createdAt: Date.now(),
   };
   if (!mark.name || !mark.city || !mark.text) return { ok: false, error: "Please fill in every field." };
+  const problem = markProblem(mark.text, mark.name, mark.city);
+  if (problem) return { ok: false, error: problem };
   if (!getStorage().writable) return { ok: true, stored: false, mark };
-  if (!(await withinLimit("mark", await visitor(), 10))) return tooMany;
+  const from = await visitor();
+  if (!(await withinLimit("mark-minute", from, 1, 60)))
+    return { ok: false, error: "One mark a minute — please wait a moment and try again." };
+  if (!(await withinLimit("mark", from, 10))) return tooMany;
   await addMark(mark);
   return { ok: true, stored: true, mark };
+}
+
+/**
+ * "Report" on a Staircase mark, from someone who can see the wall. Visitors
+ * are counted by a hash of their address, so nobody's address is stored.
+ */
+export async function reportMark(slug: string, id: string): Promise<{ ok: boolean }> {
+  if (unsign((await cookies()).get(accessCookie(slug))?.value) !== "granted") return { ok: false };
+  if (!getStorage().writable) return { ok: true };
+  const from = await visitor();
+  if (!(await withinLimit("report", from, 30))) return { ok: false };
+  const who = createHash("sha256").update(`${process.env.ROOM_SECRET ?? ""}:${from}`).digest("hex").slice(0, 16);
+  await fileReport(String(id).slice(0, 100), who, (await getContent()).settings.markReports);
+  return { ok: true };
 }
 
 /** "Request this piece". */
