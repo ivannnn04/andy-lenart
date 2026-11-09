@@ -18,7 +18,8 @@ async function readContent(): Promise<SiteContent> {
     settings: stored?.settings
       ? { ...DEFAULT_CONTENT.settings, ...stored.settings, filterWords: filterWords(stored.settings as Record<string, unknown>) }
       : DEFAULT_CONTENT.settings,
-    home: stored?.home ?? DEFAULT_CONTENT.home,
+    // Home sections added later (e.g. the preloader) come from the defaults until saved.
+    home: stored?.home ? { ...DEFAULT_CONTENT.home, ...stored.home } : DEFAULT_CONTENT.home,
     privacy: stored?.privacy ? withCurrentPrivacy(stored.privacy) : DEFAULT_CONTENT.privacy,
     // Checked on the way out too, so an older saved shape never breaks a page.
     garments: legacy

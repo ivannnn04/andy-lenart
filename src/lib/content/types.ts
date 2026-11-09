@@ -154,6 +154,8 @@ export type HomeContent = {
     statementBold: string;
   };
   stayConnected: { title: string; subtitle: string };
+  /** The opening screen: a line of text while the page loads, and the track behind "Sound on / off". */
+  preloader: { lines: string[]; track: string };
 };
 
 export type Settings = {

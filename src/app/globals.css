@@ -571,3 +571,132 @@ textarea:autofill,
 select:autofill {
   filter: none;
 }
+
+/*
+ * The opening screen (Preloader.tsx). Each word rises from under a mask,
+ * one after another; a hairline fills while the page loads; then the words
+ * leave upwards and the black lifts away. Seen already in this tab: hidden
+ * before paint (the inline script sets data-intro).
+ */
+[data-intro="seen"] .preloader {
+  display: none;
+}
+html:has(.preloader:not(.is-leaving)) {
+  overflow: hidden;
+}
+.pl-word {
+  display: inline-block;
+  overflow: hidden;
+  /* Room for the comma's tail inside the mask. */
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  vertical-align: top;
+  white-space: pre;
+}
+.pl-word > span {
+  display: inline-block;
+  transform: translateY(105%);
+  animation: pl-rise 0.9s cubic-bezier(0.2, 0.7, 0.1, 1) forwards;
+  animation-delay: calc(0.25s + var(--i) * 0.09s);
+}
+.pl-bar > span {
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: pl-fill 2.2s cubic-bezier(0.4, 0, 0.2, 1) 0.4s forwards;
+}
+.pl-sound {
+  opacity: 0;
+  animation: pl-fade 0.8s ease 1.2s forwards;
+}
+.preloader.is-leaving {
+  animation: pl-lift 0.9s cubic-bezier(0.7, 0, 0.2, 1) 0.45s forwards;
+  pointer-events: none;
+}
+.preloader.is-leaving .pl-word > span {
+  transform: none;
+  animation: pl-leave 0.55s cubic-bezier(0.6, 0, 0.4, 1) forwards;
+  animation-delay: calc(var(--i) * 0.03s);
+}
+.preloader.is-leaving .pl-bar,
+.preloader.is-leaving .pl-sound {
+  transition: opacity 0.3s;
+  opacity: 0;
+}
+@keyframes pl-rise {
+  to {
+    transform: none;
+  }
+}
+@keyframes pl-leave {
+  to {
+    transform: translateY(-105%);
+  }
+}
+@keyframes pl-fill {
+  to {
+    transform: none;
+  }
+}
+@keyframes pl-fade {
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pl-lift {
+  to {
+    clip-path: inset(0 0 100% 0);
+  }
+}
+
+/* The corner switch: three bars that move while the track plays. */
+.sound-bars {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+.sound-bars > span {
+  width: 2px;
+  height: 3px;
+  background: currentColor;
+}
+.sound-bars.is-on > span {
+  animation: sound-bar 0.9s ease-in-out infinite alternate;
+}
+.sound-bars.is-on > span:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.sound-bars.is-on > span:nth-child(3) {
+  animation-delay: -0.6s;
+}
+@keyframes sound-bar {
+  from {
+    height: 3px;
+  }
+  to {
+    height: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-word > span,
+  .pl-bar > span,
+  .pl-sound,
+  .preloader.is-leaving .pl-word > span {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+  .preloader.is-leaving {
+    animation: pl-fade-out 0.4s ease forwards;
+  }
+  .sound-bars.is-on > span {
+    animation: none;
+    height: 8px;
+  }
+}
+@keyframes pl-fade-out {
+  to {
+    opacity: 0;
+  }
+}

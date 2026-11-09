@@ -94,6 +94,21 @@ export const SCHEMAS = {
   home: [
     { kind: "lines", key: "heroLines", label: "Hero text", help: "One line per line, as it breaks on the page.", rows: 2 },
     { kind: "text", key: "heroTagline", label: "Hero tagline (bold)" },
+    {
+      kind: "group",
+      key: "preloader",
+      label: "Opening screen",
+      help: "Shown while the home page loads, once per visit.",
+      fields: [
+        { kind: "lines", key: "lines", label: "Text", help: "One line per line (up to 4).", rows: 2 },
+        {
+          kind: "audio",
+          key: "track",
+          label: "Background track",
+          help: "Plays when the visitor picks “Sound on”, and keeps playing on the home page until they turn it off. Empty hides “Sound on / off”.",
+        },
+      ],
+    },
     { kind: "lines", key: "manifesto", label: "Manifesto quote", help: "Each line starts a new line on desktop.", rows: 4 },
     {
       kind: "group",

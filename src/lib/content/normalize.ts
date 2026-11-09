@@ -207,6 +207,7 @@ export function home(v: unknown): HomeContent {
       statementBold: str(owners.statementBold, 300),
     },
     stayConnected: { title: str(stay.title, 200), subtitle: str(stay.subtitle, 500) },
+    preloader: { lines: lines(obj(o.preloader).lines, 200).slice(0, 4), track: mediaSrc(obj(o.preloader).track) ?? "" },
   };
 }
 

@@ -1,3 +1,4 @@
+import { Preloader, PRELOADER_SEEN_SCRIPT } from "@/components/Preloader";
 import { ScrollReveal } from "@/components/ScrollReveal";
 import { Collection } from "@/components/sections/Collection";
 import { Departures } from "@/components/sections/Departures";
@@ -13,6 +14,9 @@ export default async function Home() {
   const { home, garments, settings } = await getContent();
   return (
     <>
+      {/* Before paint: skip the opening screen when it was seen in this tab. */}
+      <script dangerouslySetInnerHTML={{ __html: PRELOADER_SEEN_SCRIPT }} />
+      <Preloader lines={home.preloader.lines} track={home.preloader.track} />
       {/* The inline-size container is what the design unit (--u) measures. */}
       <div
         id="top"

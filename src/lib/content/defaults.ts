@@ -40,6 +40,10 @@ export const DEFAULT_CONTENT: SiteContent = {
       "with a mother who was a waitress."
     ],
     "heroTagline": "This is how it continues...",
+    "preloader": {
+      "lines": ["When I see concrete,", "I feel at home."],
+      "track": ""
+    },
     "manifesto": [
       "One night I dreamed I broke into the flat I grew up in and found strangers asleep in every room. I wasn’t there to take anything.",
       "I just sat on the floor in grief. That’s where this collection began."
