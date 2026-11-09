@@ -1134,9 +1134,9 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           href={staircase}
           // Figma "01 — … (mobile)": "The / Staircase" at 35px from the left and
           // 45px from the top, "Public" 32px from the right and 55px down.
-          phone={{ inset: "pl-[35px] pr-8", logoWidth: 76, top: { title: 44, button: 52, logo: 35 } }}
+          phone={{ inset: "pl-[35px] pr-8", logoWidth: 76, top: { title: 44, button: 52, logo: 28 } }}
           // The monogram as large as in the room designs: its mark 118 px wide, 52 px from the top
-          // (phone: 52 px wide, 37 px down). The image has a little margin around the mark.
+          // (phone: 52 px wide, 30 px down). The image has a little margin around the mark.
           logo={{ width: 172, top: 47 }}
         />
 
@@ -1146,9 +1146,9 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           aria-labelledby="room-title"
           style={{ "--mh": layout.height[0], "--dh": layout.height[1] } as CSSProperties}
         >
-          {/* Sized to the design's width for the line (Figma sets it in the wider Text Pro). */}
+          {/* Desktop: the design's width for the line (Figma sets it in the wider Text Pro); phones: 15 px. */}
           <Placed place={layout.touch} className="text-center">
-            <p className="font-normal leading-[normal] text-[#efefef]" style={{ fontSize: `clamp(13.2px, calc(26.7 * var(--u)), 26.7px)` }}>
+            <p className="font-normal leading-[normal] text-[#efefef]" style={{ fontSize: `clamp(15px, calc(26.7 * var(--u)), 26.7px)` }}>
               TOUCH THE TAPE
             </p>
           </Placed>
