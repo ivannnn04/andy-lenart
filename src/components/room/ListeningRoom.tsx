@@ -64,7 +64,7 @@ const PELICAN_PICTURES: Picture[] = [
     place: { m: [69, 437, 250, 179], d: [242, 435, 348, 250] },
   },
   {
-    file: "room-hold-on.png",
+    file: "room-hold-on.webp",
     alt: "Handwritten: Hold on —",
     layer: "so endlessly 2 3",
     place: { m: [251, 546, 135, 170], d: [496, 587, 188, 237] },
@@ -84,7 +84,7 @@ const PELICAN_PICTURES: Picture[] = [
     place: { m: [199, 784, 160, 113], d: [408, 872, 237, 167] },
   },
   {
-    file: "room-so-endlessly.png",
+    file: "room-so-endlessly.webp",
     alt: "Handwritten: So endlessly fragmented",
     layer: "so endlessly 2 1",
     place: { m: [109, 837, 272, 170], d: [274, 950, 404, 252] },
@@ -97,7 +97,7 @@ const PELICAN_PICTURES: Picture[] = [
     place: { m: [85, 975, 160, 220], d: [723, 557, 273, 375] },
   },
   {
-    file: "room-was-that.png",
+    file: "room-was-that.webp",
     alt: "Handwritten: Was that the only way to survive?",
     layer: "was that.... 1",
     place: { m: [115, 953, 293, 183], d: [775, 519, 500, 313] },
@@ -126,14 +126,14 @@ const PAPER_WALLS_PICTURES: Picture[] = [
     place: { m: [107, 684, 181, 127], d: [307, 785, 275, 193] },
   },
   {
-    file: "room-02-line.png",
+    file: "room-02-line.webp",
     alt: "",
     layer: "lines 2",
     place: { m: [20, 536, 248, 568], d: [202, 566, 248, 568] },
     lettering: true,
   },
   {
-    file: "room-02-communal-shame.png",
+    file: "room-02-communal-shame.webp",
     alt: "Handwritten: Communal shame",
     layer: "communal shame 2",
     place: { m: [33, 562, 222, 322], d: [180, 651, 275, 399] },
@@ -157,7 +157,7 @@ const BLUEPRINT_PICTURES: Picture[] = [
     place: { m: [70, 450, 257, 169.8], d: [233, 433, 390.5, 258] },
   },
   {
-    file: "room-03-staying.png",
+    file: "room-03-staying.webp",
     alt: "Handwritten: Staying",
     layer: "cas 2",
     place: { m: [88.3, 474.1, 252.7, 121.7], d: [260.8, 469.6, 384, 185] },
@@ -174,7 +174,7 @@ const BLUEPRINT_PICTURES: Picture[] = [
   { ...FAMILY, alt: "", place: { m: [185, 964, 81, 107], d: [966.1, 691.2, 141.8, 187.3] } },
   { ...FAMILY, alt: "", place: { m: [291, 981, 54, 71.3], d: [1148.5, 720.9, 94.5, 124.8] } },
   {
-    file: "room-03-asking.png",
+    file: "room-03-asking.webp",
     alt: "Handwritten: I am asking, while I know I can't",
     layer: "cas 2 + cas 3",
     place: { m: [212, 1084, 189.5, 77.1], d: [1007.3, 906.2, 331.7, 134.9] },
@@ -208,7 +208,7 @@ const SUNSET_PICTURES: Picture[] = [
     blend: "luminosity",
   },
   {
-    file: "room-04-stand.png",
+    file: "room-04-stand.webp",
     alt: "Handwritten: Stand",
     layer: "Group 1347:69",
     place: { m: [14.3, 1064, 184.6, 100.7], d: [780, 1050, 240, 131] },
@@ -220,7 +220,7 @@ const SUNSET_PICTURES: Picture[] = [
 // collage is designed; desktop sets it in two columns, 1.5× the phone size.
 const COMFORT_PICTURES: Picture[] = [
   {
-    file: "room-05-abstract.png",
+    file: "room-05-abstract.webp",
     alt: "",
     layer: "ABSTRACT 1",
     place: { m: [0, 819, 390, 381], d: [720, 579.5, 585, 571.5] },
@@ -268,9 +268,9 @@ const STRIP = {
 };
 
 const SYMMETRICA_PICTURES: Picture[] = [
-  { ...STRIP, file: "room-06-strip-1.png", place: { m: [46, 496, 408, 28], d: [84, 472, 585, 40] } },
-  { ...STRIP, file: "room-06-strip-2.png", place: { m: [46, 535, 408, 28], d: [84, 537.5, 585, 40] } },
-  { ...STRIP, file: "room-06-strip-3.png", place: { m: [46, 574, 408, 28], d: [84, 603.9, 585, 40] } },
+  { ...STRIP, file: "room-06-strip-1.webp", place: { m: [46, 496, 408, 28], d: [84, 472, 585, 40] } },
+  { ...STRIP, file: "room-06-strip-2.webp", place: { m: [46, 535, 408, 28], d: [84, 537.5, 585, 40] } },
+  { ...STRIP, file: "room-06-strip-3.webp", place: { m: [46, 574, 408, 28], d: [84, 603.9, 585, 40] } },
   {
     file: "room-06-photo-blocks.webp",
     alt: "Black-and-white photo of prefab housing blocks behind dark trees",
@@ -302,7 +302,7 @@ const ALIENS_PICTURES: Picture[] = [
     place: { m: [74, 431, 221, 326], d: [777, 491, 305.7, 450.6] },
   },
   {
-    file: "room-07-schoulena.png",
+    file: "room-07-schoulena.webp",
     alt: "Handwritten: Schoulená 1977",
     layer: "schoulena 1",
     place: { m: [185, 722, 133, 94], d: [924.9, 902.1, 184.1, 129.9] },
@@ -317,7 +317,7 @@ const ALIENS_PICTURES: Picture[] = [
 ];
 
 const ALIENS_POWER: Picture = {
-  file: "room-07-power.png",
+  file: "room-07-power.webp",
   alt: "Handwritten: to not threaten power",
   layer: "power 1",
   place: { m: [29, 1081, 228, 167], d: [168.9, 831, 333, 244] },
@@ -350,7 +350,7 @@ const SIGNATURES_PICTURES: Picture[] = [
     place: { m: [40, 463, 246, 323], d: [297.5, 375.7, 420.6, 552.3] },
   },
   {
-    file: "room-09-1322.png",
+    file: "room-09-1322.webp",
     alt: "Handwritten: 1322",
     layer: "communal shame 7",
     place: { m: [38.6, 424, 134.9, 100], d: [295, 309, 230.8, 170.9] },
@@ -386,24 +386,24 @@ const FUNKCE_PICTURES: Picture[] = [
     blend: "luminosity",
   },
   {
-    file: "room-10-loop.png",
+    file: "room-10-loop.webp",
     alt: "",
     layer: "Vector 47",
     place: { m: [192.4, 448.2, 151.7, 120.5], d: [479, 400, 258, 205] },
     lettering: true,
   },
   // Two more strokes of the loop, drawn on the phone layout only.
-  { file: "room-10-line-1.png", alt: "", layer: "Vector 49", place: { m: [255.4, 563.3, 27, 86] }, lettering: true },
-  { file: "room-10-line-2.png", alt: "", layer: "Vector 50", place: { m: [277.3, 524.3, 37.5, 52] }, lettering: true },
+  { file: "room-10-line-1.webp", alt: "", layer: "Vector 49", place: { m: [255.4, 563.3, 27, 86] }, lettering: true },
+  { file: "room-10-line-2.webp", alt: "", layer: "Vector 50", place: { m: [277.3, 524.3, 37.5, 52] }, lettering: true },
   {
-    file: "room-10-funkce.png",
+    file: "room-10-funkce.webp",
     alt: "Handwritten: Funkce",
     layer: "fuknce 1–2",
     place: { m: [134, 673, 190.3, 91], d: [380.4, 781.2, 324, 155] },
     lettering: true,
   },
   {
-    file: "room-10-dostay.png",
+    file: "room-10-dostay.webp",
     alt: "Handwritten: do stay",
     layer: "Group 2085663318",
     place: { m: [255, 759, 56, 32], d: [585.8, 927.2, 96, 55] },
@@ -416,7 +416,7 @@ const FUNKCE_PICTURES: Picture[] = [
     place: { m: [66, 919, 236, 162], d: [787, 628, 394, 270] },
   },
   {
-    file: "room-10-star.png",
+    file: "room-10-star.webp",
     alt: "",
     layer: "Star 1",
     place: { m: [173.2, 1169, 45, 43], d: [959.2, 982, 45, 43] },
@@ -755,7 +755,7 @@ function StationsOfComfortCollage() {
         </p>
       </Placed>
       <Placed place={{ m: [266, 1154.3, 81, 41], d: [1119, 1082.4, 121.5, 61.5] }} className="pointer-events-none">
-        <Art picture={{ file: "room-05-and-more.png", alt: "Handwritten: and more", layer: "Group 2085663286", place: {}, lettering: true }} sizes="120px" />
+        <Art picture={{ file: "room-05-and-more.webp", alt: "Handwritten: and more", layer: "Group 2085663286", place: {}, lettering: true }} sizes="120px" />
       </Placed>
 
       <Placed place={{ d: [170, 990, 500] }}>
@@ -911,7 +911,7 @@ function PhilosophyOfFormCollage() {
           <span className="block">ONTO LIVES</span>
         </p>
       </Placed>
-      {scribble("room-08-scribble-1.png", { m: [212.7, 860, 59.2, 11.2], d: [957, 624.8, 109.6, 20.7] })}
+      {scribble("room-08-scribble-1.webp", { m: [212.7, 860, 59.2, 11.2], d: [957, 624.8, 109.6, 20.7] })}
 
       <Placed place={{ m: [264, 993, 120], d: [1062, 824, 132] }}>
         <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(16*var(--u)),16px)]">
@@ -919,7 +919,7 @@ function PhilosophyOfFormCollage() {
           <span className="block">as an overlay.</span>
         </p>
       </Placed>
-      {scribble("room-08-scribble-2.png", { m: [306.4, 1020.5, 69.8, 21.6], d: [1097.5, 860.5, 87, 26.9] })}
+      {scribble("room-08-scribble-2.webp", { m: [306.4, 1020.5, 69.8, 21.6], d: [1097.5, 860.5, 87, 26.9] })}
 
       <Placed place={{ m: [51, 1128, 160], d: [647, 929, 165] }}>
         <p className="font-medium leading-[normal] whitespace-nowrap text-white underline underline-offset-[0.12em] text-[17px] md:text-[clamp(17px,calc(20*var(--u)),20px)]">
@@ -931,7 +931,7 @@ function PhilosophyOfFormCollage() {
 
       <Placed place={{ d: [802.2, 593.3, 401, 446.7] }} className="pointer-events-none mix-blend-exclusion">
         <Art
-          picture={{ file: "room-08-thick-lines.png", alt: "", layer: "thick lines 1", place: {}, lettering: true }}
+          picture={{ file: "room-08-thick-lines.webp", alt: "", layer: "thick lines 1", place: {}, lettering: true }}
           sizes="28vw"
         />
       </Placed>
@@ -964,7 +964,7 @@ function TheSignaturesCollage() {
       </Placed>
       <Pictured
         picture={{
-          file: "room-09-block.png",
+          file: "room-09-block.webp",
           alt: "Handwritten: Block",
           layer: "block 1",
           place: { m: [83, 786, 225, 149], d: [721, 563, 326, 189] },
@@ -986,7 +986,7 @@ function TheSignaturesCollage() {
       </Placed>
       <Pictured
         picture={{
-          file: "room-09-drip.png",
+          file: "room-09-drip.webp",
           alt: "",
           layer: "communal shame 6",
           place: { d: [825, 728, 283, 307] },
@@ -996,7 +996,7 @@ function TheSignaturesCollage() {
       />
       <Pictured
         picture={{
-          file: "room-09-drip-tall.png",
+          file: "room-09-drip-tall.webp",
           alt: "",
           layer: "communal shame 6",
           place: { m: [146, 854, 227, 349] },

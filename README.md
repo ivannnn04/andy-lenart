@@ -189,12 +189,12 @@ outlined placeholder with the layer name holds its place.
 | `room-glimpse-<slug>.webp` | not a Figma layer: each room's desktop collage, screenshotted below its header, cropped to 560:360, blurred and saved at 1120×720 — the "Inside this garment" image on the garment page. Redo it when a room changes. |
 | `room-listen.png` | Unnamed 1 (the "LISTEN" lettering) |
 | `room-photo-road.webp` | R1-01944-0028 2 |
-| `room-hold-on.png` | so endlessly 2 3 ("hold on —") |
+| `room-hold-on.webp` | so endlessly 2 3 ("hold on —") |
 | `room-photo-sledges.webp` | R1-01944-0028 1 |
 | `room-photo-tortoise.webp` | R1-01944-0028 3 |
-| `room-so-endlessly.png` | so endlessly 2 1 ("so endlessly fragmented") |
+| `room-so-endlessly.webp` | so endlessly 2 1 ("so endlessly fragmented") |
 | `room-photo-pelican.webp` | R1-01944-0030 1 |
-| `room-was-that.png` | was that.... 1 |
+| `room-was-that.webp` | was that.... 1 |
 | `room-staircase-graffiti.png` | the two "R1-01944-0028 4" crops behind THE STAIRCASE, exported together (299×284) |
 | `room-staircase-scrawl.png` | text 4 (the scrawl beside "LISTENING ROOM") |
 
