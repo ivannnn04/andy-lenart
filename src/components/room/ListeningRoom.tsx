@@ -897,7 +897,7 @@ function AliensAndHeronsCollage() {
       ))}
 
       <Placed place={{ m: [38, 846, 330], d: [335, 545, 420] }}>
-        <p className="font-medium leading-[normal] text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
+        <p className="font-normal leading-[normal] text-white text-[14px] md:font-medium md:text-[clamp(14px,calc(20*var(--u)),20px)]">
           <span className="block">Environmental mood-setting objects</span>
           <span className="block">for a collective life that no longer exists.</span>
         </p>
@@ -946,7 +946,7 @@ function PhilosophyOfFormCollage() {
       {scribble("room-08-scribble-1.webp", { m: [212.7, 860, 59.2, 11.2], d: [957, 624.8, 109.6, 20.7] })}
 
       <Placed place={{ m: [264, 993, 120], d: [1062, 824, 132] }}>
-        <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(16*var(--u)),16px)]">
+        <p className="font-normal leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(16*var(--u)),16px)]">
           <span className="block">Emotional life</span>
           <span className="block">as an overlay.</span>
         </p>
