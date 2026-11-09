@@ -794,12 +794,6 @@ function StationsOfComfortCollage() {
       <Placed place={{ m: [266, 1154.3, 81, 41], d: [1042, 1032.3, 80.2, 40] }} className="pointer-events-none">
         <Art picture={{ file: "room-05-and-more.webp", alt: "Handwritten: and more", layer: "Group 2085663286", place: {}, lettering: true }} sizes="120px" />
       </Placed>
-
-      <Placed place={{ d: [170, 990, 500] }}>
-        <p className="font-bold leading-[normal] whitespace-nowrap text-[#efefef]" style={{ fontSize: fs(36, 20) }}>
-          STATIONS OF COMFORT
-        </p>
-      </Placed>
     </>
   );
 }
