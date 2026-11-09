@@ -2,6 +2,7 @@
  * Shape checks for what the admin panel sends: everything is coerced to the
  * types the site expects, so a bad field can never break a page.
  */
+import { BUILT_IN_TERMS } from "@/lib/moderation/terms";
 import {
   COLLAGES,
   type Collage,
@@ -163,6 +164,17 @@ export function garment(v: unknown): Garment {
 
 const navItem = (v: unknown): NavItem => ({ label: str(obj(v).label, 60), href: href(obj(v).href) ?? "/" });
 
+/**
+ * The Staircase word list. Settings saved before it was one list kept words
+ * added to and let through from the built-in one; those are folded in.
+ */
+export function filterWords(o: Record<string, unknown>): string[] {
+  const list = Array.isArray(o.filterWords)
+    ? lines(o.filterWords, 80)
+    : [...BUILT_IN_TERMS.filter((t) => !lines(o.allowedWords, 80).includes(t)), ...lines(o.blockedWords, 80)];
+  return [...new Set(list.map((w) => w.toLowerCase()))].slice(0, 2000);
+}
+
 export function settings(v: unknown): Settings {
   const o = obj(v);
   return {
@@ -173,8 +185,7 @@ export function settings(v: unknown): Settings {
     roomAttempts: Math.min(20, Math.max(0, Math.round(num(o.roomAttempts, 5)))),
     roomLockMinutes: Math.min(60, Math.max(1, Math.round(num(o.roomLockMinutes, 1)))),
     markReports: Math.min(20, Math.max(1, Math.round(num(o.markReports, 3)))),
-    blockedWords: lines(o.blockedWords, 80).slice(0, 500),
-    allowedWords: lines(o.allowedWords, 80).slice(0, 500),
+    filterWords: filterWords(o),
   };
 }
 

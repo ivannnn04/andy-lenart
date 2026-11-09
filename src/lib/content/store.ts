@@ -3,7 +3,7 @@ import { revalidatePath, revalidateTag, unstable_cache } from "next/cache";
 import { DEFAULT_CONTENT } from "./defaults";
 import { getStorage } from "./storage";
 import { fromLegacy, withCurrentDefaults, withCurrentOrder, withCurrentPrivacy } from "./legacy";
-import { garment as normalizeGarment } from "./normalize";
+import { filterWords, garment as normalizeGarment } from "./normalize";
 import type { Room, SiteContent } from "./types";
 
 const KEY = "content";
@@ -15,7 +15,9 @@ async function readContent(): Promise<SiteContent> {
   const legacy = stored && ("collection" in stored || "rooms" in stored);
   return {
     // Settings added later (e.g. the room entry pause) come from the defaults until saved.
-    settings: { ...DEFAULT_CONTENT.settings, ...stored?.settings },
+    settings: stored?.settings
+      ? { ...DEFAULT_CONTENT.settings, ...stored.settings, filterWords: filterWords(stored.settings as Record<string, unknown>) }
+      : DEFAULT_CONTENT.settings,
     home: stored?.home ?? DEFAULT_CONTENT.home,
     privacy: stored?.privacy ? withCurrentPrivacy(stored.privacy) : DEFAULT_CONTENT.privacy,
     // Checked on the way out too, so an older saved shape never breaks a page.

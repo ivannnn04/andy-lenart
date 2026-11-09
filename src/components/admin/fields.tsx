@@ -125,7 +125,7 @@ function FieldEditor({
       return (
         <div className="flex flex-col gap-1.5">
           <Label field={field} htmlFor={id} />
-          <LinesInput id={id} rows={field.rows ?? 3} value={(value as string[]) ?? []} onChange={onChange} />
+          <LinesInput id={id} rows={field.rows ?? 3} maxRows={field.maxRows} value={(value as string[]) ?? []} onChange={onChange} />
         </div>
       );
     case "image":
@@ -166,11 +166,14 @@ function FieldEditor({
 function LinesInput({
   id,
   rows,
+  maxRows = Infinity,
   value,
   onChange,
 }: {
   id: string;
   rows: number;
+  /** Past this many lines the field scrolls instead of growing. */
+  maxRows?: number;
   value: string[];
   onChange: (v: string[]) => void;
 }) {
@@ -178,7 +181,7 @@ function LinesInput({
   return (
     <textarea
       id={id}
-      rows={Math.max(rows, value.length)}
+      rows={Math.min(maxRows, Math.max(rows, value.length))}
       value={draft ?? value.join("\n")}
       onChange={(e) => {
         setDraft(e.target.value);

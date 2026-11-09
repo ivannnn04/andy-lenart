@@ -3,6 +3,7 @@
  * store (see store.ts); until something is saved — or when no store is
  * connected — the site shows this.
  */
+import { BUILT_IN_TERMS } from "@/lib/moderation/terms";
 import type { SiteContent } from "./types";
 
 export const DEFAULT_CONTENT: SiteContent = {
@@ -13,8 +14,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     "roomAttempts": 5,
     "roomLockMinutes": 1,
     "markReports": 3,
-    "blockedWords": [],
-    "allowedWords": [],
+    "filterWords": BUILT_IN_TERMS,
     "nav": [
       {
         "label": "Manifesto",

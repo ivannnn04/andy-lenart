@@ -9,7 +9,7 @@ export type Field =
   | { kind: "checkbox"; key: string; label: string; help?: string }
   | { kind: "select"; key: string; label: string; help?: string; options: { value: string; label: string }[] }
   /** string[], one per line */
-  | { kind: "lines"; key: string; label: string; help?: string; rows?: number }
+  | { kind: "lines"; key: string; label: string; help?: string; rows?: number; maxRows?: number }
   /** { src, alt, width, height } */
   | { kind: "image"; key: string; label: string; help?: string; optional?: boolean }
   /** a URL to an audio file */
@@ -46,6 +46,22 @@ const image = (key: string, label: string, help?: string, optional?: boolean): F
 });
 
 export const SCHEMAS = {
+  staircase: [
+    {
+      kind: "number",
+      key: "markReports",
+      label: "Reports that hide a mark",
+      help: "A mark reported by this many visitors leaves the wall and waits at the top of the list below for you to restore or delete it (1–20).",
+    },
+    {
+      kind: "lines",
+      key: "filterWords",
+      label: "Blocked words",
+      maxRows: 16,
+      help: "A mark with any of these as a whole word can't be posted; plurals and spellings like “n*me”, “n4me”, “n.a.m.e” are caught too. One word or phrase per line; “x*” means one or more “x”. Delete a line to allow that word. Starts with slurs on race, sexuality, gender and religion (dsojevic/profanity-list); ordinary swearing is not on it. Marks already on the wall stay.",
+      rows: 8,
+    },
+  ],
   settings: [
     { kind: "text", key: "siteTitle", label: "Site title", help: "Shown in the browser tab and search results." },
     { kind: "textarea", key: "siteDescription", label: "Site description", help: "For search results and link previews." },
@@ -61,26 +77,6 @@ export const SCHEMAS = {
       key: "roomLockMinutes",
       label: "Listening Room: pause, minutes",
       help: "How long the room stays closed after that (1–60).",
-    },
-    {
-      kind: "number",
-      key: "markReports",
-      label: "The Staircase: reports that hide a mark",
-      help: "A mark reported by this many visitors leaves the wall until you restore or delete it (1–20).",
-    },
-    {
-      kind: "lines",
-      key: "blockedWords",
-      label: "The Staircase: also block",
-      help: "One word or phrase per line. A mark with it as a whole word can't be posted (plurals and spellings like “n*me”, “n4me” included). Marks already on the wall stay.",
-      rows: 4,
-    },
-    {
-      kind: "lines",
-      key: "allowedWords",
-      label: "The Staircase: allow from the built-in list",
-      help: "One per line, spelled as in the built-in list (Admin → The Staircase → Built-in filter list).",
-      rows: 3,
     },
     {
       kind: "list",

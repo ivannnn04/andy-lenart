@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import { removeMark, restoreReportedMark, setMarkHidden } from "@/app/admin/actions";
+import { removeMark, restoreReportedMark, saveStaircase, setMarkHidden } from "@/app/admin/actions";
+import { DocEditor } from "@/components/admin/DocEditor";
 import { ActionButton } from "@/components/admin/ActionButton";
 import { PageHeader } from "@/components/admin/PageHeader";
-import Link from "next/link";
 import { allMarks } from "@/lib/content/marks";
 import { getContentFresh } from "@/lib/content/store";
-import { BUILT_IN_TERMS } from "@/lib/moderation";
+import { getStorage } from "@/lib/content/storage";
 
 export const metadata: Metadata = { title: "The Staircase" };
 
@@ -17,8 +17,22 @@ export default async function StaircaseAdmin() {
     <>
       <PageHeader
         title="The Staircase"
-        intro="The wall shared by every room. New marks appear straight away; hide one to take it off the wall, or delete it for good. Visitors can report a mark: after enough reports (Settings) it leaves the wall and waits here, at the top, for you to restore or delete it."
+        intro="The wall shared by every room. New marks appear straight away; hide one to take it off the wall, or delete it for good. Visitors can report a mark: after enough reports (Moderation) it leaves the wall and waits here, at the top, for you to restore or delete it."
       />
+      <details className="mb-6 rounded-xl border border-[#e4e4e0] bg-white p-4">
+        <summary className="cursor-pointer text-[16px] font-bold">
+          Moderation: reports and blocked words ({settings.filterWords.length})
+        </summary>
+        <p className="mt-2 mb-4 max-w-[640px] text-[14px] leading-[1.5] text-[#555]">
+          Links, emails and @handles are always refused. Marks with a blocked word can&apos;t be posted; edit the list below.
+        </p>
+        <DocEditor
+          schema="staircase"
+          initial={{ markReports: settings.markReports, filterWords: settings.filterWords }}
+          save={saveStaircase}
+          storageReady={getStorage().writable}
+        />
+      </details>
       <ul className="grid gap-3 pb-12 md:grid-cols-2 xl:grid-cols-3">
         {marks.map((m) => (
           <li
@@ -63,29 +77,6 @@ export default async function StaircaseAdmin() {
         {!marks.length && <li className="text-[14px] text-[#777]">No marks yet.</li>}
       </ul>
 
-      <section className="mb-12 rounded-xl border border-[#e4e4e0] bg-white p-4 text-[14px] leading-[1.5]">
-        <h2 className="text-[16px] font-bold">Word filter</h2>
-        <p className="mt-1 text-[#555]">
-          Marks with a slur from the built-in list, or with a link, email or @handle, can&apos;t be posted. Ordinary swearing
-          passes. Add your own words, or let one from the list through, in{" "}
-          <Link href="/admin/settings" className="underline underline-offset-2">
-            Settings
-          </Link>
-          .
-        </p>
-        <p className="mt-2 text-[#555]">
-          Also blocked: {settings.blockedWords.length ? settings.blockedWords.join(", ") : "nothing yet"}.
-          <br />
-          Allowed from the list: {settings.allowedWords.length ? settings.allowedWords.join(", ") : "nothing yet"}.
-        </p>
-        <details className="mt-3">
-          <summary className="cursor-pointer font-semibold">Built-in filter list ({BUILT_IN_TERMS.length}) — offensive words</summary>
-          <p className="mt-2 text-[12px] text-[#777]">
-            Slurs on race, sexuality, gender and religion (dsojevic/profanity-list, MIT). “x*” means one or more “x”.
-          </p>
-          <p className="mt-2 text-[13px] [overflow-wrap:anywhere] text-[#333]">{BUILT_IN_TERMS.join(" · ")}</p>
-        </details>
-      </section>
     </>
   );
 }

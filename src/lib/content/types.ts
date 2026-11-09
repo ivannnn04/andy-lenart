@@ -167,10 +167,8 @@ export type Settings = {
   roomLockMinutes: number;
   /** Reports that take a Staircase mark off the wall until the admin looks at it. */
   markReports: number;
-  /** Words and phrases refused on the Staircase on top of the built-in list. */
-  blockedWords: string[];
-  /** Words from the built-in list that may be posted after all. */
-  allowedWords: string[];
+  /** Words and phrases refused on the Staircase (starts as the built-in list; edited in the admin). */
+  filterWords: string[];
 };
 
 /** The privacy policy page (/privacy). */

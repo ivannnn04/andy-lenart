@@ -49,7 +49,19 @@ export async function logout() {
 
 export async function saveSettings(value: unknown) {
   return run(async () => {
-    await saveContent((c) => ({ ...c, settings: normalize.settings(value) }));
+    // The Staircase's own settings are saved from its page (saveStaircase).
+    await saveContent((c) => ({
+      ...c,
+      settings: normalize.settings({ ...(value as object), markReports: c.settings.markReports, filterWords: c.settings.filterWords }),
+    }));
+  });
+}
+
+/** The Staircase's moderation settings (kept with the site settings). */
+export async function saveStaircase(value: unknown) {
+  return run(async () => {
+    const o = (value ?? {}) as Record<string, unknown>;
+    await saveContent((c) => ({ ...c, settings: normalize.settings({ ...c.settings, markReports: o.markReports, filterWords: o.filterWords }) }));
   });
 }
 
