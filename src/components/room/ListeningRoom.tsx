@@ -983,7 +983,7 @@ function TheSignaturesCollage() {
       ))}
 
       <Placed place={{ m: [177, 735, 150], d: [857, 493, 160] }}>
-        <p className="font-medium leading-[22px] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
+        <p className="font-normal leading-[22px] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
           Hear me out…
         </p>
       </Placed>
@@ -1055,7 +1055,7 @@ function FunkceCollage() {
       ))}
 
       <Placed place={{ m: [47, 801, 330], d: [785, 493, 460] }}>
-        <p className="font-medium leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
+        <p className="font-normal leading-[normal] whitespace-nowrap text-white text-[14px] md:text-[clamp(14px,calc(20*var(--u)),20px)]">
           <span className="block">So you found what was there:</span>
           <span className="block">life as an ordinary, everyday function…</span>
           <span className="mt-[1.2em] block font-bold">With just a couple million layers in between.</span>
