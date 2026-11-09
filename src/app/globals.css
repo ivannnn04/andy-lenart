@@ -697,40 +697,48 @@ html:has(.preloader:not(.is-leaving)) {
   }
 }
 
-/* The header's sound wave while the background track plays: it pulses like a level meter. */
-.sound-wave > * {
-  transform-origin: 50% 55%;
-  transition: transform 0.4s ease;
+/*
+ * The header's sound wave while the background track plays: it breathes
+ * gently, like a level meter. --osc swings all the time; --amp eases in when
+ * the track starts and out when it stops, so the wave never jumps.
+ */
+@property --amp {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
 }
-.sound-wave:not(:disabled):hover > * {
-  transform: scaleY(1.08);
+@property --osc {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 0;
+}
+.sound-wave > * {
+  --amp: 0;
+  transform-origin: 50% 55%;
+  transform: scaleY(calc(1 + var(--amp) * var(--osc)));
+  transition: --amp 1.2s ease;
+  animation: wave-breathe 3.2s ease-in-out infinite;
 }
 .sound-wave.is-playing > * {
-  animation: wave-play 1.6s ease-in-out infinite;
+  --amp: 0.09;
 }
-@keyframes wave-play {
+@keyframes wave-breathe {
   0%,
   100% {
-    transform: scaleY(1);
+    --osc: 0;
   }
-  15% {
-    transform: scaleY(0.55);
-  }
-  32% {
-    transform: scaleY(1.25);
+  25% {
+    --osc: -1;
   }
   50% {
-    transform: scaleY(0.7);
+    --osc: 0.6;
   }
-  68% {
-    transform: scaleY(1.15);
-  }
-  84% {
-    transform: scaleY(0.85);
+  75% {
+    --osc: -0.4;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .sound-wave.is-playing > * {
+  .sound-wave > * {
     animation: none;
   }
 }
