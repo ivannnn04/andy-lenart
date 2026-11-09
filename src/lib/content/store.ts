@@ -14,7 +14,8 @@ async function readContent(): Promise<SiteContent> {
   const stored = await getStorage().get<Partial<SiteContent> & Record<string, unknown>>(KEY);
   const legacy = stored && ("collection" in stored || "rooms" in stored);
   return {
-    settings: stored?.settings ?? DEFAULT_CONTENT.settings,
+    // Settings added later (e.g. the room entry pause) come from the defaults until saved.
+    settings: { ...DEFAULT_CONTENT.settings, ...stored?.settings },
     home: stored?.home ?? DEFAULT_CONTENT.home,
     privacy: stored?.privacy ? withCurrentPrivacy(stored.privacy) : DEFAULT_CONTENT.privacy,
     // Checked on the way out too, so an older saved shape never breaks a page.

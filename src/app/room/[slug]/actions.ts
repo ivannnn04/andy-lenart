@@ -2,10 +2,8 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { getRoom } from "@/lib/content/store";
+import { getContent, getRoom } from "@/lib/content/store";
 import {
-  LOCK_MINUTES,
-  MAX_ATTEMPTS,
   accessCookie,
   gateCookie,
   isKeyword,
@@ -41,12 +39,14 @@ export async function enterRoom(slug: string, _prev: GateState, form: FormData):
     redirect(`/room/${slug}`);
   }
 
+  // Set in the admin (Settings); 0 attempts never pauses.
+  const { roomAttempts, roomLockMinutes } = (await getContent()).settings;
   const attempts = gate.attempts + 1;
-  if (attempts >= MAX_ATTEMPTS) {
-    const lockedUntil = now + LOCK_MINUTES * 60_000;
+  if (roomAttempts > 0 && attempts >= roomAttempts) {
+    const lockedUntil = now + roomLockMinutes * 60_000;
     jar.set(gateCookie(slug), writeGate({ attempts: 0, lockedUntil }), {
       ...cookieOptions,
-      maxAge: LOCK_MINUTES * 60,
+      maxAge: roomLockMinutes * 60,
     });
     return { status: "locked", lockedUntil };
   }
@@ -54,5 +54,6 @@ export async function enterRoom(slug: string, _prev: GateState, form: FormData):
     ...cookieOptions,
     maxAge: 60 * 60,
   });
-  return { status: "wrong", attemptsLeft: MAX_ATTEMPTS - attempts };
+  // Without a limit the count still changes each time, so the field clears after every wrong word.
+  return { status: "wrong", attemptsLeft: roomAttempts > 0 ? roomAttempts - attempts : -attempts };
 }

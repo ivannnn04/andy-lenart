@@ -161,6 +161,10 @@ export type Settings = {
   siteDescription: string;
   contactEmail: string;
   nav: NavItem[];
+  /** Wrong entry words in a row before a Listening Room pauses; 0 never pauses. */
+  roomAttempts: number;
+  /** How long that pause lasts, in minutes. */
+  roomLockMinutes: number;
 };
 
 /** The privacy policy page (/privacy). */

@@ -51,6 +51,18 @@ export const SCHEMAS = {
     { kind: "textarea", key: "siteDescription", label: "Site description", help: "For search results and link previews." },
     { kind: "email", key: "contactEmail", label: "Contact email", help: "Shown at the bottom of the home page." },
     {
+      kind: "number",
+      key: "roomAttempts",
+      label: "Listening Room: wrong words before a pause",
+      help: "After this many wrong entry words in a row the room pauses. 0 never pauses (up to 20).",
+    },
+    {
+      kind: "number",
+      key: "roomLockMinutes",
+      label: "Listening Room: pause, minutes",
+      help: "How long the room stays closed after that (1–60).",
+    },
+    {
       kind: "list",
       key: "nav",
       label: "Navigation",

@@ -10,6 +10,8 @@ export const DEFAULT_CONTENT: SiteContent = {
     "siteTitle": "Andy Lenárt — Departures 1322",
     "siteDescription": "Departures 1322, Collection 01 by Andy Lenárt: 10 designs, 10 tracks. Every garment holds a world of sound.",
     "contactEmail": "connect@andylenart.com",
+    "roomAttempts": 5,
+    "roomLockMinutes": 1,
     "nav": [
       {
         "label": "Manifesto",

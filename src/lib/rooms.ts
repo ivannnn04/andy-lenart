@@ -6,14 +6,11 @@
  * enters the room's keyword (printed inside the garment; managed in the admin
  * panel). A correct word sets a signed, httpOnly cookie that keeps the room
  * open on that device. Wrong
- * words are counted in a second signed cookie; after MAX_ATTEMPTS the gate
- * locks for LOCK_MINUTES.
+ * words are counted in a second signed cookie; after the number set in the
+ * admin (Settings) the gate pauses for the minutes set there.
  */
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { Room } from "@/lib/content/types";
-
-export const MAX_ATTEMPTS = 3;
-export const LOCK_MINUTES = 10;
 
 // Set ROOM_SECRET in the deployment's environment; the fallback only keeps
 // local development working.

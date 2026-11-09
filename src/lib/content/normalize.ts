@@ -170,6 +170,8 @@ export function settings(v: unknown): Settings {
     siteDescription: str(o.siteDescription, 500),
     contactEmail: str(o.contactEmail, 200),
     nav: arr(o.nav).map(navItem).filter((n) => n.label),
+    roomAttempts: Math.min(20, Math.max(0, Math.round(num(o.roomAttempts, 5)))),
+    roomLockMinutes: Math.min(60, Math.max(1, Math.round(num(o.roomLockMinutes, 1)))),
   };
 }
 
