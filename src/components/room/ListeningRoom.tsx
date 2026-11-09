@@ -686,7 +686,8 @@ function PaperWallsCollage() {
         </p>
       </Placed>
       <Placed place={{ m: [186, 895, 190], d: [191, 1121, 300] }}>
-        <p className={`${lettering} text-[16px] md:text-[clamp(16px,calc(24*var(--u)),24px)]`}>
+        {/* Andy: 110% between the lines (the design draws them at 85%). */}
+        <p className={`${lettering} !leading-[1.1] text-[16px] md:text-[clamp(16px,calc(24*var(--u)),24px)]`}>
           <span className="block">If I left yesterday,</span>
           <span className="block">would today’s silence</span>
           <span className="block">surprise you?</span>
