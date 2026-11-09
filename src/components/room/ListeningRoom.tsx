@@ -375,11 +375,19 @@ const SIGNATURES_PICTURES: Picture[] = [
     layer: "Group 2085663270 (desktop)",
     place: { d: [295, 309, 423.11, 619] },
   },
+  // A grey (luminosity) copy of the photo with a multiplied copy over it, as
+  // in Figma, which darkens it; rendered per layout.
   {
-    file: "room-09-photo-flats.webp",
+    file: "room-09-photo-flats-m.webp",
     alt: "Faded photo of a long block of flats",
-    layer: "Group 1503:235",
-    place: { m: [177, 749, 166, 87], d: [857.1, 509.3, 240.4, 126] },
+    layer: "Group 2085663299 (mobile)",
+    place: { m: [177, 749, 166, 87] },
+  },
+  {
+    file: "room-09-photo-flats-d.webp",
+    alt: "Faded photo of a long block of flats",
+    layer: "Group 2085663271 (desktop)",
+    place: { d: [857.1, 509.3, 240.4, 126] },
   },
 ];
 
