@@ -98,7 +98,7 @@ export const SCHEMAS = {
       kind: "group",
       key: "preloader",
       label: "Opening screen",
-      help: "Shown each time the home page is opened or reloaded.",
+      help: "Shown each time the home page is opened or reloaded. With a track it stays until the visitor picks Sound on or off.",
       fields: [
         { kind: "lines", key: "lines", label: "Text", help: "One line per line (up to 4).", rows: 2 },
         {

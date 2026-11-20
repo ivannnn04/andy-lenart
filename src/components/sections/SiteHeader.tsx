@@ -52,15 +52,9 @@ export async function SiteHeader({
 }) {
   const v = VARIANTS[variant];
   const { nav } = (await getContent()).settings;
-  return (
+  // The header's contents, shown at the top of the page and again in the bar that returns on scrolling up.
+  const contents = (
     <>
-    <MobileNav nav={nav} title={title} inset={inset} className="md:hidden" />
-    <StickyNav nav={nav} title={title} inset={inset} logoHref={v.logoHref} logoTitle={v.logoTitle} />
-    <header
-      data-reveal-children
-      className="stage gutter max-md:hidden"
-      style={stage(v.height)}
-    >
       {/* Also the switch for the home page's background track (see Preloader). */}
       <SoundWave className="place w-28" style={v.wave}>
         <Photo
@@ -107,6 +101,22 @@ export async function SiteHeader({
           ))}
         </ul>
       </nav>
+    </>
+  );
+  return (
+    <>
+    <MobileNav nav={nav} title={title} inset={inset} className="md:hidden" />
+    <StickyNav nav={nav} title={title} inset={inset}>
+      <div className="stage gutter" style={stage(v.height)}>
+        {contents}
+      </div>
+    </StickyNav>
+    <header
+      data-reveal-children
+      className="stage gutter max-md:hidden"
+      style={stage(v.height)}
+    >
+      {contents}
     </header>
     </>
   );

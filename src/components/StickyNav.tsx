@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import type { NavItem } from "@/lib/content/types";
@@ -12,8 +11,10 @@ const TRAVEL = 12;
 const TOP = 200;
 
 /**
- * The menu that slides down from the top when the visitor scrolls back up,
+ * The header that slides down from the top when the visitor scrolls back up,
  * so they can always get around, and slides away again as they scroll on.
+ * On desktop it is the page's own header, unchanged: the monogram large in
+ * the middle, the menu on the right.
  * Jumps to a section (the menu's links, "Listen", "Own") scroll by
  * themselves, so the bar keeps out of their way until they land.
  *
@@ -24,18 +25,17 @@ export function StickyNav({
   nav,
   title,
   inset,
-  logoHref,
-  logoTitle,
   tone = "light",
+  children,
 }: {
   nav: NavItem[];
   /** The page's name (or a link) on the left of the phone bar. */
   title?: ReactNode;
   inset?: string;
-  logoHref: string;
-  logoTitle: string;
   /** "dark": white on black (the Listening Room). */
   tone?: "light" | "dark";
+  /** The desktop header, the same one the page shows at its top. */
+  children: ReactNode;
 }) {
   const dark = tone === "dark";
   // False while rendering on the server, true in the browser (where the portal can go).
@@ -103,29 +103,8 @@ export function StickyNav({
       }`}
     >
       <MobileNav nav={nav} title={title} inset={inset} tone={tone} className="md:hidden" />
-      <div className="gutter mx-auto flex h-[72px] max-w-[1440px] items-center justify-between max-md:hidden">
-        <a href={logoHref} title={logoTitle} className="w-[46px]">
-          <Image
-            src="/images/logo-mark.png"
-            alt="Andy Lenárt monogram"
-            width={332}
-            height={282}
-            sizes="46px"
-            className={dark ? "invert" : undefined}
-          />
-        </a>
-        <nav aria-label="Primary">
-          <ul className="flex gap-6 text-[15px] leading-[0.9] font-black whitespace-nowrap uppercase">
-            {nav.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} className="link-draw">
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+      {/* Desktop: the page's own header, at its full size (its lengths are measured against this container, like the page's). */}
+      <div className="mx-auto w-full max-w-[1440px] [container-type:inline-size] max-md:hidden">{children}</div>
     </div>,
     document.body,
   );

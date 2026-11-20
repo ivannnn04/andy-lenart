@@ -12,9 +12,11 @@ let shownThisLoad = false;
 
 /**
  * The opening screen (Figma "Desktop - 35"): the line of text rises word by
- * word while the page loads, then the black lifts away. "Sound on / off"
- * starts the background track (browsers only allow sound after a click), and
- * a small switch in the corner keeps it at hand afterwards.
+ * word while the page loads and then stays until the visitor picks "Sound on"
+ * or "off"; only then does the black lift away. "On" starts the background
+ * track (browsers only allow sound after a click); afterwards the sound wave
+ * in the header switches it (SoundWave). Without a track there is nothing to
+ * pick, so the screen leaves by itself once the page has loaded.
  */
 export function Preloader({ lines, track }: { lines: string[]; track: string }) {
   const [phase, setPhase] = useState<"open" | "leaving" | "gone">(() => (shownThisLoad ? "gone" : "open"));
@@ -23,7 +25,7 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
   const [picked, setPicked] = useState(false);
   const audio = useRef<HTMLAudioElement>(null);
 
-  // The track is shared with the header's sound wave and the corner switch.
+  // The track is shared with the header's sound wave.
   useEffect(() => {
     backgroundSound.attach(audio.current);
     return () => backgroundSound.attach(null);
@@ -34,9 +36,9 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
     setPhase((p) => (p === "open" ? "leaving" : p));
   }, []);
 
-  // Leave once the page has loaded and the words have had their time.
+  // No track, no choice to wait for: leave once the page has loaded and the words have had their time.
   useEffect(() => {
-    if (phase !== "open") return;
+    if (phase !== "open" || track) return;
     const started = performance.now();
     let timer: number | undefined;
     const done = () => {
@@ -54,7 +56,7 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
       window.clearTimeout(timer);
       window.clearTimeout(cap);
     };
-  }, [phase, leave]);
+  }, [phase, leave, track]);
 
   useEffect(() => {
     if (phase !== "leaving") return;
@@ -94,10 +96,11 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
           className={`preloader fixed inset-0 z-[100] flex cursor-default flex-col items-center justify-center bg-black px-6 text-white ${
             phase === "leaving" ? "is-leaving" : ""
           }`}
-          // A click anywhere skips the wait.
-          onClick={leave}
-          aria-label="Loading"
-          role="status"
+          // With a track it waits for "on" or "off"; without one a click anywhere skips the wait.
+          onClick={track ? undefined : leave}
+          aria-label={track ? "Sound on or off?" : "Loading"}
+          role={track ? "dialog" : "status"}
+          aria-modal={track ? true : undefined}
         >
           <p className="pl-text w-fit max-w-[915px] text-[clamp(32px,4.45vw,64px)] leading-none font-black uppercase">
             {words.map((line, i) => (
@@ -122,23 +125,6 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
         </div>
       )}
 
-      {/* Afterwards: the switch stays in the corner while there is a track. */}
-      {track && phase === "gone" && (
-        <button
-          type="button"
-          onClick={() => backgroundSound.toggle()}
-          aria-pressed={sound}
-          aria-label={sound ? "Sound off" : "Sound on"}
-          className="sound-switch fixed bottom-4 left-4 z-50 flex items-center gap-2 text-[12px] tracking-[0.12em] text-white mix-blend-difference md:bottom-6 md:left-6"
-        >
-          <span aria-hidden className={`sound-bars ${sound ? "is-on" : ""}`}>
-            <span />
-            <span />
-            <span />
-          </span>
-          SOUND {sound ? "ON" : "OFF"}
-        </button>
-      )}
     </>
   );
 }

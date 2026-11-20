@@ -54,9 +54,49 @@ export async function RoomHeader({
       )}
     </Link>
   );
+  // The desktop header's contents, shown at the top of the page and again in the bar that returns on scrolling up.
+  const contents = (
+    <>
+      <div className="absolute top-[calc(112*var(--u))] left-[calc(98*var(--u))]">
+        <Link href={href} className={`${linkText} relative z-10 text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]`}>
+          {label}
+        </Link>
+        {extra}
+      </div>
+      <Link
+        href="/"
+        aria-label="Andy Lenárt — home"
+        className="absolute top-[calc(var(--logo-top)*var(--u))] left-1/2 w-[calc(var(--logo-w)*var(--u))] -translate-x-1/2"
+        style={{ "--logo-top": logo.top, "--logo-w": logo.width } as CSSProperties}
+      >
+        <Image
+          src="/images/logo-mark.png"
+          alt=""
+          width={332}
+          height={282}
+          sizes={`${Math.ceil((logo.width / 1440) * 100)}vw`}
+          className={dark ? "invert" : undefined}
+          preload
+        />
+      </Link>
+      <nav aria-label="Primary" className="absolute top-[calc(112*var(--u))] right-[calc(72*var(--u))]">
+        <ul className="flex gap-[max(12px,calc(25*var(--u)))] text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]">
+          {nav.map((item) => (
+            <li key={item.href}>
+              <a href={item.href} className={linkText}>
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </>
+  );
   return (
     <>
-      <StickyNav nav={nav} title={pageLink} tone={tone} logoHref="/" logoTitle="Home" />
+      <StickyNav nav={nav} title={pageLink} tone={tone}>
+        <div className="relative h-[calc(200*var(--u))]">{contents}</div>
+      </StickyNav>
       <MobileNav
         nav={nav}
         tone={tone}
@@ -66,41 +106,7 @@ export async function RoomHeader({
         {...phone}
       />
 
-      <header className="relative h-[calc(200*var(--u))] max-md:hidden">
-        <div className="absolute top-[calc(112*var(--u))] left-[calc(98*var(--u))]">
-          <Link href={href} className={`${linkText} relative z-10 text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]`}>
-            {label}
-          </Link>
-          {extra}
-        </div>
-        <Link
-          href="/"
-          aria-label="Andy Lenárt — home"
-          className="absolute top-[calc(var(--logo-top)*var(--u))] left-1/2 w-[calc(var(--logo-w)*var(--u))] -translate-x-1/2"
-          style={{ "--logo-top": logo.top, "--logo-w": logo.width } as CSSProperties}
-        >
-          <Image
-            src="/images/logo-mark.png"
-            alt=""
-            width={332}
-            height={282}
-            sizes={`${Math.ceil((logo.width / 1440) * 100)}vw`}
-            className={dark ? "invert" : undefined}
-            preload
-          />
-        </Link>
-        <nav aria-label="Primary" className="absolute top-[calc(112*var(--u))] right-[calc(72*var(--u))]">
-          <ul className="flex gap-[max(12px,calc(25*var(--u)))] text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]">
-            {nav.map((item) => (
-              <li key={item.href}>
-                <a href={item.href} className={linkText}>
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </header>
+      <header className="relative h-[calc(200*var(--u))] max-md:hidden">{contents}</header>
     </>
   );
 }
