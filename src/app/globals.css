@@ -13,6 +13,12 @@
   --foreground: #000000;
 }
 
+/* Pictures can't be picked up and dragged (see NoImageDrag for the browsers without this property). */
+img,
+a:has(img) {
+  -webkit-user-drag: none;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
