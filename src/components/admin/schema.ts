@@ -70,7 +70,7 @@ export const SCHEMAS = {
       kind: "number",
       key: "roomAttempts",
       label: "Listening Room: wrong words before a pause",
-      help: "After this many wrong entry words in a row the room pauses. 0 never pauses (up to 20).",
+      help: "After this many wrong entry words in a row the room pauses. 0 never pauses (up to 20). Either way, one visitor gets at most 30 tries an hour at a room.",
     },
     {
       kind: "number",

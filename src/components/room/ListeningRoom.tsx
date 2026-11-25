@@ -8,6 +8,7 @@ import { RoomHeader } from "@/components/room/RoomHeader";
 import { RoomTape } from "@/components/room/RoomTape";
 import { fs } from "@/lib/design";
 import type { Room as ListeningRoomInfo } from "@/lib/content/types";
+import { builtInTrack } from "@/lib/tracks";
 
 /**
  * Placement on the two artboards: [x, y, width, height?] in design px.
@@ -1145,7 +1146,8 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           logo={{ width: 172, top: 40 }}
         />
 
-        <RoomAudioProvider src={room.track}>
+        {/* A built-in track is only sent through the room's own address, to whoever has entered it. */}
+        <RoomAudioProvider src={builtInTrack(room.track) ? `/room/${room.slug}/track` : room.track}>
         <main
           className="room-stage"
           aria-labelledby="room-title"

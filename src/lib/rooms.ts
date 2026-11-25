@@ -7,7 +7,10 @@
  * panel). A correct word sets a signed, httpOnly cookie that keeps the room
  * open on that device. Wrong
  * words are counted in a second signed cookie; after the number set in the
- * admin (Settings) the gate pauses for the minutes set there.
+ * admin (Settings) the gate pauses for the minutes set there. The same limit
+ * is kept on the server for each visitor's address (see enterRoom), so
+ * clearing cookies does not allow more tries. The full track is only sent to
+ * whoever holds the access cookie (src/lib/tracks.ts).
  */
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { Room } from "@/lib/content/types";

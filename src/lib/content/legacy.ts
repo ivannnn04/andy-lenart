@@ -241,7 +241,7 @@ export function withCurrentOrder(garments: Garment[]): Garment[] {
  * the text before the Staircase note and Supabase, then before reports), by a
  * hash of the body.
  */
-const REPLACED_PRIVACY = ["62c5a3e88b4889e7", "5f7425945bf1fac7", "d5d05cc9e338727f"];
+const REPLACED_PRIVACY = ["62c5a3e88b4889e7", "5f7425945bf1fac7", "d5d05cc9e338727f", "a0af8f747ab80ac7"];
 /** Dates those texts carried. */
 const REPLACED_PRIVACY_DATES = ["[DATE]", "5 November 2026"];
 
