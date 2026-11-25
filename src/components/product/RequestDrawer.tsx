@@ -331,7 +331,8 @@ export function RequestDrawer({
                   </button>
                 </form>
 
-                <p className="text-[13px] leading-[1.4] text-muted">
+                {/* One line in the design (Light, 13px); where it has to wrap (phones, narrow windows), the lines are evened out so no word is left alone. */}
+                <p className="text-[13px] leading-[1.4] font-light text-balance text-muted lg:tracking-[-0.012em] lg:whitespace-nowrap">
                   Each request is read personally. If selected, you will receive an email to
                   complete your purchase.
                 </p>

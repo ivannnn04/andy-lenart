@@ -121,7 +121,7 @@ export function StayConnectedForm({ email }: { email: string }) {
       </div>
       {(status.done || status.error) && (
         <p role="status" className={`text-[16px] leading-[1.4] normal-case md:text-[18px] ${status.error ? "text-error" : ""}`}>
-          {status.error ?? "Thank you — we’ll write when the next garment is ready."}
+          {status.error ?? "Thank you! You will receive an email when the next garment is ready."}
         </p>
       )}
       <button

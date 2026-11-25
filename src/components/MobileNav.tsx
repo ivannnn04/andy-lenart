@@ -11,7 +11,7 @@ const barText = "text-[16px] leading-[normal] font-medium uppercase";
 /**
  * The phone header used on every page: the page's name on the left, the
  * monogram in the middle and "Public" on the right, which opens the
- * full-screen menu. Without a title, "Public" moves to the left (the
+ * full-screen menu. It stays at the top of the screen while the page scrolls. Without a title, "Public" moves to the left (the
  * Listening Room). The menu is a modal <dialog> (focus stays inside, Esc
  * closes it).
  */
@@ -98,7 +98,7 @@ export function MobileNav({
   );
 
   return (
-    <header className={className}>
+    <header className={`site-bar sticky top-0 z-40 ${dark ? "site-bar-dark bg-black" : "bg-white"} ${className}`}>
       {bar(
         <span className="relative">
           <button

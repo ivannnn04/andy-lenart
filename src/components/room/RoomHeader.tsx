@@ -2,7 +2,6 @@ import type { CSSProperties, ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
-import { StickyNav } from "@/components/StickyNav";
 import { getContent } from "@/lib/content/store";
 
 const linkText = "link-draw font-black uppercase";
@@ -36,11 +35,6 @@ export async function RoomHeader({
 }) {
   const dark = tone === "dark";
   const { nav } = (await getContent()).settings;
-  const pageLink = (
-    <Link href={href} className="link-draw">
-      {label}
-    </Link>
-  );
   // On the phone bar the name breaks after its first word ("The / Staircase"), as in the designs.
   const [first, ...rest] = label.split(" ");
   const phoneLink = (
@@ -54,7 +48,6 @@ export async function RoomHeader({
       )}
     </Link>
   );
-  // The desktop header's contents, shown at the top of the page and again in the bar that returns on scrolling up.
   const contents = (
     <>
       <div className="absolute top-[calc(112*var(--u))] left-[calc(98*var(--u))]">
@@ -94,9 +87,6 @@ export async function RoomHeader({
   );
   return (
     <>
-      <StickyNav nav={nav} title={pageLink} tone={tone}>
-        <div className="relative h-[calc(200*var(--u))]">{contents}</div>
-      </StickyNav>
       <MobileNav
         nav={nav}
         tone={tone}
@@ -106,7 +96,12 @@ export async function RoomHeader({
         {...phone}
       />
 
-      <header className="relative h-[calc(200*var(--u))] max-md:hidden">{contents}</header>
+      {/* Stays at the top of the screen, at its full height, while the page scrolls. */}
+      <header
+        className={`site-bar sticky top-0 z-40 h-[calc(200*var(--u))] max-md:hidden ${dark ? "site-bar-dark bg-black" : "bg-white"}`}
+      >
+        {contents}
+      </header>
     </>
   );
 }

@@ -19,6 +19,42 @@ a:has(img) {
   -webkit-user-drag: none;
 }
 
+/*
+ * The header stays at the top of the screen (SiteHeader, RoomHeader,
+ * MobileNav), so links to a section stop below it, and a hairline appears
+ * under it once the page has scrolled (where the browser can tie that to the
+ * scroll position).
+ */
+html {
+  scroll-padding-top: 101px;
+}
+@media (min-width: 768px) {
+  html {
+    scroll-padding-top: calc(200 * var(--u));
+  }
+}
+.site-bar {
+  --bar-line: #e5e5e5;
+}
+.site-bar-dark {
+  --bar-line: #333;
+}
+@supports (animation-timeline: scroll()) {
+  .site-bar {
+    animation: bar-line linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 80px;
+  }
+}
+@keyframes bar-line {
+  from {
+    box-shadow: 0 1px 0 transparent;
+  }
+  to {
+    box-shadow: 0 1px 0 var(--bar-line);
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -689,10 +725,10 @@ html:has(.preloader:not(.is-leaving)) {
   transform-origin: 50% 55%;
   transform: scaleY(calc(1 + var(--amp) * var(--osc)));
   transition: --amp 1.2s ease;
-  animation: wave-breathe 3.2s ease-in-out infinite;
+  animation: wave-breathe 4.4s ease-in-out infinite;
 }
 .sound-wave.is-playing > * {
-  --amp: 0.15;
+  --amp: 0.06;
 }
 @keyframes wave-breathe {
   0%,

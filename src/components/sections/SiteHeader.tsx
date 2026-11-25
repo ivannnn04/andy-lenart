@@ -1,7 +1,6 @@
 import { MobileNav } from "@/components/MobileNav";
 import { Photo } from "@/components/Photo";
 import { SoundWave } from "@/components/SoundWave";
-import { StickyNav } from "@/components/StickyNav";
 import { placer, stage } from "@/lib/design";
 import { getContent } from "@/lib/content/store";
 
@@ -37,7 +36,8 @@ const VARIANTS = {
 
 /**
  * Phones get the compact bar (page name · monogram · "Public" menu) on every
- * page; from md the art-directed header below takes over.
+ * page; from md the art-directed header below takes over. Both stay at the
+ * top of the screen while the page scrolls.
  */
 export async function SiteHeader({
   variant = "home",
@@ -52,7 +52,6 @@ export async function SiteHeader({
 }) {
   const v = VARIANTS[variant];
   const { nav } = (await getContent()).settings;
-  // The header's contents, shown at the top of the page and again in the bar that returns on scrolling up.
   const contents = (
     <>
       {/* Also the switch for the home page's background track (see Preloader). */}
@@ -105,19 +104,15 @@ export async function SiteHeader({
   );
   return (
     <>
-    <MobileNav nav={nav} title={title} inset={inset} className="md:hidden" />
-    <StickyNav nav={nav} title={title} inset={inset}>
-      <div className="stage gutter" style={stage(v.height)}>
+      <MobileNav nav={nav} title={title} inset={inset} className="md:hidden" />
+      {/* Stays at the top of the screen, at its full height, while the page scrolls. */}
+      <header
+        data-reveal-children
+        className="site-bar stage gutter top-0 z-40 bg-white max-md:hidden md:sticky!"
+        style={stage(v.height)}
+      >
         {contents}
-      </div>
-    </StickyNav>
-    <header
-      data-reveal-children
-      className="stage gutter max-md:hidden"
-      style={stage(v.height)}
-    >
-      {contents}
-    </header>
+      </header>
     </>
   );
 }

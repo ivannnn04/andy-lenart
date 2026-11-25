@@ -44,14 +44,17 @@ export function Departures() {
       />
       <h2
         id="departures-title"
-        // Phones: as large as fits on one line (13vw, max 96px), above the
-        // signature that overlaps it.
-        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-20 max-md:order-1 md:text-[clamp(48px,calc(96*var(--u)),96px)]"
-        style={p(361, 1896, 1130)}
+        // Phones: as large as fits on one line (13vw, max 96px), centred above
+        // the signature that overlaps it. Desktop (Andy's revised design): both
+        // lines set to the right, "1322" under the end of "Departures", higher
+        // up so the number clears the photo.
+        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-20 max-md:order-1 md:text-right md:text-[clamp(48px,calc(100*var(--u)),100px)] md:leading-[1.04]"
+        style={p(361, 1839, 911)}
       >
         Departures
         <br />
-        1322
+        {/* The figures end a little short of the "S" above, as drawn. */}
+        <span className="md:pr-[0.07em]">1322</span>
       </h2>
     </section>
   );
