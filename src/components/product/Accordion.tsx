@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { RichText } from "@/components/RichText";
 
 type Item = { title: string; body?: string };
 
@@ -49,13 +50,15 @@ export function Accordion({ items }: { items: Item[] }) {
               }`}
             >
               <div className="overflow-hidden">
-                <p
+                {/* Shown as typed in the admin: paragraphs, line breaks, "-" lists and **bold**. */}
+                <RichText
+                  text={item.body ?? "Details coming soon."}
+                  gap="0.85em"
+                  strongClass="font-bold text-ink"
                   className={`pt-2 pb-1 text-[14px] font-normal leading-[1.5] text-body transition-[opacity,translate] duration-[600ms] ease-[cubic-bezier(0.65,0,0.35,1)] motion-reduce:transition-none ${
                     isOpen ? "translate-y-0 opacity-100 delay-150" : "-translate-y-1 opacity-0"
                   }`}
-                >
-                  {item.body ?? "Details coming soon."}
-                </p>
+                />
               </div>
             </div>
           </div>

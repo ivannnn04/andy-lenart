@@ -15,3 +15,17 @@ export function inline(text: string, strongClass = "font-bold"): ReactNode {
     ),
   );
 }
+
+/** As `inline`, and each line break typed in the admin starts a new line. */
+export function inlineLines(text: string, strongClass = "font-bold"): ReactNode {
+  return text
+    .replace(/\r\n?/g, "\n")
+    .trim()
+    .split("\n")
+    .map((line, i) => (
+      <Fragment key={i}>
+        {i > 0 && <br />}
+        {inline(line, strongClass)}
+      </Fragment>
+    ));
+}

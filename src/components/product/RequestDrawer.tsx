@@ -7,6 +7,7 @@ import { Arrow } from "@/components/Arrow";
 import type { GarmentImage } from "@/lib/content/types";
 import { sendRequest } from "@/app/actions";
 import { emailError } from "@/lib/validate";
+import { inline } from "@/lib/inline";
 
 const buttonClass =
   "flex w-full items-center justify-center bg-ink px-7 py-[18px] text-[13px] font-medium uppercase tracking-[0.08em] whitespace-nowrap text-white shadow-[inset_0_0_0_1px_#1a1a1a] transition-colors duration-300 hover:bg-white hover:text-ink motion-reduce:transition-none";
@@ -186,7 +187,7 @@ export function RequestDrawer({
               <p className="text-[15px] font-semibold">
                 No. {no} — <span className="uppercase">{title}</span>
               </p>
-              <p className="text-[13px] text-muted">{summary}</p>
+              <p className="text-[13px] text-muted">{inline(summary)}</p>
             </div>
             )}
 

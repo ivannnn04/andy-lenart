@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import { Photo } from "@/components/Photo";
 import { fs, placer, stage } from "@/lib/design";
+import { inline } from "@/lib/inline";
 
 const p = placer(3060);
 
@@ -27,7 +28,7 @@ export function Manifesto({ lines }: { lines: string[] }) {
                 <br className="max-md:hidden" />
               </>
             )}
-            {line}
+            {inline(line)}
           </Fragment>
         ))}
       </p>

@@ -10,6 +10,25 @@ const MIN_MS = 2600;
 // by a link inside the site (no reload) skips it.
 let shownThisLoad = false;
 
+/** The line split into words, each marked bold when it falls inside **double asterisks**. */
+function boldWords(lines: string[]) {
+  let bold = false;
+  return lines.map((line) =>
+    line
+      .split(/\s+/)
+      .filter(Boolean)
+      .map((raw) => {
+        const opens = raw.startsWith("**");
+        const closes = raw.endsWith("**") && raw.length > (opens ? 4 : 2);
+        if (opens) bold = true;
+        const word = { text: raw.replace(/^\*\*|\*\*$/g, ""), bold };
+        if (closes) bold = false;
+        return word;
+      })
+      .filter((w) => w.text),
+  );
+}
+
 /**
  * The opening screen (Figma "Desktop - 35"): the line of text rises word by
  * word while the page loads and then stays until the visitor picks "Sound on"
@@ -69,7 +88,8 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
     backgroundSound.turn(on);
   };
 
-  const words = lines.map((line) => line.split(/\s+/).filter(Boolean));
+  // Each word rises on its own; **double asterisks** around words make them bold.
+  const words = boldWords(lines);
   let n = 0;
 
   const choice = (on: boolean, label: string) => (
@@ -107,7 +127,7 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
               <span key={i} className="block">
                 {line.map((word, j) => (
                   <span key={j} className="pl-word" style={{ "--i": n++ } as CSSProperties}>
-                    <span>{word}</span>
+                    <span className={word.bold ? "font-black" : undefined}>{word.text}</span>
                     {j < line.length - 1 && " "}
                   </span>
                 ))}

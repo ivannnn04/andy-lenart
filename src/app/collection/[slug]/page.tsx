@@ -12,7 +12,7 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { fs } from "@/lib/design";
 import { getContent, getGarment } from "@/lib/content/store";
-import { inline } from "@/lib/inline";
+import { inline, inlineLines } from "@/lib/inline";
 
 export async function generateStaticParams() {
   return (await getContent()).garments.filter((g) => g.page).map((g) => ({ slug: g.slug }));
@@ -79,13 +79,13 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                   >
                     {garment.titleLines.map((line, i) => (
                       <span key={line} className="block">
-                        {line}
+                        {inline(line)}
                         {i < garment.titleLines.length - 1 && " "}
                       </span>
                     ))}
                   </h1>
                   <p className="font-light italic leading-[1.4] text-[#595959]" style={{ fontSize: fs(20, 18) }}>
-                    {garment.tagline}
+                    {inlineLines(garment.tagline, "font-medium")}
                   </p>
 
                   <div className="flex flex-col gap-3">
@@ -103,14 +103,14 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
 
                   <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
                     <p className="font-ui font-bold leading-[normal] text-ink" style={{ fontSize: fs(32, 26) }}>
-                      {garment.price}
+                      {inline(garment.price)}
                     </p>
                     <p className="text-[12px] font-medium uppercase tracking-[0.08em] text-[#595959]">
-                      {garment.availability}
+                      {inline(garment.availability)}
                     </p>
                   </div>
                   <p className="text-[15px] font-medium uppercase tracking-[0.1em] text-[#595959]">
-                    {garment.size}
+                    {inline(garment.size)}
                   </p>
 
                   <RequestDrawer
@@ -143,7 +143,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 >
                   {garment.titleLines.map((line) => (
                     <span key={line} className="block">
-                      {line}{" "}
+                      {inline(line)}{" "}
                     </span>
                   ))}
                 </h2>
@@ -168,7 +168,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                   className="mt-7 text-center font-light italic leading-[1.35] md:mt-[calc(28*var(--u))]"
                   style={{ fontSize: fs(30, 22) }}
                 >
-                  {garment.concept.quote}
+                  {inline(garment.concept.quote, "font-medium")}
                 </blockquote>
               </div>
 
@@ -177,10 +177,10 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 {garment.credits.map((credit) => (
                   <li key={credit.name} className="md:w-[calc(410*var(--u))]">
                     <p className="font-medium" style={{ fontSize: fs(20, 18) }}>
-                      {credit.name}
+                      {inline(credit.name)}
                     </p>
                     <p className="mt-1.5 font-light text-muted" style={{ fontSize: fs(18, 16) }}>
-                      {credit.role}
+                      {inline(credit.role, "font-medium")}
                     </p>
                   </li>
                 ))}
@@ -202,7 +202,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
                 >
                   {garment.inside.title.map((line) => (
                     <span key={line} className="block">
-                      {line}{" "}
+                      {inline(line)}{" "}
                     </span>
                   ))}
                 </h2>

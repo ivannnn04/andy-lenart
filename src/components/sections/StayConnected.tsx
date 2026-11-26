@@ -2,6 +2,7 @@ import { Photo } from "@/components/Photo";
 import { fs, placer, sp } from "@/lib/design";
 import type { HomeContent } from "@/lib/content/types";
 import { StayConnectedForm } from "./StayConnectedForm";
+import { inline, inlineLines } from "@/lib/inline";
 
 const p = placer(7185);
 
@@ -26,13 +27,13 @@ export function StayConnected({
           className="font-bold uppercase leading-none md:max-w-[calc(688*var(--u))]"
           style={{ fontSize: fs(72, 40) }}
         >
-          {text.title}
+          {inline(text.title, "font-black")}
         </h2>
         <p
           className="font-normal leading-[1.2] md:max-w-[calc(723*var(--u))]"
           style={{ marginTop: sp(24, 16), fontSize: fs(24, 18) }}
         >
-          {text.subtitle}
+          {inlineLines(text.subtitle)}
         </p>
         <StayConnectedForm email={email} />
       </div>

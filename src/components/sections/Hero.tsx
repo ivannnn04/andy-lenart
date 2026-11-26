@@ -1,5 +1,6 @@
 import { Photo } from "@/components/Photo";
 import { fs, placer, stage } from "@/lib/design";
+import { inline } from "@/lib/inline";
 
 const p = placer(200);
 
@@ -39,11 +40,11 @@ export function Hero({ lines, tagline }: { lines: string[]; tagline: string }) {
         <p className="whitespace-nowrap">
           {lines.map((line, i) => (
             <span key={i} className="block">
-              {line}
+              {inline(line)}
             </span>
           ))}
         </p>
-        <p className="mt-[1.5em] font-bold">{tagline}</p>
+        <p className="mt-[1.5em] font-bold">{inline(tagline, "font-black")}</p>
       </div>
 
       <p

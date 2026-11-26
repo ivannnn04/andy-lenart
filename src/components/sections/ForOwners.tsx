@@ -1,7 +1,7 @@
 import { Photo } from "@/components/Photo";
 import type { HomeContent } from "@/lib/content/types";
 import { fs, sp } from "@/lib/design";
-import { inline } from "@/lib/inline";
+import { inline, inlineLines } from "@/lib/inline";
 
 export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
   return (
@@ -11,13 +11,13 @@ export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
       className="gutter"
       style={{ paddingTop: sp(66, 64) }}
     >
-      <p className="text-[12px] leading-[normal] font-medium tracking-[0.14em] text-muted">{owners.label}</p>
+      <p className="text-[12px] leading-[normal] font-medium tracking-[0.14em] text-muted">{inline(owners.label)}</p>
       <h2
         id="owners-title"
         className="mt-3 font-bold leading-[normal]"
         style={{ fontSize: fs(44, 30) }}
       >
-        {owners.title}
+        {inline(owners.title, "font-black")}
       </h2>
 
       <ol data-reveal-children className="flex flex-col" style={{ marginTop: sp(30, 24), gap: sp(40, 32) }}>
@@ -27,13 +27,13 @@ export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
               {String(i + 1).padStart(2, "0")}
             </span>
             <h3 className="font-bold leading-[normal] text-ink" style={{ fontSize: fs(22, 20) }}>
-              {step.title}
+              {inline(step.title, "font-black")}
             </h3>
             <p
               className="mt-1.5 font-normal leading-[1.55] text-body md:max-w-[calc(1227*var(--u))]"
               style={{ fontSize: fs(20, 16) }}
             >
-              {inline(step.body)}
+              {inlineLines(step.body)}
             </p>
           </li>
         ))}
@@ -52,9 +52,9 @@ export function ForOwners({ owners }: { owners: HomeContent["owners"] }) {
           className="pointer-events-none w-4/5 max-md:order-last max-md:-mt-[calc(13%-8px)] md:absolute! md:top-[calc(16*var(--u))] md:left-[calc(5*var(--u))] md:w-[calc(583*var(--u))]"
         />
         <p className="relative text-[22px] font-normal leading-[1.2] md:text-[clamp(24px,calc(40*var(--u)),40px)]">
-          {owners.statement}
+          {inline(owners.statement)}
           <br />
-          <span className="font-medium">{owners.statementBold}</span>
+          <span className="font-medium">{inline(owners.statementBold)}</span>
         </p>
       </div>
     </section>

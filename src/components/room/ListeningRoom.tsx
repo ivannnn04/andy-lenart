@@ -9,6 +9,7 @@ import { RoomTape } from "@/components/room/RoomTape";
 import { fs } from "@/lib/design";
 import type { Room as ListeningRoomInfo } from "@/lib/content/types";
 import { builtInTrack } from "@/lib/tracks";
+import { inline } from "@/lib/inline";
 
 /**
  * Placement on the two artboards: [x, y, width, height?] in design px.
@@ -645,7 +646,7 @@ function PelicanCollage({ room }: { room: ListeningRoomInfo }) {
         <p className="font-normal leading-[normal] text-[14px] md:text-[clamp(14px,calc(16*var(--u)),16px)]">
           {room.verse.map((line, i) => (
             <span key={line} className={i < 3 ? "block" : "block max-md:hidden"}>
-              {line}
+              {inline(line)}
             </span>
           ))}
         </p>
@@ -655,7 +656,7 @@ function PelicanCollage({ room }: { room: ListeningRoomInfo }) {
           <p className="font-normal leading-[normal] text-[13px]">
             {room.verse.slice(3).flatMap((line) => line.split(/(?<=,) /)).map((part) => (
               <span key={part} className="block">
-                {part}
+                {inline(part)}
               </span>
             ))}
           </p>

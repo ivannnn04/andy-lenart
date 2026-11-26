@@ -36,6 +36,9 @@ export type Field =
 export type Schema = Field[] | { tabs: { label: string; key?: string; fields: Field[] }[] };
 
 const bold = "Use **double asterisks** for bold.";
+/** For the longer texts: what the site keeps of the way they are typed. */
+const rich = "**Double asterisks** for bold. An empty line starts a new paragraph, a line break a new line; lines starting with - become a list.";
+const lineBreaks = "**Double asterisks** for bold; a line break starts a new line.";
 
 const image = (key: string, label: string, help?: string, optional?: boolean): Field => ({
   kind: "image",
@@ -125,7 +128,7 @@ export const SCHEMAS = {
           blank: { title: "New step", body: "" },
           fields: [
             { kind: "text", key: "title", label: "Title" },
-            { kind: "textarea", key: "body", label: "Text", help: bold },
+            { kind: "textarea", key: "body", label: "Text", help: lineBreaks },
           ],
         },
         { kind: "text", key: "statement", label: "Statement" },
@@ -138,7 +141,7 @@ export const SCHEMAS = {
       label: "Stay connected",
       fields: [
         { kind: "text", key: "title", label: "Heading" },
-        { kind: "textarea", key: "subtitle", label: "Text" },
+        { kind: "textarea", key: "subtitle", label: "Text", help: lineBreaks },
       ],
     },
   ],
@@ -163,7 +166,7 @@ export const SCHEMAS = {
           { kind: "lines", key: "titleLines", label: "Title", help: "One line per line, as it breaks on the page and in the room.", rows: 2 },
           { kind: "checkbox", key: "hidden", label: "Hidden from the home page" },
           { kind: "text", key: "cardTitle", label: "Card title", help: "Optional, when the card shows a different title (e.g. with a translation)." },
-          { kind: "textarea", key: "tagline", label: "Card text / tagline", help: "Under the card’s title, and the tagline on the garment page." },
+          { kind: "textarea", key: "tagline", label: "Card text / tagline", help: `Under the card’s title, and the tagline on the garment page. ${lineBreaks}` },
           { kind: "text", key: "status", label: "Status line", placeholder: "Coming soon" },
           { kind: "text", key: "statusHref", label: "Status link", help: "Optional, e.g. #stay-connected." },
           { kind: "text", key: "price", label: "Price", placeholder: "£1,500", help: "Shown on the card and the page; leave empty to hide." },
@@ -197,7 +200,7 @@ export const SCHEMAS = {
             blank: { title: "New section", body: "" },
             fields: [
               { kind: "text", key: "title", label: "Title" },
-              { kind: "textarea", key: "body", label: "Text", help: "Empty shows “Details coming soon”." },
+              { kind: "textarea", key: "body", label: "Text", help: `${rich} Empty shows “Details coming soon”.`, rows: 8 },
             ],
           },
           {
@@ -245,7 +248,7 @@ export const SCHEMAS = {
             label: "Entry page",
             help: "What the page before the room says. Use **double asterisks** for bold. Empty a field to bring back the original text.",
             fields: [
-              { kind: "textarea", key: "text", label: "Instruction", help: "Above the field, e.g. which word of the concept text to enter.", rows: 2 },
+              { kind: "textarea", key: "text", label: "Instruction", help: "Above the field, e.g. which word of the concept text to enter. A line break starts a new line.", rows: 2 },
               { kind: "text", key: "note", label: "Small line under it" },
               { kind: "textarea", key: "error", label: "After a wrong word", rows: 3 },
             ],

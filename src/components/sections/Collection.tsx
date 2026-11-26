@@ -4,6 +4,7 @@ import { CardPreview } from "@/components/product/PreviewPlayer";
 import { fs, sp } from "@/lib/design";
 import type { Garment } from "@/lib/content/types";
 import { garmentHref } from "@/lib/content/store";
+import { inline, inlineLines } from "@/lib/inline";
 
 const label = "text-[12px] leading-[normal] font-medium tracking-[0.14em] text-muted";
 
@@ -157,14 +158,14 @@ function GarmentCard({
         >
           {href ? (
             <Link href={href} className="link-draw">
-              {title}
+              {inline(title)}
             </Link>
           ) : (
-            title
+            inline(title)
           )}
         </h3>
 
-        <p className="text-[14px] font-light leading-[1.4] text-muted">{description}</p>
+        <p className="text-[14px] font-light leading-[1.4] text-muted">{inlineLines(description, "font-medium")}</p>
 
         <div className="flex items-start justify-between font-medium">
           {statusHref ? (
@@ -172,16 +173,16 @@ function GarmentCard({
               href={statusHref}
               className="text-[11px] whitespace-nowrap uppercase tracking-[0.08em] text-subtle link-draw max-[400px]:whitespace-normal"
             >
-              {status}
+              {inline(status)}
             </a>
           ) : (
             <span
               className={`text-[11px] whitespace-nowrap uppercase tracking-[0.08em] max-[400px]:whitespace-normal ${price ? "text-ink" : "text-subtle"}`}
             >
-              {status}
+              {inline(status)}
             </span>
           )}
-          {price && <span className="text-[13px] whitespace-nowrap text-ink">{price}</span>}
+          {price && <span className="text-[13px] whitespace-nowrap text-ink">{inline(price)}</span>}
         </div>
       </article>
     </li>

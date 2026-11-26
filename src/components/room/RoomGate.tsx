@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { enterRoom, type GateState } from "@/app/room/[slug]/actions";
-import { inline } from "@/lib/inline";
+import { inlineLines } from "@/lib/inline";
 
 const ERROR_BLUE = "text-[#2137e1]";
 
@@ -60,7 +60,7 @@ export function RoomGate({ slug, initial, error }: { slug: string; initial: Gate
           >
             <path d="M1 1l10 10M11 1 1 11" />
           </svg>
-          {inline(error, "font-medium")}
+          {inlineLines(error, "font-medium")}
         </p>
       )}
 
