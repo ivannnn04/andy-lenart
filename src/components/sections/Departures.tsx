@@ -47,8 +47,10 @@ export function Departures() {
         // Phones: as large as fits on one line (13vw, max 96px), centred above
         // the signature that overlaps it. Desktop (Andy's revised design): both
         // lines set to the right, "1322" under the end of "Departures", higher
-        // up so the number clears the photo.
-        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-20 max-md:order-1 md:text-right md:text-[clamp(48px,calc(100*var(--u)),100px)] md:leading-[1.04]"
+        // up so the number clears the photo; set in white with "difference",
+        // so it reads black on the page and the brush stroke shows through
+        // light where it crosses the first letters.
+        className="place text-center text-[min(13vw,96px)] font-bold uppercase leading-[normal] max-md:relative max-md:z-20 max-md:order-1 md:text-right md:text-[clamp(48px,calc(100*var(--u)),100px)] md:leading-[1.04] md:text-white md:mix-blend-difference"
         style={p(361, 1839, 911)}
       >
         Departures
