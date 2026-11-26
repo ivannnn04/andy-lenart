@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
 import { getContent } from "@/lib/content/store";
+import { inline } from "@/lib/inline";
 
 const linkText = "link-draw font-black uppercase";
 
@@ -77,7 +78,7 @@ export async function RoomHeader({
           {nav.map((item) => (
             <li key={item.href}>
               <a href={item.href} className={linkText}>
-                {item.label}
+                {inline(item.label, "font-black")}
               </a>
             </li>
           ))}

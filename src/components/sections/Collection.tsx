@@ -4,7 +4,7 @@ import { CardPreview } from "@/components/product/PreviewPlayer";
 import { fs, sp } from "@/lib/design";
 import type { Garment } from "@/lib/content/types";
 import { garmentHref } from "@/lib/content/store";
-import { inline, inlineLines } from "@/lib/inline";
+import { inline, inlineLines, plainText } from "@/lib/inline";
 
 const label = "text-[12px] leading-[normal] font-medium tracking-[0.14em] text-muted";
 
@@ -149,7 +149,7 @@ function GarmentCard({
 
         <div className="flex items-start justify-between text-[12px] font-medium">
           <span className="font-medium tracking-[0.08em] text-muted">No. {no}</span>
-          {preview && <CardPreview title={title} src={preview.src} duration={preview.duration} />}
+          {preview && <CardPreview title={plainText(title)} src={preview.src} duration={preview.duration} />}
         </div>
 
         <h3

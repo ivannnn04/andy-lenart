@@ -9,7 +9,7 @@ import { RoomTape } from "@/components/room/RoomTape";
 import { fs } from "@/lib/design";
 import type { Room as ListeningRoomInfo } from "@/lib/content/types";
 import { builtInTrack } from "@/lib/tracks";
-import { inline } from "@/lib/inline";
+import { inline, plainText } from "@/lib/inline";
 
 /**
  * Placement on the two artboards: [x, y, width, height?] in design px.
@@ -667,7 +667,7 @@ function PelicanCollage({ room }: { room: ListeningRoomInfo }) {
         <p className="font-bold leading-[normal] uppercase text-[#efefef]" style={{ fontSize: fs(40, 24) }}>
           {room.titleLines.map((line) => (
             <span key={line} className="block">
-              {line}
+              {inline(line, "font-black")}
             </span>
           ))}
         </p>
@@ -1162,7 +1162,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           </Placed>
 
           <Placed place={tape.place}>
-            <RoomTape title={`the track of ${room.titleLines.join(" ")}`}>
+            <RoomTape title={`the track of ${plainText(room.titleLines.join(" "))}`}>
               <span className="relative block size-full">
                 <Art picture={tape} sizes="(min-width: 768px) 23vw, 50vw" />
                 {imageExists(TAPE_SPIN_FILE) && (
@@ -1181,7 +1181,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
               No. {room.garmentNo} / DEPARTURES 1322
             </p>
             <h1 id="room-title" className="sr-only">
-              Listening Room — {room.titleLines.join(" ")}
+              Listening Room — {plainText(room.titleLines.join(" "))}
             </h1>
             <RoomCurrentLine
               lines={room.lyrics}
@@ -1203,7 +1203,7 @@ export function ListeningRoom({ room }: { room: ListeningRoomInfo }) {
           {room.collage === "funkce" && <FunkceCollage />}
           {layout.footerY && (
             <Footer y={layout.footerY}>
-              {room.garmentNo} / {room.titleLines.join(" ").toUpperCase()}
+              {room.garmentNo} / {inline(room.titleLines.join(" ").toUpperCase(), "font-black")}
             </Footer>
           )}
 

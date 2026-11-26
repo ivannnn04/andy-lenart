@@ -12,7 +12,7 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { fs } from "@/lib/design";
 import { getContent, getGarment } from "@/lib/content/store";
-import { inline, inlineLines } from "@/lib/inline";
+import { inline, inlineLines, plainText } from "@/lib/inline";
 
 export async function generateStaticParams() {
   return (await getContent()).garments.filter((g) => g.page).map((g) => ({ slug: g.slug }));
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageProps<"/collection/[slug]
   const garment = await getGarment((await params).slug);
   if (!garment) return {};
   return {
-    title: `${garment.titleLines.join(" ")} — No. ${garment.no} · Andy Lenárt`,
+    title: `${plainText(garment.titleLines.join(" "))} — No. ${garment.no} · Andy Lenárt`,
     description: garment.tagline,
   };
 }
@@ -115,7 +115,7 @@ export default async function GarmentPage({ params }: PageProps<"/collection/[sl
 
                   <RequestDrawer
                     no={garment.no}
-                    title={garment.titleLines.join(" ")}
+                    title={plainText(garment.titleLines.join(" "))}
                     summary={[garment.size.toUpperCase(), garment.price, garment.remaining].join(" · ")}
                     photo={garment.gallery[garment.requestPhoto]}
                     email={settings.contactEmail}

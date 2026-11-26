@@ -7,6 +7,7 @@ import { DocEditor } from "@/components/admin/DocEditor";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { getStorage } from "@/lib/content/storage";
 import { getContentFresh } from "@/lib/content/store";
+import { plainText } from "@/lib/inline";
 
 export const metadata: Metadata = { title: "Edit garment" };
 
@@ -14,7 +15,7 @@ export default async function GarmentEditor({ params }: PageProps<"/admin/collec
   const { slug } = await params;
   const garment = (await getContentFresh()).garments.find((g) => g.slug === slug);
   if (!garment) notFound();
-  const title = garment.titleLines.join(" ") || "Garment";
+  const title = plainText(garment.titleLines.join(" ")) || "Garment";
   const link = "underline";
   return (
     <>

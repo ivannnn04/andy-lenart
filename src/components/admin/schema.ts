@@ -89,7 +89,7 @@ export const SCHEMAS = {
       titleKey: "label",
       blank: { label: "New link", href: "/" },
       fields: [
-        { kind: "text", key: "label", label: "Label" },
+        { kind: "text", key: "label", label: "Label", help: bold },
         { kind: "text", key: "href", label: "Link" },
       ],
     },
@@ -146,7 +146,7 @@ export const SCHEMAS = {
     },
   ],
   privacy: [
-    { kind: "text", key: "title", label: "Title" },
+    { kind: "text", key: "title", label: "Title", help: bold },
     { kind: "text", key: "updated", label: "Last updated", placeholder: "1 December 2026" },
     {
       kind: "textarea",
@@ -163,7 +163,7 @@ export const SCHEMAS = {
         fields: [
           { kind: "text", key: "slug", label: "Address", help: "Used for both /collection/<address> and /room/<address>. Don’t change it once the NFC tags are written." },
           { kind: "text", key: "no", label: "Number", placeholder: "01" },
-          { kind: "lines", key: "titleLines", label: "Title", help: "One line per line, as it breaks on the page and in the room.", rows: 2 },
+          { kind: "lines", key: "titleLines", label: "Title", help: `One line per line, as it breaks on the page and in the room. ${bold}`, rows: 2 },
           { kind: "checkbox", key: "hidden", label: "Hidden from the home page" },
           { kind: "text", key: "cardTitle", label: "Card title", help: "Optional, when the card shows a different title (e.g. with a translation)." },
           { kind: "textarea", key: "tagline", label: "Card text / tagline", help: `Under the card’s title, and the tagline on the garment page. ${lineBreaks}` },
@@ -267,9 +267,9 @@ export const SCHEMAS = {
             key: "lyrics",
             label: "Lyrics",
             trackKey: "track",
-            help: "One line at a time, from the time it starts. Import an .lrc or .srt file, or edit here.",
+            help: "One line at a time, from the time it starts. Import an .lrc or .srt file, or edit here. Use **double asterisks** for bold words.",
           },
-          { kind: "lines", key: "verse", label: "Printed verse", help: "Fixed text in the collage (the first room’s design only). One line each; on phones the fourth line sits lower, broken after its comma.", rows: 4 },
+          { kind: "lines", key: "verse", label: "Printed verse", help: `Fixed text in the collage (the first room’s design only). One line each; on phones the fourth line sits lower, broken after its comma. ${bold}`, rows: 4 },
         ],
       },
     ],

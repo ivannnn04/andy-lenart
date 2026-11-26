@@ -34,20 +34,43 @@ export function sungLetters(line: Lyric, next: number | undefined, time: number)
   return total * clamp01((time - line.time) / length);
 }
 
+/** The line's letters, each marked bold when it falls inside **double asterisks**. */
+function letters(text: string) {
+  const out: { char: string; bold: boolean }[] = [];
+  let bold = false;
+  for (let i = 0; i < text.length; i++) {
+    if (text.startsWith("**", i)) {
+      bold = !bold;
+      i++;
+      continue;
+    }
+    out.push({ char: text[i], bold });
+  }
+  return out;
+}
+
 /** The line's letters: sung ones lit, the rest waiting (see .room-letter). */
 export function KaraokeLetters({ text, sung }: { text: string; sung: number }) {
+  // Words: runs of letters between spaces (spaces kept as they are).
+  const words: { space: boolean; letters: { char: string; bold: boolean }[] }[] = [];
+  for (const l of letters(text)) {
+    const space = /\s/.test(l.char);
+    const last = words[words.length - 1];
+    if (last && last.space === space) last.letters.push(l);
+    else words.push({ space, letters: [l] });
+  }
   let index = 0;
   return (
     <span aria-hidden>
-      {text.split(/(\s+)/).map((word, w) =>
-        /^\s*$/.test(word) ? (
-          word
+      {words.map((word, w) =>
+        word.space ? (
+          word.letters.map((l) => l.char).join("")
         ) : (
           // A word never breaks across lines.
           <span key={w} className="whitespace-nowrap">
-            {[...word].map((letter, l) => (
-              <span key={l} className={`room-letter${index++ < sung ? " is-sung" : ""}`}>
-                {letter}
+            {word.letters.map((l, i) => (
+              <span key={i} className={`room-letter${index++ < sung ? " is-sung" : ""}${l.bold ? " font-black" : ""}`}>
+                {l.char}
               </span>
             ))}
           </span>

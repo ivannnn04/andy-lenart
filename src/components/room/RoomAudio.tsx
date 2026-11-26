@@ -4,6 +4,7 @@ import { createContext, useContext, useLayoutEffect, useRef, type ReactNode } fr
 import { usePreviewAudio } from "@/components/product/PreviewPlayer";
 import type { Lyric } from "@/lib/content/types";
 import { KaraokeLetters, lineAt, sungLetters } from "./karaoke";
+import { plainText } from "@/lib/inline";
 
 type RoomAudio = { src?: string; playing: boolean; time: number; toggle: () => void };
 
@@ -77,7 +78,7 @@ export function RoomCurrentLine({
     // Not announced line by line: that would talk over the music.
     <p aria-live="off" className={className}>
       <span ref={span} key={at} className="room-line block">
-        <span className="sr-only">{line.text}</span>
+        <span className="sr-only">{plainText(line.text)}</span>
         <KaraokeLetters text={line.text} sung={sungLetters(line, lines[at + 1]?.time, time)} />
       </span>
     </p>

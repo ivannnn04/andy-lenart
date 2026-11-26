@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, type ReactNode } from "react";
 import type { NavItem } from "@/lib/content/types";
+import { inline } from "@/lib/inline";
 
 const barText = "text-[16px] leading-[normal] font-medium uppercase";
 
@@ -132,7 +133,7 @@ export function MobileNav({
                   onClick={close}
                   className="link-draw text-[36px] leading-[1.05] font-black uppercase"
                 >
-                  {item.label}
+                  {inline(item.label, "font-black")}
                 </a>
               </li>
             ))}

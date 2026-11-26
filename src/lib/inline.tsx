@@ -16,6 +16,9 @@ export function inline(text: string, strongClass = "font-bold"): ReactNode {
   );
 }
 
+/** The text without its bold marks, for places that only take plain text (tab titles, labels for screen readers). */
+export const plainText = (text: string) => text.replace(/\*\*/g, "");
+
 /** As `inline`, and each line break typed in the admin starts a new line. */
 export function inlineLines(text: string, strongClass = "font-bold"): ReactNode {
   return text

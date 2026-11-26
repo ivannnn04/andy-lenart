@@ -64,7 +64,7 @@ export default async function RoomPage({ params }: PageProps<"/room/[slug]">) {
           <main className="flex w-full max-w-[480px] flex-col">
             <p className={label}>Listening Room · No. {room.garmentNo}</p>
             <h1 className="mt-6 text-[40px] leading-[0.95] font-bold uppercase md:text-[56px]">
-              {room.titleLines.join(" ")}
+              {inline(room.titleLines.join(" "), "font-black")}
             </h1>
 
             <p className="mt-6 text-[20px] leading-[1.5] font-normal text-ink">{inlineLines(room.gate.text, "font-medium")}</p>

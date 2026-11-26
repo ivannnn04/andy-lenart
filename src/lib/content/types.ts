@@ -22,7 +22,8 @@ export type GarmentImage = {
 export type Lyric = { time: number; text: string; end?: number; words?: number[] };
 
 /** The words of a lyric line, as `Lyric.words` counts them. */
-export const lyricWords = (text: string) => text.trim().split(/\s+/).filter(Boolean);
+/** The words of a lyric line (bold marks ** are not part of them). */
+export const lyricWords = (text: string) => text.replace(/\*\*/g, "").trim().split(/\s+/).filter(Boolean);
 
 /** The 30-second clip on the cards and the garment page. */
 export type Preview = {

@@ -6,6 +6,7 @@ import { HiddenSwitch } from "@/components/admin/HiddenSwitch";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { getStorage } from "@/lib/content/storage";
 import { getContentFresh } from "@/lib/content/store";
+import { plainText } from "@/lib/inline";
 
 export const metadata: Metadata = { title: "Collection" };
 
@@ -27,7 +28,7 @@ export default async function CollectionList() {
       />
       <ul className="flex flex-col gap-2 pb-12">
         {garments.map((g, i) => {
-          const title = g.cardTitle || g.titleLines.join(" ") || "Untitled";
+          const title = plainText(g.cardTitle || g.titleLines.join(" ")) || "Untitled";
           const cover = g.cardImage?.src ?? g.gallery[0]?.src;
           return (
             <li

@@ -4,11 +4,11 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { getContent } from "@/lib/content/store";
-import { inline } from "@/lib/inline";
+import { inline, plainText } from "@/lib/inline";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { privacy, settings } = await getContent();
-  return { title: `${privacy.title} · ${settings.siteTitle}` };
+  return { title: `${plainText(privacy.title)} · ${settings.siteTitle}` };
 }
 
 /** **Bold** runs, and email addresses as links. */
@@ -66,10 +66,10 @@ export default async function PrivacyPage() {
           <SiteHeader variant="compact" title="Privacy" />
           <main className="gutter pt-10 pb-24 md:pt-[calc(40*var(--u))] md:pb-[calc(120*var(--u))]">
             <article className="max-w-[760px]">
-              <h1 className="text-[32px] leading-[normal] font-bold uppercase md:text-[44px]">{privacy.title}</h1>
+              <h1 className="text-[32px] leading-[normal] font-bold uppercase md:text-[44px]">{inline(privacy.title, "font-black")}</h1>
               {privacy.updated && (
                 <p className="mt-3 text-[12px] leading-[normal] font-medium uppercase tracking-[0.12em] text-muted">
-                  Last updated {privacy.updated}
+                  Last updated {inline(privacy.updated)}
                 </p>
               )}
               <div className="mt-10 text-[17px] leading-[1.55] font-normal text-body md:text-[18px]">

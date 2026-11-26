@@ -3,6 +3,7 @@ import { Photo } from "@/components/Photo";
 import { SoundWave } from "@/components/SoundWave";
 import { placer, stage } from "@/lib/design";
 import { getContent } from "@/lib/content/store";
+import { inline } from "@/lib/inline";
 
 const p = placer(0);
 
@@ -94,7 +95,7 @@ export async function SiteHeader({
           {nav.map((item) => (
             <li key={item.href}>
               <a href={item.href} className="link-draw">
-                {item.label}
+                {inline(item.label, "font-black")}
               </a>
             </li>
           ))}
