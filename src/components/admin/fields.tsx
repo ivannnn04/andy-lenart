@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type DragEvent, type ReactNode } from "react";
 import { KaraokeLetters, sungLetters } from "@/components/room/karaoke";
 import { lyricWords, type Lyric } from "@/lib/content/types";
 import { analyseAudio, formatTime, imageSize, parseLyrics, parseTime, uploadFile } from "./client-tools";
+import { RichEditor } from "./RichEditor";
 import type { Field } from "./schema";
 
 type Obj = Record<string, unknown>;
@@ -22,7 +23,7 @@ const set = (value: Obj, key: string, next: unknown): Obj =>
 function Label({ field, htmlFor, children }: { field: Field; htmlFor?: string; children?: ReactNode }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <label htmlFor={htmlFor} className={labelText}>
+      <label id={htmlFor ? `${htmlFor}-label` : undefined} htmlFor={htmlFor} className={labelText}>
         {field.label}
       </label>
       {field.help && <p className={helpText}>{field.help}</p>}
@@ -35,15 +36,28 @@ function Label({ field, htmlFor, children }: { field: Field; htmlFor?: string; c
 export function Fields({ fields, value, onChange }: { fields: Field[]; value: Obj; onChange: (v: Obj) => void }) {
   return (
     <div className="flex flex-col gap-5">
-      {fields.map((field) => (
-        <FieldEditor
-          key={field.key || field.label}
-          field={field}
-          value={get(value, field.key)}
-          parent={value}
-          onChange={(next) => onChange(set(value, field.key, next))}
-        />
-      ))}
+      {fields.map((field) =>
+        field.kind === "gallery" ? (
+          // The gallery also moves the "beside the request form" choice with its photo.
+          <GalleryInput
+            key={field.key}
+            field={field}
+            value={(get(value, field.key) as Obj[]) ?? []}
+            request={field.requestKey ? Number(value?.[field.requestKey] ?? 0) : undefined}
+            onChange={(next, request) =>
+              onChange({ ...set(value, field.key, next), ...(field.requestKey && request !== undefined ? { [field.requestKey]: request } : {}) })
+            }
+          />
+        ) : (
+          <FieldEditor
+            key={field.key || field.label}
+            field={field}
+            value={get(value, field.key)}
+            parent={value}
+            onChange={(next) => onChange(set(value, field.key, next))}
+          />
+        ),
+      )}
     </div>
   );
 }
@@ -62,6 +76,14 @@ function FieldEditor({
   const id = useId();
   switch (field.kind) {
     case "text":
+      if (field.format === "inline")
+        return (
+          <div className="flex flex-col gap-1.5">
+            <Label field={field} htmlFor={id} />
+            <RichEditor id={id} mode="inline" value={String(value ?? "")} placeholder={field.placeholder} onChange={onChange} labelledBy={`${id}-label`} />
+          </div>
+        );
+    // falls through
     case "email":
     case "number":
       return (
@@ -80,6 +102,22 @@ function FieldEditor({
         </div>
       );
     case "textarea":
+      if (field.format !== "plain")
+        return (
+          <div className="flex flex-col gap-1.5">
+            <Label field={field} htmlFor={id} />
+            <RichEditor
+              id={id}
+              mode="rich"
+              headings={field.headings}
+              rows={field.rows ?? 3}
+              value={String(value ?? "")}
+              placeholder={field.placeholder}
+              onChange={onChange}
+              labelledBy={`${id}-label`}
+            />
+          </div>
+        );
       return (
         <div className="flex flex-col gap-1.5">
           <Label field={field} htmlFor={id} />
@@ -125,7 +163,11 @@ function FieldEditor({
       return (
         <div className="flex flex-col gap-1.5">
           <Label field={field} htmlFor={id} />
-          <LinesInput id={id} rows={field.rows ?? 3} maxRows={field.maxRows} value={(value as string[]) ?? []} onChange={onChange} />
+          {field.format === "plain" ? (
+            <LinesInput id={id} rows={field.rows ?? 3} maxRows={field.maxRows} value={(value as string[]) ?? []} onChange={onChange} />
+          ) : (
+            <RichEditor id={id} mode="lines" rows={field.rows ?? 3} value={(value as string[]) ?? []} onChange={onChange} labelledBy={`${id}-label`} />
+          )}
         </div>
       );
     case "image":
@@ -159,6 +201,9 @@ function FieldEditor({
       );
     case "list":
       return <ListInput field={field} value={(value as Obj[]) ?? []} onChange={onChange} />;
+    case "gallery":
+      // Rendered by Fields (it needs the sibling request-photo number).
+      return null;
   }
 }
 
@@ -819,5 +864,318 @@ export function Toggle({ on, label, onChange }: { on: boolean; label: string; on
       </span>
       <span className="w-12 text-left">{on ? "On site" : "Hidden"}</span>
     </button>
+  );
+}
+
+// --- Gallery -------------------------------------------------------------------
+
+/** Uploads one image file and returns the gallery item for it. */
+async function photoFromFile(file: File): Promise<Obj> {
+  const [src, size] = await Promise.all([uploadFile(file), imageSize(file).catch(() => ({ width: 1253, height: 1875 }))]);
+  return { src, alt: "", ...size };
+}
+
+const isImage = (f: File) => f.type.startsWith("image/");
+
+/**
+ * The garment's photos as a grid of thumbnails: add many at once (button or
+ * files dropped on it), drag a photo onto another place to reorder (or use the
+ * arrows on a phone), click one to replace it, describe it or remove it, and
+ * mark which one sits beside the request form.
+ */
+function GalleryInput({
+  field,
+  value,
+  request,
+  onChange,
+}: {
+  field: Extract<Field, { kind: "gallery" }>;
+  value: Obj[];
+  /** Index of the photo beside the request form (when the field has one). */
+  request?: number;
+  onChange: (v: Obj[], request?: number) => void;
+}) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [dragging, setDragging] = useState<number | null>(null);
+  const [over, setOver] = useState<number | null>(null);
+  const [filesOver, setFilesOver] = useState(false);
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const addRef = useRef<HTMLInputElement>(null);
+  const replaceRef = useRef<HTMLInputElement>(null);
+  // Latest value, so uploads that finish later don't overwrite edits made meanwhile.
+  const latest = useRef({ value, request });
+  useEffect(() => {
+    latest.current = { value, request };
+  }, [value, request]);
+
+  /** The request photo follows its photo through moves and removals. */
+  const reorder = (from: number, to: number) => {
+    if (from === to || to < 0 || to >= value.length) return;
+    const next = [...value];
+    const [item] = next.splice(from, 1);
+    next.splice(to, 0, item);
+    const order = value.map((_, i) => i);
+    const [moved] = order.splice(from, 1);
+    order.splice(to, 0, moved);
+    onChange(next, request === undefined ? undefined : order.indexOf(request));
+    setSelected((s) => (s === null ? s : order.indexOf(s)));
+  };
+
+  const remove = (i: number) => {
+    const next = value.filter((_, j) => j !== i);
+    const r = request === undefined ? undefined : request === i ? 0 : request > i ? request - 1 : request;
+    onChange(next, r === undefined ? undefined : Math.max(0, Math.min(r, next.length - 1)));
+    setSelected(null);
+  };
+
+  const add = async (files: File[]) => {
+    const images = files.filter(isImage);
+    if (!images.length) {
+      if (files.length) setError("Only image files can be added here.");
+      return;
+    }
+    setError(null);
+    let done = 0;
+    setBusy(`Uploading ${images.length} ${images.length === 1 ? "photo" : "photos"}…`);
+    try {
+      // One after another, in the order chosen; each appears as soon as it is up.
+      for (const file of images) {
+        const photo = await photoFromFile(file);
+        done++;
+        setBusy(`Uploading… ${done} of ${images.length}`);
+        onChange([...latest.current.value, photo], latest.current.request);
+      }
+    } catch (e) {
+      setError(`${(e as Error).message}${done ? ` (${done} of ${images.length} added)` : ""}`);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const replace = async (i: number, file?: File) => {
+    if (!file) return;
+    if (!isImage(file)) return setError("Only image files can be used here.");
+    setError(null);
+    setBusy("Uploading the new photo…");
+    try {
+      const photo = await photoFromFile(file);
+      const { value: now, request: r } = latest.current;
+      onChange(now.map((x, j) => (j === i ? { ...photo, alt: x.alt ?? "" } : x)), r);
+    } catch (e) {
+      setError((e as Error).message);
+    } finally {
+      setBusy(null);
+    }
+  };
+
+  const update = (i: number, patch: Obj) => onChange(value.map((x, j) => (j === i ? { ...x, ...patch } : x)), request);
+
+  const hasFiles = (e: DragEvent<HTMLElement>) => [...e.dataTransfer.types].includes("Files");
+  const current = selected !== null ? value[selected] : undefined;
+
+  return (
+    <div className="flex flex-col gap-2">
+      <Label field={field} />
+      <div
+        onDragOver={(e) => {
+          if (!hasFiles(e)) return;
+          e.preventDefault();
+          setFilesOver(true);
+        }}
+        onDragLeave={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node)) setFilesOver(false);
+        }}
+        onDrop={(e) => {
+          if (!hasFiles(e)) return;
+          e.preventDefault();
+          setFilesOver(false);
+          add([...e.dataTransfer.files]);
+        }}
+        className={`rounded-lg border-2 border-dashed p-3 transition-colors ${filesOver ? "border-ink bg-[#f0f0ec]" : "border-[#d4d4d0] bg-white"}`}
+      >
+        <ol className="grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-5">
+          {value.map((item, i) => {
+            const src = String(item?.src ?? "");
+            const isSelected = selected === i;
+            return (
+              <li
+                key={`${src}-${i}`}
+                draggable
+                onDragStart={(e) => {
+                  setDragging(i);
+                  e.dataTransfer.effectAllowed = "move";
+                  e.dataTransfer.setData("text/plain", String(i));
+                }}
+                onDragEnd={() => {
+                  setDragging(null);
+                  setOver(null);
+                }}
+                onDragOver={(e) => {
+                  if (dragging === null) return;
+                  e.preventDefault();
+                  e.dataTransfer.dropEffect = "move";
+                  setOver(i);
+                }}
+                onDrop={(e) => {
+                  if (dragging === null) return;
+                  e.preventDefault();
+                  e.stopPropagation();
+                  reorder(dragging, i);
+                  setDragging(null);
+                  setOver(null);
+                }}
+                className={`group relative flex flex-col gap-1 ${dragging === i ? "opacity-40" : ""}`}
+              >
+                <button
+                  type="button"
+                  onClick={() => setSelected(isSelected ? null : i)}
+                  aria-pressed={isSelected}
+                  aria-label={`Photo ${i + 1}${i === 0 ? " (main)" : ""}: ${String(item?.alt || "no description")}. Click to edit.`}
+                  className={`relative block aspect-[2/3] w-full cursor-grab overflow-hidden rounded-md border-2 bg-[repeating-conic-gradient(#eee_0_25%,#fff_0_50%)] bg-[length:12px_12px] active:cursor-grabbing ${
+                    isSelected ? "border-ink" : over === i && dragging !== i ? "border-[#888]" : "border-transparent"
+                  }`}
+                >
+                  {src ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- any URL, preview only
+                    <img src={src} alt="" draggable={false} className="size-full object-cover" />
+                  ) : (
+                    <span className="text-[11px] text-[#999]">No image</span>
+                  )}
+                  <span className="absolute top-1 left-1 rounded bg-black/70 px-1.5 py-0.5 text-[11px] font-semibold text-white">{i + 1}</span>
+                  {i === 0 && (
+                    <span className="absolute right-1 bottom-1 rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink">
+                      Main
+                    </span>
+                  )}
+                  {request === i && (
+                    <span className="absolute bottom-1 left-1 rounded bg-white/90 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-ink">
+                      Form
+                    </span>
+                  )}
+                </button>
+                <div className="flex justify-between">
+                  <button type="button" onClick={() => reorder(i, i - 1)} disabled={i === 0} className={`${smallButton} px-2! py-0.5!`} aria-label={`Move photo ${i + 1} earlier`}>
+                    ←
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (confirm(`Remove photo ${i + 1} from the page?`)) remove(i);
+                    }}
+                    className={`${smallButton} px-2! py-0.5! text-error`}
+                    aria-label={`Remove photo ${i + 1}`}
+                  >
+                    ✕
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => reorder(i, i + 1)}
+                    disabled={i === value.length - 1}
+                    className={`${smallButton} px-2! py-0.5!`}
+                    aria-label={`Move photo ${i + 1} later`}
+                  >
+                    →
+                  </button>
+                </div>
+              </li>
+            );
+          })}
+          <li>
+            <button
+              type="button"
+              disabled={busy !== null}
+              onClick={() => addRef.current?.click()}
+              className="flex aspect-[2/3] w-full flex-col items-center justify-center gap-1 rounded-md border-2 border-dashed border-[#c4c4c0] text-[12px] font-semibold text-[#555] transition-colors hover:border-ink hover:text-ink disabled:opacity-50"
+            >
+              <span aria-hidden className="text-[24px] leading-none">+</span>
+              Add photos
+            </button>
+          </li>
+        </ol>
+        <p className="mt-2 text-[12px] text-[#777]">
+          {busy ?? (filesOver ? "Drop to add these photos." : "Drag photos to reorder, or drop image files here to add them.")}
+        </p>
+        {error && <p className="mt-1 text-[12px] text-error">{error}</p>}
+      </div>
+
+      <input
+        ref={addRef}
+        type="file"
+        accept="image/*"
+        multiple
+        hidden
+        onChange={(e) => {
+          add([...(e.target.files ?? [])]);
+          e.target.value = "";
+        }}
+      />
+      <input
+        ref={replaceRef}
+        type="file"
+        accept="image/*"
+        hidden
+        onChange={(e) => {
+          if (selected !== null) replace(selected, e.target.files?.[0]);
+          e.target.value = "";
+        }}
+      />
+
+      {current && selected !== null && (
+        <div className="flex flex-col gap-3 rounded-lg border border-[#e4e4e0] bg-white p-3 sm:flex-row">
+          <div className="w-28 shrink-0 overflow-hidden rounded-md bg-[#f3f3f0]">
+            {/* eslint-disable-next-line @next/next/no-img-element -- any URL, preview only */}
+            {current.src ? <img src={String(current.src)} alt="" className="w-full" /> : null}
+          </div>
+          <div className="flex min-w-0 flex-1 flex-col gap-2">
+            <p className="text-[13px] font-semibold">
+              Photo {selected + 1}
+              {selected === 0 && " · main photo"}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" disabled={busy !== null} onClick={() => replaceRef.current?.click()} className={smallButton}>
+                Replace with another file
+              </button>
+              {selected !== 0 && (
+                <button type="button" onClick={() => reorder(selected, 0)} className={smallButton}>
+                  Make main photo
+                </button>
+              )}
+              {request !== undefined && (
+                <button type="button" disabled={request === selected} onClick={() => onChange(value, selected)} className={smallButton}>
+                  {request === selected ? "Shown beside the request form" : "Show beside the request form"}
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => {
+                  if (confirm(`Remove photo ${selected + 1} from the page?`)) remove(selected);
+                }}
+                className={`${smallButton} text-error`}
+              >
+                Remove
+              </button>
+            </div>
+            <label className="flex flex-col gap-1 text-[12px] text-[#777]">
+              Description (for screen readers and search)
+              <input
+                value={String(current.alt ?? "")}
+                placeholder="e.g. Model in the white coat on a concrete staircase"
+                onChange={(e) => update(selected, { alt: e.target.value })}
+                className={input}
+              />
+            </label>
+            <details className="text-[12px] text-[#777]">
+              <summary className="cursor-pointer">File address</summary>
+              <input
+                value={String(current.src ?? "")}
+                onChange={(e) => update(selected, { src: e.target.value || undefined })}
+                className={`${input} mt-1 font-mono text-[12px]`}
+              />
+            </details>
+          </div>
+        </div>
+      )}
+    </div>
   );
 }

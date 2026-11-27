@@ -13,6 +13,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     "contactEmail": "connect@andylenart.com",
     "roomAttempts": 5,
     "roomLockMinutes": 1,
+    "roomHourlyTries": 30,
     "markReports": 3,
     "filterWords": BUILT_IN_TERMS,
     "nav": [

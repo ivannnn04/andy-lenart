@@ -1,3 +1,4 @@
+import { plainText } from "@/lib/markup";
 /**
  * Everything the admin panel edits. The whole site's content is one
  * `SiteContent` document; Staircase marks and inbox entries are kept apart
@@ -22,8 +23,8 @@ export type GarmentImage = {
 export type Lyric = { time: number; text: string; end?: number; words?: number[] };
 
 /** The words of a lyric line, as `Lyric.words` counts them. */
-/** The words of a lyric line (bold marks ** are not part of them). */
-export const lyricWords = (text: string) => text.replace(/\*\*/g, "").trim().split(/\s+/).filter(Boolean);
+/** The words of a lyric line (bold and other marks are not part of them). */
+export const lyricWords = (text: string) => plainText(text).trim().split(/\s+/).filter(Boolean);
 
 /** The 30-second clip on the cards and the garment page. */
 export type Preview = {
@@ -168,6 +169,8 @@ export type Settings = {
   roomAttempts: number;
   /** How long that pause lasts, in minutes. */
   roomLockMinutes: number;
+  /** Most tries at a room's word from one visitor in an hour, whatever the pause. */
+  roomHourlyTries: number;
   /** Reports that take a Staircase mark off the wall until the admin looks at it. */
   markReports: number;
   /** Words and phrases refused on the Staircase (starts as the built-in list; edited in the admin). */

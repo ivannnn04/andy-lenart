@@ -95,7 +95,7 @@ export async function SiteHeader({
           {nav.map((item) => (
             <li key={item.href}>
               <a href={item.href} className="link-draw">
-                {inline(item.label, "font-black")}
+                {inline(item.label, "font-black", { links: false })}
               </a>
             </li>
           ))}

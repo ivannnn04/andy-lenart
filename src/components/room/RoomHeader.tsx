@@ -78,7 +78,7 @@ export async function RoomHeader({
           {nav.map((item) => (
             <li key={item.href}>
               <a href={item.href} className={linkText}>
-                {inline(item.label, "font-black")}
+                {inline(item.label, "font-black", { links: false })}
               </a>
             </li>
           ))}

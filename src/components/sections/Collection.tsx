@@ -158,7 +158,7 @@ function GarmentCard({
         >
           {href ? (
             <Link href={href} className="link-draw">
-              {inline(title)}
+              {inline(title, "font-bold", { links: false })}
             </Link>
           ) : (
             inline(title)
@@ -173,7 +173,7 @@ function GarmentCard({
               href={statusHref}
               className="text-[11px] whitespace-nowrap uppercase tracking-[0.08em] text-subtle link-draw max-[400px]:whitespace-normal"
             >
-              {inline(status)}
+              {inline(status, "font-bold", { links: false })}
             </a>
           ) : (
             <span

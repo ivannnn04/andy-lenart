@@ -5,6 +5,7 @@ import { SiteFooter } from "@/components/sections/SiteFooter";
 import { SiteHeader } from "@/components/sections/SiteHeader";
 import { getContent } from "@/lib/content/store";
 import { inline, plainText } from "@/lib/inline";
+import { parseBlocks } from "@/lib/markup";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { privacy, settings } = await getContent();
@@ -13,6 +14,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 /** **Bold** runs, and email addresses as links. */
 function rich(text: string): ReactNode {
+  // A written link already says where it goes.
+  if (/\]\(/.test(text)) return inline(text, "font-medium");
   return text.split(/([\w.+-]+@[\w-]+\.[\w.-]*\w)/g).map((part, i) =>
     i % 2 ? (
       <a key={i} href={`mailto:${part}`} className="underline underline-offset-2">
@@ -24,28 +27,28 @@ function rich(text: string): ReactNode {
   );
 }
 
-/** The policy text: blocks split by blank lines; "## " headings, "- " lists. */
+/** The policy text as written in the editor: "## " headings, paragraphs, lists. */
 function PolicyText({ body }: { body: string }) {
-  const blocks = body.split(/\n\s*\n/).map((b) => b.trim()).filter(Boolean);
-  return blocks.map((block, i) => {
-    if (block.startsWith("## "))
+  return parseBlocks(body, { headings: true }).map((block, i) => {
+    if (block.t === "h")
       return (
         <h2 key={i} className="mt-12 text-[22px] leading-[normal] font-bold text-ink first:mt-0">
-          {block.slice(3)}
+          {rich(block.v)}
         </h2>
       );
-    const lines = block.split("\n");
-    if (lines.every((l) => l.startsWith("- ")))
+    if (block.t !== "p") {
+      const List = block.t;
       return (
-        <ul key={i} className="mt-4 flex list-disc flex-col gap-3 pl-5">
-          {lines.map((l, j) => (
-            <li key={j}>{rich(l.slice(2))}</li>
+        <List key={i} className={`mt-4 flex flex-col gap-3 pl-5 ${block.t === "ul" ? "list-disc" : "list-decimal"}`}>
+          {block.items.map((item, j) => (
+            <li key={j}>{rich(item)}</li>
           ))}
-        </ul>
+        </List>
       );
+    }
     return (
       <p key={i} className="mt-4">
-        {lines.map((l, j) => (
+        {block.lines.map((l, j) => (
           <Fragment key={j}>
             {j > 0 && <br />}
             {rich(l)}

@@ -1,4 +1,5 @@
 import { lyricWords, type Lyric } from "@/lib/content/types";
+import { parseInline, type InlineNode } from "@/lib/markup";
 
 /* The karaoke of the Listening Room, also previewed in the admin. */
 
@@ -34,25 +35,23 @@ export function sungLetters(line: Lyric, next: number | undefined, time: number)
   return total * clamp01((time - line.time) / length);
 }
 
-/** The line's letters, each marked bold when it falls inside **double asterisks**. */
+type Letter = { char: string; bold?: boolean; italic?: boolean; underline?: boolean };
+
+/** The line's letters, each keeping the bold, italic or underline set in the admin. */
 function letters(text: string) {
-  const out: { char: string; bold: boolean }[] = [];
-  let bold = false;
-  for (let i = 0; i < text.length; i++) {
-    if (text.startsWith("**", i)) {
-      bold = !bold;
-      i++;
-      continue;
-    }
-    out.push({ char: text[i], bold });
-  }
-  return out;
+  const walk = (nodes: InlineNode[], style: Omit<Letter, "char">): Letter[] =>
+    nodes.flatMap((n) =>
+      n.t === "text"
+        ? [...n.v].map((char) => ({ char, ...style }))
+        : walk(n.c, n.t === "b" ? { ...style, bold: true } : n.t === "i" ? { ...style, italic: true } : n.t === "u" ? { ...style, underline: true } : style),
+    );
+  return walk(parseInline(text), {});
 }
 
 /** The line's letters: sung ones lit, the rest waiting (see .room-letter). */
 export function KaraokeLetters({ text, sung }: { text: string; sung: number }) {
   // Words: runs of letters between spaces (spaces kept as they are).
-  const words: { space: boolean; letters: { char: string; bold: boolean }[] }[] = [];
+  const words: { space: boolean; letters: Letter[] }[] = [];
   for (const l of letters(text)) {
     const space = /\s/.test(l.char);
     const last = words[words.length - 1];
@@ -69,7 +68,7 @@ export function KaraokeLetters({ text, sung }: { text: string; sung: number }) {
           // A word never breaks across lines.
           <span key={w} className="whitespace-nowrap">
             {word.letters.map((l, i) => (
-              <span key={i} className={`room-letter${index++ < sung ? " is-sung" : ""}${l.bold ? " font-black" : ""}`}>
+              <span key={i} className={`room-letter${index++ < sung ? " is-sung" : ""}${l.bold ? " font-black" : ""}${l.italic ? " italic" : ""}${l.underline ? " underline" : ""}`}>
                 {l.char}
               </span>
             ))}

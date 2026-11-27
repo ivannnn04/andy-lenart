@@ -26,9 +26,6 @@ const cookieOptions = {
   path: "/room",
 };
 
-/** However the pause is set, one address gets this many tries at a room's word in an hour. */
-const HOURLY_TRIES = 30;
-
 /**
  * Tries from this visitor's address at this room's word, counted on the
  * server: the cookie count below is a courtesy to the visitor (it can be
@@ -36,7 +33,7 @@ const HOURLY_TRIES = 30;
  * address is kept only as a one-way code. Returns how long to wait, in
  * minutes, or 0 when the try may go ahead.
  */
-async function serverPause(slug: string, tries: number, minutes: number) {
+async function serverPause(slug: string, tries: number, minutes: number, hourly: number) {
   const storage = getStorage();
   if (!storage.writable) return 0;
   const h = await headers();
@@ -47,7 +44,7 @@ async function serverPause(slug: string, tries: number, minutes: number) {
     tries > 0 ? storage.incr(`room:${slug}:${who}`, minutes * 60) : 0,
     storage.incr(`room-hour:${slug}:${who}`, 3600),
   ]);
-  if (hour > HOURLY_TRIES) return 60;
+  if (hour > hourly) return 60;
   return tries > 0 && recent > tries ? minutes : 0;
 }
 
@@ -61,8 +58,8 @@ export async function enterRoom(slug: string, _prev: GateState, form: FormData):
   if (gate.lockedUntil > now) return { status: "locked", lockedUntil: gate.lockedUntil };
 
   // Set in the admin (Settings); 0 attempts never pauses (the hourly limit still holds).
-  const { roomAttempts, roomLockMinutes } = (await getContent()).settings;
-  const wait = await serverPause(slug, roomAttempts, roomLockMinutes).catch(() => 0);
+  const { roomAttempts, roomLockMinutes, roomHourlyTries } = (await getContent()).settings;
+  const wait = await serverPause(slug, roomAttempts, roomLockMinutes, roomHourlyTries).catch(() => 0);
   if (wait) {
     const lockedUntil = now + wait * 60_000;
     jar.set(gateCookie(slug), writeGate({ attempts: 0, lockedUntil }), { ...cookieOptions, maxAge: wait * 60 });

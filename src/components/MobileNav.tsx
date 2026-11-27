@@ -133,7 +133,7 @@ export function MobileNav({
                   onClick={close}
                   className="link-draw text-[36px] leading-[1.05] font-black uppercase"
                 >
-                  {inline(item.label, "font-black")}
+                  {inline(item.label, "font-black", { links: false })}
                 </a>
               </li>
             ))}

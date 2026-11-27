@@ -750,3 +750,34 @@ html:has(.preloader:not(.is-leaving)) {
     animation: none;
   }
 }
+
+/* The admin's text editor (RichEditor): lists and headings as they read on the site. */
+.rich-editor p + p,
+.rich-editor p + ul,
+.rich-editor p + ol,
+.rich-editor ul + p,
+.rich-editor ol + p,
+.rich-editor h2 + p,
+.rich-editor p + h2 {
+  margin-top: 0.6em;
+}
+.rich-editor ul {
+  list-style: "– ";
+  padding-left: 1.2em;
+}
+.rich-editor ol {
+  list-style: decimal;
+  padding-left: 1.4em;
+}
+.rich-editor h2 {
+  font-size: 1.15em;
+  font-weight: 700;
+}
+.rich-editor a {
+  text-decoration: underline;
+  color: #1d4ed8;
+}
+.rich-editor b,
+.rich-editor strong {
+  font-weight: 700;
+}

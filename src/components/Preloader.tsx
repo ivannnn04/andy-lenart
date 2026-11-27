@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
 import { backgroundSound } from "@/lib/background-sound";
+import { parseInline, type InlineNode } from "@/lib/markup";
 
 // The shortest time the opening stays up, so the words can be read.
 const MIN_MS = 2600;
@@ -10,23 +11,23 @@ const MIN_MS = 2600;
 // by a link inside the site (no reload) skips it.
 let shownThisLoad = false;
 
-/** The line split into words, each marked bold when it falls inside **double asterisks**. */
-function boldWords(lines: string[]) {
-  let bold = false;
-  return lines.map((line) =>
-    line
-      .split(/\s+/)
-      .filter(Boolean)
-      .map((raw) => {
-        const opens = raw.startsWith("**");
-        const closes = raw.endsWith("**") && raw.length > (opens ? 4 : 2);
-        if (opens) bold = true;
-        const word = { text: raw.replace(/^\*\*|\*\*$/g, ""), bold };
-        if (closes) bold = false;
-        return word;
-      })
-      .filter((w) => w.text),
-  );
+type Piece = { text: string; b?: boolean; i?: boolean; u?: boolean };
+
+/** The line split into words, each word in pieces that keep their bold, italic or underline. */
+function styledWords(lines: string[]) {
+  const pieces = (nodes: InlineNode[], style: Omit<Piece, "text">): Piece[] =>
+    nodes.flatMap((n) =>
+      n.t === "text" ? [{ text: n.v, ...style }] : pieces(n.c, n.t === "a" ? style : { ...style, [n.t]: true }),
+    );
+  return lines.map((line) => {
+    const words: Piece[][] = [[]];
+    for (const p of pieces(parseInline(line), {}))
+      p.text.split(/(\s+)/).forEach((part, k) => {
+        if (k % 2) words.push([]);
+        else if (part) words[words.length - 1].push({ ...p, text: part });
+      });
+    return words.filter((w) => w.length);
+  });
 }
 
 /**
@@ -88,8 +89,8 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
     backgroundSound.turn(on);
   };
 
-  // Each word rises on its own; **double asterisks** around words make them bold.
-  const words = boldWords(lines);
+  // Each word rises on its own, keeping the styles set in the editor.
+  const words = styledWords(lines);
   let n = 0;
 
   const choice = (on: boolean, label: string) => (
@@ -127,7 +128,13 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
               <span key={i} className="block">
                 {line.map((word, j) => (
                   <span key={j} className="pl-word" style={{ "--i": n++ } as CSSProperties}>
-                    <span className={word.bold ? "font-black" : undefined}>{word.text}</span>
+                    <span>
+                      {word.map((p, k) => (
+                        <span key={k} className={[p.b && "font-black", p.i && "italic", p.u && "underline"].filter(Boolean).join(" ") || undefined}>
+                          {p.text}
+                        </span>
+                      ))}
+                    </span>
                     {j < line.length - 1 && " "}
                   </span>
                 ))}
