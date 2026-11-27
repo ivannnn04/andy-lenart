@@ -128,13 +128,13 @@ export function MobileNav({
           <ul className="flex flex-col gap-4">
             {nav.map((item) => (
               <li key={item.href}>
-                <a
+                <Link
                   href={item.href}
                   onClick={close}
                   className="link-draw text-[36px] leading-[1.05] font-black uppercase"
                 >
                   {inline(item.label, "font-black", { links: false })}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

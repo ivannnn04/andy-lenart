@@ -36,7 +36,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function RootLayout({ children }: LayoutProps<"/">) {
   const { home } = await getContent();
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${neueHaas.variable} ${inter.variable} h-full antialiased`}>
+    // suppressHydrationWarning: the Preloader's early script may add "intro-seen" to <html>.
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning className={`${neueHaas.variable} ${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <NoImageDrag />
         <BackgroundTrack src={home.preloader.track} />

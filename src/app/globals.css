@@ -619,8 +619,12 @@ select:autofill {
  * one after another; a hairline fills while the page loads; then the words
  * leave upwards and the black lifts away.
  */
-html:has(.preloader:not(.is-leaving)) {
+html:not(.intro-seen):has(.preloader:not(.is-leaving)) {
   overflow: hidden;
+}
+/* Seen already in this tab (Preloader.tsx): never shown again. */
+html.intro-seen .preloader {
+  display: none;
 }
 .pl-word {
   display: inline-block;

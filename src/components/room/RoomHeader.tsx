@@ -77,9 +77,9 @@ export async function RoomHeader({
         <ul className="flex gap-[max(12px,calc(25*var(--u)))] text-[clamp(11px,calc(18*var(--u)),18px)] leading-[0.9]">
           {nav.map((item) => (
             <li key={item.href}>
-              <a href={item.href} className={linkText}>
+              <Link href={item.href} className={linkText}>
                 {inline(item.label, "font-black", { links: false })}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

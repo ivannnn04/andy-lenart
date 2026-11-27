@@ -7,9 +7,32 @@ import { parseInline, type InlineNode } from "@/lib/markup";
 // The shortest time the opening stays up, so the words can be read.
 const MIN_MS = 2600;
 
-// Shown on every load or reload of the page; coming back to the home page
-// by a link inside the site (no reload) skips it.
+// Shown once per browser tab: the first time the visitor opens the site.
+// Coming back to the home page later (a link, the logo, a reload) skips it.
+// The tab remembers it in sessionStorage; `shownThisLoad` covers moves inside
+// the site that don't reload the page.
 let shownThisLoad = false;
+const SEEN_KEY = "andy-lenart:intro-seen";
+// Runs before the page is painted, so a returning visitor never sees the black screen flash.
+const SEEN_SCRIPT = `try{sessionStorage.getItem("${SEEN_KEY}")&&document.documentElement.classList.add("intro-seen")}catch(e){}`;
+const remember = () => {
+  try {
+    sessionStorage.setItem(SEEN_KEY, "1");
+  } catch {}
+};
+// Read once per page load: whether the tab had already seen it before this load.
+let seenAtLoad: boolean | undefined;
+const seenBefore = () => {
+  if (seenAtLoad === undefined) {
+    try {
+      seenAtLoad = sessionStorage.getItem(SEEN_KEY) !== null;
+    } catch {
+      seenAtLoad = false;
+    }
+  }
+  return seenAtLoad;
+};
+const noSubscribe = () => () => {};
 
 type Piece = { text: string; b?: boolean; i?: boolean; u?: boolean };
 
@@ -40,12 +63,16 @@ function styledWords(lines: string[]) {
  * itself is the root layout's BackgroundTrack.
  */
 export function Preloader({ lines, track }: { lines: string[]; track: string }) {
-  const [phase, setPhase] = useState<"open" | "leaving" | "gone">(() => (shownThisLoad ? "gone" : "open"));
+  const [state, setPhase] = useState<"open" | "leaving" | "gone">(() => (shownThisLoad ? "gone" : "open"));
+  // Already seen in this tab: straight to the page (the server can't know, so it renders the screen).
+  const seen = useSyncExternalStore(noSubscribe, seenBefore, () => false);
+  const phase = seen ? "gone" : state;
   const sound = useSyncExternalStore(backgroundSound.subscribe, backgroundSound.isPlaying, () => false);
   // Whether the visitor has picked on or off yet (until then both read grey, as in the design).
   const [picked, setPicked] = useState(false);
   const leave = useCallback(() => {
     shownThisLoad = true;
+    remember();
     setPhase((p) => (p === "open" ? "leaving" : p));
   }, []);
 
@@ -103,6 +130,7 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
 
   return (
     <>
+      {phase !== "gone" && <script dangerouslySetInnerHTML={{ __html: SEEN_SCRIPT }} />}
       {phase !== "gone" && (
         <div
           className={`preloader fixed inset-0 z-[100] flex cursor-default flex-col items-center justify-center bg-black px-6 text-white ${

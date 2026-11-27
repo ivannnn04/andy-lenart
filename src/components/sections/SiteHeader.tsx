@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { MobileNav } from "@/components/MobileNav";
 import { Photo } from "@/components/Photo";
 import { SoundWave } from "@/components/SoundWave";
@@ -65,8 +66,9 @@ export async function SiteHeader({
           sizes="(min-width: 768px) 22vw, 112px"
         />
       </SoundWave>
-      {/* The logo never moves: no reveal, no hover effect. */}
-      <a
+      {/* The logo never moves: no reveal, no hover effect. Links move inside
+          the site without reloading, so the music keeps playing. */}
+      <Link
         href={v.logoHref}
         title={v.logoTitle}
         data-reveal-skip
@@ -81,7 +83,7 @@ export async function SiteHeader({
           sizes="(min-width: 768px) 12vw, 64px"
           preload
         />
-      </a>
+      </Link>
       <nav
         aria-label="Primary"
         // Anchored to its right edge so it never runs off-screen or into the
@@ -94,9 +96,9 @@ export async function SiteHeader({
         >
           {nav.map((item) => (
             <li key={item.href}>
-              <a href={item.href} className="link-draw">
+              <Link href={item.href} className="link-draw">
                 {inline(item.label, "font-black", { links: false })}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
