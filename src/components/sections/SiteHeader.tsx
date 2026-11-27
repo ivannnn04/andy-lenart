@@ -26,7 +26,9 @@ const VARIANTS = {
   },
   compact: {
     height: 130,
-    wave: p(24, -10, 200),
+    // Sized and placed so the drawn wave matches the design (78px wide,
+    // from x=55, y=40); the image has empty space around the drawing.
+    wave: p(-3, 5, 226),
     logo: p(629, 25, 115),
     logoHref: "/",
     logoTitle: "Home",
