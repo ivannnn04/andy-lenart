@@ -4,8 +4,8 @@ import { useSyncExternalStore, type CSSProperties, type ReactNode } from "react"
 import { backgroundSound } from "@/lib/background-sound";
 
 /**
- * The hand-drawn sound wave in the home page header. Where the page has a
- * background track it switches it on and off, and moves while it plays.
+ * The hand-drawn sound wave in the header. It switches the site's background
+ * track on and off, and moves while it plays.
  */
 export function SoundWave({ className, style, children }: { className?: string; style?: CSSProperties; children: ReactNode }) {
   const available = useSyncExternalStore(backgroundSound.subscribe, backgroundSound.isAvailable, () => false);

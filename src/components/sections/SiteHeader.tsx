@@ -55,7 +55,7 @@ export async function SiteHeader({
   const { nav } = (await getContent()).settings;
   const contents = (
     <>
-      {/* Also the switch for the home page's background track (see Preloader). */}
+      {/* Also the switch for the site's background track (see BackgroundTrack). */}
       <SoundWave className="place w-28" style={v.wave}>
         <Photo
           src="/images/radio-wave.png"

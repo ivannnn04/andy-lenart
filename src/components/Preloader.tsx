@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore, type CSSProperties } from "react";
 import { backgroundSound } from "@/lib/background-sound";
 import { parseInline, type InlineNode } from "@/lib/markup";
 
@@ -36,21 +36,14 @@ function styledWords(lines: string[]) {
  * or "off"; only then does the black lift away. "On" starts the background
  * track (browsers only allow sound after a click); afterwards the sound wave
  * in the header switches it (SoundWave). Without a track there is nothing to
- * pick, so the screen leaves by itself once the page has loaded.
+ * pick, so the screen leaves by itself once the page has loaded. The <audio>
+ * itself is the root layout's BackgroundTrack.
  */
 export function Preloader({ lines, track }: { lines: string[]; track: string }) {
   const [phase, setPhase] = useState<"open" | "leaving" | "gone">(() => (shownThisLoad ? "gone" : "open"));
   const sound = useSyncExternalStore(backgroundSound.subscribe, backgroundSound.isPlaying, () => false);
   // Whether the visitor has picked on or off yet (until then both read grey, as in the design).
   const [picked, setPicked] = useState(false);
-  const audio = useRef<HTMLAudioElement>(null);
-
-  // The track is shared with the header's sound wave.
-  useEffect(() => {
-    backgroundSound.attach(audio.current);
-    return () => backgroundSound.attach(null);
-  }, [track]);
-
   const leave = useCallback(() => {
     shownThisLoad = true;
     setPhase((p) => (p === "open" ? "leaving" : p));
@@ -110,8 +103,6 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
 
   return (
     <>
-      {track && <audio ref={audio} src={track} loop preload="none" />}
-
       {phase !== "gone" && (
         <div
           className={`preloader fixed inset-0 z-[100] flex cursor-default flex-col items-center justify-center bg-black px-6 text-white ${
@@ -151,7 +142,6 @@ export function Preloader({ lines, track }: { lines: string[]; track: string }) 
           )}
         </div>
       )}
-
     </>
   );
 }

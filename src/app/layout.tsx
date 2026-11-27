@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
+import { BackgroundTrack } from "@/components/BackgroundTrack";
 import { NoImageDrag } from "@/components/NoImageDrag";
 import { getContent } from "@/lib/content/store";
 import "./globals.css";
@@ -32,11 +33,13 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: settings.siteTitle, description: settings.siteDescription };
 }
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default async function RootLayout({ children }: LayoutProps<"/">) {
+  const { home } = await getContent();
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${neueHaas.variable} ${inter.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <NoImageDrag />
+        <BackgroundTrack src={home.preloader.track} />
         {children}
       </body>
     </html>

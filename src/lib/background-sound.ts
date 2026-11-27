@@ -1,8 +1,8 @@
 /**
- * The home page's background track, shared by everything that shows or
- * switches it: the opening screen's "Sound on / off", the sound wave in the
- * header and the switch in the corner. The <audio> element lives in the
- * Preloader, which attaches it here.
+ * The site's background track, shared by everything that shows or switches
+ * it: the opening screen's "Sound on / off" and the sound wave in the header.
+ * The <audio> element lives in the root layout (BackgroundTrack), which
+ * attaches it here.
  */
 
 const VOLUME = 0.6;
@@ -55,7 +55,7 @@ function onOtherPlay(e: Event) {
 }
 
 export const backgroundSound = {
-  /** Called by the Preloader with its <audio> (null when it goes). */
+  /** Called by BackgroundTrack with its <audio> (null when it goes). */
   attach(audio: HTMLAudioElement | null) {
     if (audio === el) return;
     window.clearInterval(fade);
